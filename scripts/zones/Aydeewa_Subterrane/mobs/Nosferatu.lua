@@ -33,46 +33,43 @@ local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
 --local murkID = [17056164, 17056165, 17056166] 
 
 local function spawnAdds(mob, target)
-    local mobType = math.random(1,3) -- 1 = bats, 2 = wolf, 3 = murk 
-    local af = mob:getLocalVar("AF")
+    mob:setLocalVar("MobType", math.random(1,3)) -- 1 = bats, 2 = wolf, 3 = murk 
     mob:setLocalVar("addTimer", os.time() + math.random(90, 120)) 
     local x = mob:getXPos(target) -- does this work?
     local y = mob:getYPos(target)
     local z = mob:getZPos(target)
 
 
-    if af == 1 then -- If we used astral flow
+    if mob:getLocalVar("AF") == 1 then -- If we used astral flow
         for jj = 1, 3 do
-        local adds = math.random(0,1)
+            mob:setLocalVar("adds", math.random(0,1))
 
-        if jj == 1 then
-            local offset = 1
-        elseif jj == 2 then
-            local offset = 4
-        elseif jj == 3 then
-            local offset = 7
-        end
+            if jj == 1 then
+                mob:setLocalVar("offset", 1)
+            elseif jj == 2 then
+                mob:setLocalVar("offset", 4)
+            elseif jj == 3 then
+                mob:setLocalVar("offset", 7)
+            end
 
-            for ii = ID.mob.NOSFERATU + offset, ID.mob.NOSFERATU + offset + adds do
+            for ii = ID.mob.NOSFERATU + mob:getLocalVar("offset"), ID.mob.NOSFERATU + mob:getLocalVar("offset") + mob:getLocalVar("adds") do
                 local pet = GetMobByID(ii)
                 pet:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
                 pet:spawn()
-                pet:setLocalVar("AF", 1)
+                GetMobByID(ii):setLocalVar("AF", 1)
                 pet:updateEnmity(target)
             end
         end
-
--- regular mob spawning
-    else
-        if mobType == 1 then
-            local offset = 1
-        elseif mobType == 2 then
-            local offset = 4
-        elseif mobType == 3 then
-            local offset = 7
+    else -- regular mob spawning
+        if mob:getLocalVar("MobType") == 1 then
+            mob:setLocalVar("offset", 1)
+        elseif mob:getLocalVar("MobType") == 2 then
+            mob:setLocalVar("offset", 4)
+        elseif mob:getLocalVar("MobType") == 3 then
+            mob:setLocalVar("offset", 7)
         end
 
-        for ii = ID.mob.NOSFERATU + offset, ID.mob.NOSFERATU + offset + 2 do
+        for ii = ID.mob.NOSFERATU + mob:getLocalVar("offset"), ID.mob.NOSFERATU + mob:getLocalVar("offset") + 2 do
             local pet = GetMobByID(ii)
             pet:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
             pet:spawn()
@@ -96,28 +93,39 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
-    mob:setLocalVar("addTimer", os.time() + math.random(90, 120))   
-    mob:setLocalVar("AF", 0)       
-    mob:setLocalVar("2hr", math.random(20,50))
+    mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes 
+    mob:setLocalVar("AF", 0)
+    tpz.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            {id = tpz.jsa.BLOOD_WEAPON, hpp = 0},
+            {id = tpz.jsa.ASTRAL_FLOW, hpp = math.random(5, 70)},
+        },
+    })
+
 end     
+
+function onMobEngaged(mob, target)
+    mob:setLocalVar("addTimer", os.time() + math.random(90, 120)) 
+end
 
 
 function onMobFight(mob, target)
     local pop = mob:getLocalVar("addTimer")
     local now = os.time()
-    local hpp = mob:getHPP()
-    local boom = mob:getLocalVar("2hr")
+
+
 
     if now >= pop then
-        spawnMobs()
+        spawnAdds(mob, target)
     end
+end
 
-    if hpp <= boom then
-        mob:setLocalVar("AF", 1) 
-        mob:useMobAbility(1111) -- ASCAR Astral Flow
+function onMobWeaponSkill(target, mob, skill)
+    if skill:getID() == 734 then -- Astral Flow
+        mob:setLocalVar("AF", 1)
+        mob:setLocalVar("addTimer", os.time() + 2)
     end
-
 end
 
 
