@@ -3,11 +3,13 @@
 -- Zone: Sacrarium (28)
 --
 -----------------------------------
-local ID = require("scripts/zones/Sacrarium/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/settings")
 require("scripts/globals/treasure")
 require("scripts/globals/status")
+require("scripts/globals/world")
+require("scripts/globals/zone")
+local ID = require("scripts/zones/Sacrarium/IDs")
 -----------------------------------
 
 function onInitialize(zone)
@@ -58,6 +60,42 @@ function onGameDay()
     for i = 0, 17 do
         GetNPCByID(ID.npc.LABYRINTH_OFFSET + i):setAnimation(tpz.anim.OPEN_DOOR + doors[i+1])
     end
+end
+
+function onZoneWeatherChange(weather)
+    local Elel = GetMobByID(ID.mob.ELEL)
+
+    if
+        os.time() > GetServerVariable("ElelRespawn") and
+        not Elel:isSpawned() and
+        elelCanSpawn()
+    then
+        SpawnMob(Elel:getID())
+    end
+end
+
+function onGameHour(zone)
+    local Elel = GetMobByID(ID.mob.ELEL)
+
+    if
+        os.time() > GetServerVariable("ElelRespawn") and
+        not Elel:isSpawned() and
+        elelCanSpawn()
+    then
+        SpawnMob(Elel:getID())
+    end
+end
+
+function elelCanSpawn()
+    local Elel = GetMobByID(ID.mob.ELEL)
+    local totd = VanadielTOTD()
+    local isNighttime = (totd == tpz.time.NIGHT or totd == tpz.time.MIDNIGHT)
+    local isDark = (Elel:getWeather() == tpz.weather.GLOOM or Elel:getWeather() == tpz.weather.DARKNESS)
+
+    if not isDark or not isNighttime then
+        return false
+    end
+    return true
 end
 
 function onEventUpdate(player, csid, option)

@@ -49,6 +49,7 @@ zones[tpz.zone.SACRARIUM] =
             {16892074, {[tpz.race.GALKA]    = true}},                             -- Indich (galka)
         },
         OLD_PROFESSOR_MARISELLE = 16891970,
+        ELEL = 16891948,
     },
     npc =
     {
