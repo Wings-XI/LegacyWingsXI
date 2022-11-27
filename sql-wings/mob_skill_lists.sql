@@ -1351,6 +1351,7 @@ INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2110);
 INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2111);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1753);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1758);
+INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1761);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1829);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1830);

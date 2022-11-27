@@ -58,21 +58,20 @@ function onMobSpawn(mob)
 end     
 
 function onMobEngaged(mob, target)
-    mob:setLocalVar("clock", os.time() + 120) 
+    mob:setLocalVar("clock", os.time() + 20) 
 end
 
 function onMobFight(mob, target)
     local now = os.time()
     local popTime = mob:getLocalVar("clock")
     local adds = mob:getLocalVar("adds")
-    local tailslap = mob:getLocalVar("tailSlap")
 
     if now >= popTime and adds == 0 then
         spawnAdds(mob, target)
     end 
 
-    if tailslap == 1 then
-        mob:useMobAbility(1761) -- arrow deluge, may be 1192, 1774, 1518
+    if mob:getLocalVar("dances") > 0 then
+        mob:addTP(1000)
     end
 end
 
@@ -83,13 +82,11 @@ function onMobWeaponSkillPrepare(mob)
         mob:setLocalVar("dances", dance - 1)
         return 1762 -- May be 1193
     end
+end
 
-    if skill:getID() == 1758 then -- Tail Slap, may be 1190
-        tailslap = 1
-    end
-
-    if skill:getID() == 1761 then -- arrow deluge, may be 1192, 1774, 1518
-        tailslap = 0
+function onMobWeaponSkill(target, mob, skill)
+    if skill:getID() == 1758 then -- Tail Slap
+        mob:useMobAbility(1761)
     end
 end
 

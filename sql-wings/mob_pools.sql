@@ -1332,7 +1332,7 @@ INSERT INTO `mob_pools` VALUES(1268, 'Excaliace', 'Excaliace', 145, _binary 0x01
 INSERT INTO `mob_pools` VALUES(1269, 'Executioner_Antlion', 'Executioner_Antlion', 26, _binary 0x0000440500000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 0, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 128, 26);
 INSERT INTO `mob_pools` VALUES(1270, 'Exoplates', 'Exoplates', 236, _binary 0x0000090300000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 18, 0, 0, 6951, 1155, 0, 0, 0, 0, 0, 237);
 INSERT INTO `mob_pools` VALUES(1271, 'Exoray', 'Exoray', 116, _binary 0x0000780100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 1, 0, 0, 0, 310, 1157, 0, 0, 0, 0, 0, 116);
-INSERT INTO `mob_pools` VALUES(1272, 'Experimental_Lamia', 'Experimental_Lamia', 310, _binary 0x0000800600000000000000000000000000000000, 17, 17, 11, 240, 100, 0, 1, 1, 1, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 310);
+INSERT INTO `mob_pools` VALUES(1272, 'Experimental_Lamia', 'Experimental_Lamia', 310, _binary 0x0000800600000000000000000000000000000000, 11, 11, 11, 240, 100, 0, 1, 1, 1, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 310);
 INSERT INTO `mob_pools` VALUES(1273, 'Experimental_Poroggo', 'Experimental_Poroggo', 196, _binary 0x0000130700000000000000000000000000000000, 4, 4, 5, 150, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 2, 0, 0, 196);
 INSERT INTO `mob_pools` VALUES(1274, 'Experimental_Undead_thie', 'Experimental_Undead_thie', 359, _binary 0x0500520700000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 1, 0, 0, 0, 0, 1, 1155, 0, 0, 0, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(1275, 'Explosure', 'Explosure', 56, _binary 0x0000180100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 451, 1153, 0, 0, 0, 0, 0, 56);
