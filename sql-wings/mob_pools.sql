@@ -94,8 +94,8 @@ INSERT INTO `mob_pools` VALUES(30, 'Ace_of_Batons', 'Ace_of_Batons', 61, _binary
 INSERT INTO `mob_pools` VALUES(31, 'Ace_of_Coins', 'Ace_of_Coins', 509, _binary 0x0000af0100000000000000000000000000000000, 5, 5, 11, 240, 100, 0, 1, 0, 1, 2, 0, 0, 7, 1157, 0, 0, 3, 0, 0, 61);
 INSERT INTO `mob_pools` VALUES(32, 'Ace_of_Cups', 'Ace_of_Cups', 510, _binary 0x0000af0100000000000000000000000000000000, 3, 3, 12, 240, 100, 0, 1, 0, 1, 2, 0, 0, 7, 1157, 0, 0, 1, 0, 0, 61);
 INSERT INTO `mob_pools` VALUES(33, 'Ace_of_Swords', 'Ace_of_Swords', 511, _binary 0x0000af0100000000000000000000000000000000, 7, 7, 12, 240, 100, 0, 1, 0, 1, 2, 0, 0, 7, 1157, 0, 0, 4, 0, 0, 61);
-INSERT INTO `mob_pools` VALUES(34, 'Achamoth', 'Achamoth', 307, _binary 0x0000100700000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 0, 2, 1, 0, 7, 1181, 0, 0, 0, 0, 0, 253);
-INSERT INTO `mob_pools` VALUES(35, 'Achamothcampa', 'Achamothcampa', 254, _binary 0x00000a0700000000000000000000000000000000, 1, 1, 7, 265, 100, 0, 1, 0, 1, 2, 0, 0, 7, 3225, 0, 0, 0, 0, 0, 254);
+INSERT INTO `mob_pools` VALUES(34, 'Achamoth', 'Achamoth', 307, _binary 0x0000100700000000000000000000000000000000, 3, 1, 7, 240, 100, 0, 1, 1, 0, 2, 1, 0, 7, 6, 0, 0, 553, 0, 0, 253);
+INSERT INTO `mob_pools` VALUES(35, 'Achamothcampa', 'Achamothcampa', 254, _binary 0x00000a0700000000000000000000000000000000, 1, 1, 7, 265, 100, 0, 1, 0, 1, 2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 254);
 INSERT INTO `mob_pools` VALUES(36, 'Achamoth_Nympha', 'Achamoth_Nympha', 253, _binary 0x0000100700000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 1, 0, 7, 1689, 0, 0, 0, 0, 0, 253);
 INSERT INTO `mob_pools` VALUES(37, 'Achtelle', 'Achtelle', 145, _binary 0x0100090434103420343034403450cf6000700080, 14, 14, 8, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 145);
 INSERT INTO `mob_pools` VALUES(38, 'Acid_Grease', 'Acid_Grease', 229, _binary 0x0000240100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 229);

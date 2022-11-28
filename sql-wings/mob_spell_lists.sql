@@ -4530,6 +4530,18 @@ INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 212, 1, 255); -- B
 INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 214, 1, 255); -- Flood
 INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 34, 1, 255); -- Diaga2
 INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 273, 1, 255); -- Sleepga
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 358, 1, 255); -- Hastega
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 129, 1, 255); -- Protectra V 
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 134, 1, 255); -- Shellra V
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 10, 1, 255); -- Curaga IV
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 14, 1, 255); -- Poisona
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 15, 1, 255); -- Paralyna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 16, 1, 255); -- Blindna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 19, 1, 255); -- Viruna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 20, 1, 255); -- Cursna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 143, 1, 255); -- Erase
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 21, 1, 255); -- Holy
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 39, 1, 255); -- Banishga 2
 
 
 --

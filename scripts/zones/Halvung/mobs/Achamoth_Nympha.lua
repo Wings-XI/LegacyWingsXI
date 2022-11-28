@@ -10,10 +10,7 @@
 local ID = require("scripts/zones/Halvung/IDs")
 
 function onMobDeath(mob)
-    local mother = GetMobByID(ID.mob.ACHAMOTH)
-    if mother:isSpawned() then
-        mother:setLocalVar("bigAdds", mother:getLocalVar("bigAdds") - 1)
-    end
+
 end
 
 function onMobDespawn(mob)
