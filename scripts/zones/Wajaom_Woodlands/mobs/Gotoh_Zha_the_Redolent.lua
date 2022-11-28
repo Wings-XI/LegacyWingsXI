@@ -31,6 +31,7 @@ function onMobSpawn(mob)
 
     mob:setLocalVar("BreakChance", 5)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
+    mob:setMod(tpz.mod.FASTCAST, 25)
     mob:setLocalVar("BLM", math.random(66,80))
     mob:setLocalVar("BLMused", 0)
     mob:setLocalVar("WHM", math.random(1,50))
@@ -50,7 +51,6 @@ function onMobSpawn(mob)
 end
 
 function onMobFight(mob, target)
-
     if mob:AnimationSub() == 1 and mob:getLocalVar("jobChanged") == 0 then
         mob:setLocalVar("jobChanged", 1)
         mob:setSpellList(297) -- Set WHM spell list.

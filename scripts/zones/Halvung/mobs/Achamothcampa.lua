@@ -37,7 +37,16 @@ end
 
 
 function onMobSpawn(mob)
-    mob:setLocalVar("clock", os.time() + 30) 
+    mob:setLocalVar("clock", os.time() + 40) 
+    if math.random(1,2) == 1 then
+        mob:AnimationSub(1) -- weak to magic
+        mob:setMod(tpz.mod.UDMGPHYS,-100)
+        mob:setMod(tpz.mod.UDMGMAGIC, 200)
+    else
+        mob:AnimationSub(0) -- weak to phys
+        mob:setMod(tpz.mod.UDMGPHYS, 200)
+        mob:setMod(tpz.mod.UDMGMAGIC, -100)
+    end
 end
 
 

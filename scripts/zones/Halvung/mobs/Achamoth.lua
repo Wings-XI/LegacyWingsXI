@@ -36,7 +36,7 @@ function onMobInitialize(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = tpz.jsa.BENEDICTION, hpp = 0},
+            {id = tpz.jsa.BENEDICTION, hpp = -1},
             
         },
     })
@@ -51,7 +51,15 @@ end
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
     mob:setLocalVar("smallAdds", 0)
-    mob:setLocalVar("bigAdds", 0)               
+    mob:setLocalVar("bigAdds", 0)      
+    
+    tpz.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            {id = tpz.jsa.BENEDICTION, hpp = -1},
+            
+        },
+    })
 end     
 
 local function despawnAdds(mob) 
@@ -63,7 +71,7 @@ end
 
 
 function onMobEngaged(mob, target)
-    mob:setLocalVar("clock", os.time() + 20) 
+    mob:setLocalVar("clock", os.time() + 120) 
 end
 
 

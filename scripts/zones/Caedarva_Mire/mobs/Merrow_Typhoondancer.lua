@@ -11,7 +11,6 @@ mixins =
     }
 
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
- -- Check it uses 2hr
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)

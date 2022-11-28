@@ -72,22 +72,24 @@ function onMobFight(mob, target)
     end 
 
     if mob:getLocalVar("dances") > 0 then
-        mob:addTP(1000)
+        mob:setTP(3000)
     end
 end
 
 function onMobWeaponSkillPrepare(mob)
-    local dance = mob:getLocalVar("dances")
-    local tailslap = mob:getLocalVar("tailSlap")
-    if dance > 0 then
-        mob:setLocalVar("dances", dance - 1)
-        return 1762 -- May be 1193
+    if mob:getLocalVar("dances") > 0 then
+        return 1762
     end
 end
 
 function onMobWeaponSkill(target, mob, skill)
     if skill:getID() == 1758 then -- Tail Slap
         mob:useMobAbility(1761)
+    end
+
+    if skill:getID() == 1762 then -- Belly Dance
+        mob:setLocalVar("dances", mob:getLocalVar("dances") - 1)
+        mob:setTP(0)
     end
 end
 
