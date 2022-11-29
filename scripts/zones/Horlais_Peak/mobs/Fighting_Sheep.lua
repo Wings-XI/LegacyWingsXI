@@ -17,12 +17,13 @@ function onMobInitialize(mob)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    -- 30 yalm knockback
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.KNOCKBACK, { power = 30, chance = 100 })
+    -- uses sheep charge for zero dmg to apply knockback
+    mob:setLocalVar("skill_tp", mob:getTP())
+    mob:useMobAbility(274, target)
 end
 
-entity.onMobSpawn = function(mob)
-    mob:SetMobSkillAttack(701)
+function onMobSpawn(mob)
+    -- mob:SetMobSkillAttack(701)
 end
 
 function onMobSpawn(mob)
@@ -31,4 +32,12 @@ end
 
 
 function onMobDeath(mob, player, isKiller)
+end
+
+function onMobWeaponSkill(target, mob, skill)
+    -- logic from lsb upstream
+    if skill:getID() == 274 then
+        mob:addTP(mob:getLocalVar("skill_tp"))
+        mob:setLocalVar("skill_tp", 0)
+    end
 end
