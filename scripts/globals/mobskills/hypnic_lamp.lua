@@ -12,7 +12,7 @@ require("scripts/globals/status")
 
 function onMobSkillCheck(target, mob, skill)
     if mob:getID() == 16998874 then
-        if mob:getLocalVar("Phase") == 1 and math.random(1,100) > 95 then
+        if math.random(1,100) > 95 then
             return 0
         else
             return 1

@@ -2,12 +2,14 @@
 -- Area: Caedarva Mire (79)
 --  ZNM: Mahjlaef the Paintorn
 -- !pos 698 -7.453 520 79
+-- Author: Chiefy
 -----------------------------------
 --Spell list 550 base, 551 2shield, 552 1shield
 --TODO: Needs a listener if mind purge is stunned. It will still use it after the stun.
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/magic")
+mixins = {require("scripts/mixins/rage")}
 -----------------------------------
 
 function onMobInitialize(mob)
@@ -16,6 +18,7 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("Shielded", 0)
+    mob:setLocalVar("[rage]timer", 5400) -- 90 minutes
 end
 
 function onMobWeaponSkillPrepare(mob, target)

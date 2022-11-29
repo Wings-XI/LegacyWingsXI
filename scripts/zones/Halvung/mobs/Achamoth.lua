@@ -4,26 +4,11 @@
 -- Author: Spaceballs
 -----------------------------------
 
-mixins = {
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
+mixins ={require("scripts/mixins/job_special"),
+require("scripts/mixins/rage")}
+require("scripts/globals/status")
+
 local ID = require("scripts/zones/Halvung/IDs")
-
-
--- Wiki notes
-
--- Max of 2 adds TOTAL
-
--- When achamoth hits something, it restores (not drains) 3- MP
-
-
--- uses -na and erase for debuffs
--- exuviation heals dependant on how many debuffs are on mob - this should exist already in mob skills
-
-
-
-
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
@@ -31,7 +16,7 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
     mob:setMod(tpz.mod.WINDDEF, 50)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
-    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 12)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 15)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     tpz.mix.jobSpecial.config(mob, {
         specials =
@@ -43,8 +28,10 @@ function onMobInitialize(mob)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.MP_DRAIN, { chance = 100, power = 30 }) 
-    
+    -- tpz.mob.onAddEffect was not sufficient, going rogue
+    local mpRestored = math.random(20,30)
+    mob:addMP(mpRestored)
+    return tpz.subEffect.MP_DRAIN, tpz.msg.basic.ADD_EFFECT_MP_HEAL, mpRestored
 end
 
 

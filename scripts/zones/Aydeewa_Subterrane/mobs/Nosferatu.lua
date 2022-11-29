@@ -3,34 +3,11 @@
 --    Mob: T3 ZNM - Nosferatu
 -- Author: Spaceballs
 -----------------------------------
-mixins = {
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
+mixins = {require("scripts/mixins/job_special"),
+require("scripts/mixins/rage")}
+require("scripts/globals/status")
+
 local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
-
--- wiki notes
-
--- occationally spawns a group of 3 pets that appear, WS, then depop
--- should be some kind of stunnable cast
--- The minions are 3 of either Nosferatu Bats (bat trios),
--- Nosferatu Wolves (hounds), or Nosferatu Murks (fomors).
--- saw wolf use dirty claw 
--- batt use jet stream
--- murk used barbed cresent
--- astral flow: bats uses turbulence, wolf used methane breath, murk used foxfire
--- sub 50% he can AF, pops 3-6 mobs instantly and they do the same thing
--- draw in
--- verified it uses eternal damnation, heliovoid, wings of gehenna, bloodrake, nocturnal servitude, nosferatu's kiss, decollation
--- casts absorb ac, aborb tp, dread spike, drain 2, drain, stun
-
--- my notes, seems to favor decolation early and kiss late
-
-
-
---local batID = [17056158, 17056159, 17056160]
---local wolfID = [17056161, 17056162, 17056163]
---local murkID = [17056164, 17056165, 17056166] 
 
 local function spawnAdds(mob, target)
     mob:setLocalVar("MobType", math.random(1,3)) -- 1 = bats, 2 = wolf, 3 = murk 
@@ -127,6 +104,16 @@ function onMobWeaponSkill(target, mob, skill)
         mob:setLocalVar("addTimer", os.time() + 2)
     end
 end
+
+function onMobWeaponSkillPrepare(mob, target)
+    if mob:getHPP() <= 25 and math.random() <= .5 then  
+        return 2108
+    else
+        return 0
+    end
+
+end
+
 
 
 -- Take care of adds

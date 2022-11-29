@@ -6,19 +6,10 @@
 
 mixins = {
     require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
+    require("scripts/globals/status"),
+    require("scripts/mixins/rage")
 }
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
-
-
-
--- uses arrow deluge immediately after tail slap
-
--- Confirm
--- can para and blind, immune to grav
--- she does ranged attacks
--- uses hypnic sway (amnesia)... dukkeripen (self heal)...pole swing
-
 
 local function spawnAdds(mob, target)
     mob:setLocalVar("adds", 1)

@@ -4,11 +4,6 @@
 -- Author: Spaceballs
 -----------------------------------
 
-
--- Immune to either physical or magic damage depending on curl form
--- If add is not killed in 30s time, will turn into Achamoth Nympha
--- Max of 2 adds TOTAL
-
 local ID = require("scripts/zones/Halvung/IDs")
 
 local function spawnBig(mob, target)
@@ -37,14 +32,15 @@ end
 
 
 function onMobSpawn(mob)
+   -- mob:setMod(tpz.mobMod.DAMAGE_ENMITY_PERC, 50)
     mob:setLocalVar("clock", os.time() + 40) 
     if math.random(1,2) == 1 then
         mob:AnimationSub(1) -- weak to magic
         mob:setMod(tpz.mod.UDMGPHYS,-100)
-        mob:setMod(tpz.mod.UDMGMAGIC, 200)
+        mob:setMod(tpz.mod.UDMGMAGIC, 500)
     else
         mob:AnimationSub(0) -- weak to phys
-        mob:setMod(tpz.mod.UDMGPHYS, 200)
+        mob:setMod(tpz.mod.UDMGPHYS, 400)
         mob:setMod(tpz.mod.UDMGMAGIC, -100)
     end
 end

@@ -1,20 +1,24 @@
 -----------------------------------
 -- Area: Bhaflau Thickets
 --  ZNM: Dea(T3ZNM)
+-- Author: Chiefy
 -- To do:   As HP decreases, the effective range of "Demoralizing Roar" and "Crippling Slam" expands. -- Need more evidence.
 --          Dispel message for boiling blood needs to fixed.
 -- Issues:  If mob is never moved after spawning the target:isBehind/isInFront can react weirdly.
 -----------------------------------
---mixins = {require("scripts/mixins/rage")}
+mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
 end
 
 function onMobSpawn(mob)
     mob:setLocalVar("QuedAbility", 0)
+    mob:setLocalVar("[rage]timer", 5400)
 end
 
 function onMobWeaponSkillPrepare(mob, target)

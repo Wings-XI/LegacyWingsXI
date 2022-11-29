@@ -1346,12 +1346,18 @@ INSERT INTO `mob_skill_lists` VALUES('Khromasoul', 308, 1743);
 INSERT INTO `mob_skill_lists` VALUES('Khromasoul', 308, 1744);
 INSERT INTO `mob_skill_lists` VALUES('Khromasoul', 308, 1745);
 INSERT INTO `mob_skill_lists` VALUES('Khromasoul', 308, 1899);
-INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2106);
-INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2110);
-INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2111);
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2106); -- Bloodrake
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2107); -- Decollation
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2108); -- Nosferatu's Kiss
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2109); -- Heliovoid
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2110); -- Wings of Gehanna
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2111); -- Eternal Damnation
+INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2112); -- Nocturnal Servitude
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1753);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1758);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1761);
+INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1929);
+INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1754);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1829);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1830);
@@ -3499,11 +3505,11 @@ INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 648); -- Petro
 INSERT INTO `mob_skill_lists` VALUES('Zareehkl_Phase2', 5303, 2363);
 -- Nuhn
 INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1693); -- gnash
-INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1677); -- deathgnash
+INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1977); -- deathgnash
 INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1695); -- hypnic lamp
-INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1997); -- SeaSpray
-INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1994); -- Vile Belch
-INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1996); -- Seismic Tail
+INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1697); -- SeaSpray
+INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1694); -- Vile Belch
+INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1696); -- Seismic Tail
 
 --
 -- Indexes for dumped tables

@@ -4,13 +4,9 @@
 -- Author: Spaceballs
 --   Note: Pet of Nosferatu
 -----------------------------------
+mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 
--- Mob should spawn, use TP move (single target if regular spawn, AoE is astral flow), then despawn.
-
-mixins = {
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
 local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
 
 function onMobSpawn(mob)

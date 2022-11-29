@@ -12,12 +12,7 @@ require("scripts/globals/monstertpmoves")
 function onMobSkillCheck(target, mob, skill)
 
     if mob:getID() == 16998874 then
-        if mob:getLocalVar("Phase") == 2 then
-            return 0
-        else
-            return 1
-        end
-
+        return 0
     else
         if not target:isBehind(mob, 96) then
             return 1
@@ -31,9 +26,6 @@ function onMobWeaponSkill(target, mob, skill)
     local numhits = 3
     local accmod = 2
     local dmgmod = math.random(5, 7) 
-    if mob:getID() == 16998874 then
-        dmgmod = dmgmod * 2
-    end
     
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 2, 3, 4)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_3_SHADOW)

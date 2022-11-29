@@ -1,17 +1,14 @@
 -----------------------------------
 --   Area: Mount Zhayolm
 --    Mob: Troll Artilleryman
--- Author: Spaceballs / Chiefy
+-- Author: Spaceballs
 --   Note: Pet of Khromasoul Bhurborlor
 -----------------------------------
 
+mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 
-mixins =
-{
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
--- They will use the ranged attack Zarraqa frequently, which ignores shadows.
+
 
 function onMobDespawn(mob)
 end

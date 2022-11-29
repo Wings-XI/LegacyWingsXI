@@ -9,7 +9,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if mob:getMainJob() == tpz.job.COR then
+    if mob:getMainJob() == tpz.job.COR or mob:getID() == 17101205 then
         return 0
     else
         return 1

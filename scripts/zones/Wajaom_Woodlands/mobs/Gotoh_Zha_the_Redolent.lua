@@ -1,7 +1,7 @@
 -----------------------------------
 -- Area: Wajaom Woodlands
 --  Mob: T3 ZNM - Gotoh Zha the Redolent
--- Author: Spaceballs / Chiefy (Edits from Topaz, real credit is theirs)
+-- Author: Spaceballs (Edits from Topaz, real credit is theirs)
 -----------------------------------
 mixins =
 {

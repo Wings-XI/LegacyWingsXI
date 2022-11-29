@@ -1,17 +1,14 @@
 -----------------------------------
 --   Area: Mount Zhayolm
 --    Mob: Troll Hammersmith
--- Author: Spaceballs / Chiefy
+-- Author: Spaceballs
 --   Note: Pet of Khromasoul Bhurborlor
 -----------------------------------
 
 
-mixins =
-{
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
--- Should only use Drop Hammer
+mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
+
 function onMobWeaponSkillPrepare(mob)
     if math.random() < .5 then
         return 2083

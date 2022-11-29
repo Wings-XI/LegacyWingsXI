@@ -1,16 +1,13 @@
 -----------------------------------
 --    Area: Alzadaal Undersea Ruins
---     Mob: Armed Gears 17072178
+--     Mob: Armed Gears
 --  Author: Spaceballs
 -----------------------------------
 
-
-mixins =
-{
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status"),
-    require("scripts/mobfamilies/Gears")
-}
+mixins = {require("scripts/mixins/job_special"),
+require("scripts/mixins/rage")}
+require("scripts/globals/status")
+require("scripts/mobfamilies/Gears")
 
 local ID = require("scripts/zones/Alzadaal_Undersea_Ruins/IDs")
 
@@ -98,10 +95,6 @@ end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400)                                      -- 90 minutes
-    mob:setMod(tpz.mod.UDMGPHYS, -40)
-    mob:setMod(tpz.mod.UDMGMAGIC, -50)
-    mob:setMod(tpz.mod.DMGPHYS, 25)
-    mob:setMod(tpz.mod.DMGMAGIC, 20)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
     mob:AnimationSub(0)         -- 3 gears
     mob:setLocalVar("gears", 3)
@@ -189,17 +182,15 @@ function onMobFight(mob, target)
     -- This block deals with def/mdef changes from dropping gears.
     if mob:getLocalVar("gears") == 3 and mob:getHPP() <= 49 then
         mob:AnimationSub(1)   -- 2 gears Should be done in mob families ASCAR remove if not needed
-        mob:setMod(tpz.mod.UDMGPHYS, -20)
-        mob:setMod(tpz.mod.UDMGMAGIC, -25)
-        mob:setMod(tpz.mod.DMGPHYS, 45)
-        mob:setMod(tpz.mod.DMGMAGIC, 30)
+        mob:setMod(tpz.mod.DMGPHYS, 25)
+        mob:setMod(tpz.mod.DMGRANGE, 25)
+        mob:setMod(tpz.mod.DMGMAGIC, 25)
         mob:setLocalVar("gears", 2)
      elseif mob:getLocalVar("gears") == 2 and mob:getHPP() <= 25 then
         mob:AnimationSub(2)   -- 1 gear Should be done in mob families ASCAR remove if not needed
-        mob:setMod(tpz.mod.UDMGPHYS, 20)
-        mob:setMod(tpz.mod.UDMGMAGIC, 20)
-        mob:setMod(tpz.mod.DMGPHYS, 60)
-        mob:setMod(tpz.mod.DMGMAGIC, 40)
+        mob:setMod(tpz.mod.DMGPHYS, 50)
+        mob:setMod(tpz.mod.DMGRANGE, 50)
+        mob:setMod(tpz.mod.DMGMAGIC, 50)
         mob:setLocalVar("gears", 1)
     end
 

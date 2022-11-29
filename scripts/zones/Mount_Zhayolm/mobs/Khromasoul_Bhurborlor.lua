@@ -1,29 +1,15 @@
 -----------------------------------
 --   Area: Mount Zhayolm
 --    Mob: T3 ZNM - Khromasoul Bhurborlor (Chromesole Bulbasaur)
--- Author: Spaceballs / Chiefy
+-- Author: Spaceballs
 -----------------------------------
 
 
-mixins =
-{
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
---[[
-local addList = {
-    [1] = 17027475, --Troll Grendier
-    [2] = 17027476, --Troll Grendier
-    [3] = 17027477, --Troll Grendier
-    [4] = 17027478, --Troll Cuirassier
-    [5] = 17027479, --Troll Cuirassier
-    [6] = 17027480, --Troll Cuirassier
-    [7] = 17027481, --Troll Artelleryman
-    [8] = 17027482, --Troll Artelleryman
-    [9] = 17027483, --Troll Hammersmith
-    [10] = 17027484  --Troll Hammersmith
-}
-]]
+mixins = {require("scripts/mixins/job_special"),
+require("scripts/mixins/rage")}
+require("scripts/globals/status")
+
+
 local function despawnAdds(mob) 
     local mobId = mob:getID()
     for ii = mobId + 1, mobId + 10 do   -- yolo just despawn everything

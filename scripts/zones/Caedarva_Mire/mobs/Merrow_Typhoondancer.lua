@@ -4,12 +4,7 @@
 -- Author: Spaceballs
 -- Note: Minion of Experimental Lamia
 -----------------------------------
-mixins =
-    {
-        require("scripts/mixins/job_special"),
-        require("scripts/mixins/weapon_break")
-    }
-
+mixins ={require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
 
 function onMobInitialize(mob)

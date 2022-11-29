@@ -11,16 +11,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if mob:getID() == 16998874 then
-        if mob:getLocalVar("Phase") == 2 then
-            return 0
-        else
-            return 1
-        end
-    else
-        return 0
-    end
-
+    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)

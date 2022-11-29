@@ -368,7 +368,7 @@ INSERT INTO `mob_family_system` VALUES(301, 'Verdelet', 9, 'Demon', 1, 70, 65, 1
 INSERT INTO `mob_family_system` VALUES(302, 'Wulgaru', 3, 'Arcana', 2, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 2, 0);
 INSERT INTO `mob_family_system` VALUES(303, 'ZareehklTheJu', 19, 'Undead', 1, 40, 100, 140, 1, 3, 3, 3, 1, 5, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1.3, 0.5, 1.15, 0.85, 1.15, 1.15, 1.3, 0.5, 8, 7, 0);
 INSERT INTO `mob_family_system` VALUES(304, 'ArmedGears', 4, 'ArchaicMachine', 1, 40, 90, 90, 3, 3, 4, 5, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.125, 1, 1, 0.875, 1, 1, 1, 0, 35, 0);
-INSERT INTO `mob_family_system` VALUES(305, 'GotohZhaTheRe', 7, 'Beastmen', 2, 40, 100, 120, 2, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.125, 0.875, 1, 1, 1, 0.875, 1, 3, 1, 0);
+INSERT INTO `mob_family_system` VALUES(305, 'GotohZhaTheRe', 7, 'Beastmen', 2, 40, 100, 200, 2, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.125, 0.875, 1, 1, 1, 0.875, 1, 3, 1, 0);
 INSERT INTO `mob_family_system` VALUES(306, 'Dea', 14, 'Lizard', 4, 43, 120, 90, 2, 5, 1, 6, 6, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.125, 1.125, 1, 1, 1, 1, 1, 4, 1, 0);
 INSERT INTO `mob_family_system` VALUES(307, 'Achamoth', 20, 'Vermin', 2, 40, 90, 190, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.5, 1.125, 1, 1, 1, 1, 1, 1, 1, 35, 0);
 INSERT INTO `mob_family_system` VALUES(308, 'Khromasoul', 7, 'Beastmen', 2, 40, 120, 120, 1, 2, 1, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 1, 1, 1, 1, 1.125, 1, 1, 1, 1, 0);
