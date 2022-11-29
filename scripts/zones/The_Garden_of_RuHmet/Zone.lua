@@ -90,13 +90,18 @@ end
 function onGameHour(zone)
     local VanadielHour = VanadielHour()
     local qmDrk = GetNPCByID(ID.npc.QM_IXAERN_DRK) -- Ix'aern drk
-    local s = math.random(6, 12) -- wait time till change to next spawn pos for jailor of faith, random 15~30 mins.
+    local qmFaith = GetNPCByID(ID.npc.QM_JAILER_OF_FAITH) -- JoF QM
+    local Faith = GetMobByID(ID.mob.JAILER_OF_FAITH) -- Jailer of Faith
+
+    if qmFaith:getStatus() == STATUS_NORMAL and qmFaith:getLocalVar("nextMove") == 0 then
+        qmFaith:setLocalVar("nextMove", os.time() + math.random(900, 1800)) -- wait time till change to next spawn pos for jailor of faith, random 15~30 mins.
+    end
 
     -- Jailer of Faith spawn randomiser
-    if VanadielHour % s == 0 then
-        local qmFaith = GetNPCByID(ID.npc.QM_JAILER_OF_FAITH) -- Jailer of Faith
+    if not Faith:isAlive() and qmFaith:getLocalVar("nextMove") > os.time() then
         qmFaith:hideNPC(60) -- Hide it for 60 seconds
         qmFaith:setPos(unpack(ID.npc.QM_JAILER_OF_FAITH_POS[math.random(1, 5)])) -- Set the new position
+        qmFaith:setLocalVar("nextMove", 0)
     end
 
     -- Ix'DRK spawn randomiser

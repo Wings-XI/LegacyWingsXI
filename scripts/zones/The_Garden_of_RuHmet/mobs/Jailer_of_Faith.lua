@@ -137,5 +137,7 @@ end
 
 function onMobDespawn(mob)
     -- Move QM to random location
-    GetNPCByID(ID.npc.QM_JAILER_OF_FAITH):setPos(unpack(ID.npc.QM_JAILER_OF_FAITH_POS[math.random(1, 5)]))
+    local qmFaith = GetNPCByID(ID.npc.QM_JAILER_OF_FAITH)
+    qmFaith:setPos(unpack(ID.npc.QM_JAILER_OF_FAITH_POS[math.random(1, 5)]))
+    qmFaith:setLocalVar("nextMove", 0)
 end
