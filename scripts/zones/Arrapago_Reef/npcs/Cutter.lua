@@ -24,7 +24,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    
+
     local allInstances = DEBUG + BLACK_COFFIN + AGAINST_ALL_ODDS + SCOUTING_THE_ASHU_TALIF + ROYAL_PAINTER + TARGETING_CAPTAIN -- intentionally excluding the NONE option
     local availableInstances = allInstances
 
@@ -34,6 +34,9 @@ function onTrigger(player, npc)
 
     if player:hasKeyItem(tpz.ki.LIFE_FLOAT) and player:getCharVar("AgainstAllOdds") == 2 then
         availableInstances = bit.bxor(availableInstances, AGAINST_ALL_ODDS)
+    elseif player:getCharVar("AgainstAllOdds") == 3 then
+        -- onZoneIn handles re-issue of cutscene
+        player:setPos(0, 0, 0, 0, 54)
     end
 
     --if player:getCharVar("Halshaob_Quest") == 2 then
@@ -51,10 +54,10 @@ end
 function onEventUpdate(player, csid, option, target)
     if (csid == 221) then
         local party = player:getParty()
-        if (option == 524288) then -- 524288 - BLACK_COFFIN    
+        if (option == 524288) then -- 524288 - BLACK_COFFIN
             if (party ~= nil) then
                 for i, v in ipairs(party) do
-                    if not (v:hasKeyItem(tpz.ki.EPHRAMADIAN_GOLD_COIN) or v:hasCompletedMission(TOAU, tpz.mission.id.toau.THE_BLACK_COFFIN)) then 
+                    if not (v:hasKeyItem(tpz.ki.EPHRAMADIAN_GOLD_COIN) or v:hasCompletedMission(TOAU, tpz.mission.id.toau.THE_BLACK_COFFIN)) then
                         player:messageText(target, ID.text.MEMBER_NO_REQS, false)
                         player:instanceEntry(target, 1)
                         return
