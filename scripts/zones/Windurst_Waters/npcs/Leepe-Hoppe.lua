@@ -70,8 +70,14 @@ function onTrigger(player, npc)
     -- The Moonlit Path and Other Fenrir Stuff (if they have the bauble, it's just flavor text with less priority over other quest progress)
     elseif (not player:hasKeyItem(tpz.ki.MOON_BAUBLE)) then
         if (moonlitPath == QUEST_ACCEPTED) then
-            if (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- First turn-in
+            if (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- First turn-in (and every repeat?)
                 local availRewards = 0
+                if (player:hasItem(18165)) then availRewards = availRewards + 1; end -- Fenrir's Stone
+                if (player:hasItem(13572)) then availRewards = availRewards + 2; end -- Fenrir's Cape
+                if (player:hasItem(13138)) then availRewards = availRewards + 4; end -- Fenrir's Torque
+                if (player:hasItem(13399)) then availRewards = availRewards + 8; end -- Fenrir's Earring
+                if (player:hasItem(1208)) then availRewards = availRewards + 16; end -- Ancient's Key
+                if (player:hasSpell(297)) then availRewards = availRewards + 64; end -- Pact
                 if not player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) or
                     player:hasKeyItem(tpz.ki.FENRIR_WHISTLE) then availRewards = availRewards + 128; end -- Mount Pact
 
