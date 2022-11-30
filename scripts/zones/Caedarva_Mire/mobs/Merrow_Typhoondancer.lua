@@ -4,14 +4,8 @@
 -- Author: Spaceballs
 -- Note: Minion of Experimental Lamia
 -----------------------------------
-mixins =
-    {
-        require("scripts/mixins/job_special"),
-        require("scripts/mixins/weapon_break")
-    }
-
+mixins ={require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
- -- Check it uses 2hr
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)

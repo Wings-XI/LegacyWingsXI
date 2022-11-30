@@ -4530,6 +4530,42 @@ INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 212, 1, 255); -- B
 INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 214, 1, 255); -- Flood
 INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 34, 1, 255); -- Diaga2
 INSERT INTO `mob_spell_lists` VALUES('Mahjlaef_1Shield', 552, 273, 1, 255); -- Sleepga
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 358, 1, 255); -- Hastega
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 129, 1, 255); -- Protectra V 
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 134, 1, 255); -- Shellra V
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 10, 1, 255); -- Curaga IV
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 14, 1, 255); -- Poisona
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 15, 1, 255); -- Paralyna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 16, 1, 255); -- Blindna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 19, 1, 255); -- Viruna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 20, 1, 255); -- Cursna
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 143, 1, 255); -- Erase
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 21, 1, 255); -- Holy
+INSERT INTO `mob_spell_lists` VALUES('Achamoth', 553, 39, 1, 255); -- Banishga 2
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Fire', 554, 146, 1, 255); -- Fire 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Earth', 555, 161, 1, 255); -- Stone 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Earth', 555, 54, 1, 255); -- Stoneskin
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Water', 556, 171, 1, 255); -- Water 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Water', 556, 221, 1, 255); -- Poison 2
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Wind', 557, 156, 1, 255); -- Aero 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Wind', 557, 59, 1, 255); -- Silence
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Wind', 557, 53, 1, 255); -- Blink
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Ice', 558, 151, 1, 255); -- Blizzard 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Ice', 558, 58, 1, 255); -- Paralyze
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Lightning', 559, 166, 1, 255); -- Thunder 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Light', 560, 106, 1, 255); -- Phalnax
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Light', 560, 25, 1, 255); -- Dia 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Light', 560, 30, 1, 255); -- Banish 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Dark', 561, 232, 1, 255); -- Bio 3
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Dark', 561, 254, 1, 255); -- Blind
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Dark', 561, 259, 1, 255); -- Sleep 2
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Dark', 561, 361, 1, 255); -- Blindga
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 100, 1, 255); -- Enfire
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 101, 1, 255); -- EnBlizzard
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 102, 1, 255); -- Enaero
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 103, 1, 255); -- Enstone
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 104, 1, 255); -- Enthunder
+INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 105, 1, 255); -- Enwater
 
 
 --

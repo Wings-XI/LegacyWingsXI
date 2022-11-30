@@ -47,7 +47,7 @@ function npcUtil.popFromQM(player, qm, mobId, params)
 
     -- get list of mobs to pop
     local mobs = {}
-    if type(mobId) == "number" then
+    if mobId == nil or type(mobId) == "number" then
         table.insert(mobs, mobId)
     elseif type(mobId) == "table" then
         for _, v in pairs(mobId) do

@@ -4,90 +4,107 @@
 -- Author: Spaceballs
 -----------------------------------
 
-mixins = {
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
+mixins ={require("scripts/mixins/job_special"),
+require("scripts/mixins/rage")}
+require("scripts/globals/status")
+
 local ID = require("scripts/zones/Halvung/IDs")
-
-
--- Wiki notes
-
--- Max of 2 adds TOTAL
-
--- When achamoth hits something, it restores (not drains) 3- MP
-
-
--- uses -na and erase for debuffs
--- exuviation heals dependant on how many debuffs are on mob - this should exist already in mob skills
-
-
-local smallList = { -- Achamothcampa
-    17031601, 
-    17031602
-}
- 
-local bigList = { -- Achamoth_Nympha
-    17031603, 
-    17031604
-}
-
-
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
     mob:setMod(tpz.mod.WINDDEF, 50)
-    mob:setMod(tpz.mod.DOUBLEATTACK, 10)
-    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 12)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 15)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    tpz.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            {id = tpz.jsa.BENEDICTION, hpp = -1},
+            
+        },
+    })
+end
+
+function onAdditionalEffect(mob, target, damage)
+    -- tpz.mob.onAddEffect was not sufficient, going rogue
+    local mpRestored = math.random(20,30)
+    mob:addMP(mpRestored)
+    return tpz.subEffect.MP_DRAIN, tpz.msg.basic.ADD_EFFECT_MP_HEAL, mpRestored
 end
 
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
     mob:setLocalVar("smallAdds", 0)
-    mob:setLocalVar("bigAdds", 0)               
-    mob:addListener("ATTACK", "RESTORE_MP", function(player, target, action)
-        if mob:getTarget() ~= nil 
-        mob:addMP(30)
-        -- Addditional effect: Achamoth recovers 30 MP. (blue cure color)
-        end
-    end)              
+    mob:setLocalVar("bigAdds", 0)      
+    
+    tpz.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            {id = tpz.jsa.BENEDICTION, hpp = -1},
+            
+        },
+    })
 end     
+
+local function despawnAdds(mob) 
+    local mobId = mob:getID()
+    for ii = mobId + 1, mobId + 4 do   -- yolo just despawn everything
+        DespawnMob(ii)
+    end
+end
 
 
 function onMobEngaged(mob, target)
-    mob:setLocalVar("clock", os.time() + 60) 
+    mob:setLocalVar("clock", os.time() + 120) 
 end
 
 
 function onMobFight(mob, target)
+    
     local now = os.time()
     local popTime = mob:getLocalVar("clock")
     local small = mob:getLocalVar("smallAdds")
     local big = mob:getLocalVar("bigAdds")
+    
+    if small+big == 2 then
+        mob:setLocalVar("clock", os.time() + math.random(30,60))
+    end
 
 
-    if now >= popTime and (small+big <= 2) then -- Time to have babies
+
+    if now >= popTime and (small+big < 2) then -- Time to have babies
         local mobId = mob:getID()
         local mobPos = mob:getPos()
 
         -- Determine which of the adds to spawn and give birth
-        if mob:getHPP(smallList(1)) > 0 then
-            local pet = GetMobByID(smallList(2))
+        if GetMobByID(17031601):isSpawned() then
+            local pet = GetMobByID(17031602)
             pet:setSpawn(mobPos.x + math.random(-2, 2), mobPos.y, mobPos.z + math.random(-2, 2), mobPos.r)
-            pet:spawn(smallList(2))
+            pet:spawn(17031602)
+            pet:updateEnmity(target)
         else
-            local pet = GetMobByID(smallList(1))
+            local pet = GetMobByID(17031601)
             pet:setSpawn(mobPos.x + math.random(-2, 2), mobPos.y, mobPos.z + math.random(-2, 2), mobPos.r)
-            pet:spawn(smallList(1))
+            pet:spawn(17031601)
+            pet:updateEnmity(target)
         end
-        pet:updateEnmity(target)
+        
         -- Count the new baby and start a new clock
         mob:setLocalVar("smallAdds", small + 1)
         mob:setLocalVar("clock", os.time() + 60) 
     end
 
 
+end
+
+
+function onMobDeath(mob)
+    despawnAdds(mob)
+end
+
+function onMobDespawn(mob)
+    despawnAdds(mob)
 end

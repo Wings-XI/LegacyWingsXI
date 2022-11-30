@@ -23,6 +23,7 @@ function onMobWeaponSkill(target, mob, skill)
             local numhits = 3
             local accmod = 1
             local dmgmod = 1
+
             local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_ACC_VARIES, 1, 2, 3)
             local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.FIRE, info.hitslanded)
             target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.FIRE)
@@ -33,11 +34,25 @@ function onMobWeaponSkill(target, mob, skill)
             return dmg
         else
             local dmgmod = 1
+
             local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*4, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
             local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
             target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
 
             return dmg
         end
+    elseif mob:getFamily() == 305 then -- Gotoh Zha the Redolent
+
+        local numhits = 3
+        local accmod = 1
+        local dmgmod = 3
+
+        local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*4, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
+        local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
+        target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
+
+        return dmg
+
+
     end
 end

@@ -12,6 +12,11 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+
+    if mob:getID() == 17101205 and mob:getLocalVar("dances") > 0 then
+        return 1
+    end
+
   if(mob:getFamily() == 91) then
     local mobSkin = mob:getModelId()
 

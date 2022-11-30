@@ -4,50 +4,43 @@
 -- Author: Spaceballs
 --   Note: Pet of Nosferatu
 -----------------------------------
+mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 
--- Mob should spawn, use TP move (single target if regular spawn, AoE is astral flow), then despawn.
-
-mixins = {
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
 local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
 
 function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
+    mob:setLocalVar("time2die", os.time() + 6 )
+    mob:setLocalVar("ws", os.time() + 2 )
+    mob:setLocalVar("hit", 0 )
 end    
 
-
-
-function onMobEngaged(mob, target)
-    local mother = GetMobByID(ID.mob.NOSFERATU)
-    local af = mother:getLocalVar("AF")
-
-    if af == 1 then
-        mob:useMobAbility(????) -- methane breath ASCAR
-    else
-        mob:useMobAbility(????) -- Dirty claw ASCAR
-    end
-
-    mob:setLocalVar("time2die" os.time() + 3 )
-end
-
 function onMobFight(mob, target)
-    local mobId = mob:getID()
-    local death = getLocalVar("time2die")
-    local now = os.time()
-    if now >= death then,
-        DespawnMob(mobID)
+    if os.time() >= mob:getLocalVar("time2die") then
+        DespawnMob(mob:getID())
+    end
+    if os.time() >=mob:getLocalVar("ws") and mob:getLocalVar("hit") == 0 then
+        if mob:getLocalVar("AF") == 1 then
+            mob:useMobAbility(470) -- methane breath
+        else
+            mob:useMobAbility(468) -- Dirty claw
+        end
+        mob:setLocalVar("hit", 1 )
     end
 end
 
 -- Death stuff
 function onMobDeath(mob, player, isKiller)
-    local mother = GetMobByID(ID.mob.NOSFERATU)
-    mother:setLocalVar("AF", 3)
+    if mob:getLocalVar("AF") == 1 then
+        GetMobByID(ID.mob.NOSFERATU):setLocalVar("AF", 3)
+        mob:setLocalVar("AF", 0) 
+    end
 end
 
 function onMobDespawn(mob)
-    local mother = GetMobByID(ID.mob.NOSFERATU)
-    mother:setLocalVar("AF", 3)
+    if mob:getLocalVar("AF") == 1 then
+        GetMobByID(ID.mob.NOSFERATU):setLocalVar("AF", 3)
+        mob:setLocalVar("AF", 0) 
+    end
 end

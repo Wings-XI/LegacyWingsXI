@@ -16,9 +16,9 @@ function onMobSkillCheck(target, mob, skill)
     -- TODO add the inBesieged condition
     if mob:isMobType(MOBTYPE_NOTORIOUS) then
         return 0
+    else
+        return 1
     end
-
-    return 1
 end
 
 function onMobWeaponSkill(target, mob, skill)

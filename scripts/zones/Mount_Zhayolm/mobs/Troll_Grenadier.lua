@@ -1,18 +1,15 @@
 -----------------------------------
 --   Area: Mount Zhayolm
 --    Mob: Troll Grenadier
--- Author: Spaceballs / Chiefy
+-- Author: Spaceballs
 --   Note: Pet of Khromasoul Bhurborlor
 -----------------------------------
 
 
 -- RDM Mobs immune to sleep
 
-mixins =
-{
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
+mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 
 
 function onMobDespawn(mob)

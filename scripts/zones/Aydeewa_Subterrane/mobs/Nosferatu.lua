@@ -3,76 +3,50 @@
 --    Mob: T3 ZNM - Nosferatu
 -- Author: Spaceballs
 -----------------------------------
-mixins = {
-    require("scripts/mixins/job_special"),
-    require("scripts/globals/status")
-}
+mixins = {require("scripts/mixins/job_special"),
+require("scripts/mixins/rage")}
+require("scripts/globals/status")
+
 local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
 
--- wiki notes
-
--- occationally spawns a group of 3 pets that appear, WS, then depop
--- should be some kind of stunnable cast
--- The minions are 3 of either Nosferatu Bats (bat trios),
--- Nosferatu Wolves (hounds), or Nosferatu Murks (fomors).
--- saw wolf use dirty claw 
--- batt use jet stream
--- murk used barbed cresent
--- astral flow: bats uses turbulence, wolf used methane breath, murk used foxfire
--- sub 50% he can AF, pops 3-6 mobs instantly and they do the same thing
--- draw in
--- verified it uses eternal damnation, heliovoid, wings of gehenna, bloodrake, nocturnal servitude, nosferatu's kiss, decollation
--- casts absorb ac, aborb tp, dread spike, drain 2, drain, stun
-
--- my notes, seems to favor decolation early and kiss late
-
-
-
---local batID = [17056158, 17056159, 17056160]
---local wolfID = [17056161, 17056162, 17056163]
---local murkID = [17056164, 17056165, 17056166] 
-
 local function spawnAdds(mob, target)
-    local mobType = math.random(1,3) -- 1 = bats, 2 = wolf, 3 = murk 
-    local af = mob:getLocalVar("AF")
+    mob:setLocalVar("MobType", math.random(1,3)) -- 1 = bats, 2 = wolf, 3 = murk 
     mob:setLocalVar("addTimer", os.time() + math.random(90, 120)) 
     local x = mob:getXPos(target) -- does this work?
     local y = mob:getYPos(target)
     local z = mob:getZPos(target)
 
 
-    if af == 1 -- If we used astral flow
-        for jj = 1, 3
-        local adds = math.random(0,1)
+    if mob:getLocalVar("AF") == 1 then -- If we used astral flow
+        for jj = 1, 3 do
+            mob:setLocalVar("adds", math.random(0,1))
 
-        if jj == 1
-            local offset = 1
-        elseif jj == 2
-            local offset = 4
-        elseif jj == 3
-            local offset = 7
-        end
+            if jj == 1 then
+                mob:setLocalVar("offset", 1)
+            elseif jj == 2 then
+                mob:setLocalVar("offset", 4)
+            elseif jj == 3 then
+                mob:setLocalVar("offset", 7)
+            end
 
-            for ii = ID.mob.NOSFERATU + offset, ID.mob.NOSFERATU + offset + adds do
+            for ii = ID.mob.NOSFERATU + mob:getLocalVar("offset"), ID.mob.NOSFERATU + mob:getLocalVar("offset") + mob:getLocalVar("adds") do
                 local pet = GetMobByID(ii)
                 pet:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
                 pet:spawn()
-                pet:setLocalVar("AF", 1)
+                GetMobByID(ii):setLocalVar("AF", 1)
                 pet:updateEnmity(target)
             end
         end
-
--- regular mob spawning
-    else
-        if mobType == 1
-            local offset = 1
-        elseif mobType == 2
-            local offset = 4
-        elseif mobType == 3
-            local offset = 7
+    else -- regular mob spawning
+        if mob:getLocalVar("MobType") == 1 then
+            mob:setLocalVar("offset", 1)
+        elseif mob:getLocalVar("MobType") == 2 then
+            mob:setLocalVar("offset", 4)
+        elseif mob:getLocalVar("MobType") == 3 then
+            mob:setLocalVar("offset", 7)
         end
 
-        for ii = ID.mob.NOSFERATU + offset, ID.mob.NOSFERATU + offset + 2 do
+        for ii = ID.mob.NOSFERATU + mob:getLocalVar("offset"), ID.mob.NOSFERATU + mob:getLocalVar("offset") + 2 do
             local pet = GetMobByID(ii)
             pet:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
             pet:spawn()
@@ -96,29 +70,50 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes
-    mob:setLocalVar("addTimer", os.time() + math.random(90, 120))   
-    mob:setLocalVar("AF", 0)       
-    mob:setLocalVar("2hr", math.random(20,50))
+    mob:setLocalVar("[rage]timer", 5400)                 -- 90 minutes 
+    mob:setLocalVar("AF", 0)
+    tpz.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            {id = tpz.jsa.BLOOD_WEAPON, hpp = 0},
+            {id = tpz.jsa.ASTRAL_FLOW, hpp = math.random(5, 70)},
+        },
+    })
+
 end     
+
+function onMobEngaged(mob, target)
+    mob:setLocalVar("addTimer", os.time() + math.random(90, 120)) 
+end
 
 
 function onMobFight(mob, target)
     local pop = mob:getLocalVar("addTimer")
     local now = os.time()
-    local hpp = mob:getHPP()
-    local boom = mob:getLocalVar("2hr")
 
-    if now >= pop then,
-        spawnMobs()
+
+
+    if now >= pop then
+        spawnAdds(mob, target)
     end
+end
 
-    if hpp <= boom
-        mob:setLocalVar("AF", 1) 
-        mob:useMobAbility(####) -- ASCAR Astral Flow
+function onMobWeaponSkill(target, mob, skill)
+    if skill:getID() == 734 then -- Astral Flow
+        mob:setLocalVar("AF", 1)
+        mob:setLocalVar("addTimer", os.time() + 2)
+    end
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+    if mob:getHPP() <= 25 and math.random() <= .5 then  
+        return 2108
+    else
+        return 0
     end
 
 end
+
 
 
 -- Take care of adds

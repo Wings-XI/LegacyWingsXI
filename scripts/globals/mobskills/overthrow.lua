@@ -15,7 +15,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if mob:AnimationSub() == 1 or mob:getMainJob() == tpz.job.MNK or mob:getMainJob() == tpz.job.PUP then
+    if mob:AnimationSub() == 1 or mob:getMainJob() == tpz.job.MNK or mob:getMainJob() == tpz.job.PUP or mob:getID() == 17027474 then
         return 0
     else
         return 1
