@@ -27,6 +27,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
 
     if info.hitslanded > 0 then
+        target:delStatusEffect(tpz.effect.FLEE)
         MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.WEIGHT, 50, 0, 120)
     end
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.FIRE)
