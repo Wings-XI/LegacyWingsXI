@@ -6,9 +6,10 @@
 
 mixins = {
     require("scripts/mixins/job_special"),
-    require("scripts/globals/status"),
     require("scripts/mixins/rage")
 }
+require("scripts/globals/status")
+
 local ID = require("scripts/zones/Caedarva_Mire/IDs")
 
 local function spawnAdds(mob, target)
