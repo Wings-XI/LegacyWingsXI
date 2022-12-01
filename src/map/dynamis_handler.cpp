@@ -68,6 +68,10 @@ void CDynamisHandler::HandleDynamis(time_point tick)
         m_PZone->ForEachChar([&](CCharEntity* PChar) { luautils::OnDynamisTimeWarning(this, PChar); });
         ExpireDynamis();
     }
+    if (timeRemaining < -24)
+    {
+        ClearLootPool();
+    }
     if (timeRemaining < -30)
     {
         CleanupDynamis();
@@ -148,9 +152,7 @@ void CDynamisHandler::EjectAllPlayers(bool immediate)
 {
     if (!m_PZone)
         return;
-    if (m_expirationRoutine == true){
-        ClearLootPool();
-    }
+
     m_PZone->ForEachChar([&](CCharEntity* PChar) { EjectPlayer(PChar, immediate); });
 }
 
