@@ -77,7 +77,7 @@ function onEventFinish(player, csid, option)
         elseif (option == 4) then item = 1206     -- Elder Branch
         end
 
-        if (player:getFreeSlotsCount() == 0 and (option ~= 5 or option ~= 6)) then
+        if (player:getFreeSlotsCount() == 0 and not (option == 5 or option == 6)) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
         else
             if (option == 5) then

@@ -59,14 +59,14 @@ function onEventFinish(player, csid, option)
         player:addKeyItem(tpz.ki.TUNING_FORK_OF_FIRE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TUNING_FORK_OF_FIRE)
     elseif (csid == 273) then
-        item = 0
+        local item = 0
         if (option == 1) then item = 17665         -- Ifrits Blade
         elseif (option == 2) then item = 13241  -- Fire Belt
         elseif (option == 3) then item = 13560  -- Fire Ring
         elseif (option == 4) then item = 1203     -- Egil's Torch
         end
 
-        if (player:getFreeSlotsCount() == 0 and (option ~= 5 or option ~= 6)) then
+        if (player:getFreeSlotsCount() == 0 and not (option == 5 or option == 6)) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
         else
             if (option == 5) then

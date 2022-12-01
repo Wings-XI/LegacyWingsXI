@@ -70,8 +70,14 @@ function onTrigger(player, npc)
     -- The Moonlit Path and Other Fenrir Stuff (if they have the bauble, it's just flavor text with less priority over other quest progress)
     elseif (not player:hasKeyItem(tpz.ki.MOON_BAUBLE)) then
         if (moonlitPath == QUEST_ACCEPTED) then
-            if (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- First turn-in
+            if (player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)) then -- First turn-in (and every repeat?)
                 local availRewards = 0
+                if (player:hasItem(18165)) then availRewards = availRewards + 1; end -- Fenrir's Stone
+                if (player:hasItem(13572)) then availRewards = availRewards + 2; end -- Fenrir's Cape
+                if (player:hasItem(13138)) then availRewards = availRewards + 4; end -- Fenrir's Torque
+                if (player:hasItem(13399)) then availRewards = availRewards + 8; end -- Fenrir's Earring
+                if (player:hasItem(1208)) then availRewards = availRewards + 16; end -- Ancient's Key
+                if (player:hasSpell(297)) then availRewards = availRewards + 64; end -- Pact
                 if not player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) or
                     player:hasKeyItem(tpz.ki.FENRIR_WHISTLE) then availRewards = availRewards + 128; end -- Mount Pact
 
@@ -174,24 +180,27 @@ function onEventFinish(player, csid, option)
             -- Pact as Mount
         end
 
-        if (reward ~= nil) then
-            player:addTitle(tpz.title.HEIR_OF_THE_NEW_MOON)
-            player:delKeyItem(tpz.ki.WHISPER_OF_THE_MOON)
-            player:setCharVar("MoonlitPath_date", os.date("%j")) -- %M for next minute, %j for next day
-            player:addFame(WINDURST, 30)
-            player:completeQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
-        end
-
-        if (player:getFreeSlotsCount() == 0 and reward ~= 0) then
+        if (player:getFreeSlotsCount() == 0 and not (option == 6 or option == 7 or option == 8)) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, reward)
-        elseif (reward ~= 0) then
-            player:addItem(reward)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
-        end
+        else
+            if (reward ~= 0) then
+                player:addItem(reward)
+                player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
+            end
 
-        if (player:getNation() == tpz.nation.WINDURST and player:getRank() == 10 and player:getQuestStatus(WINDURST, tpz.quest.id.windurst.THE_PROMISE) == QUEST_COMPLETED) then
-            player:addKeyItem(tpz.ki.DARK_MANA_ORB)
-            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_MANA_ORB)
+            if (reward ~= nil) then
+                player:addTitle(tpz.title.HEIR_OF_THE_NEW_MOON)
+                player:delKeyItem(tpz.ki.WHISPER_OF_THE_MOON)
+                player:setCharVar("MoonlitPath_date", os.date("%j")) -- %M for next minute, %j for next day
+                player:addFame(WINDURST, 30)
+                player:completeQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
+            end
+
+
+            if (player:getNation() == tpz.nation.WINDURST and player:getRank() == 10 and player:getQuestStatus(WINDURST, tpz.quest.id.windurst.THE_PROMISE) == QUEST_COMPLETED) then
+                player:addKeyItem(tpz.ki.DARK_MANA_ORB)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_MANA_ORB)
+            end
         end
     elseif (csid == 850) then -- Repeat turn-in event
         local reward = 0
@@ -211,23 +220,25 @@ function onEventFinish(player, csid, option)
             -- Pact as Mount
         end
 
-        if (reward ~= nil) then
-            player:addTitle(tpz.title.HEIR_OF_THE_NEW_MOON)
-            player:delKeyItem(tpz.ki.WHISPER_OF_THE_MOON)
-            player:setCharVar("MoonlitPath_date", os.date("%j")) -- %M for next minute, %j for next day
-            player:addFame(WINDURST, 30)
-        end
-
-        if (player:getFreeSlotsCount() == 0 and reward ~= 0) then
+        if (player:getFreeSlotsCount() == 0 and not (option == 6 or option == 7 or option == 8)) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, reward)
-        elseif (reward ~= 0) then
-            player:addItem(reward)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
-        end
+        else
+            if (reward ~= 0) then
+                player:addItem(reward)
+                player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
+            end
 
-        if (player:getNation() == tpz.nation.WINDURST and player:getRank() == 10 and player:getQuestStatus(WINDURST, tpz.quest.id.windurst.THE_PROMISE) == QUEST_COMPLETED) then
-            player:addKeyItem(tpz.ki.DARK_MANA_ORB)
-            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_MANA_ORB)
+            if (reward ~= nil) then
+                player:addTitle(tpz.title.HEIR_OF_THE_NEW_MOON)
+                player:delKeyItem(tpz.ki.WHISPER_OF_THE_MOON)
+                player:setCharVar("MoonlitPath_date", os.date("%j")) -- %M for next minute, %j for next day
+                player:addFame(WINDURST, 30)
+            end
+
+            if (player:getNation() == tpz.nation.WINDURST and player:getRank() == 10 and player:getQuestStatus(WINDURST, tpz.quest.id.windurst.THE_PROMISE) == QUEST_COMPLETED) then
+                player:addKeyItem(tpz.ki.DARK_MANA_ORB)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.DARK_MANA_ORB)
+            end
         end
     elseif (csid == 848) then
         player:delQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH)
