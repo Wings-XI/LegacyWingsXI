@@ -1397,7 +1397,7 @@ INSERT INTO `mob_pools` VALUES(1333, 'Fiendish_Leechkeeper', 'Fiendish_Leechkeep
 INSERT INTO `mob_pools` VALUES(1334, 'Fierce_Smilodon', 'Fierce_Smilodon', 242, _binary 0x0000c80800000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 355, 131, 0, 0, 0, 0, 0, 242);
 INSERT INTO `mob_pools` VALUES(1335, 'Fighting_Flan', 'Fighting_Flan', 112, _binary 0x0000070700000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 1, 1, 0, 0, 0, 0, 11, 131, 0, 0, 2, 0, 0, 112);
 INSERT INTO `mob_pools` VALUES(1336, 'Fighting_Pugil', 'Fighting_Pugil', 197, _binary 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 197);
-INSERT INTO `mob_pools` VALUES(1337, 'Fighting_Sheep', 'Fighting_Sheep', 226, _binary 0x0000540100000000000000000000000000000000, 1, 1, 7, 210, 100, 0, 1, 0, 1, 18, 1, 0, 5608, 133, 0, 0, 0, 0, 0, 226);
+INSERT INTO `mob_pools` VALUES(1337, 'Fighting_Sheep', 'Fighting_Sheep', 226, _binary 0x0000540100000000000000000000000000000000, 1, 1, 7, 210, 100, 0, 1, 0, 1, 18, 1, 0, 5608, 133, 0, 0, 0, 0, 0, 702);
 INSERT INTO `mob_pools` VALUES(1338, 'Fighting_Smilodon', 'Fighting_Smilodon', 242, _binary 0x0000c80800000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 133, 131, 0, 0, 0, 0, 0, 242);
 INSERT INTO `mob_pools` VALUES(1339, 'Fingerfilcher_Dradzad', 'Fingerfilcher_Dradzad', 334, _binary 0x0000f40700000000000000000000000000000000, 19, 1, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 5006);
 INSERT INTO `mob_pools` VALUES(1340, 'Firedrake', 'Firedrake', 266, _binary 0x00008e0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 1, 0, 0, 0, 291, 129, 0, 0, 0, 0, 0, 266);
