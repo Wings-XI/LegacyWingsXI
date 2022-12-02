@@ -17,6 +17,7 @@ end
 function onGameHour(zone)
 	darkixion.onZoneGameHour(zone)
 end
+
 function onZoneIn(player, prevZone)
     local cs = -1
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
