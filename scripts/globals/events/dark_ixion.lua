@@ -236,9 +236,16 @@ darkixion.onMobDeath = function(mob, player, isKiller)
     player:addTitle(tpz.title.IXION_HORNBREAKER)
     -- only reset hp after being killed
     SetServerVariable("DarkIxion_HP", 0)
+    if isKiller == true then
+        mob:setLocalVar("wasKilled", 1)
+    end
 end
 
 darkixion.onMobDespawn = function(mob)
+    if mob:getLocalVar("wasKilled") == 1 then
+        darkixion.repop(mob)
+        SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death same zone
+    end
 end
 
 darkixion.onMobInitialize = function(mob)
@@ -247,6 +254,7 @@ end
 darkixion.onMobSpawn = function(mob)
     SetServerVariable("DarkIxion_PopTime", os.time())
     mob:setLocalVar("[rage]timer", 5400)
+    mob:setLocalVar("wasKilled", 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.STUNRES, 100)
