@@ -6,12 +6,17 @@
 local ID = require("scripts/zones/West_Sarutabaruta_[S]/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/helm")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.HARVESTING)
+    darkixion.onZoneInit(zone)
 end
 
+function onGameHour(zone)
+	darkixion.onZoneGameHour(zone)
+end
 function onZoneIn(player, prevZone)
     local cs = -1
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then

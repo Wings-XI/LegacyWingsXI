@@ -2,6 +2,7 @@
 -- Area: Fort_Karugo-Narugo_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -31,6 +32,7 @@ zones[tpz.zone.FORT_KARUGO_NARUGO_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.FORT_KARUGO_NARUGO_S].mobID,
         RATATOSKR_PH =
         {
             [17170472] = 17170475,

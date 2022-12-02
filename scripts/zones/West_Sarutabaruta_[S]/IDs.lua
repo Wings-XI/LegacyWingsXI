@@ -2,6 +2,7 @@
 -- Area: West_Sarutabaruta_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -26,6 +27,7 @@ zones[tpz.zone.WEST_SARUTABARUTA_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.WEST_SARUTABARUTA_S].mobID,
         JEDUAH_PH =
         {
             [17166542] = 17166543, -- 113.797 -0.8 -310.342

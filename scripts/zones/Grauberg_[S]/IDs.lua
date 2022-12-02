@@ -2,6 +2,7 @@
 -- Area: Grauberg_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -30,6 +31,7 @@ zones[tpz.zone.GRAUBERG_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.GRAUBERG_S].mobID,
         KOTAN_KOR_KAMUY_PH =
         {
             [17141958] = 17141962,

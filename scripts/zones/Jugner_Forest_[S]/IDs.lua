@@ -2,6 +2,7 @@
 -- Area: Jugner_Forest_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -30,6 +31,7 @@ zones[tpz.zone.JUGNER_FOREST_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.JUGNER_FOREST_S].mobID,
         DRUMSKULL_ZOGDREGG_PH =
         {
             [17113380] = 17113381, -- 195.578 -0.556 -347.699

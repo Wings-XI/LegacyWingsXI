@@ -5,9 +5,15 @@
 -----------------------------------
 local ID = require("scripts/zones/Rolanberry_Fields_[S]/IDs")
 require("scripts/globals/conquest")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
+	darkixion.onZoneInit(zone)
+end
+
+function onGameHour(zone)
+	darkixion.onZoneGameHour(zone)
 end
 
 function onZoneIn(player, prevZone)

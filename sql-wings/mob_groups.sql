@@ -3890,6 +3890,7 @@ INSERT INTO `mob_groups` VALUES(35, 6201, 82, 'Cobraclaw_Buchzvotch', 0, 128, 0,
 INSERT INTO `mob_groups` VALUES(36, 1262, 82, 'Eurytos', 0, 128, 0, 0, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(37, 5153, 82, 'Kholomodumo', 0, 128, 0, 0, 9999, 93, 94, 0);
 INSERT INTO `mob_groups` VALUES(38, 6211, 82, 'Voirloup', 0, 128, 332, 16000, 0, 83, 85, 0);
+INSERT INTO `mob_groups` VALUES(41, 915, 82, 'Dark_Ixion', 0, 128, 0, 100000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(3096, 18, 82, 'Abenzio', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(3097, 37, 82, 'Achtelle', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(3098, 84, 82, 'Alfons', 1, 0, 0, 0, 0, 1, 1, 0);
@@ -3920,7 +3921,6 @@ INSERT INTO `mob_groups` VALUES(3125, 776, 82, 'Confederate_Mantelet', 0, 128, 0
 INSERT INTO `mob_groups` VALUES(3126, 777, 82, 'Conqueror_Bakgodek', 0, 128, 506, 0, 0, 75, 80, 0);
 INSERT INTO `mob_groups` VALUES(3127, 896, 82, 'Dalzakk', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(3128, 903, 82, 'Darach', 1, 0, 0, 0, 0, 1, 1, 0);
-INSERT INTO `mob_groups` VALUES(3129, 915, 82, 'Dark_Ixion', 0, 128, 0, 100000, 0, 85, 85, 0);
 INSERT INTO `mob_groups` VALUES(3130, 935, 82, 'Deathlord_Rojgnoj', 0, 128, 580, 0, 0, 60, 60, 0);
 INSERT INTO `mob_groups` VALUES(3132, 960, 82, 'Degenhard', 1, 0, 0, 0, 0, 1, 1, 0);
 INSERT INTO `mob_groups` VALUES(3133, 1141, 82, 'Duskraven', 0, 0, 0, 0, 0, 0, 0, 0);

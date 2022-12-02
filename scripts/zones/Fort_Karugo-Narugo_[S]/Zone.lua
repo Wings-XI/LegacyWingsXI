@@ -7,10 +7,16 @@ local ID = require("scripts/zones/Fort_Karugo-Narugo_[S]/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/status")
 require("scripts/globals/helm")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
+    darkixion.onZoneInit(zone)
+end
+
+function onGameHour(zone)
+	darkixion.onZoneGameHour(zone)
 end
 
 function onZoneIn(player, prevZone)

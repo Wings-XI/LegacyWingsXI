@@ -2,6 +2,7 @@
 -- Area: Batallia_Downs_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -25,6 +26,7 @@ zones[tpz.zone.BATALLIA_DOWNS_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.BATALLIA_DOWNS_S].mobID,
         BURLIBIX_BRAWNBACK_PH =
         {
             [17121398] = 17121399,
