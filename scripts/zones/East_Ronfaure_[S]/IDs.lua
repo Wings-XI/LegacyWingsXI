@@ -2,6 +2,7 @@
 -- Area: East_Ronfaure_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -26,6 +27,7 @@ zones[tpz.zone.EAST_RONFAURE_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.EAST_RONFAURE_S].mobID,
         GOBLINTRAP_PH =
         {
             [17109295] = 17109296, -- 156 0 -438

@@ -8,6 +8,7 @@ require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/helm")
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
@@ -21,6 +22,21 @@ function onInitialize(zone)
 	else
 		SpawnMob(ID.mob.MELUSINE)
     end
+    darkixion.onZoneInit(zone)
+end
+
+function onGameHour(zone)
+	darkixion.onZoneGameHour(zone)
+end
+
+function onGameHour(zone)
+	local ixion = GetMobByID(ID.mob.DARK_IXION)
+	if ixion:getStatus() == STATUS_DISAPPEAR
+		and GetServerVariable("DarkIxion_ZoneID") == zone:getID()
+		and GetServerVariable("DarkIxion_PopTime") < os.time() then
+			SpawnMob(ixion:getID())
+	end
+
 end
 
 function onZoneIn(player, prevZone)
