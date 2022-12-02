@@ -2,6 +2,7 @@
 -- Area: Rolanberry_Fields_[S]
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/dark_ixion")
 -----------------------------------
 
 zones = zones or {}
@@ -24,6 +25,7 @@ zones[tpz.zone.ROLANBERRY_FIELDS_S] =
     },
     mob =
     {
+        DARK_IXION = darkixion.zoneinfo[tpz.zone.ROLANBERRY_FIELDS_S].mobID,
         DELICIEUSE_DELPHINE_PH =
         {
             [17150279] = 17150280, -- -484.535 -23.756 -467.462
