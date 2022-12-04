@@ -10,14 +10,15 @@ require("scripts/globals/monstertpmoves")
 require("scripts/globals/msg")
 ---------------------------------------------
 
--- todo check animation subs, give it a chance to restore, add IDs
--- currently damages itself for 0
+-- Animation sub stuff doesnt work yet, may need to deal with it in weaponskillprepare on mob lua
+
 function onMobSkillCheck(target, mob, skill)
     return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
     local dispel = mob:eraseStatusEffect()
+    local RND = math.random(1,100)
 
 
     while (dispel ~= tpz.effect.NONE) do
@@ -27,11 +28,9 @@ function onMobWeaponSkill(target, mob, skill)
     if mob:AnimationSub() == 2 and RND <= 5 then
         mob:AnimationSub(3)
     end
-
-    print(target:getName()) 
-
-
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
+    
+    --mob:AnimationSub(0)
     
 
     return MobHealMove(mob, mob:getMaxHP()*5/100)
