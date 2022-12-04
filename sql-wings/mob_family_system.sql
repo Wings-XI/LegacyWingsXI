@@ -106,7 +106,7 @@ INSERT INTO `mob_family_system` VALUES(35, 'Avatar-Diabolos', 5, 'Avatar', 0, 40
 INSERT INTO `mob_family_system` VALUES(36, 'Avatar-Fenrir', 5, 'Avatar', 1, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 1, 0.875, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(37, 'Avatar-Garuda', 5, 'Avatar', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(38, 'Avatar-Ifrit', 5, 'Avatar', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 1, 0.875, 0.875, 0, 41, 0);
-INSERT INTO `mob_family_system` VALUES(39, 'Avatar-Ixion', 5, 'Avatar', 2, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 41, 0);
+INSERT INTO `mob_family_system` VALUES(39, 'Monoceros', 18, 'Unclassified', 2, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(40, 'Avatar-Leviathan', 5, 'Avatar', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 1, 0.875, 0.875, 0.875, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(41, 'Avatar-Odin', 5, 'Avatar', 2, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.125, 1, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(42, 'Avatar-Odin', 5, 'Avatar', 2, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0, 41, 0);
