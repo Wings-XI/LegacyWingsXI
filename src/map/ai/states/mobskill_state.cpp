@@ -56,21 +56,21 @@ CMobSkillState::CMobSkillState(CMobEntity* PEntity, uint16 targid, uint16 wsid) 
     {
         throw CStateInitException(std::move(m_errorMsg));
     }
-    
+
     m_PSkill = std::make_unique<CMobSkill>(*skill);
     m_castTime = std::chrono::milliseconds(m_PSkill->getActivationTime());
-    
+
     if (m_castTime > 0s)
     {
         action_t action;
         action.id = m_PEntity->id;
         action.actiontype = ACTION_MOBABILITY_START;
-        
+
         actionList_t& actionList = action.getNewActionList();
         actionList.ActionTargetID = PTarget->id;
-        
+
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
-        
+
         actionTarget.reaction = REACTION_NONE;
         actionTarget.speceffect = SPECEFFECT_NONE;
         actionTarget.animation = 0;
@@ -84,7 +84,7 @@ CMobSkillState::CMobSkillState(CMobEntity* PEntity, uint16 targid, uint16 wsid) 
     {
         m_speedRemoved = m_PEntity->speed;
         m_PEntity->speed = 0;
-        ShowDebug("Removing speed %u", m_speedRemoved);
+        // ShowDebug("Removing speed %u", m_speedRemoved);
     }
 
     m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_STATE_ENTER", m_PEntity, m_PSkill->getID());
@@ -159,7 +159,7 @@ bool CMobSkillState::Update(time_point tick)
             }
         }
         m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_STATE_EXIT", m_PEntity, m_PSkill->getID());
-        
+
         if (m_PEntity->objtype == TYPE_PET && m_PEntity->PMaster && m_PEntity->PMaster->objtype == TYPE_PC && (WasBloodPactRage(m_PSkill->getID()) || WasBloodPactWard(m_PSkill->getID())))
         {
             CCharEntity* PSummoner = (CCharEntity*)(m_PEntity->PMaster);
@@ -169,7 +169,7 @@ bool CMobSkillState::Update(time_point tick)
                 // Rage BPs reduce the power of Avatar's Favor by 4 levels
                 // Ward BPs reduce the power of Avatar's Favor by 2 levels
                 int levelLost = WasBloodPactRage(m_PSkill->getID()) ? 4 : 2;
-                power -= levelLost;        
+                power -= levelLost;
                 PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_AVATARS_FAVOR)->SetPower(power > 0 ? power : 1);
             }
         }
