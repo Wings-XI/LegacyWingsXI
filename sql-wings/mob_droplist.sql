@@ -17107,6 +17107,11 @@ INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1453, 300); -- Silverpiece
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1450, 300); -- Lungo
 INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1456, 300); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3240, 0, 0, 1000, 15219, 475);
+INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 19107, 636); -- Dark Ixion: Azoth
+INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 11289, 657); -- Dark Ixion: Ixion Cloak
+INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 16242, 654); -- Dark Ixion: Ixion Cape
+INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 2654, 1000); -- Dark Ixion: Horn
+INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 2655, 1000); -- Dark Ixion: Tail
 
 --
 -- Indexes for dumped tables
