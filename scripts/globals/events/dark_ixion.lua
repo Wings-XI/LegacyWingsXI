@@ -12,6 +12,22 @@ mixins = {
 
 darkixion = {}
 
+-- TODOs, notes, and reminders
+-- DB Tweaks: Mowford is of the opinion we don't need to move them, i like seeing it more explicit in lua
+  -- We can move stun and sleep resist to mob_pools
+  -- can modify base speed in mob family, if we want
+-- need to reference oncriticalhit and onweaponskillhit on ohter luas
+  -- DONE
+-- Charges currently time baised, good for testing,
+  -- i want to change that logic to randomly use after WS
+-- remove print statements
+-- fine tune the cliff jumping distance
+-- mob:AnimationSub() -- 0 is normal || Charging is animation sub 1  || 2 is broken horn || 3 is glowing and repairs horn
+-- still gotta make shit cast twice if glowing, finish up charges, make it charge a lot while low
+-- slow down lightning tp moves to give u time to run, figure out if it does thunder w/o horn
+-- hp is supposed to be hidden until his horn is broken
+  -- i assume animation sub is reset when he runs away?
+  -- if not we need to store that as a server variable along with HP and reset when killed
 
 darkixion.zoneinfo =
 {
@@ -196,6 +212,51 @@ darkixion.zoneinfo =
         },
 }
 
+
+darkixion.endStomp = function(mob)
+    mob:setLocalVar("charging", 0)
+    mob:AnimationSub(0)
+    mob:setMod(tpz.mod.MOVE, 70)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:setLocalVar("lastHit", 0)
+    print("done")
+    mob:setLocalVar("run", os.time() + 20)
+    pos = nil
+    hitList = nil
+    mob:setBehaviour(tpz.behavior.NO_TURN, 0)
+end
+
+darkixion.itsStompinTime = function(mob)
+    local targets = {}
+    hitList = {}
+    print("start")
+    mob:setLocalVar("charging", 1)
+    mob:AnimationSub(1)
+    mob:setMod(tpz.mod.MOVE, 180)
+    mob:SetAutoAttackEnabled(false)
+    mob:SetMobAbilityEnabled(false)
+    mob:SetMagicCastingEnabled(false)
+    local nearbyPlayers = mob:getPlayersInRange(30)
+
+   for _, player in pairs(nearbyPlayers) do -- find eligible players to curb stomp
+        local posP = player:getPos()
+        local posM = mob:getPos()
+        if math.abs(posP.y-posM.y) <= 7 and player:isAlive() then -- no cliff jumping, may need to tune
+            table.insert(targets, player)
+        end
+   end
+
+    if (#targets) > 0 then -- pick one and run to it
+       local target = targets[math.random(#targets)]
+        pos = target:getPos()
+
+        mob:setBehaviour(tpz.behavior.NO_TURN, 1)
+        mob:lookAt(pos)
+        mob:pathTo(pos.x, pos.y, pos.z)--, tpz.path.flag.WALLHACK) -- tpz.path.flag.RUN )--+ tpz.path.flag.SCRIPT)
+    end
+end
+
 darkixion.repop = function(mob)
     DespawnMob(mob:getID())
     local keys = {}
@@ -248,6 +309,21 @@ darkixion.onMobDespawn = function(mob)
     end
 end
 
+darkixion.onCriticalHit = function(mob)
+    local RND = math.random(1, 100)
+    if mob:AnimationSub() == 0 and RND <= 5 then
+        mob:AnimationSub(2)
+    end
+end
+
+darkixion.onWeaponskillHit = function(mob, attacker, weaponskill)
+    local RND = math.random(1, 100)
+    if mob:AnimationSub() == 0 and RND <= 5 then
+        mob:AnimationSub(2)
+    end
+    return 0
+end
+
 darkixion.onMobInitialize = function(mob)
 end
 
@@ -258,6 +334,8 @@ darkixion.onMobSpawn = function(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setLocalVar("charging", 0)
+    mob:setLocalVar("lastHit", 0)
 
     mob:setMobMod(tpz.mobMod.NO_REST, 10)
 end
@@ -314,6 +392,9 @@ darkixion.onMobEngaged = function(mob, target)
     mob:setMod(tpz.mod.UDMGBREATH , 0)
     mob:setMod(tpz.mod.UDMGMAGIC  , 0)
     mob:setMod(tpz.mod.UDMGRANGE  , 0)
+    mob:setLocalVar("run", os.time() + 10)
+    mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
+    mob:speed(70) -- movement +75% = 40 * 1.75
 end
 
 darkixion.onMobDisengage = function(mob)
@@ -326,7 +407,60 @@ darkixion.onMobDisengage = function(mob)
 end
 
 darkixion.onMobFight = function(mob, target)
-    mob:speed(70) -- movement +75% = 40 * 1.75
+    -- mob:useMobAbility(2337) -- heal
+
+
+    -- This section deals with him glowing (double TP moves)
+    --[[
+    if os.time() >=  mob:getLocalVar("PhaseChange") and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
+        mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
+        if mob:AnimationSub() == 0 then
+            mob:AnimationSub(3)
+        else
+            mob:AnimationSub(0)
+        end
+    end]]
+
+
+    -- Everything below deals with his charge attack
+    if os.time() >= mob:getLocalVar("run") and mob:getLocalVar("charging") == 0 then
+        itsStompinTime(mob)
+    end
+
+    if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 10 then
+        endStomp(mob)
+    elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 10 then
+    --    mob:setBehaviour(tpz.behavior.NO_TURN, 1)
+    --    mob:lookAt(pos)
+    --    mob:pathTo(pos.x, pos.y, pos.z)
+
+        local nearbyPlayers = mob:getPlayersInRange(5)
+        if nearbyPlayers == nil then print("nothing near") return end
+
+        for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he runs
+            mob:setLocalVar("stomp", 0)
+
+            local dork = nearbyPlayers[aa]
+            if dork:isAlive() then
+                local nextHit = dork:getID()
+                if (#hitList) == 0 then
+                    table.insert(hitList, nextHit)
+                    mob:useMobAbility(2339, nextHit) -- trample
+                    return
+                else
+                    for v = 1, (#hitList) do
+                        if hitList[v] == nextHit then
+                            mob:setLocalVar("stomp", mob:getLocalVar("stomp")+1)
+                        end
+                    end
+                    if mob:getLocalVar("stomp") == 0 then
+                        mob:useMobAbility(2339,dork) -- trample
+                        table.insert(hitList, nextHit)
+                    end
+                end
+            end
+        end
+    end
 
     -- TODO: Remove this when fight is tuned
     -- reset hp to full if below 40%

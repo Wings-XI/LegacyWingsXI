@@ -12,6 +12,14 @@ function onMobDespawn(mob)
     darkixion.onMobDespawn(mob)
 end
 
+function onCriticalHit(mob)
+    darkixion.onCriticalHit(mob)
+end
+
+function onWeaponskillHit(mob, attacker, weaponskill)
+    darkixion.onWeaponskillHit(mob, attacker, weaponskill)
+end
+
 function onMobInitialize(mob)
     darkixion.onMobInitialize(mob)
 end
