@@ -2539,8 +2539,8 @@ INSERT INTO `item_basic` VALUES(2650, 0, 'handful_of_darkling_bolt_heads', 'drk.
 INSERT INTO `item_basic` VALUES(2651, 0, 'handful_of_fusion_bolt_heads', 'fsn._bolt_heads', 99, 4, 66, 0, 1);
 INSERT INTO `item_basic` VALUES(2652, 0, 'gigas_helm', 'gigas_helm', 12, 4100, 50, 1, 0);
 INSERT INTO `item_basic` VALUES(2653, 0, 'gigas_gauntlets', 'gigas_gauntlets', 12, 4100, 50, 1, 0);
-INSERT INTO `item_basic` VALUES(2654, 0, 'dark_ixion_horn', 'dark_ixion_horn', 12, 4, 42, 0, 166);
-INSERT INTO `item_basic` VALUES(2655, 0, 'dark_ixion_tail', 'dark_ixion_tail', 12, 4, 40, 0, 166);
+INSERT INTO `item_basic` VALUES(2654, 0, 'dark_ixion_horn', 'dark_ixion_horn', 1, 4, 42, 0, 166);
+INSERT INTO `item_basic` VALUES(2655, 0, 'dark_ixion_tail', 'dark_ixion_tail', 1, 4, 40, 0, 166);
 INSERT INTO `item_basic` VALUES(2656, 0, 'spool_of_luminian_thread', 'luminian_thread', 12, 28756, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(2657, 0, 'square_of_flameshun_cloth', 'flameshun_cloth', 12, 28756, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(2658, 0, 'spool_of_silkworm_thread', 'silkworm_thread', 12, 28756, 0, 1, 0);
@@ -2620,7 +2620,7 @@ INSERT INTO `item_basic` VALUES(2731, 0, 'korrigan_cap', 'korrigan_cap', 1, 6152
 INSERT INTO `item_basic` VALUES(2732, 0, 'lycopodium_cap', 'lycopodium_cap', 1, 61520, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(2733, 0, 'square_of_spirit_smilodon_leather', 's._smil._leather', 12, 4, 41, 0, 283);
 INSERT INTO `item_basic` VALUES(2734, 0, 'maze_monger_members_card', 'mmm_members_cd.', 1, 61536, 0, 1, 0);
-INSERT INTO `item_basic` VALUES(2735, 0, 'dark_ixion_ferrule', 'dk._ixion_ferrule', 12, 4, 42, 0, 1412);
+INSERT INTO `item_basic` VALUES(2735, 0, 'dark_ixion_ferrule', 'dk._ixion_ferrule', 1, 4, 42, 0, 1412);
 INSERT INTO `item_basic` VALUES(2736, 0, 'mog_kupon_a-lum', 'kupon_a-lum', 99, 28736, 0, 1, 0);
 INSERT INTO `item_basic` VALUES(2737, 0, 'square_of_silky_suede', 'silky_suede', 12, 4, 41, 0, 1956);
 INSERT INTO `item_basic` VALUES(2738, 0, 'cassiopeia_card', 'cassiopeia_card', 1, 12384, 0, 1, 0);

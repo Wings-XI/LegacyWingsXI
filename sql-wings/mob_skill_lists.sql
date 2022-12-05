@@ -149,7 +149,7 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2335);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2337);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2338);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2369);
+INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2339); 
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 858);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 859);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 860);
