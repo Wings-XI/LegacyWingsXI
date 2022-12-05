@@ -112,9 +112,6 @@ bool CPathFind::PathTo(const position_t& point, uint8 pathFlags, bool clear)
     }
     else
     {
-        if (clear)
-            Clear();
-
         m_points.push_back(point);
     }
 
