@@ -29,6 +29,8 @@ darkixion = {}
   -- i assume animation sub is reset when he runs away?
   -- if not we need to store that as a server variable along with HP and reset when killed
 
+  -- for charge, idk, maybe add roam flag 512 or 256
+
 darkixion.zoneinfo =
 {
     [tpz.zone.JUGNER_FOREST_S] =
@@ -221,7 +223,7 @@ darkixion.endStomp = function(mob)
     mob:SetMobAbilityEnabled(true)
     mob:setLocalVar("lastHit", 0)
     print("done")
-    mob:setLocalVar("run", os.time() + 20)
+    mob:setLocalVar("run", os.time() + 5)
     pos = nil
     hitList = nil
     mob:setBehaviour(tpz.behavior.NO_TURN, 0)
@@ -251,9 +253,10 @@ darkixion.itsStompinTime = function(mob)
        local target = targets[math.random(#targets)]
         pos = target:getPos()
 
+
         mob:setBehaviour(tpz.behavior.NO_TURN, 1)
         mob:lookAt(pos)
-        mob:pathTo(pos.x, pos.y, pos.z)--, tpz.path.flag.WALLHACK) -- tpz.path.flag.RUN )--+ tpz.path.flag.SCRIPT)
+        mob:pathTo(pos.x, pos.y, pos.z, tpz.path.flag.RUN)--, tpz.path.flag.WALLHACK) -- tpz.path.flag.RUN )--+ tpz.path.flag.SCRIPT)
     end
 end
 
@@ -423,16 +426,18 @@ darkixion.onMobFight = function(mob, target)
 
 
     -- Everything below deals with his charge attack
+    
     if os.time() >= mob:getLocalVar("run") and mob:getLocalVar("charging") == 0 then
-        itsStompinTime(mob)
+        darkixion.itsStompinTime(mob)
     end
 
     if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 10 then
-        endStomp(mob)
+        darkixion.endStomp(mob)
     elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 10 then
-    --    mob:setBehaviour(tpz.behavior.NO_TURN, 1)
-    --    mob:lookAt(pos)
-    --    mob:pathTo(pos.x, pos.y, pos.z)
+
+       -- mob:setBehaviour(tpz.behavior.NO_TURN, 1)
+        --mob:lookAt(pos)
+        --mob:pathTo(pos.x, pos.y, pos.z)
 
         local nearbyPlayers = mob:getPlayersInRange(5)
         if nearbyPlayers == nil then print("nothing near") return end
@@ -445,8 +450,9 @@ darkixion.onMobFight = function(mob, target)
                 local nextHit = dork:getID()
                 if (#hitList) == 0 then
                     table.insert(hitList, nextHit)
-                    mob:useMobAbility(2339, nextHit) -- trample
-                    return
+                    --mob:useMobAbility(2339, nextHit) -- trample
+                    print("trample")                
+                    --return
                 else
                     for v = 1, (#hitList) do
                         if hitList[v] == nextHit then
@@ -454,7 +460,9 @@ darkixion.onMobFight = function(mob, target)
                         end
                     end
                     if mob:getLocalVar("stomp") == 0 then
-                        mob:useMobAbility(2339,dork) -- trample
+                        --mob:useMobAbility(2339,dork) -- trample
+                        print("trample")
+                        
                         table.insert(hitList, nextHit)
                     end
                 end
