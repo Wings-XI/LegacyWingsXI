@@ -383,22 +383,25 @@ end
 darkixion.onMobWeaponSkill = function(target, mob, skill)
     if mob:getLocalVar("double") == 1 then -- means we will use most TP moves twice now
         if skill:getID() ~= 2337 and skill:getID() ~= 2339 then
-            local reee = skill:getID()
-            mob:useMobAbility(reee)
+            mob:setLocalVar("skillToUse", skill:getID())
+            mob:setLocalVar("double", 2)
         end
     end
 end
 
 darkixion.onMobSkillFinished = function(mob, target, skill)
+    if mob:getLocalVar("double") == 2 then
+        mob:setLocalVar("double", 1)
+    end
     if math.random(1,100) > 30 then
-        if mob:HPP() < 33 then
-            local runs = math.random(1,3)
-        elseif mob:HPP() < 50 then
-            local runs = math.random(1,2)
+        if mob:getHPP() < 33 then
+            mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3)) 
+        elseif mob:getHPP() < 50 then
+            mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,2))
         else
-            local runs = 1
+            mob:setLocalVar("run", mob:getLocalVar("run") + 1)
         end
-        mob:setLocalVar("run", mob:getLocalVar("run") + runs)
+        
     end
 end
 
@@ -463,7 +466,7 @@ darkixion.onMobFight = function(mob, target)
 
     -- This section deals with him glowing (double TP moves)
     
-    if os.time() >=  mob:getLocalVar("PhaseChange") and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
+    if os.time() >= mob:getLocalVar("PhaseChange") and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
         mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
         if mob:AnimationSub() == 0 then
             mob:setLocalVar("double", 1)
@@ -476,6 +479,10 @@ darkixion.onMobFight = function(mob, target)
 
     if mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
         mob:AnimationSub(0)
+    end
+
+    if mob:AnimationSub() == 3 and mob:getLocalVar("double") == 2 then -- Purpose is if horn is restored by heal, we don't want to glow
+        mob:useMobAbility(mob:getLocalVar("skillToUse")) -- trample
     end
 
 

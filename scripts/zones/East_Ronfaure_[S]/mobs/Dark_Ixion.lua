@@ -59,3 +59,6 @@ end
 function onMobFight(mob, target)
     darkixion.onMobFight(mob, target)
 end
+function onMobSkillFinished(mob, target, skill)
+    darkixion.onMobSkillFinished(mob, target, skill)
+end 
