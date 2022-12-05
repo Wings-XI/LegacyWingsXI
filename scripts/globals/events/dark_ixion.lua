@@ -51,3 +51,13 @@ darkixion.zoneinfo =
             mobID = 17109367,
         },
 }
+
+
+darkixion.onZoneInit = function(zone)
+end
+
+darkixion.onZoneGameHour = function(zone)
+end
+
+darkixion.onMobInitialize = function(mob)
+end
