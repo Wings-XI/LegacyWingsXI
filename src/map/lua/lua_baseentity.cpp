@@ -2210,6 +2210,7 @@ inline int32 CLuaBaseEntity::pathThrough(lua_State* L)
 *  Purpose : Returns true if entity is following its specified path
 *  Example : if (npc:isFollowingPath()) then
 *  Notes   : Often used in conjunction with pathThrough()
+*               Pass a number to return IsFollowingScriptedPath instead
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::isFollowingPath(lua_State* L)
@@ -2218,8 +2219,13 @@ inline int32 CLuaBaseEntity::isFollowingPath(lua_State* L)
 
     CBattleEntity* PBattle = (CBattleEntity*)m_PBaseEntity;
 
-    lua_pushboolean(L, PBattle->PAI->PathFind != nullptr &&
+    if(lua_isnumber(L, 1)){
+        lua_pushboolean(L, PBattle->PAI->PathFind != nullptr &&
+        PBattle->PAI->PathFind->IsFollowingScriptedPath());
+    }else{
+        lua_pushboolean(L, PBattle->PAI->PathFind != nullptr &&
         PBattle->PAI->PathFind->IsFollowingPath());
+    }
 
     return 1;
 }
