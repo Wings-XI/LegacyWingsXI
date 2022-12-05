@@ -176,9 +176,31 @@ darkixion.zoneinfo =
             zoneID = tpz.zone.FORT_KARUGO_NARUGO_S,
             mobID = 17170649,
             pathList = {
-                -201    ,-30    ,147    ,
-                -445    ,-16    ,78     ,
-                -135    ,-1.7   ,297    ,
+                -088.8	,-068.0	,-269.5	,
+                -025.0	,-067.0	,-282.5	,
+                023.7	,-068.0	,-232.0	,
+                054.7   ,-069.7 ,-178.0 ,
+                085.0	,-064.0	,-165.5	,
+                105.5	,-065.0	,-180.0	,
+                136.0	,-059.0	,-215.5	,
+                180.7	,-056.0	,-195.5	,
+                198.0	,-057.8	,-146.7	,
+                199.0	,-043.0	,-062.5	,
+                200.8   ,-040.0 ,-026.4 ,
+                205.7	,-028.0	,021.3	,
+                256.6	,-022.0	,025.0	,
+                281.6	,-026.5	,010.0	,
+                259.5	,-029.8	,-049.5	,
+                239.0	,-040.5	,-100.0	,
+                205.7	,-057.0	,-145.0	,
+                194.0	,-054.0	,-186.0	,
+                180.7	,-047.5	,-227.2	,
+                135.0	,-050.8	,-251.0	,
+                107.8	,-061.7	,-295.5	,
+                097.0	,-061.5	,-307.5	,
+                041.0	,-068.0	,-321.0	,
+                -007.0	,-067.9	,-301.0	,
+                -052.5	,-067.7	,-275.0	,
             }
     },
     [tpz.zone.EAST_RONFAURE_S] =
@@ -289,11 +311,15 @@ end
 darkixion.onZoneGameHour = function(zone)
     local ixionID = darkixion.zoneinfo[zone:getID()].mobID
     local ixion = GetMobByID(ixionID)
-	if ixion:getStatus() ~= STATUS_NORMAL and
+	if not ixion:isSpawned() and
 		GetServerVariable("DarkIxion_ZoneID") == zone:getID() and
 		GetServerVariable("DarkIxion_PopTime") < os.time() then
 			SpawnMob(ixionID)
-	end
+    elseif ixion:isSpawned() and GetServerVariable("DarkIxion_ZoneID") ~= zone:getID()
+        -- really shouldn't be possible, but catch just in case
+        ixion:disengage()
+        -- DespawnMob(ixionID)
+    end
 end
 
 darkixion.onMobDeath = function(mob, player, isKiller)
@@ -426,7 +452,7 @@ darkixion.onMobFight = function(mob, target)
 
 
     -- Everything below deals with his charge attack
-    
+
     if os.time() >= mob:getLocalVar("run") and mob:getLocalVar("charging") == 0 then
         darkixion.itsStompinTime(mob)
     end
@@ -451,7 +477,7 @@ darkixion.onMobFight = function(mob, target)
                 if (#hitList) == 0 then
                     table.insert(hitList, nextHit)
                     --mob:useMobAbility(2339, nextHit) -- trample
-                    print("trample")                
+                    print("trample")
                     --return
                 else
                     for v = 1, (#hitList) do
@@ -462,7 +488,7 @@ darkixion.onMobFight = function(mob, target)
                     if mob:getLocalVar("stomp") == 0 then
                         --mob:useMobAbility(2339,dork) -- trample
                         print("trample")
-                        
+
                         table.insert(hitList, nextHit)
                     end
                 end
