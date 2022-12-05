@@ -25,12 +25,11 @@ function onMobWeaponSkill(target, mob, skill)
         dispel = mob:eraseStatusEffect()
     end
 
-    if mob:AnimationSub() == 2 and RND <= 5 then
+    if mob:AnimationSub() == 2 and RND >= 5 then
         mob:AnimationSub(3)
     end
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
     
-    --mob:AnimationSub(0)
     
 
     return MobHealMove(mob, mob:getMaxHP()*5/100)
