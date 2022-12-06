@@ -13,23 +13,22 @@ mixins = {
 darkixion = {}
 
 -- TODOs, notes, and reminders
--- DB Tweaks: Mowford is of the opinion we don't need to move them, i like seeing it more explicit in lua
-  -- We can move stun and sleep resist to mob_pools
-  -- can modify base speed in mob family, if we want
--- need to reference oncriticalhit and onweaponskillhit on ohter luas
-  -- DONE
--- Charges currently time baised, good for testing,
-  -- i want to change that logic to randomly use after WS
+
+-- attacks from behind dont back kick
+-- charge works well overall, doesnt do knockback nor bind due to having no animation 
+
 -- remove print statements
--- fine tune the cliff jumping distance
+
 -- mob:AnimationSub() -- 0 is normal || Charging is animation sub 1  || 2 is broken horn || 3 is glowing and repairs horn
--- still gotta make shit cast twice if glowing, finish up charges, make it charge a lot while low
+
 -- slow down lightning tp moves to give u time to run, figure out if it does thunder w/o horn
--- hp is supposed to be hidden until his horn is broken
+
   -- i assume animation sub is reset when he runs away?
   -- if not we need to store that as a server variable along with HP and reset when killed
+        -- i think a server var for HP is good, horn is ok to reset
 
   -- for charge, idk, maybe add roam flag 512 or 256
+        -- what do
 
 darkixion.zoneinfo =
 {
@@ -239,7 +238,7 @@ darkixion.zoneinfo =
 
 darkixion.endStomp = function(mob)
     mob:setLocalVar("charging", 0)
-    mob:AnimationSub(0)
+    mob:AnimationSub(mob:getLocalVar("sub"))
     mob:setMod(tpz.mod.MOVE, 70)
     mob:SetAutoAttackEnabled(true)
     mob:SetMobAbilityEnabled(true)
@@ -248,7 +247,7 @@ darkixion.endStomp = function(mob)
     mob:setLocalVar("run", mob:getLocalVar("run") - 1)
     pos = nil
     hitList = nil
-    mob:setBehaviour(tpz.behavior.NO_TURN, 0)
+    
 end
 
 darkixion.itsStompinTime = function(mob)
@@ -276,9 +275,9 @@ darkixion.itsStompinTime = function(mob)
         pos = target:getPos()
 
 
-        mob:setBehaviour(tpz.behavior.NO_TURN, 1)
+        
         mob:lookAt(pos)
-        mob:pathTo(pos.x, pos.y, pos.z, tpz.path.flag.RUN)--, tpz.path.flag.WALLHACK) -- tpz.path.flag.RUN )--+ tpz.path.flag.SCRIPT)
+        mob:pathTo(pos.x, pos.y, pos.z, 9)--, tpz.path.flag.WALLHACK) -- tpz.path.flag.RUN )--+ tpz.path.flag.SCRIPT)
     end
 end
 
@@ -340,15 +339,19 @@ end
 
 darkixion.onCriticalHit = function(mob)
     local RND = math.random(1, 100)
-    if mob:AnimationSub() == 0 and RND <= 5 then
+    if (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) and RND <= 5 then
         mob:AnimationSub(2)
+        mob:setLocalVar("sub", 2)
+        mob:hideHP(false)
     end
 end
 
 darkixion.onWeaponskillHit = function(mob, attacker, weaponskill)
     local RND = math.random(1, 100)
-    if mob:AnimationSub() == 0 and RND <= 5 then
+    if (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) and RND <= 5 then
         mob:AnimationSub(2)
+        mob:setLocalVar("sub", 2)
+        mob:hideHP(false)
     end
     return 0
 end
@@ -365,6 +368,9 @@ darkixion.onMobSpawn = function(mob)
     mob:setMod(tpz.mod.STUNRES, 100)
     mob:setLocalVar("charging", 0)
     mob:setLocalVar("double", 0)
+    mob:setLocalVar("casts", 0)
+    mob:hideHP(true)
+    mob:setLocalVar("sub", 0)
 
     mob:setMobMod(tpz.mobMod.NO_REST, 10)
 end
@@ -375,33 +381,53 @@ darkixion.onAdditionalEffect = function(mob, target, damage)
 end
 
 darkixion.onMobWeaponSkillPrepare = function(mob, target)
-    if skill:getID() == 2335 then
-        mob:lookAt(target:getPos())
+    if math.random(1,5) == 1 and mob:getLocalVar("double") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
+        mob:setLocalVar("zap", 1)
+        mob:setTP(0)
     end
+
+    if math.random(1,10) == 1 and mob:getLocalVar("double") == 1 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
+        mob:setLocalVar("zap", 2)
+        mob:setTP(0)
+    end
+
 end
 
 darkixion.onMobWeaponSkill = function(target, mob, skill)
-    if mob:getLocalVar("double") == 1 then -- means we will use most TP moves twice now
-        if skill:getID() ~= 2337 and skill:getID() ~= 2339 then
-            mob:setLocalVar("skillToUse", skill:getID())
-            mob:setLocalVar("double", 2)
-        end
+
+    if mob:getLocalVar("double") == 1 and mob:getLocalVar("casts") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2337 and skill:getID() ~= 2339 then
+        mob:setLocalVar("skillToUse", skill:getID())
+        mob:setLocalVar("casts", 1)
+        mob:setLocalVar("castTime", os.time())
+        mob:useMobAbility(mob:getLocalVar("skillToUse"))
     end
+    
+    
 end
 
 darkixion.onMobSkillFinished = function(mob, target, skill)
-    if mob:getLocalVar("double") == 2 then
-        mob:setLocalVar("double", 1)
-    end
-    if math.random(1,100) > 30 then
+
+    if math.random(1,100) > 30 and mob:AnimationSub() ~= 3 then
         if mob:getHPP() < 33 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3)) 
-        elseif mob:getHPP() < 50 then
+        elseif mob:getHPP() < 50 and mob:AnimationSub() ~= 3 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,2))
-        else
+        elseif mob:AnimationSub() ~= 3 then
             mob:setLocalVar("run", mob:getLocalVar("run") + 1)
+        end   
+    end
+
+    if mob:getLocalVar("run") > 3 then
+        mob:setLocalVar("run", 3)
+    end
+
+
+    if skill:getID() == 2337 then
+        if mob:AnimationSub() == 2 and math.random(1,100) <= 25 then
+            mob:AnimationSub(3)
+            mob:hideHP(true)
+            mob:setLocalVar("horn", os.time() + 5)
         end
-        
     end
 end
 
@@ -449,6 +475,7 @@ darkixion.onMobEngaged = function(mob, target)
     mob:setLocalVar("run", 0)
     mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
     mob:speed(70) -- movement +75% = 40 * 1.75
+    mob:setBehaviour(tpz.behavior.NO_TURN)
 end
 
 darkixion.onMobDisengage = function(mob)
@@ -461,30 +488,62 @@ darkixion.onMobDisengage = function(mob)
 end
 
 darkixion.onMobFight = function(mob, target)
-    -- mob:useMobAbility(2337) -- heal
+        if mob:getLocalVar("zap") >= 1 then
+            mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
+            
+            local targets = {}
+            local nearbyPlayers = mob:getPlayersInRange(20)
+            if nearbyPlayers == nil then return 1 end
 
+            for _, player in pairs(nearbyPlayers) do -- find eligible players to look at
+                local posP = player:getPos()
+                local posM = mob:getPos()
+                if math.abs(posP.y-posM.y) <= 7 then -- no cliff jumping, may need to tune
+                    table.insert(targets, player) 
+                end  
+            end
+   
+            if (#targets) > 0 then 
+                local target = targets[math.random(#targets)]
+                mob:lookAt(target:getPos())
+                mob:useMobAbility(2335, target)
+            end
+        end
+    
 
     -- This section deals with him glowing (double TP moves)
     
-    if os.time() >= mob:getLocalVar("PhaseChange") and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
+    if os.time() >= mob:getLocalVar("PhaseChange") and mob:AnimationSub()~= 2 and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
         mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
         if mob:AnimationSub() == 0 then
             mob:setLocalVar("double", 1)
+            mob:setLocalVar("casts", 0)
             mob:AnimationSub(3)
         else
             mob:setLocalVar("double", 0)
+            mob:setLocalVar("casts", 0)
             mob:AnimationSub(0)
+            mob:setLocalVar("sub", 0)
         end
     end
 
-    if mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
+    if mob:AnimationSub()== 2 and mob:getLocalVar("double") == 0 then
+        mob:setLocalVar("double", 0)
+        mob:setLocalVar("casts", 0)
+    end
+
+
+    if os.time() >= mob:getLocalVar("castTime")+10 and mob:getLocalVar("casts") == 1 then
+        mob:setLocalVar("casts", 0)
+        if math.random(1,2) == 1 then
+            mob:setLocalVar("zap", 2)
+        end
+    end
+
+    if os.time() >= mob:getLocalVar("horn") and mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
         mob:AnimationSub(0)
+        mob:setLocalVar("sub", 0)
     end
-
-    if mob:AnimationSub() == 3 and mob:getLocalVar("double") == 2 then -- Purpose is if horn is restored by heal, we don't want to glow
-        mob:useMobAbility(mob:getLocalVar("skillToUse")) -- trample
-    end
-
 
     -- Everything below deals with his charge attack
 
@@ -492,9 +551,7 @@ darkixion.onMobFight = function(mob, target)
         darkixion.itsStompinTime(mob)
     end
 
-    if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 10 then
-        darkixion.endStomp(mob)
-    elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 10 then
+    if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 10 then
 
         local nearbyPlayers = mob:getPlayersInRange(5)
         if nearbyPlayers == nil then print("nothing near") return end
@@ -507,9 +564,7 @@ darkixion.onMobFight = function(mob, target)
                 local nextHit = dork:getID()
                 if (#hitList) == 0 then
                     table.insert(hitList, nextHit)
-                    --mob:useMobAbility(2339, nextHit) -- trample
-                    print("trample")
-                    --return
+                    mob:useMobAbility(2339, nextHit) -- trample
                 else
                     for v = 1, (#hitList) do
                         if hitList[v] == nextHit then
@@ -517,14 +572,14 @@ darkixion.onMobFight = function(mob, target)
                         end
                     end
                     if mob:getLocalVar("stomp") == 0 then
-                        --mob:useMobAbility(2339,dork) -- trample
-                        print("trample")
-
+                        mob:useMobAbility(2339,dork) -- trample
                         table.insert(hitList, nextHit)
                     end
                 end
             end
         end
+    elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 10 then
+        darkixion.endStomp(mob)
     end
 
     -- TODO: Remove this when fight is tuned

@@ -11,7 +11,11 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 --TODO check shadow behavior and silence duration
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if mob:getLocalVar("sub") == 2 or mob:AnimationSub() == 1 then
+        return 1
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
