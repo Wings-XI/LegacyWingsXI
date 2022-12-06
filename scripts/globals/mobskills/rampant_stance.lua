@@ -2,16 +2,16 @@
 -- Rampant Stance
 -- Physical area of effect damage that inflicts stun.
 ---------------------------------------------------
-
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
-
 ---------------------------------------------------
 
--- does this get absorbed by shadows? TODO
-
 function onMobSkillCheck(target, mob, skill)
+    if  mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
+        return 1
+    end
+
     return 0
 end
 

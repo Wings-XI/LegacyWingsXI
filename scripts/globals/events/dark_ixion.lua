@@ -7,28 +7,31 @@ require("scripts/globals/npc_util")
 require("scripts/globals/titles")
 mixins = {
     require("scripts/mixins/job_special"),
-    require("scripts/mixins/rage"),
 }
 
 darkixion = {}
 
 -- TODOs, notes, and reminders
 
--- attacks from behind dont back kick
--- charge works well overall, doesnt do knockback nor bind due to having no animation 
+-- attacks from behind dont back kick (animation wise)
+-- Need to verify all zone DI luas match East Ronf [S] (the one ive worked with)
+-- charge works well overall, doesnt do knockback due to no animation. idk how to address this
 
--- remove print statements
+-- remove print statement
 
 -- mob:AnimationSub() -- 0 is normal || Charging is animation sub 1  || 2 is broken horn || 3 is glowing and repairs horn
 
--- slow down lightning tp moves to give u time to run, figure out if it does thunder w/o horn
+-- slow down lightning tp moves to give u time to run, ** I dont think I can do this, it will aim for the target always
+
+-- maybe lower movement speed while its roaming, or get it to stop randomly
+-- test evasion for first throw, may need to have it lowered while out of combat
 
   -- i assume animation sub is reset when he runs away?
   -- if not we need to store that as a server variable along with HP and reset when killed
         -- i think a server var for HP is good, horn is ok to reset
 
   -- for charge, idk, maybe add roam flag 512 or 256
-        -- what do
+        -- what dodoes the flag do? it works pretty good now
 
 darkixion.zoneinfo =
 {
@@ -243,7 +246,6 @@ darkixion.endStomp = function(mob)
     mob:SetAutoAttackEnabled(true)
     mob:SetMobAbilityEnabled(true)
     mob:setLocalVar("lastHit", 0)
-    print("done")
     mob:setLocalVar("run", mob:getLocalVar("run") - 1)
     pos = nil
     hitList = nil
@@ -253,10 +255,9 @@ end
 darkixion.itsStompinTime = function(mob)
     local targets = {}
     hitList = {}
-    print("start")
     mob:setLocalVar("charging", 1)
     mob:AnimationSub(1)
-    mob:setMod(tpz.mod.MOVE, 180)
+    mob:setMod(tpz.mod.MOVE, 120)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
     mob:SetMagicCastingEnabled(false)
@@ -274,10 +275,29 @@ darkixion.itsStompinTime = function(mob)
        local target = targets[math.random(#targets)]
         pos = target:getPos()
 
+        if mob:checkDistance(pos) < 18 and mob:checkDistance(pos) >= 5 then -- very short range and boring...
+            local Mx = mob:getXPos()
+            local Mz = mob:getZPos()
+            local Ty = target:getYPos()
+            local Tx = target:getXPos()
+            local Tz = target:getZPos()
+            local Dx = Tx - Mx
+            local Dz = Tz - Mz
+            local RSS = math.sqrt(Dx*Dx + Dz*Dz)
 
-        
-        mob:lookAt(pos)
-        mob:pathTo(pos.x, pos.y, pos.z, 9)--, tpz.path.flag.WALLHACK) -- tpz.path.flag.RUN )--+ tpz.path.flag.SCRIPT)
+            
+            local Ux = Dx/RSS
+            local Uz = Dz/RSS
+            pos = {x = Tx + (Ux * 7), y = Ty, z = Tz + (Uz * 7)}
+        elseif mob:checkDistance(pos) < 5 then
+            mob:lookAt(pos)
+            pos = mob:getPos()
+        end
+
+        mob:lookAt(target:getPos())
+        mob:pathTo(pos.x, pos.y, pos.z, 9)
+    else
+        darkixion.endStomp(mob)
     end
 end
 
@@ -361,7 +381,6 @@ end
 
 darkixion.onMobSpawn = function(mob)
     SetServerVariable("DarkIxion_PopTime", os.time())
-    mob:setLocalVar("[rage]timer", 5400)
     mob:setLocalVar("wasKilled", 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.SLEEPRES, 100)
@@ -376,24 +395,15 @@ darkixion.onMobSpawn = function(mob)
 end
 
 darkixion.onAdditionalEffect = function(mob, target, damage)
-    -- horn: en-bind
-    -- feet: en-gravity
+    if target:isBehind(mob, 48) == true then
+        return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.WEIGHT, {chance = 75, duration = math.random(1,15)})
+    else
+        return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.BIND, {chance = 75, duration = math.random(1,15)})
+    end
 end
 
 darkixion.onMobWeaponSkillPrepare = function(mob, target)
-    if math.random(1,5) == 1 and mob:getLocalVar("double") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
-        mob:setLocalVar("zap", 1)
-        mob:setTP(0)
-    end
-
-    if math.random(1,10) == 1 and mob:getLocalVar("double") == 1 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
-        mob:setLocalVar("zap", 2)
-        mob:setTP(0)
-    end
-
-end
-
-darkixion.onMobWeaponSkill = function(target, mob, skill)
+    
 
     if mob:getLocalVar("double") == 1 and mob:getLocalVar("casts") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2337 and skill:getID() ~= 2339 then
         mob:setLocalVar("skillToUse", skill:getID())
@@ -401,20 +411,32 @@ darkixion.onMobWeaponSkill = function(target, mob, skill)
         mob:setLocalVar("castTime", os.time())
         mob:useMobAbility(mob:getLocalVar("skillToUse"))
     end
-    
+end
+
+darkixion.onMobWeaponSkill = function(target, mob, skill)
+    if math.random(1,5) == 1 and mob:getLocalVar("double") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
+        mob:setLocalVar("zap", 1)
+        mob:setLocalVar("zapTime", os.time()+7)
+    end
+
+    if math.random(1,10) == 1 and mob:getLocalVar("double") == 1 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
+        mob:setLocalVar("zap", 2)
+        mob:setLocalVar("zapTime", os.time())
+    end
     
 end
 
 darkixion.onMobSkillFinished = function(mob, target, skill)
 
-    if math.random(1,100) > 30 and mob:AnimationSub() ~= 3 then
+    if math.random(1,100) > 30 and mob:AnimationSub() ~= 3 and skill:getID() ~= 2339 then
         if mob:getHPP() < 33 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3)) 
         elseif mob:getHPP() < 50 and mob:AnimationSub() ~= 3 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,2))
         elseif mob:AnimationSub() ~= 3 then
             mob:setLocalVar("run", mob:getLocalVar("run") + 1)
-        end   
+        end
+        mob:setLocalVar("runTime", os.time()+5)   
     end
 
     if mob:getLocalVar("run") > 3 then
@@ -488,8 +510,9 @@ darkixion.onMobDisengage = function(mob)
 end
 
 darkixion.onMobFight = function(mob, target)
-        if mob:getLocalVar("zap") >= 1 then
+        if mob:getLocalVar("zap") >= 1 and os.time() >= mob:getLocalVar("zapTime") and mob:AnimationSub() ~= 1 then
             mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
+            mob:setTP(0)
             
             local targets = {}
             local nearbyPlayers = mob:getPlayersInRange(20)
@@ -506,7 +529,8 @@ darkixion.onMobFight = function(mob, target)
             if (#targets) > 0 then 
                 local target = targets[math.random(#targets)]
                 mob:lookAt(target:getPos())
-                mob:useMobAbility(2335, target)
+                mob:useMobAbility(2335, target)                
+                mob:setLocalVar("zapTime", os.time()+7)
             end
         end
     
@@ -547,14 +571,15 @@ darkixion.onMobFight = function(mob, target)
 
     -- Everything below deals with his charge attack
 
-    if mob:getLocalVar("run") >= 1 and mob:getLocalVar("charging") == 0 and mob:AnimationSub() ~= 3 then
+    if mob:getLocalVar("run") >= 1 and os.time() >= mob:getLocalVar("runTime") and mob:getLocalVar("charging") == 0 and mob:AnimationSub() ~= 3 then
         darkixion.itsStompinTime(mob)
+        mob:setTP(0)
     end
 
-    if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 10 then
+    if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 3 then
 
-        local nearbyPlayers = mob:getPlayersInRange(5)
-        if nearbyPlayers == nil then print("nothing near") return end
+        local nearbyPlayers = mob:getPlayersInRange(3)
+        if nearbyPlayers == nil then return end
 
         for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he runs
             mob:setLocalVar("stomp", 0)
@@ -578,7 +603,7 @@ darkixion.onMobFight = function(mob, target)
                 end
             end
         end
-    elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 10 then
+    elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 3 then
         darkixion.endStomp(mob)
     end
 

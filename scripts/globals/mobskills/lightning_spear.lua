@@ -10,13 +10,12 @@ require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/utils")
 ---------------------------------------------
-
--- could be useful mob:lookAt(target:getPos())
-
 function onMobSkillCheck(target, mob, skill)
-    if mob:getLocalVar("sub") == 2 or mob:AnimationSub() == 1 or mob:getLocalVar("zap") < 1 then
+    if mob:AnimationSub() == 1 or mob:getLocalVar("zap") < 1 or mob:getLocalVar("charging") == 1 then
         return 1
     else
+        local TP = target:getPos()
+        mob:lookAt(TP)
         return 0
     end
 end
@@ -29,7 +28,7 @@ function onMobWeaponSkill(target, mob, skill)
    
     MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
 
-    local dmgmod = 8
+    local dmgmod = 7
     local angleMultiplier = 0.2
     dmgmod = utils.conalDamageAdjustment(mob, target, skill, dmgmod, angleMultiplier)
 

@@ -9,10 +9,11 @@ require("scripts/globals/settings")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/msg")
 ---------------------------------------------
-
--- Animation sub stuff doesnt work yet, may need to deal with it in weaponskillprepare on mob lua
-
 function onMobSkillCheck(target, mob, skill)
+    if  mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
+        return 1
+    end
+
     return 0
 end
 
