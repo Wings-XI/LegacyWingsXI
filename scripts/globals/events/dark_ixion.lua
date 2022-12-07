@@ -15,7 +15,7 @@ darkixion = {}
 
 -- attacks from behind dont back kick (animation wise)
 -- Need to verify all zone DI luas match East Ronf [S] (the one ive worked with)
--- charge works well overall, doesnt do knockback due to no animation. idk how to address this
+
 
 -- remove print statement
 
@@ -257,7 +257,7 @@ darkixion.itsStompinTime = function(mob)
     hitList = {}
     mob:setLocalVar("charging", 1)
     mob:AnimationSub(1)
-    mob:setMod(tpz.mod.MOVE, 120)
+    mob:setMod(tpz.mod.MOVE, 80)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
     mob:SetMagicCastingEnabled(false)
@@ -403,9 +403,7 @@ darkixion.onAdditionalEffect = function(mob, target, damage)
 end
 
 darkixion.onMobWeaponSkillPrepare = function(mob, target)
-    
-
-    if mob:getLocalVar("double") == 1 and mob:getLocalVar("casts") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2337 and skill:getID() ~= 2339 then
+    if mob:getLocalVar("double") == 1 and mob:getLocalVar("casts") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2337 and skill:getID() ~= 2339 and skill:getID() ~= 2344 then
         mob:setLocalVar("skillToUse", skill:getID())
         mob:setLocalVar("casts", 1)
         mob:setLocalVar("castTime", os.time())
@@ -414,21 +412,30 @@ darkixion.onMobWeaponSkillPrepare = function(mob, target)
 end
 
 darkixion.onMobWeaponSkill = function(target, mob, skill)
-    if math.random(1,5) == 1 and mob:getLocalVar("double") == 0 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
-        mob:setLocalVar("zap", 1)
-        mob:setLocalVar("zapTime", os.time()+7)
+    if skill:getID() == 2345 then
+        if double == 0 then  
+            mob:setLocalVar("zap", mob:getLocalVar("zap")+1)
+            mob:setLocalVar("zapTime", os.time()+5)
+        else
+            mob:setLocalVar("zap", mob:getLocalVar("zap")+2)
+            mob:setLocalVar("zapTime", os.time()+5)
+        end
     end
 
-    if math.random(1,10) == 1 and mob:getLocalVar("double") == 1 and skill:getID() ~= 2335 and skill:getID() ~= 2339 then
-        mob:setLocalVar("zap", 2)
-        mob:setLocalVar("zapTime", os.time())
+    if skill:getID() == 2344 then
+        if double == 0 then  
+            mob:setLocalVar("zap2", mob:getLocalVar("zap2")+1)
+            mob:setLocalVar("zapTime2", os.time()+5)
+        else
+            mob:setLocalVar("zap2", mob:getLocalVar("zap2")+2)
+            mob:setLocalVar("zapTime2", os.time()+5)
+        end  
     end
-    
 end
 
 darkixion.onMobSkillFinished = function(mob, target, skill)
-
-    if math.random(1,100) > 30 and mob:AnimationSub() ~= 3 and skill:getID() ~= 2339 then
+    
+    if math.random(1,100) > 30 and mob:AnimationSub() ~= 3 and skill:getID() ~= 2339 and skill:getID() ~= 2344 and skill:getID() ~= 2345 then
         if mob:getHPP() < 33 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3)) 
         elseif mob:getHPP() < 50 and mob:AnimationSub() ~= 3 then
@@ -509,30 +516,39 @@ darkixion.onMobDisengage = function(mob)
     SetServerVariable("DarkIxion_HP", mob:getHP())
 end
 
-darkixion.onMobFight = function(mob, target)
-        if mob:getLocalVar("zap") >= 1 and os.time() >= mob:getLocalVar("zapTime") and mob:AnimationSub() ~= 1 then
-            mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
-            mob:setTP(0)
-            
-            local targets = {}
-            local nearbyPlayers = mob:getPlayersInRange(20)
-            if nearbyPlayers == nil then return 1 end
+darkixion.onMobFight = function(mob, target) 
 
-            for _, player in pairs(nearbyPlayers) do -- find eligible players to look at
-                local posP = player:getPos()
-                local posM = mob:getPos()
-                if math.abs(posP.y-posM.y) <= 7 then -- no cliff jumping, may need to tune
-                    table.insert(targets, player) 
-                end  
-            end
-   
-            if (#targets) > 0 then 
-                local target = targets[math.random(#targets)]
-                mob:lookAt(target:getPos())
-                mob:useMobAbility(2335, target)                
-                mob:setLocalVar("zapTime", os.time()+7)
-            end
+
+    if mob:getLocalVar("zap2") >= 1 and os.time() >= mob:getLocalVar("zapTime2") and mob:AnimationSub() ~= 1 then
+        mob:setLocalVar("zap2", mob:getLocalVar("zap2") - 1)
+        mob:setTP(0)
+        mob:useMobAbility(2334)
+        mob:setLocalVar("zapTime2", os.time()+7)
+    end
+
+    if mob:getLocalVar("zap") >= 1 and os.time() >= mob:getLocalVar("zapTime") and mob:AnimationSub() ~= 1 then
+        mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
+        mob:setTP(0)
+            
+        local targets = {}
+        local nearbyPlayers = mob:getPlayersInRange(20)
+        if nearbyPlayers == nil then return 1 end
+
+        for _, player in pairs(nearbyPlayers) do -- find eligible players to look at
+            local posP = player:getPos()
+            local posM = mob:getPos()
+            if math.abs(posP.y-posM.y) <= 7 then -- no cliff jumping, may need to tune
+                table.insert(targets, player) 
+            end  
         end
+   
+        if (#targets) > 0 then 
+            local target = targets[math.random(#targets)]
+            mob:lookAt(target:getPos())
+            mob:useMobAbility(2335, target)                
+            mob:setLocalVar("zapTime", os.time()+7)
+        end
+    end
     
 
     -- This section deals with him glowing (double TP moves)

@@ -11,7 +11,7 @@ require("scripts/globals/monstertpmoves")
 require("scripts/globals/utils")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if mob:AnimationSub() == 1 or mob:getLocalVar("zap") < 1 or mob:getLocalVar("charging") == 1 then
+    if mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
         return 1
     else
         local TP = target:getPos()

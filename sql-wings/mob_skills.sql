@@ -1550,7 +1550,9 @@ INSERT INTO `mob_skills` VALUES(2335, 1639, 'lightning_spear', 6, 20.0, 4000, 20
 INSERT INTO `mob_skills` VALUES(2336, 1642, 'acheron_kick', 5, 10.0, 2000, 1500, 4, 8, 0, 5, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2337, 1653, 'damsel_memento', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2338, 1641, 'rampant_stance', 1, 7, 4000, 1800, 4, 8, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2339, 0, 'di_trample', 0, 30.0, 1, 0, 4, 8, 0, 7, 0, 0, 0); -- TODO likely need to play with animations
+INSERT INTO `mob_skills` VALUES(2339, 1643, 'di_trample', 0, 30, 1, 0, 4, 8, 0, 5, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2344, 1638, 'di_glow', 0, 30.0, 4000, 0, 4, 8, 0, 7, 0, 0, 0); -- glows
+INSERT INTO `mob_skills` VALUES(2345, 1638, 'di_glow', 0, 30.0, 4000, 0, 4, 8, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2359, 1201, 'strap_cutter', 0, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2360, 1195, 'wind_shear_znm', 1, 10.0, 2000, 1800, 4, 0, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2361, 1269, 'stave_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
