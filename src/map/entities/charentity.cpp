@@ -815,6 +815,13 @@ bool CCharEntity::ReloadParty()
     return m_reloadParty;
 }
 
+void CCharEntity::ForceReloadParty()
+{
+    if (PParty) {
+        PParty->ResetLastReloadTime();
+    }
+}
+
 void CCharEntity::RemoveTrust(CTrustEntity* PTrust)
 {
     if (!PTrust->PAI->IsSpawned())

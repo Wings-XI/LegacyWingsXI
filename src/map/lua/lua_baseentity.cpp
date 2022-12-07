@@ -10733,6 +10733,9 @@ inline int32 CLuaBaseEntity::reloadParty(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    if (!lua_isnil(L, 1) && lua_isboolean(L, 1) && ((bool)lua_toboolean(L, 1))) {
+        ((CCharEntity*)m_PBaseEntity)->ForceReloadParty();
+    }
     ((CCharEntity*)m_PBaseEntity)->ReloadPartyInc();
 
     return 0;

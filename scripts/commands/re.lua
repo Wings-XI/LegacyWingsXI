@@ -11,6 +11,6 @@ cmdprops =
 
 function onTrigger(player)
 	
-    player:reloadParty()
+    player:reloadParty(true)
 	
 end;
