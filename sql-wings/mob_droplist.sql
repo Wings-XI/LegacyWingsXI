@@ -478,6 +478,7 @@ INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 19129, 1000);
 INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 15733, 111); -- Nyzul Isle Investigation Floor 20 Boss
 INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 15734, 111);
 INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 15735, 111);
+INSERT INTO `mob_droplist` VALUES(71, 1, 0, 1000, 4101, 667); -- Water crystal added to group to ensure armor droprate isn't 100% and is unaffected by TH. See gitlab #2943 for details
 INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17742, 50);
 INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17743, 50);
 INSERT INTO `mob_droplist` VALUES(71, 1, 1, 1000, 17744, 50);
@@ -834,6 +835,7 @@ INSERT INTO `mob_droplist` VALUES(147, 2, 0, 1000, 864, 0);
 INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 15647, 111); -- Nyzul Isle Investigation Floor 40 Boss
 INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 15648, 111);
 INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 15649, 111);
+INSERT INTO `mob_droplist` VALUES(148, 1, 0, 1000, 4101, 667); -- Water crystal added to group to ensure armor droprate isn't 100% and is unaffected by TH. See gitlab #2943 for details
 INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17742, 50);
 INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17743, 50);
 INSERT INTO `mob_droplist` VALUES(148, 1, 1, 1000, 17744, 50);
@@ -928,6 +930,7 @@ INSERT INTO `mob_droplist` VALUES(163, 0, 0, 1000, 17415, 330);
 INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 14983, 111); -- Nyzul Isle Investigation Floor 60 Boss
 INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 14984, 111);
 INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 14985, 111);
+INSERT INTO `mob_droplist` VALUES(164, 1, 0, 1000, 4101, 667); -- Water crystal added to group to ensure armor droprate isn't 100% and is unaffected by TH. See gitlab #2943 for details
 INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17742, 50);
 INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17743, 50);
 INSERT INTO `mob_droplist` VALUES(164, 1, 1, 1000, 17744, 50);
@@ -1068,6 +1071,7 @@ INSERT INTO `mob_droplist` VALUES(180, 0, 0, 1000, 4362, 200);
 INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 14568, 111); -- Nyzul Isle Investigation Floor 80 Boss
 INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 14569, 111);
 INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 14570, 111);
+INSERT INTO `mob_droplist` VALUES(181, 1, 0, 1000, 4101, 667); -- Water crystal added to group to ensure armor droprate isn't 100% and is unaffected by TH. See gitlab #2943 for details
 INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17742, 50);
 INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17743, 50);
 INSERT INTO `mob_droplist` VALUES(181, 1, 1, 1000, 17744, 50);
@@ -1850,6 +1854,7 @@ INSERT INTO `mob_droplist` VALUES(302, 0, 0, 1000, 1125, 20);
 INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 16106, 111); -- Nyzul Isle Investigation Floor 100 Boss
 INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 16107, 111);
 INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 16108, 111);
+INSERT INTO `mob_droplist` VALUES(303, 1, 0, 1000, 4101, 667); -- Water crystal added to group to ensure armor droprate isn't 100% and is unaffected by TH. See gitlab #2943 for details
 INSERT INTO `mob_droplist` VALUES(303, 1, 1, 1000, 17742, 50);
 INSERT INTO `mob_droplist` VALUES(303, 1, 1, 1000, 17743, 50);
 INSERT INTO `mob_droplist` VALUES(303, 1, 1, 1000, 17744, 50);
