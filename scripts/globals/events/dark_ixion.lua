@@ -330,10 +330,12 @@ end
 darkixion.onZoneGameHour = function(zone)
     local ixionID = darkixion.zoneinfo[zone:getID()].mobID
     local ixion = GetMobByID(ixionID)
+    printf("spawned %u", ixion:isSpawned())
 	if not ixion:isSpawned() and
 		GetServerVariable("DarkIxion_ZoneID") == zone:getID() and
 		GetServerVariable("DarkIxion_PopTime") < os.time() then
 			SpawnMob(ixionID)
+            printf("Spawn?")
     elseif ixion:isSpawned() and GetServerVariable("DarkIxion_ZoneID") ~= zone:getID() then
         -- really shouldn't be possible, but catch just in case
         ixion:disengage()

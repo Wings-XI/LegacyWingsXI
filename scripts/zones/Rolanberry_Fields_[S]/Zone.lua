@@ -16,16 +16,6 @@ function onGameHour(zone)
 	darkixion.onZoneGameHour(zone)
 end
 
-function onGameHour(zone)
-	local ixion = GetMobByID(ID.mob.DARK_IXION)
-	if ixion:getStatus() == STATUS_DISAPPEAR
-		and GetServerVariable("DarkIxion_ZoneID") == zone:getID()
-		and GetServerVariable("DarkIxion_PopTime") < os.time() then
-			SpawnMob(ixion:getID())
-	end
-
-end
-
 function onZoneIn(player, prevZone)
     local cs = -1
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
