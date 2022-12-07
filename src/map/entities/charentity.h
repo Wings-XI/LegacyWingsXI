@@ -446,6 +446,7 @@ public:
     void        ReloadPartyInc();
     void        ReloadPartyDec();
     bool        ReloadParty();
+    void        ForceReloadParty();
     void        ClearTrusts();
     void        RemoveTrust(CTrustEntity*);
     void        RemoveFellow();

@@ -1256,6 +1256,19 @@ bool CParty::HasTrusts()
     return false;
 }
 
+void CParty::ResetLastReloadTime()
+{
+    // Definitely more than 15 seconds ago
+    m_TimeLastReloaded = std::chrono::system_clock::from_time_t(0);
+    if (m_PAlliance) {
+        for (auto&& party : m_PAlliance->partyList) {
+            if (party) {
+                party->m_TimeLastReloaded = std::chrono::system_clock::from_time_t(0);
+            }
+        }
+    }
+}
+
 void CParty::RefreshFlags(std::vector<partyInfo_t>& info)
 {
     for (auto&& memberinfo : info)
