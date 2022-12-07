@@ -68,7 +68,7 @@ find_package(RabbitMQ REQUIRED)
 find_package(LuaJIT)
 
 # Find Baseencode
-find_package(Baseencode)
+find_package(BASEENCODE)
 
 # Find COTP
 find_package(COTP)

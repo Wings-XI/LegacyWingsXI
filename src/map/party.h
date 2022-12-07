@@ -126,6 +126,7 @@ private:
     void RefreshFlags(std::vector<partyInfo_t>&);
 
     time_point m_TimeLastMemberJoined;
+    time_point m_TimeLastReloaded;
 };
 
 #endif
