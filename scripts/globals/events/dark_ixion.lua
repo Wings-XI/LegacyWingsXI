@@ -266,7 +266,7 @@ darkixion.itsStompinTime = function(mob)
    for _, player in pairs(nearbyPlayers) do -- find eligible players to curb stomp
         local posP = player:getPos()
         local posM = mob:getPos()
-        if math.abs(posP.y-posM.y) <= 7 and player:isAlive() then -- no cliff jumping, may need to tune
+        if math.abs(posP.y-posM.y) <= 7 and player:isAlive() and mob:checkDistance(posP) > 5 then -- no cliff jumping, may need to tune
             table.insert(targets, player)
         end
    end
@@ -275,7 +275,7 @@ darkixion.itsStompinTime = function(mob)
        local target = targets[math.random(#targets)]
         pos = target:getPos()
 
-        if mob:checkDistance(pos) < 18 and mob:checkDistance(pos) >= 5 then -- very short range and boring...
+        if mob:checkDistance(pos) < 18 then -- very short range and boring...
             local Mx = mob:getXPos()
             local Mz = mob:getZPos()
             local Ty = target:getYPos()
