@@ -1355,7 +1355,6 @@ INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2111); -- Eternal Damnati
 INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2112); -- Nocturnal Servitude
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1753);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1758);
-INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1761);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1929);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1754);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828);
