@@ -202,6 +202,7 @@ CZone::CZone(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
     m_Weather = WEATHER_NONE;
     m_WeatherChangeTime = 0;
     m_navMesh = nullptr;
+    m_playerAbilityHandle = false;
     m_zoneEntities = new CZoneEntities(this);
     PEventHandler = new CAIEventHandler;
 

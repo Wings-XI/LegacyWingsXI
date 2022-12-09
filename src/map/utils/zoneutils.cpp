@@ -610,7 +610,7 @@ void LoadMOBList()
     // handle mob initialise functions after they're all loaded
     ForEachZone([](CZone* PZone)
     {
-        PZone->ForEachMob([](CMobEntity* PMob)
+        PZone->ForEachMob([PZone](CMobEntity* PMob)
         {
             luautils::OnMobInitialize(PMob);
             luautils::OnMobFamilyInitialize(PMob);
@@ -622,6 +622,9 @@ void LoadMOBList()
             bool shouldSpawn = PMob->m_AllowRespawn;
             if (PMob->m_SpawnType == SPAWNTYPE_PIXIE) {
                 shouldSpawn = PMob->PixieShouldSpawn();
+            }
+            if (PMob->getMobMod(MOBMOD_PLAYER_ABILITY)) {
+                PZone->m_playerAbilityHandle = true;
             }
 
             if (shouldSpawn)
