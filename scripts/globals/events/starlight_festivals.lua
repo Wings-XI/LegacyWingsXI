@@ -16,6 +16,21 @@ function isStarlightEnabled()
     local day = tonumber(os.date("%d"))
     if ((month == 12 and day >= 12) or STARLIGHT_YEAR_ROUND) then -- According to wiki Startlight Festival is December 12 - December 31.
         if (STARLIGHT_2007 == 1) then
+            -- starlight 2005 mechanics with additional cards to match one-to-one all race/gender combinations
+            -- mechanics are such that you trade cassiopeia cards to the moogle:
+              -- every odd trade you get fireworks and a charvar that preps you for next cassiopeia trade
+              -- every other trade you get the next dream equipment, based on what you have in your inventory/mh
+            -- first 5 combos are handled by nq cards
+            -- last 5 combos are handled by hq cards (received by talking to moogle while wearing dream robe)
+            -- list of race combos, in order:
+              -- male Hume
+              -- female Hume
+              -- male Elvaan
+              -- female Elvaan
+              -- male Tarutaru
+              -- female Tarutaru
+              -- Mithra
+              -- Galka
             option = 1
         end
     end
@@ -413,7 +428,7 @@ function onStarlightMoogleTrade(player, npc, trade)
                         player:setCharVar("DialogChosen", 0)
                         player:setCharVar("CardChosen", 0)
                         player:tradeComplete()
-                    elseif player:hasItem(11966) == false then
+                    elseif player:getGender() ~= 0 and player:hasItem(11966) == false then
                         local reward = 11966 -- Dream Trousers +1 (M)
                         player:addItem(reward)
                         player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
