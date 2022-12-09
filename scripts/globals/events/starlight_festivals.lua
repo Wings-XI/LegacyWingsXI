@@ -512,9 +512,20 @@ function onStarlightMoogleTrigger(player, npc)
                     player:setCharVar("DialogChosen", 0)
                 end
             elseif player:getCharVar("HQCard") == 1 then
-                player:showText(npc, ID.text.STARLIGHT_CARD_CHECK, player:getCharVar("DialogChosen") - 1)
-                player:showText(npc, ID.text.STARLIGHT_CARD_RED)
-                player:showText(npc, ID.text.STARLIGHT_CARD_4)
+                if player:hasItem(player:getCharVar("CardGiven")) then
+                    player:showText(npc, ID.text.STARLIGHT_CARD_CHECK, player:getCharVar("DialogChosen") - 1)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_RED)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_4)
+                else
+                    -- Give a new HQ card if no longer has old card
+                    player:showText(npc, ID.text.STARLIGHT_CARD_1)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_2)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_3)
+                    player:setCharVar("CardConvo", 1)
+                    player:setCharVar("CardGiven", 0)
+                    player:setCharVar("CardChosen", 0)
+                    player:setCharVar("DialogChosen", 0)
+                end
             end
         -- HQ Upgrade Pathway--
         elseif player:getCharVar("CardConvo") == 1 and dreamRobe then
