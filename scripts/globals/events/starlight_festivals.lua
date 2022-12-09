@@ -97,6 +97,7 @@ function onStarlightMoogleTrade(player, npc, trade)
         local zone = player:getZoneName()
         local ID = zones[player:getZoneID()]
         local bodySlot = player:getEquipID(tpz.slot.BODY)
+        local dreamRobe = (bodySlot == 14519 or bodySlot == 14520) and true or false
 
         ------------------
         -- 2007 Edition --
@@ -221,7 +222,7 @@ function onStarlightMoogleTrade(player, npc, trade)
                 player:showText(npc, ID.text.STARLIGHT_CARD_WRONG)
             end
         -- HQ Card Trade-in *Requires Dream Robe or Dream Robe +1 Equipped* --
-        elseif trade:hasItemQty(2115, 1) and (bodySlot == 14519 or bodySlot == 14520) then
+        elseif trade:hasItemQty(2115, 1) and dreamRobe then
                 if player:getRace() == tpz.race.ELVAAN_F then -- Elvaan Female
                     if player:getFreeSlotsCount() >= 2 then
                         local fireworkselection =  fireworks_table[math.random(1, #fireworks_table)]
@@ -237,7 +238,7 @@ function onStarlightMoogleTrade(player, npc, trade)
                 else
                     player:showText(npc, ID.text.STARLIGHT_CARD_WRONG)
                 end
-        elseif trade:hasItemQty(2116, 1) and (bodySlot == 14519 or bodySlot == 14520) then
+        elseif trade:hasItemQty(2116, 1) and dreamRobe then
             if player:getRace() == tpz.race.TARU_M then -- Tarutaru Male
                 if player:getFreeSlotsCount() >= 2 then
                     local fireworkselection =  fireworks_table[math.random(1, #fireworks_table)]
@@ -253,7 +254,7 @@ function onStarlightMoogleTrade(player, npc, trade)
             else
                 player:showText(npc, ID.text.STARLIGHT_CARD_WRONG)
             end
-        elseif trade:hasItemQty(2540, 1) and (bodySlot == 14519 or bodySlot == 14520) then
+        elseif trade:hasItemQty(2540, 1) and dreamRobe then
             if player:getRace() == tpz.race.TARU_F then -- Tarutaru Female
                 if player:getFreeSlotsCount() >= 2 then
                     local fireworkselection =  fireworks_table[math.random(1, #fireworks_table)]
@@ -269,7 +270,7 @@ function onStarlightMoogleTrade(player, npc, trade)
             else
                 player:showText(npc, ID.text.STARLIGHT_CARD_WRONG)
             end
-        elseif trade:hasItemQty(2541, 1) and (bodySlot == 14519 or bodySlot == 14520) then
+        elseif trade:hasItemQty(2541, 1) and dreamRobe then
             if player:getRace() == tpz.race.MITHRA then -- Mithra
                 if player:getFreeSlotsCount() >= 2 then
                     local fireworkselection =  fireworks_table[math.random(1, #fireworks_table)]
@@ -285,7 +286,7 @@ function onStarlightMoogleTrade(player, npc, trade)
             else
                 player:showText(npc, ID.text.STARLIGHT_CARD_WRONG)
             end
-        elseif trade:hasItemQty(2739, 1) and (bodySlot == 14519 or bodySlot == 14520) then
+        elseif trade:hasItemQty(2739, 1) and dreamRobe then
             if player:getRace() == tpz.race.GALKA then -- Galka
                 if player:getFreeSlotsCount() >= 2 then
                     local fireworkselection =  fireworks_table[math.random(1, #fireworks_table)]
@@ -433,14 +434,6 @@ function onStarlightMoogleTrade(player, npc, trade)
                     player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED)
                 end
             end
-        elseif trade:hasItemQty(4215, 10) then
-            player:showText(npc, ID.text.STARLIGHT_CARD_1)
-            player:showText(npc, ID.text.STARLIGHT_CARD_2)
-            player:showText(npc, ID.text.STARLIGHT_CARD_3)
-            player:setCharVar("CardConvo", 1)
-            player:setCharVar("CardGiven", 0)
-            player:setCharVar("DialogChosen", 0)
-            player:tradeComplete()
         end
     end
 end
@@ -452,7 +445,9 @@ function onStarlightMoogleTrigger(player, npc)
         local contentEnabled = isStarlightEnabled()
         local CurrentCardDay = VanadielDayOfTheWeek()
         local bodySlot = player:getEquipID(tpz.slot.BODY)
+        local dreamRobe = (bodySlot == 14519 or bodySlot == 14520) and true or false
         local mainSlot = player:getEquipID(tpz.slot.MAIN)
+        local dreamBellPlusOne = (mainSlot == 18864) and true or false
 
         ------------------
         -- 2007 Edition --
@@ -491,8 +486,10 @@ function onStarlightMoogleTrigger(player, npc)
             player:showText(npc, ID.text.STARLIGHT_CARD_3)
             player:setCharVar("CardConvo", 1)
             player:setCharVar("CardGiven", 0)
-        -- Remove for Prod, used for testing --
-        elseif player:getCharVar("CardConvo") == 1 and mainSlot == 18864 then
+            player:setCharVar("CardChosen", 0)
+            player:setCharVar("DialogChosen", 0)
+        -- Remove for Prod, used for testing -- I see no reason to remove this, honestly
+        elseif player:getCharVar("CardConvo") == 1 and dreamBellPlusOne then
             player:setCharVar("CardGiven", 0)
             player:setCharVar("CardChosen", 0)
             player:setCharVar("DialogChosen", 0)
@@ -501,27 +498,38 @@ function onStarlightMoogleTrigger(player, npc)
         -- Card Checker --
         elseif player:getCharVar("CardConvo") == 1 and player:getCharVar("DialogChosen") ~= 0 then
             if player:getCharVar("HQCard") ~= 1 then
-                player:showText(npc, ID.text.STARLIGHT_CARD_CHECK, player:getCharVar("DialogChosen"))
-                player:showText(npc, ID.text.STARLIGHT_CARD_4)
+                if player:hasItem(player:getCharVar("CardGiven")) then
+                    player:showText(npc, ID.text.STARLIGHT_CARD_CHECK, player:getCharVar("DialogChosen") - 1)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_4)
+                else
+                    -- Give a new NQ card if no longer has old card
+                    player:showText(npc, ID.text.STARLIGHT_CARD_1)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_2)
+                    player:showText(npc, ID.text.STARLIGHT_CARD_3)
+                    player:setCharVar("CardConvo", 1)
+                    player:setCharVar("CardGiven", 0)
+                    player:setCharVar("CardChosen", 0)
+                    player:setCharVar("DialogChosen", 0)
+                end
             elseif player:getCharVar("HQCard") == 1 then
-                player:showText(npc, ID.text.STARLIGHT_CARD_CHECK, player:getCharVar("DialogChosen"))
+                player:showText(npc, ID.text.STARLIGHT_CARD_CHECK, player:getCharVar("DialogChosen") - 1)
                 player:showText(npc, ID.text.STARLIGHT_CARD_RED)
                 player:showText(npc, ID.text.STARLIGHT_CARD_4)
             end
         -- HQ Upgrade Pathway--
-        elseif player:getCharVar("CardConvo") == 1 and (bodySlot == 14519 or bodySlot == 14520) then
+        elseif player:getCharVar("CardConvo") == 1 and dreamRobe then
             -- Job and Level Choice w/ Param Set --
-            local mathChoice = math.random(3, 7) -- Selects which prompt to use for race/gender selection.
-            local mathCardChoice = (mathChoice - 2)
+            local mathCardChoice = math.random(#cardsHQ_table)
+            local mathChoice = mathCardChoice + 2 -- Selects which prompt to use for race/gender selection.
             player:setCharVar("CardChosen", 1)
             -- -- Dialog Selection --
             if player:getCharVar("CardChosen") ~= 0 then
+                player:setCharVar("HQCard", 1)
+                player:setCharVar("DialogChosen", mathChoice + 1)
                 player:showText(npc, ID.text.STARLIGHT_CARD_5, mathChoice)
                 player:showText(npc, ID.text.STARLIGHT_CARD_RED)
                 player:showText(npc, ID.text.STARLIGHT_CARD_4)
                 player:showText(npc, ID.text.STARLIGHT_CARD_6)
-                player:setCharVar("HQCard", 1)
-                player:setCharVar("DialogChosen", mathChoice)
             end
             -- Give Item --
             local cardpicked = cardsHQ_table[mathCardChoice]
@@ -539,16 +547,17 @@ function onStarlightMoogleTrigger(player, npc)
         -- NQ Pathway --
         elseif player:getCharVar("CardConvo") == 1 and player:getCharVar("CardGiven") == 0 then
             -- Job and Level Choice w/ Param Set --
-            local mathChoice = math.random(0, 4) -- Selects which prompt to use for race/gender selection.
-            local mathCardChoice = (mathChoice + 1)
+            local mathCardChoice = math.random(#cardsNQ_table)
+            local mathChoice = mathCardChoice - 1 -- Selects which prompt to use for race/gender selection.
+
             player:setCharVar("CardChosen", 1)
             -- -- Dialog Selection --
             if player:getCharVar("CardChosen") ~= 0 then
+                player:setCharVar("HQCard", 0)
+                player:setCharVar("DialogChosen", mathChoice + 1)
                 player:showText(npc, ID.text.STARLIGHT_CARD_5, mathChoice)
                 player:showText(npc, ID.text.STARLIGHT_CARD_4)
                 player:showText(npc, ID.text.STARLIGHT_CARD_6)
-                player:setCharVar("HQCard", 0)
-                player:setCharVar("DialogChosen", mathChoice)
             end
             -- Give Item --
             local cardpicked = cardsNQ_table[mathCardChoice]
@@ -562,6 +571,10 @@ function onStarlightMoogleTrigger(player, npc)
                 player:setCharVar("DialogChosen", 0)
                 player:setCharVar("CardChosen", 0)
             end
+        else
+            -- nothing matched, reset card convo. Should be impossible.
+            player:PrintToPlayer("Moogle: You appear to have found a bug, Kupo! Talk to me again for a new card!", 0xD)
+            player:setCharVar("CardConvo", 0)
         end
     end
 end
