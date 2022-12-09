@@ -51,7 +51,7 @@ function onMobSpawn(mob)
 end     
 
 function onMobEngaged(mob, target)
-    mob:setLocalVar("clock", os.time() + 20) 
+    mob:setLocalVar("clock", os.time() + 120) 
 end
 
 function onMobFight(mob, target)
