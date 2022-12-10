@@ -6818,7 +6818,7 @@ namespace battleutils
         // constant 80% dist 25+
         return 0.80f;
     }
-/*
+
     void HandlePlayerAbilityUsed(CBattleEntity* PSource, CAbility* PAbility, action_t* action)
     {
         TPZ_DEBUG_BREAK_IF(PSource == nullptr);
@@ -6845,13 +6845,13 @@ namespace battleutils
 
                 // Unclear if the required conditions include enmity and/or alliance.
                 // Let's go with just alliance for now.
-                if (PCurrentMob->m_OwnerID.id != 0 && PIterSource->IsMobOwner(PCurrentMob) && distance(PIterSource->loc.p, PCurrentMob->loc.p) < 15.0)
+                if (PCurrentMob->m_OwnerID.id != 0 && PCurrentMob->getMobMod(MOBMOD_PLAYER_ABILITY) > 0 && PIterSource->IsMobOwner(PCurrentMob) && distanceSquared(PIterSource->loc.p, PCurrentMob->loc.p) < (15.0 * 15.0))
                 {
                     PCurrentMob->PAI->EventHandler.triggerListener("PLAYER_ABILITY_USED", PCurrentMob, PSource, PAbility, action);
                 }
             }
         }
     }
-*/
+
 
     };

@@ -1691,7 +1691,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        //battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+        if (this->loc.zone->m_playerAbilityHandle) {
+            battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+        }
 
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime);
 
