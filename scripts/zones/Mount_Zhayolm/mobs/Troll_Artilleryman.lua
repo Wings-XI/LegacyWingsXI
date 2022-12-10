@@ -23,7 +23,7 @@ end
 function onMobRoam(mob)
     local ID = require("scripts/zones/Mount_Zhayolm/IDs")
     local mother = GetMobByID(ID.mob.KHROMASOUL_BHURBORLOR)
-    if mother:isSpawned() and mother:getCurrentAction() == tpz.act.ENGAGED then
+    if mother:isSpawned() and mother:getCurrentAction() == tpz.act.ATTACK then
         mob:updateEnmity(mother:getTarget())
     end
 end
