@@ -407,6 +407,7 @@ darkixion.onMobSpawn = function(mob)
     mob:SetMobSkillAttack(39)
 
     mob:setMobMod(tpz.mobMod.NO_REST, 10)
+    mob:setAggressive(1)
 end
 
 
@@ -503,9 +504,17 @@ darkixion.onMobRoam = function(mob)
     else
         mob:speed(70) -- movement +75% = 40 * 1.75
     end
-    if not mob:hasStatusEffect(tpz.effect.BIND) then
+
+
+    if math.random(1000) < 5 or mob:getLocalVar("RunAway") > os.time() then
+        -- low chance to reverse path or if RunAway is later than now just stand still for a bit
+        if mob:isFollowingPath() then
+            tpz.path.patrolsimple(mob, darkixion.zoneinfo[mob:getZoneID()].pathList, tpz.path.flag.REVERSE)
+        end
+    else
         tpz.path.patrolsimple(mob, darkixion.zoneinfo[mob:getZoneID()].pathList, tpz.path.flag.RUN)
     end
+
 end
 
 darkixion.onMobEngaged = function(mob, target)
@@ -523,11 +532,17 @@ darkixion.onMobEngaged = function(mob, target)
 end
 
 darkixion.onMobDisengage = function(mob)
-    -- disengage, give one 10-second window of him standing still unclaimed before "Running away"
-    mob:addStatusEffect(tpz.effect.BIND, 0, 0, 10) -- bind will not stack if hit a second time to engage/disengage
+    if mob:getLocalVar("RunAway") == 0 then
+        -- disengage, give one window of him standing still unclaimed before "Running away"
+        mob:setLocalVar("RunAway", os.time() + 15)
+    else
+        -- just reset time until despawn
+        mob:setLocalVar("RunAway", os.time())
+    end
 
+    -- no chance of him staying in this zone unless an ash is landed before he runs away and despawns
+    mob:setAggressive(0)
     mob:setLocalVar("StygianLanded", 0)
-    mob:setLocalVar("RunAway", os.time())
     SetServerVariable("DarkIxion_HP", mob:getHP())
 end
 
