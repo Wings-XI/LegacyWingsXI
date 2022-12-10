@@ -21,28 +21,16 @@ darkixion = {}
 
 -- mob:AnimationSub() -- 0 is normal || Charging is animation sub 1  || 2 is broken horn || 3 is glowing and repairs horn
 
--- slow down lightning tp moves to give u time to run, ** I dont think I can do this, it will aim for the target always
+-- If we can find a way for TP moves to be aimed at a point instead of player, we should.
 
 -- maybe lower movement speed while its roaming, or get it to stop randomly
 -- test evasion for first throw, may need to have it lowered while out of combat
 
-  -- i assume animation sub is reset when he runs away?
-  -- if not we need to store that as a server variable along with HP and reset when killed
-        -- i think a server var for HP is good, horn is ok to reset
+  -- Make Servervar for horn status
 
   -- for charge, idk, maybe add roam flag 512 or 256
         -- what dodoes the flag do? it works pretty good now
 
---[[
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2344); -- glow
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2345); -- glow
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336); -- acheron_kick
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2337); -- damsel_memento
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2338); -- rampant stance
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2339); -- di trample
-Zeus = 2334
-Lightning spear = 2335
-]]
 
 darkixion.zoneinfo =
 {
@@ -665,7 +653,6 @@ darkixion.onMobFight = function(mob, target)
 
     if mob:getLocalVar("run") >= 1 and os.time() >= mob:getLocalVar("runTime") and mob:getLocalVar("charging") == 0 and mob:AnimationSub() ~= 3 then
         darkixion.itsStompinTime(mob)
-        print("charging")
         mob:setTP(0)
     end
 
@@ -682,7 +669,6 @@ darkixion.onMobFight = function(mob, target)
                 local nextHit = dork:getID()
                 if (#hitList) == 0 then
                     table.insert(hitList, nextHit)
-                    print("kick")
                     mob:useMobAbility(2339, nextHit) -- trample
                 else
                     for v = 1, (#hitList) do
@@ -692,7 +678,6 @@ darkixion.onMobFight = function(mob, target)
                     end
                     if mob:getLocalVar("stomp") == 0 then
                         mob:useMobAbility(2339,dork) -- trample
-                        print("kick")
                         table.insert(hitList, nextHit)
                     end
                 end
