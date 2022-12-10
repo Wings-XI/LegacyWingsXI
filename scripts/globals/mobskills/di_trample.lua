@@ -11,11 +11,7 @@ No message is displayed in the chat log.
 
 
 function onMobSkillCheck(target, mob, skill)
-    if mob:getLocalVar("charging") == 1 or not target:isInfront(mob) then
-        return 0
-    else
-        return 1
-    end
+    return 0
 end
 
 

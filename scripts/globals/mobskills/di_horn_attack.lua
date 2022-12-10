@@ -1,33 +1,29 @@
 ---------------------------------------------
---  Acheron Kick
---
---  Description: Physical Cone Attack damage behind user.
---  Type: Physical
---  Utsusemi/Blink absorb: 2-3 shadows
---  Range: Back
---  Notes: Used only if a target with hate is behind them, conal. 
---  Dark Ixion CAN turn around to use this move on anyone with hate, regardless of their original position or even distance.
+-- Unnamed attack for use to gore the target
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if  mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
-        return 1
-    else
-        return 0
-    end
+    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local numhits = math.random(2,3)
+    local numhits = 1
     local accmod = 1
     local dmgmod = 1
+
+    local typeEffect = tpz.effect.BIND
+    local duration = math.random(1, 15)
+
+    MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
+
 
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, info.hitslanded)
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+    skill:setMsg(tpz.msg.basic.HIT_DMG)
     return dmg
 end

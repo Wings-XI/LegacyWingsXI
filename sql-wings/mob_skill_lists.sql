@@ -144,12 +144,14 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 844);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 845);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 846);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 847);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2344);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2345);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2337);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2338);
-INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2339); 
+--INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2344); -- glow
+--INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2345); -- glow
+--INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336); -- acheron_kick
+--INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2337); -- damsel_memento
+--INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2338); -- rampant stance
+--INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2339); -- di trample
+INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2340); -- di hoof attack
+INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2341); -- di horn attack
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 858);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 859);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 860);
