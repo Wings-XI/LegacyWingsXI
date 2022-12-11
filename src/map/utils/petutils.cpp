@@ -289,7 +289,15 @@ namespace petutils
     uint16 GetJugWeaponDamage(CPetEntity* PPet)
     {
         float MainLevel = PPet->GetMLevel();
-        return (uint16)(MainLevel * (MainLevel < 40 ? 1.4 - MainLevel / 100 : 1));
+        if (PPet->GetMJob() == JOB_MNK)
+        {
+            uint16 h2hskill = battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_MNK, MainLevel);
+            // https://ffxiclopedia.fandom.com/wiki/Category:Hand-to-Hand
+            return 0.11f * h2hskill + 3 +
+                     18 * MainLevel / 75; // basic h2h weapon dmg + scaling "weapon" for mnk mobs based on h2h skill (destroyers 18 dmg at 75)
+        }
+        else
+            return (uint16)(MainLevel * (MainLevel < 40 ? 1.4 - MainLevel / 100 : 1));
     }
 
     uint16 GetBaseToRank(uint8 rank, uint16 lvl)
