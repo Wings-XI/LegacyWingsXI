@@ -443,8 +443,8 @@ INSERT INTO `mob_pools` VALUES(379, 'Beach_Monk', 'Beach_Monk', 218, _binary 0x0
 INSERT INTO `mob_pools` VALUES(380, 'Beach_Pugil', 'Beach_Pugil', 197, _binary 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 197);
 INSERT INTO `mob_pools` VALUES(381, 'Beadeaux_Vanguard', 'Beadeaux_Vanguard', 202, _binary 0x00004e0800000000000000000000000000000000, 7, 7, 3, 265, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 4, 0, 0, 2030);
 INSERT INTO `mob_pools` VALUES(382, 'Beady_Beetle', 'Beady_Beetle', 49, _binary 0x0000980100000000000000000000000000000000, 7, 7, 8, 240, 100, 0, 0, 0, 1, 0, 0, 0, 185, 131, 0, 0, 0, 0, 0, 49);
-INSERT INTO `mob_pools` VALUES(383, 'Bearclaw_Leveret', 'Bearclaw_Leveret', 206, _binary 0x00000e0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 206);
-INSERT INTO `mob_pools` VALUES(384, 'Bearclaw_Rabbit', 'Bearclaw_Rabbit', 206, _binary 0x00000e0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 0, 0, 0, 4385, 135, 0, 0, 0, 0, 0, 206);
+INSERT INTO `mob_pools` VALUES(383 , 'Bearclaw_Leveret', 'Bearclaw_Leveret', 206, 0x00000E0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 18, 2048, 0, 0, 3, 0, 0, 0, 0, 0, 405, 206);
+INSERT INTO `mob_pools` VALUES(384 , 'Bearclaw_Rabbit', 'Bearclaw_Rabbit', 206, 0x00000E0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 18, 0, 0, 4385, 135, 0, 0, 0, 0, 0, 405, 206);
 INSERT INTO `mob_pools` VALUES(385, 'Beelzebub', 'Beelzebub', 48, _binary 0x0000100100000000000000000000000000000000, 3, 3, 11, 240, 100, 0, 1, 1, 1, 16, 0, 32, 3240, 159, 0, 0, 74, 0, 0, 1048);
 INSERT INTO `mob_pools` VALUES(386, 'Beet_Leafhopper', 'Beet_Leafhopper', 113, _binary 0x0000c00100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 1, 2, 0, 0, 1505, 643, 0, 0, 0, 0, 0, 113);
 INSERT INTO `mob_pools` VALUES(387, 'Behemoth', 'Behemoth', 51, _binary 0x0000940100000000000000000000000000000000, 6, 1, 6, 210, 125, 1024, 1, 1, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 51);
