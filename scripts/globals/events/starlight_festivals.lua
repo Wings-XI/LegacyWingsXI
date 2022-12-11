@@ -599,7 +599,7 @@ function onStarlightMoogleTrigger(player, npc)
             end
         else
             -- nothing matched, reset card convo. Should be impossible.
-            player:PrintToPlayer("Moogle: You appear to have found a bug, Kupo! Talk to me again for a new card!", 0xD)
+            player:PrintToPlayer("Moogle : You appear to have found a bug, Kupo! Talk to me again for a new card!", 0xD)
             player:setCharVar("CardConvo", 0)
         end
     end
