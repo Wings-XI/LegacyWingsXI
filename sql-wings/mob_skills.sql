@@ -1953,6 +1953,7 @@ INSERT INTO `mob_skills` VALUES(1339, 221, 'bane', 2, 15.0, 2000, 1500, 4, 0, 0,
 INSERT INTO `mob_skills` VALUES(709,439,'souleater',0,7.0,2000,1500,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES(1761,1192,'arrow_deluge',0,20.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES(1929,1278,'pole_swing',0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES(1594, 814, 'toxic_spit', 0, 22, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);  -- alternate toxic spit for Race Runner
 
 
 

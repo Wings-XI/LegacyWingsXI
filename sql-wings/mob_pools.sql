@@ -3361,7 +3361,7 @@ INSERT INTO `mob_pools` VALUES(3297, 'Qutrub_Wastrel', 'Qutrub_Wastrel', 205, _b
 INSERT INTO `mob_pools` VALUES(3298, 'Quu_Domi_the_Gallant', 'Quu_Domi_the_Gallant', 270, _binary 0x00004c0200000000000000000000000000000000, 13, 13, 2, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 155, 0, 0, 7, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(3299, 'QuPho_Bloodspiller', 'QuPho_Bloodspiller', 337, _binary 0x00001b0400000000000000000000000000000000, 1, 1, 7, 265, 100, 0, 1, 0, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 202);
 INSERT INTO `mob_pools` VALUES(3300, 'Rabid_Rat', 'Rabid_Rat', 206, _binary 0x00000c0100000000000000000000000000000000, 6, 6, 7, 240, 100, 0, 0, 0, 1, 0, 0, 0, 231, 131, 0, 0, 0, 0, 0, 206);
-INSERT INTO `mob_pools` VALUES(3301, 'Race_Runner', 'Race_Runner', 98, _binary 0x0000450500000000000000000000000000000000, 4, 6, 12, 190, 100, 0, 0, 0, 0, 18, 535, 0, 681, 135, 0, 0, 133, 0, 256, 98);
+INSERT INTO `mob_pools` VALUES(3301, 'Race_Runner', 'Race_Runner', 98, _binary 0x0000450500000000000000000000000000000000, 4, 6, 12, 190, 100, 0, 0, 0, 0, 18, 6839, 0, 681, 135, 0, 0, 133, 0, 256, 98);
 INSERT INTO `mob_pools` VALUES(3302, 'Racing_Chariot', 'Racing_Chariot', 63, _binary 0x00001d0700000000000000000000000000000000, 1, 1, 12, 320, 100, 1024, 1, 0, 1, 0, 0, 0, 0, 131, 0, 0, 0, 0, 0, 63);
 INSERT INTO `mob_pools` VALUES(3303, 'Radiant_Wyvern', 'Radiant_Wyvern', 266, _binary 0x00008e0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 16, 0, 0, 6, 129, 0, 0, 0, 0, 0, 266);
 INSERT INTO `mob_pools` VALUES(3304, 'Rafflesia', 'Rafflesia', 207, _binary 0x0000e80700000000000000000000000000000000, 9, 9, 7, 240, 100, 0, 1, 0, 0, 0, 0, 0, 578, 641, 0, 0, 0, 0, 0, 207);

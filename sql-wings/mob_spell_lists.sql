@@ -1349,10 +1349,10 @@ INSERT INTO `mob_spell_lists` VALUES('Alastor_Antlion', 132, 162, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Alastor_Antlion', 132, 191, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Alastor_Antlion', 132, 210, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Alastor_Antlion', 132, 365, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 53, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 158, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 186, 1, 255);
-INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 216, 1, 255);
+INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 53, 1, 255);  -- blink (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 157, 1, 255); -- aero_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 186, 1, 255); -- aeroga_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Race_Runner', 133, 216, 1, 255); -- gravity (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Ajido_Marujido', 134, 166, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ajido_Marujido', 134, 167, 1, 255);
 INSERT INTO `mob_spell_lists` VALUES('Ajido_Marujido', 134, 171, 1, 255);

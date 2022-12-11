@@ -301,7 +301,7 @@ INSERT INTO `mob_groups` VALUES(6, 4046, 8, 'Tuchulcha', 0, 128, 0, 11000, 0, 81
 INSERT INTO `mob_groups` VALUES(7, 3827, 8, 'Swift_Hunter', 0, 128, 0, 5000, 0, 79, 79, 0);
 INSERT INTO `mob_groups` VALUES(8, 3613, 8, 'Shrewd_Hunter', 0, 128, 0, 5000, 0, 79, 79, 0);
 INSERT INTO `mob_groups` VALUES(9, 247, 8, 'Armored_Hunter', 0, 128, 0, 6000, 0, 79, 79, 0);
-INSERT INTO `mob_groups` VALUES(10, 3301, 8, 'Race_Runner', 0, 128, 0, 7000, 2000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(10, 3301, 8, 'Race_Runner', 0, 128, 0, 7000, 2000, 80, 80, 0);
 -- ENM Shell We Dance? - BONEYARD_GULLY
 INSERT INTO `mob_groups` VALUES(11, 3099, 8, 'Parata', 0, 128, 0, 11000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(12, 444, 8, 'Bladmall', 0, 128, 0, 9000, 10000, 80, 80, 0);
