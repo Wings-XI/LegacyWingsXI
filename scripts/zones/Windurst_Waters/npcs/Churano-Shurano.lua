@@ -13,6 +13,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    -- WINGSOOE magicked astrolabe
 	if not player:hasKeyItem(tpz.ki.MAGICKED_ASTROLABE) then
         local cost = 10000
         if player:getLocalVar("Astrolabe") == 0 then
