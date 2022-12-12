@@ -23,12 +23,11 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 3000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 5000)
-    mob:setLocalVar("[rage]timer", 5400) -- 90 minutes
+    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setMod(tpz.mod.UFASTCAST, 50)
 end
 
 function onMobSpawn(mob)
-
     mob:setLocalVar("BreakChance", 5)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
     mob:setMod(tpz.mod.FASTCAST, 25)
@@ -39,6 +38,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 5400) -- 90 minutes
     mob:setSpellList(296) -- Set BLM spell list
     mob:setMobMod(tpz.mobMod.NO_STANDBACK, 1)
+    mob:setMod(tpz.mod.SILENCERES, 100)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -64,10 +64,10 @@ function onMobFight(mob, target)
     end
 
     if mob:hasStatusEffect(tpz.effect.MANAFONT) == 1 then
-            mob:setMobMod(tpz.mobMod.MAGIC_COOL, 5)
-        elseif mob:hasStatusEffect(tpz.effect.MANAFONT) == 0 then
-            mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
-        end
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 5)
+    elseif mob:hasStatusEffect(tpz.effect.MANAFONT) == 0 then
+        mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
+    end
 end
 
 function onCriticalHit(mob)

@@ -17,7 +17,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setLocalVar("QuedAbility", 0)
+    mob:setLocalVar("QueuedAbility", 0)
     mob:setLocalVar("[rage]timer", 5400)
 end
 
@@ -26,16 +26,16 @@ function onMobWeaponSkillPrepare(mob, target)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local QuedAbility = mob:getLocalVar("QuedAbility")
+    local QueuedAbility = mob:getLocalVar("QueuedAbility")
 
     if skill:getID() == 2101 then
         mob:useMobAbility(2104)
     end
     if skill:getID() == 2102 then
-        mob:setLocalVar("QuedAbility", math.random(1,3))
-        if QuedAbility == 1 then
+        mob:setLocalVar("QueuedAbility", math.random(1,3))
+        if QueuedAbility == 1 then
             mob:useMobAbility(2104)
-        elseif QuedAbility == 2 or 3 then
+        elseif QueuedAbility == 2 or 3 then
             if target:isBehind(mob, 96) then
                 mob:useMobAbility(2099)
             elseif target:isInfront(mob, 90) then
@@ -45,8 +45,9 @@ function onMobWeaponSkill(target, mob, skill)
             end
         end
     end
-    if skill:getID() == 2099 or 2100 or 2104 then
-        mob:setLocalVar("QuedAbility", 0)
+    local skillID = skill:getID()
+    if skillID == 2099 or skillID == 2100 or skillID == 2104 then
+        mob:setLocalVar("QueuedAbility", 0)
     end   
 end
 

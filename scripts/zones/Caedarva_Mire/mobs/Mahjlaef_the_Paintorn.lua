@@ -38,9 +38,9 @@ local Shielded = mob:getLocalVar("Shielded")
 end
 
 function onMobFight(mob, target)
-local Shielded = mob:getLocalVar("Shielded")
-local hpp = mob:getHPP()
-local useImmortalShield = false
+    local Shielded = mob:getLocalVar("Shielded")
+    local hpp = mob:getHPP()
+    local useImmortalShield = false
 
     if (mob:getMod(tpz.mod.RAMPART_STONESKIN) == 0 and Shielded == 1 and hpp <= 30) then
         mob:useMobAbility(1969) -- AoE Dispely thing

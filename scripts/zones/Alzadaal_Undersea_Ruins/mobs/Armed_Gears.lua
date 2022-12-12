@@ -11,8 +11,7 @@ require("scripts/mobfamilies/Gears")
 
 local ID = require("scripts/zones/Alzadaal_Undersea_Ruins/IDs")
 
-local function formChange(mob)
-    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
+local function clearAbsorb(mob) -- we can use this block to "clean the slate" for absorbs and elemental def
     mob:setMod(tpz.mod.FIRE_ABSORB, 0)
     mob:setMod(tpz.mod.EARTH_ABSORB, 0)
     mob:setMod(tpz.mod.WATER_ABSORB, 0)
@@ -29,6 +28,11 @@ local function formChange(mob)
     mob:setMod(tpz.mod.THUNDERDEF, 231)
     mob:setMod(tpz.mod.LIGHTDEF, 231)
     mob:setMod(tpz.mod.DARKDEF, 231)
+end
+
+local function formChange(mob)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
+    clearAbsorb(mob)
 
     if mob:getLocalVar("State") == 1 then     -- Fire
         mob:setSpellList(554)
@@ -64,25 +68,6 @@ local function formChange(mob)
         mob:setMod(tpz.mod.LIGHTDEF, 0)
     end
     mob:setLocalVar("Dispelled", 0)
-end
-
-local function clearAbsorb(mob) -- we can use this block to "clean the slate" for absorbs and elemental def
-    mob:setMod(tpz.mod.FIRE_ABSORB, 0)
-    mob:setMod(tpz.mod.EARTH_ABSORB, 0)
-    mob:setMod(tpz.mod.WATER_ABSORB, 0)
-    mob:setMod(tpz.mod.WIND_ABSORB, 0)
-    mob:setMod(tpz.mod.ICE_ABSORB, 0)
-    mob:setMod(tpz.mod.LTNG_ABSORB, 0)
-    mob:setMod(tpz.mod.LIGHT_ABSORB, 0)
-    mob:setMod(tpz.mod.DARK_ABSORB, 0)
-    mob:setMod(tpz.mod.FIREDEF, 231)
-    mob:setMod(tpz.mod.EARTHDEF, 231)
-    mob:setMod(tpz.mod.WATERDEF, 231)
-    mob:setMod(tpz.mod.WINDDEF, 231)
-    mob:setMod(tpz.mod.ICEDEF, 231)
-    mob:setMod(tpz.mod.THUNDERDEF, 231)
-    mob:setMod(tpz.mod.LIGHTDEF, 231)
-    mob:setMod(tpz.mod.DARKDEF, 231)
 end
 
 
@@ -172,10 +157,13 @@ function onMobFight(mob, target)
             mob:setLocalVar("Dispelled", 0)
         end
     else -- We are in an element phase and missing en-spell
-        if mob:hasStatusEffect(tpz.effect.ENFIRE) == 0 and mob:hasStatusEffect(tpz.effect.ENAERO) == 0 and mob:hasStatusEffect(tpz.effect.ENSTONE) == 0 and mob:hasStatusEffect(tpz.effect.ENWATER) == 0 and mob:hasStatusEffect(tpz.effect.ENBLIZZARD) == 0 and mob:hasStatusEffect(tpz.effect.ENTHUNDER) == 0 then
-            
-        else
-            mob:setLocalVar("Dispelled", 1)
+        if not (mob:hasStatusEffect(tpz.effect.ENFIRE) or
+            mob:hasStatusEffect(tpz.effect.ENAERO) or
+            mob:hasStatusEffect(tpz.effect.ENSTONE) or
+            mob:hasStatusEffect(tpz.effect.ENWATER) or
+            mob:hasStatusEffect(tpz.effect.ENBLIZZARD) or
+            mob:hasStatusEffect(tpz.effect.ENTHUNDER)) then
+                mob:setLocalVar("Dispelled", 1)
         end
     end
         
