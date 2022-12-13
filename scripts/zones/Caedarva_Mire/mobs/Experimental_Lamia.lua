@@ -69,6 +69,7 @@ function onMobFight(mob, target)
         mob:useMobAbility(1762)
     elseif mob:getLocalVar("tailSlap") == 1 then
         -- use arrow_deluge after tail_slap, after belly dances
+        mob:setLocalVar("tailSlap", 0)
         mob:useMobAbility(1761)
     end
 end

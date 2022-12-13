@@ -17,11 +17,6 @@ function onMobDeath(mob, player, isKiller)
     mother:setLocalVar("dances", dance + 1)
 end
 
-function onMobFight(mob, target)
-    local mother = GetMobByID(ID.mob.EXPERIMENTAL_LAMIA)
-    -- adjust target if mother has enough hate?
-end
-
 function onMobRoam(mob)
     local mother = GetMobByID(ID.mob.EXPERIMENTAL_LAMIA)
     if mother:isSpawned() and mother:getCurrentAction() == tpz.act.ATTACK then
