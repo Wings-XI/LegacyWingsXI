@@ -6043,6 +6043,15 @@ namespace charutils
     void ReloadParty(CCharEntity* PChar)
     {
         TracyZoneScoped;
+
+        time_point timepointNow = std::chrono::system_clock::now();
+
+        if (timepointNow < PChar->PParty->GetLastReloadTime() + 15s) {
+            // Suppressing another party reload, something in the codebase is spamming party reloads,
+            // maybe reloadparty happens async for each member of the alliance and creates a feedback loop?
+            return;
+        }
+
         int ret = Sql_Query(SqlHandle, "SELECT partyid, allianceid, partyflag & %d FROM accounts_sessions s JOIN accounts_parties p ON "
             "s.charid = p.charid WHERE p.charid = %u;", (PARTY_SECOND | PARTY_THIRD), PChar->id);
         if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
