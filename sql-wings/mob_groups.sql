@@ -2672,7 +2672,7 @@ INSERT INTO `mob_groups` VALUES(50, 4327, 62, 'Wheel_Wamoura', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(51, 1020, 62, 'Dextrose', 0, 128, 647, 26000, 10000, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(52, 3339, 62, 'Reacton', 0, 128, 2082, 25000, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(53, 34, 62, 'Achamoth', 0, 128, 14, 38000, 0, 86, 88, 0);
-INSERT INTO `mob_groups` VALUES(54, 35, 62, 'Achamothcampa', 0, 128, 0, 8000, 0, 73, 75, 0);
+INSERT INTO `mob_groups` VALUES(54, 35, 62, 'Achamothcampa', 0, 128, 0, 4000, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(55, 36, 62, 'Achamoth_Nympha', 0, 128, 0, 12000, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(2103, 2697, 62, 'Moblin_Millionaire', 960, 0, 1712, 0, 0, 70, 75, 0);
 INSERT INTO `mob_groups` VALUES(2132, 4493, 62, 'Zazarg', 0, 0, 0, 0, 0, 0, 0, 0);
