@@ -38,34 +38,42 @@ local function formChange(mob)
         mob:setSpellList(554)
         mob:setMod(tpz.mod.FIRE_ABSORB, 100)
         mob:setMod(tpz.mod.WATERDEF, 0)
+        mob:setMod(tpz.mod.FIREDEF, 0)
     elseif mob:getLocalVar("State") == 2 then -- Earth
         mob:setSpellList(555)
         mob:setMod(tpz.mod.EARTH_ABSORB, 100)
         mob:setMod(tpz.mod.WINDDEF, 0)
+        mob:setMod(tpz.mod.EARTHDEF, 0)
     elseif mob:getLocalVar("State") == 3 then -- Water
         mob:setSpellList(556)
         mob:setMod(tpz.mod.WATER_ABSORB, 100)
         mob:setMod(tpz.mod.THUNDERDEF, 0)
+        mob:setMod(tpz.mod.WATERDEF, 0)
     elseif mob:getLocalVar("State") == 4 then -- Wind
         mob:setSpellList(557)
         mob:setMod(tpz.mod.WIND_ABSORB, 100)
         mob:setMod(tpz.mod.ICEDEF, 0)
+        mob:setMod(tpz.mod.WINDDEF, 0)
     elseif mob:getLocalVar("State") == 5 then -- Ice
         mob:setSpellList(558)
         mob:setMod(tpz.mod.ICE_ABSORB, 100)
         mob:setMod(tpz.mod.FIREDEF, 0)
+        mob:setMod(tpz.mod.ICEDEF, 0)
     elseif mob:getLocalVar("State") == 6 then -- Lightning
         mob:setSpellList(559)
         mob:setMod(tpz.mod.LTNG_ABSORB, 100)
         mob:setMod(tpz.mod.EARTHDEF, 0)
+        mob:setMod(tpz.mod.THUNDERDEF, 0)
     elseif mob:getLocalVar("State") == 7 then -- Light
         mob:setSpellList(560)
         mob:setMod(tpz.mod.LIGHT_ABSORB, 100)
         mob:setMod(tpz.mod.DARKDEF, 0)
+        mob:setMod(tpz.mod.LIGHTDEF, 0)
     else                                      -- Dark
         mob:setSpellList(561)
         mob:setMod(tpz.mod.DARK_ABSORB, 100)
         mob:setMod(tpz.mod.LIGHTDEF, 0)
+        mob:setMod(tpz.mod.DARKDEF, 0)
     end
     mob:setLocalVar("Dispelled", 0)
 end
