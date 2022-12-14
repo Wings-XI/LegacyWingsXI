@@ -33,6 +33,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../map.h"
 #include "petutils.h"
 #include "zoneutils.h"
+#include "itemutils.h"
 #include "../entities/mobentity.h"
 #include "../entities/automatonentity.h"
 #include "../ability.h"
@@ -411,48 +412,15 @@ namespace petutils
         PMob->health.hp = PMob->GetMaxHP();
         PMob->health.mp = PMob->GetMaxMP();
 
-        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
-        
         // Enables Monk swinging twice
-        // TODO: This is temporary fixes until cmbSkill, and weapon checks properly implemented for pets.
-        
         if (PMob->GetMJob() == JOB_MNK)
         {
-            PMob->addModifier(Mod::DOUBLE_ATTACK, 100);
+            // this makes the weapon swing twice, and the later "setDamage" call sets weapon dmg appropriately
+            // since we load job traits for this mnk, weapon delay is adjusted properly based on level
+            PMob->m_Weapons[SLOT_MAIN] = itemutils::GetUnarmedH2HItem();
         }
-        
-        // Adds Martial Arts trait.
-        
-        if (PMob->GetMJob() == JOB_MNK && lvl >= 75)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(300 * 1000 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(300 * 1000 / 60);
-        }
-        else if (PMob->GetMJob() == JOB_MNK && lvl >= 61)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(320 * 1000 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(320 * 1000 / 60);
-        }
-        else if (PMob->GetMJob() == JOB_MNK && lvl >= 46)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(340 * 1000 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(340 * 1000 / 60);
-        }
-        else if (PMob->GetMJob() == JOB_MNK && lvl >= 31)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(360 * 1000 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(360 * 1000 / 60);
-        }
-        else if (PMob->GetMJob() == JOB_MNK && lvl >= 16)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(380 * 1000 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(380 * 1000 / 60);
-        }
-        else if (PMob->GetMJob() == JOB_MNK && lvl >= 1)
-        {
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay(400 * 1000 / 60);
-            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay(400 * 1000 / 60);
-        }
+
+        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
 
         uint16 fSTR = GetBaseToRank(petStats->strRank, PMob->GetMLevel());
         uint16 fDEX = GetBaseToRank(petStats->dexRank, PMob->GetMLevel());
