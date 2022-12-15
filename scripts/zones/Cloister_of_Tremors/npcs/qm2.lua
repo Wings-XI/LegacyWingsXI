@@ -7,6 +7,7 @@
 -----------------------------------
 require("scripts/globals/settings")
 local ID = require("scripts/zones/Cloister_of_Tremors/IDs")
+require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
