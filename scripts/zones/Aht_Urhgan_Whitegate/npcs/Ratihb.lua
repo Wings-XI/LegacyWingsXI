@@ -16,6 +16,7 @@ end
 function onTrigger(player, npc)
     local luckOfTheDraw = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.LUCK_OF_THE_DRAW)
     local againstAllOdds = player:getQuestStatus(AHT_URHGAN, tpz.quest.id.ahtUrhgan.AGAINST_ALL_ODDS)
+    local threeMenProg = player:getCharVar("threemenandaclosetCS")
 
     if luckOfTheDraw == QUEST_AVAILABLE and player:getMainLvl() >= ADVANCED_JOB_LEVEL then
         player:startEvent(547)
@@ -25,6 +26,10 @@ function onTrigger(player, npc)
         player:startEvent(772)
     elseif againstAllOdds == QUEST_ACCEPTED and not player:hasKeyItem(tpz.ki.LIFE_FLOAT) then
         player:startEvent(604)
+    elseif threeMenProg == 4 then
+        player:startEvent(840)
+    elseif threeMenProg == 5 then
+        player:startEvent(841)
     else
         player:startEvent(603)
     end
@@ -43,5 +48,7 @@ function onEventFinish(player, csid, option)
         npcUtil.completeQuest(player, AHT_URHGAN, tpz.quest.id.ahtUrhgan.EQUIPPED_FOR_ALL_OCCASIONS, {item = 18702, var = {"EquippedforAllOccasions", "LuckOfTheDraw"}})
     elseif csid == 604 then
         npcUtil.giveKeyItem(player, tpz.ki.LIFE_FLOAT)
+    elseif csid == 840 then
+        player:setCharVar("threemenandaclosetCS", 5)
     end
 end
