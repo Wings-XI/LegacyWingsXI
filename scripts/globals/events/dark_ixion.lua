@@ -10,21 +10,27 @@ mixins = {
 }
 
 darkixion = {}
-
--- TODOs, notes, and reminders
-
--- attacks from behind dont back kick (animation wise)
--- Need to verify all zone DI luas match East Ronf [S] (the one ive worked with)
-
-
--- remove print statement
-
 -- mob:AnimationSub() -- 0 is normal || Charging is animation sub 1  || 2 is broken horn || 3 is glowing and repairs horn
 
+
+-- TODOs, notes, and reminders
+-- remove print statement
+
+
+
 -- If we can find a way for TP moves to be aimed at a point instead of player, we should.
+  -- played around with this a bit, not sure it's gonna be possible
+  -- targetfind.cpp is pretty rigid with target allegiance. I don't see a way to target the mob then include players in the range
+    -- suppose if we really wanted to do it with our system
+    -- we could make it target only himself with no aoe
+    -- then inside the WoZ lua manually get all the enemy targets in 15 yalm radius and push the skill messages and dmg manually
+    -- technically possible
+
+-- adjust as appropriate the tp gained from his autoattack skills (skill_tp + X)
 
 -- maybe lower movement speed while its roaming, or get it to stop randomly
 -- test evasion for first throw, may need to have it lowered while out of combat
+    -- lowered eva by half and have about 50% hit rate as ungeared 75 rdm with 170 throwing skill
 
   -- Make Servervar for horn status
 
@@ -315,13 +321,13 @@ darkixion.repop = function(mob)
 end
 
 darkixion.roamingMods = function(mob)
-    darkixion.endStomp(mob)
-
     -- don't take damage until the fight officially starts
     mob:setMod(tpz.mod.UDMGPHYS   , -100)
     mob:setMod(tpz.mod.UDMGBREATH , -100)
     mob:setMod(tpz.mod.UDMGMAGIC  , -100)
     mob:setMod(tpz.mod.UDMGRANGE  , -100)
+    -- easier to land ash
+    mob:setMod(tpz.mod.AGI, -1 * (mob:getStat(tpz.mod.AGI) / 2))
     local HP = GetServerVariable("DarkIxion_HP")
     if HP == 0 then
         HP = mob:getHP()
@@ -332,6 +338,10 @@ darkixion.roamingMods = function(mob)
     mob:SetMobSkillAttack(39)
     mob:setLocalVar("charging", 0)
     mob:setLocalVar("double", 0)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:setLocalVar("lastHit", 0)
+    mob:setBehaviour(0)
 end
 
 darkixion.onZoneInit = function(zone)
@@ -376,9 +386,9 @@ end
 
 darkixion.onMobDespawn = function(mob)
     DisallowRespawn(mob:getID())
+    darkixion.repop(mob)
     if mob:getLocalVar("wasKilled") == 1 then
-        darkixion.repop(mob)
-        SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death same zone
+        SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death
     end
 end
 
@@ -420,18 +430,24 @@ end
 
 
 darkixion.onMobWeaponSkillPrepare = function(mob, target)
+    -- skill unknown, tp still there
+    -- preserve tp from melee swings, from SetMobSkillAttack
+    mob:setLocalVar("skill_tp", mob:getTP() + 24) -- give tp for the auto attack
 end
 
 darkixion.onMobWeaponSkill = function(target, mob, skill)
-   
+    -- skill chosen, tp already wiped
 end
 
 darkixion.onMobSkillFinished = function(mob, target, skill)
+    -- skill finished
 
     if skill:getID() == 2336 then
         mob:setBehaviour(0)
     end
     -- Below handels the charge > zap logic, including if DI is glowing
+    -- zap -> lightning spear
+    -- zap2 -> Wrath of Zeus
     if skill:getID() == 2345 then
         if mob:getLocalVar("double") == 0 then  
             mob:setLocalVar("zap", 1)
@@ -479,10 +495,14 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
             mob:setLocalVar("horn", os.time() + 5)
         end
     end
-    -- Lets keep count of how many auto attacks we have done
+
+    -- Lets keep count of how many auto attacks we have done, and wipe localvar for tp if this wasn't an autoattack
     if skill:getID() == 2340 or skill:getID() == 2341 then
         mob:setLocalVar("Hits",mob:getLocalVar("Hits")+1)
+        -- restore tp from melee swings, from SetMobSkillAttack
+        mob:addTP(mob:getLocalVar("skill_tp"))
     end
+    mob:setLocalVar("skill_tp", 0)
 end
 
 darkixion.onMobRoamAction = function(mob)
@@ -523,6 +543,8 @@ darkixion.onMobEngaged = function(mob, target)
     mob:setMod(tpz.mod.UDMGBREATH , 0)
     mob:setMod(tpz.mod.UDMGMAGIC  , 0)
     mob:setMod(tpz.mod.UDMGRANGE  , 0)
+    -- revert agi back for fight
+    mob:setMod(tpz.mod.AGI, 0)
     mob:setLocalVar("run", 0)
     mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
     mob:speed(70) -- movement +75% = 40 * 1.75
@@ -546,10 +568,9 @@ end
 
 darkixion.onMobFight = function(mob, target) 
     -- Since its autos are technically TP moves, lets deal with the other fancy stuff here
-
-    if (mob:getLocalVar("Hits") >= 15 and mob:getHPP() > 66) or -- basically want to pretend DI is building tp
-       (mob:getLocalVar("Hits") >= 10 and mob:getHPP() > 33) or
-       (mob:getLocalVar("Hits") >= 5 and mob:getHPP() > 0) then
+    if (mob:getTP() >= 2900 and mob:getHPP() > 66) or
+       (mob:getTP() >= 1900 and mob:getHPP() > 33) or
+       (mob:getTP() >= 900 and mob:getHPP() > 0) then
         mob:setLocalVar("timeToWS", 1)
         mob:setLocalVar("Hits", 0)
     end
@@ -605,14 +626,14 @@ darkixion.onMobFight = function(mob, target)
    -- This is called after charging to either perform WoZ or LS
     if mob:getLocalVar("zap2") >= 1 and os.time() >= mob:getLocalVar("zapTime2") and mob:AnimationSub() ~= 1 then
         mob:setLocalVar("zap2", mob:getLocalVar("zap2") - 1)
-        mob:setTP(0)
+        mob:setTP(0) -- in case skill gets ranged, still reset TP
         mob:useMobAbility(2334)
         mob:setLocalVar("zapTime2", os.time()+7)
     end
 
     if mob:getLocalVar("zap") >= 1 and os.time() >= mob:getLocalVar("zapTime") and mob:AnimationSub() ~= 1 then
         mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
-        mob:setTP(0)
+        mob:setTP(0) -- in case skill gets ranged, still reset TP
             
         local targets = {}
         local nearbyPlayers = mob:getPlayersInRange(20)
@@ -629,7 +650,7 @@ darkixion.onMobFight = function(mob, target)
         if (#targets) > 0 then 
             local target = targets[math.random(#targets)]
             mob:lookAt(target:getPos())
-            mob:useMobAbility(2335, target)                
+            mob:useMobAbility(2335, target)
             mob:setLocalVar("zapTime", os.time()+7)
         end
     end
@@ -659,7 +680,7 @@ darkixion.onMobFight = function(mob, target)
         mob:setLocalVar("sub", 0)
     end
 
-    -- Everything below deals with his charge attack
+    -- Everything below deals with his charge attack (trample)
 
     if mob:getLocalVar("run") >= 1 and os.time() >= mob:getLocalVar("runTime") and mob:getLocalVar("charging") == 0 and mob:AnimationSub() ~= 3 then
         darkixion.itsStompinTime(mob)

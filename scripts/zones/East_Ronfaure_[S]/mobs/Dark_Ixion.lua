@@ -40,6 +40,10 @@ function onMobWeaponSkill(target, mob, skill)
     darkixion.onMobWeaponSkill(target, mob, skill)
 end
 
+function onMobSkillFinished(mob, target, skill)
+    darkixion.onMobSkillFinished(mob, target, skill)
+end
+
 function onMobRoamAction(mob)
     darkixion.onMobRoamAction(mob)
 end
@@ -59,6 +63,3 @@ end
 function onMobFight(mob, target)
     darkixion.onMobFight(mob, target)
 end
-function onMobSkillFinished(mob, target, skill)
-    darkixion.onMobSkillFinished(mob, target, skill)
-end 
