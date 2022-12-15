@@ -314,6 +314,26 @@ darkixion.repop = function(mob)
     SetServerVariable("DarkIxion_PopTime", os.time() + math.random(1, 15 * 60)) -- based on onGameHour function timing
 end
 
+darkixion.roamingMods = function(mob)
+    darkixion.endStomp(mob)
+
+    -- don't take damage until the fight officially starts
+    mob:setMod(tpz.mod.UDMGPHYS   , -100)
+    mob:setMod(tpz.mod.UDMGBREATH , -100)
+    mob:setMod(tpz.mod.UDMGMAGIC  , -100)
+    mob:setMod(tpz.mod.UDMGRANGE  , -100)
+    local HP = GetServerVariable("DarkIxion_HP")
+    if HP == 0 then
+        HP = mob:getHP()
+        SetServerVariable("DarkIxion_HP", HP)
+    end
+    mob:setHP(HP)
+
+    mob:SetMobSkillAttack(39)
+    mob:setLocalVar("charging", 0)
+    mob:setLocalVar("double", 0)
+end
+
 darkixion.onZoneInit = function(zone)
     local ixionID = darkixion.zoneinfo[zone:getID()].mobID
     local ixionZoneID = GetServerVariable("DarkIxion_ZoneID")
@@ -335,8 +355,9 @@ darkixion.onZoneGameHour = function(zone)
     local ixion = GetMobByID(ixionID)
 	if not ixion:isSpawned() and
 		GetServerVariable("DarkIxion_ZoneID") == zone:getID() and
-		GetServerVariable("DarkIxion_PopTime") < os.time() then
-			SpawnMob(ixionID)
+		GetServerVariable("DarkIxion_PopTime") < os.time() - 45 then
+            -- if gamehour flip is within 45s, randomly spawn within next twice that
+			ixion:setRespawnTime(math.random(0,90))
     elseif ixion:isSpawned() and GetServerVariable("DarkIxion_ZoneID") ~= zone:getID() then
         -- really shouldn't be possible, but catch just in case
         ixion:disengage()
@@ -354,6 +375,7 @@ darkixion.onMobDeath = function(mob, player, isKiller)
 end
 
 darkixion.onMobDespawn = function(mob)
+    DisallowRespawn(mob:getID())
     if mob:getLocalVar("wasKilled") == 1 then
         darkixion.repop(mob)
         SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death same zone
@@ -383,16 +405,14 @@ darkixion.onMobInitialize = function(mob)
 end
 
 darkixion.onMobSpawn = function(mob)
+    darkixion.roamingMods(mob)
     SetServerVariable("DarkIxion_PopTime", os.time())
     mob:setLocalVar("wasKilled", 0)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.STUNRES, 100)
-    mob:setLocalVar("charging", 0)
-    mob:setLocalVar("double", 0)
     mob:hideHP(true)
     mob:setLocalVar("sub", 0)
-    mob:SetMobSkillAttack(39)
 
     mob:setMobMod(tpz.mobMod.NO_REST, 10)
     mob:setAggressive(1)
@@ -469,22 +489,10 @@ darkixion.onMobRoamAction = function(mob)
 end
 
 darkixion.onMobRoam = function(mob)
-    -- don't take damage until the fight officially starts
-    mob:setMod(tpz.mod.UDMGPHYS   , -100)
-    mob:setMod(tpz.mod.UDMGBREATH , -100)
-    mob:setMod(tpz.mod.UDMGMAGIC  , -100)
-    mob:setMod(tpz.mod.UDMGRANGE  , -100)
-    local HP = GetServerVariable("DarkIxion_HP")
-    if HP == 0 then
-        HP = mob:getHP()
-        SetServerVariable("DarkIxion_HP", HP)
-    end
-    mob:setHP(HP)
     if mob:getLocalVar("RunAway") ~= 0 and mob:getLocalVar("RunAway") + 60 < os.time()
         or  GetServerVariable("DarkIxion_PopTime") < os.time() - 24 * 60 * 60
         then
             -- time to repop somewhere else
-            printf("vars %u %u", mob:getLocalVar("RunAway"), GetServerVariable("DarkIxion_PopTime"))
             darkixion.repop(mob)
     elseif mob:getLocalVar("RunAway") ~= 0 then
         -- run fast before repopping
@@ -494,7 +502,7 @@ darkixion.onMobRoam = function(mob)
     end
 
 
-    if math.random(1000) < 5 or mob:getLocalVar("RunAway") > os.time() then
+    if math.random(1000) < 10 or mob:getLocalVar("RunAway") > os.time() then
         -- low chance to reverse path or if RunAway is later than now just stand still for a bit
         if mob:isFollowingPath() then
             tpz.path.patrolsimple(mob, darkixion.zoneinfo[mob:getZoneID()].pathList, tpz.path.flag.REVERSE)
@@ -506,6 +514,7 @@ darkixion.onMobRoam = function(mob)
 end
 
 darkixion.onMobEngaged = function(mob, target)
+    darkixion.roamingMods(mob)
     -- if stygian ash missed or aggro via any other means, immediately disengage (even if hearing aggro "If you get too close, DI runs away")
     if mob:getLocalVar("StygianLanded") ~= 1 then
         mob:disengage()
@@ -520,6 +529,8 @@ darkixion.onMobEngaged = function(mob, target)
 end
 
 darkixion.onMobDisengage = function(mob)
+    SetServerVariable("DarkIxion_HP", mob:getHP())
+    darkixion.roamingMods(mob)
     if mob:getLocalVar("RunAway") == 0 then
         -- disengage, give one window of him standing still unclaimed before "Running away"
         mob:setLocalVar("RunAway", os.time() + 15)
@@ -531,7 +542,6 @@ darkixion.onMobDisengage = function(mob)
     -- no chance of him staying in this zone unless an ash is landed before he runs away and despawns
     mob:setAggressive(0)
     mob:setLocalVar("StygianLanded", 0)
-    SetServerVariable("DarkIxion_HP", mob:getHP())
 end
 
 darkixion.onMobFight = function(mob, target) 
