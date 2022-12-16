@@ -311,6 +311,7 @@ darkixion.itsStompinTime = function(mob)
 end
 
 darkixion.repop = function(mob)
+    printf("repop")
     DespawnMob(mob:getID())
     local keys = {}
     for k in pairs(darkixion.zoneinfo) do table.insert(keys, k) end
@@ -363,7 +364,10 @@ end
 darkixion.onZoneGameHour = function(zone)
     local ixionID = darkixion.zoneinfo[zone:getID()].mobID
     local ixion = GetMobByID(ixionID)
-	if not ixion:isSpawned() and
+    if GetServerVariable("DarkIxion_ZoneID") == zone:getID() and GetServerVariable("DarkIxion_PopTime") < os.time() - 24 * 60 * 60 then
+        -- wander logic in onGameHour so even zones with no players can hold DI and cycle him out
+        darkixion.repop(ixion)
+	elseif not ixion:isSpawned() and
 		GetServerVariable("DarkIxion_ZoneID") == zone:getID() and
 		GetServerVariable("DarkIxion_PopTime") < os.time() - 45 then
             -- if gamehour flip is within 45s, randomly spawn within next twice that
@@ -514,7 +518,6 @@ end
 
 darkixion.onMobRoam = function(mob)
     if mob:getLocalVar("RunAway") ~= 0 and mob:getLocalVar("RunAway") + 60 < os.time()
-        or  GetServerVariable("DarkIxion_PopTime") < os.time() - 24 * 60 * 60
         then
             -- time to repop somewhere else
             darkixion.repop(mob)
@@ -718,8 +721,9 @@ darkixion.onMobFight = function(mob, target)
     end
 
     -- TODO: Remove this when fight is tuned
-    -- reset hp to full if below 40%
+    -- reset hp to full and run away if below 40%
     if mob:getHPP() < 40 then
         mob:setHP(mob:getMaxHP())
+        mob:disengage()
     end
 end
