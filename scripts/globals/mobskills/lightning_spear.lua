@@ -22,6 +22,10 @@ end
 
 
 function onMobWeaponSkill(target, mob, skill)
+    if target:getName() == "Dark_Ixion" then
+        skill:setMsg(0)
+        return
+    end
     local typeEffect = tpz.effect.AMNESIA
     local duration = math.random(30, 120)
     
