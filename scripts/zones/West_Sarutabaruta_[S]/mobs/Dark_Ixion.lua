@@ -1,7 +1,7 @@
 -----------------------------------
 --  Mob: Dark Ixion
 -----------------------------------
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)

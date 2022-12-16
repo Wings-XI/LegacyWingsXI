@@ -5,7 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Batallia_Downs_[S]/IDs")
 require("scripts/globals/conquest")
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)

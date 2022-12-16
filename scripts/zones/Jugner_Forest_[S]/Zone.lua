@@ -8,7 +8,7 @@ require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/globals/quests")
 require("scripts/globals/helm")
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)

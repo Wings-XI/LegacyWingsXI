@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Fort_Karugo-Narugo_[S]/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/status")
 require("scripts/globals/helm")
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
