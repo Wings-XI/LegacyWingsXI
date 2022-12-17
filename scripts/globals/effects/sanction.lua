@@ -16,7 +16,7 @@ function onEffectGain(target, effect)
     elseif power == 2 then
         target:addLatent(tpz.latent.SANCTION_REFRESH_BONUS, 75, tpz.mod.REFRESH, 1)
     elseif power == 3 then
-        target:addMod(tpz.mod.FOOD_DURATION, 100)
+        target:addMod(tpz.mod.FOOD_DURATION, 100) -- WINGSCUSTOM food duration in any zone
     end
 end
 

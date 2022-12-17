@@ -20,13 +20,13 @@ function onEffectGain(target, effect)
     end
 
     if (power >= 4 and power <= 7) then
-        target:addMod(tpz.mod.FOOD_DURATION, 100)
+        target:addMod(tpz.mod.FOOD_DURATION, 100) -- WINGSCUSTOM food duration in any zone
     elseif (power >= 8 and power <= 11) then
         -- target:addMod(tpz.mod.EXPLOSS_REDUCTION), ???)
         -- exp loss reduction not implemented.
     elseif (power >= 12) then
         -- Possibly handle exp loss reduction in core instead..Maybe the food bonus also?
-        target:addMod(tpz.mod.FOOD_DURATION, 100)
+        target:addMod(tpz.mod.FOOD_DURATION, 100) -- WINGSCUSTOM food duration in any zone
         -- target:addLatent(LATENT_SIGIL_EXPLOSS, ?, MOD_EXPLOSS_REDUCTION, ?)
         -- exp loss reduction not implemented.
     end
