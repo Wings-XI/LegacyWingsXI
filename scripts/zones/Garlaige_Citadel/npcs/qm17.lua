@@ -14,9 +14,10 @@ end
 
 function onTrigger(player, npc)
     -- WINGSOOE pouch of weighted stones
-    if (player:hasKeyItem(tpz.ki.POUCH_OF_WEIGHTED_STONES) == false) then
-        player:addKeyItem(tpz.ki.POUCH_OF_WEIGHTED_STONES)
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.POUCH_OF_WEIGHTED_STONES)
+    if (KEY_ITEMS_FOR_SOLO_GATE_BREACH == 1 and
+        player:hasKeyItem(tpz.ki.POUCH_OF_WEIGHTED_STONES) == false) then
+            player:addKeyItem(tpz.ki.POUCH_OF_WEIGHTED_STONES)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.POUCH_OF_WEIGHTED_STONES)
     else
 
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)

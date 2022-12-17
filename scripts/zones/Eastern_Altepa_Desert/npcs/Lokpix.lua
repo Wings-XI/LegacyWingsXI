@@ -21,12 +21,14 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if (player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.OPEN_SESAME) == QUEST_AVAILABLE) then
-        player:startEvent(20)
-    elseif (player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.OPEN_SESAME) == QUEST_ACCEPTED) then
-        player:startEvent(21)
-    elseif (player:hasCompletedQuest(OUTLANDS, tpz.quest.id.outlands.OPEN_SESAME)) then
-        player:startEvent(24)
+    if KEY_ITEMS_FOR_SOLO_GATE_BREACH == 1 then
+        if (player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.OPEN_SESAME) == QUEST_AVAILABLE) then
+            player:startEvent(20)
+        elseif (player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.OPEN_SESAME) == QUEST_ACCEPTED) then
+            player:startEvent(21)
+        elseif (player:hasCompletedQuest(OUTLANDS, tpz.quest.id.outlands.OPEN_SESAME)) then
+            player:startEvent(24)
+        end
     end
 end
 
