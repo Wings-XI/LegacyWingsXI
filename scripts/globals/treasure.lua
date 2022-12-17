@@ -28,6 +28,18 @@ local keyType =
     LIVING_KEY    = 4,
 }
 
+local rse_map =
+{
+    [tpz.race.HUME_M]   = {12654, 12761, 12871, 13015},
+    [tpz.race.HUME_F]   = {12655, 12762, 12872, 13016},
+    [tpz.race.ELVAAN_M] = {12656, 12763, 12873, 13017},
+    [tpz.race.ELVAAN_F] = {12657, 12764, 12874, 13018},
+    [tpz.race.TARU_M]   = {12658, 12765, 12875, 13019},
+    [tpz.race.TARU_F]   = {12658, 12765, 12875, 13019},
+    [tpz.race.MITHRA]   = {12659, 12766, 12876, 13020},
+    [tpz.race.GALKA]    = {12660, 12767, 12877, 13021},
+}
+
 local treasureInfo =
 {
     [tpz.treasure.type.CHEST] =
@@ -473,7 +485,11 @@ local treasureInfo =
                     },
                     {
                         test = function(player)
-                            return player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR) >= QUEST_ACCEPTED and VanadielRSELocation() == 0 and VanadielRSERace() == player:getRace() and not player:hasKeyItem(tpz.ki.MAGICAL_PATTERN)
+                            return player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR) >= QUEST_ACCEPTED and
+                                VanadielRSELocation() == 0 and
+                                VanadielRSERace() == player:getRace() and
+                                not player:hasKeyItem(tpz.ki.MAGICAL_PATTERN) and
+                                player:getCharVar("GoblinTailorProgress") < 15
                         end,
                         code = function(player) npcUtil.giveKeyItem(player, tpz.ki.MAGICAL_PATTERN) end,
                     },
@@ -541,7 +557,11 @@ local treasureInfo =
                 {
                     {
                         test = function(player)
-                            return player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR) >= QUEST_ACCEPTED and VanadielRSELocation() == 1 and VanadielRSERace() == player:getRace() and not player:hasKeyItem(tpz.ki.MAGICAL_PATTERN)
+                            return player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR) >= QUEST_ACCEPTED and
+                                VanadielRSELocation() == 1 and
+                                VanadielRSERace() == player:getRace() and
+                                not player:hasKeyItem(tpz.ki.MAGICAL_PATTERN) and
+                                player:getCharVar("GoblinTailorProgress") < 15
                         end,
                         code = function(player) npcUtil.giveKeyItem(player, tpz.ki.MAGICAL_PATTERN) end,
                     },
@@ -607,7 +627,11 @@ local treasureInfo =
                 {
                     {
                         test = function(player)
-                            return player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR) >= QUEST_ACCEPTED and VanadielRSELocation() == 2 and VanadielRSERace() == player:getRace() and not player:hasKeyItem(tpz.ki.MAGICAL_PATTERN)
+                            return player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR) >= QUEST_ACCEPTED and
+                                VanadielRSELocation() == 2 and
+                                VanadielRSERace() == player:getRace() and
+                                not player:hasKeyItem(tpz.ki.MAGICAL_PATTERN) and
+                                player:getCharVar("GoblinTailorProgress") < 15
                         end,
                         code = function(player) npcUtil.giveKeyItem(player, tpz.ki.MAGICAL_PATTERN) end,
                     },
@@ -1530,6 +1554,5 @@ tpz.treasure.onTrigger = function(player, chestType)
     local zoneId = player:getZoneID()
     local msgBase = zones[zoneId].text.CHEST_UNLOCKED
     local info = treasureInfo[chestType].zone[zoneId]
-
     player:messageSpecial(msgBase + 7, info.key)
 end
