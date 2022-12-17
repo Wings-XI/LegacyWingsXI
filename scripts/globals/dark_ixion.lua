@@ -247,7 +247,8 @@ darkixion.zoneinfo =
 darkixion.endStomp = function(mob)
     mob:setLocalVar("charging", 0)
     mob:AnimationSub(mob:getLocalVar("sub"))
-    mob:setMod(tpz.mod.MOVE, 70)
+    mob:speed(70)
+    -- mob:setMod(tpz.mod.MOVE, 70)
     mob:SetAutoAttackEnabled(true)
     mob:SetMobAbilityEnabled(true)
     mob:setLocalVar("lastHit", 0)
@@ -264,7 +265,8 @@ darkixion.itsStompinTime = function(mob)
     hitList = {}
     mob:setLocalVar("charging", 1)
     mob:AnimationSub(1)
-    mob:setMod(tpz.mod.MOVE, 60)
+    -- mob:setMod(tpz.mod.MOVE, 60)
+    mob:speed(60)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
     mob:SetMagicCastingEnabled(false)
@@ -304,14 +306,13 @@ darkixion.itsStompinTime = function(mob)
         end
 
         mob:lookAt(target:getPos())
-        mob:pathTo(pos.x, pos.y, pos.z, 9)
+        mob:pathTo(pos.x, pos.y, pos.z, tpz.path.flag.WALLHACK + tpz.path.flag.RUN + tpz.path.flag.SCRIPT + tpz.path.flag.SLIDE)
     else
         darkixion.endStomp(mob)
     end
 end
 
 darkixion.repop = function(mob)
-    printf("repop")
     DespawnMob(mob:getID())
     local keys = {}
     for k in pairs(darkixion.zoneinfo) do table.insert(keys, k) end
@@ -436,41 +437,36 @@ end
 darkixion.onMobWeaponSkillPrepare = function(mob, target)
     -- skill unknown, tp still there
     -- preserve tp from melee swings, from SetMobSkillAttack
-    mob:setLocalVar("skill_tp", mob:getTP() + 24) -- give tp for the auto attack
+    mob:setLocalVar("skill_tp", mob:getTP() + 64) -- give tp for the auto attack (confirmed by not replacing autos with mobskilllist)
 end
 
 darkixion.onMobWeaponSkill = function(target, mob, skill)
     -- skill chosen, tp already wiped
+    if not (skill:getID() == 2340 or skill:getID() == 2341) then
+        -- add slight delay to WS selection if not an autoattack
+        mob:setLocalVar("timeSinceWS", os.time())
+    end
 end
 
 darkixion.onMobSkillFinished = function(mob, target, skill)
     -- skill finished
 
-    -- if skill:getID() == 2336 then
+    -- don't reset behavior for di_trample
+    if skill:getID() ~= 2339 then
         mob:setBehaviour(0)
-    -- end
+    end
 
     -- Below handles the charge > zap logic, including if DI is glowing
     -- zap -> lightning spear
     -- zap2 -> Wrath of Zeus
     if skill:getID() == 2345 then
-        if mob:getLocalVar("double") == 0 then  
-            mob:setLocalVar("zap", 1)
-            mob:setLocalVar("zapTime", os.time()+5)
-        else
-            mob:setLocalVar("zap", 2)
-            mob:setLocalVar("zapTime", os.time()+5)
-        end
+        mob:setLocalVar("zap", mob:getLocalVar("double") == 1 and 2 or 1)
+        mob:setLocalVar("zapTime", os.time()+5)
     end
 
     if skill:getID() == 2344 then
-        if mob:getLocalVar("double") == 0 then  
-            mob:setLocalVar("zap2", 1)
-            mob:setLocalVar("zapTime2", os.time()+5)
-        else
-            mob:setLocalVar("zap2", 2)
-            mob:setLocalVar("zapTime2", os.time()+5)
-        end  
+        mob:setLocalVar("zap2", mob:getLocalVar("double") == 1 and 2 or 1)
+        mob:setLocalVar("zapTime2", os.time()+5)
     end
 
     -- determine if we want to run soon, do it randomly off autos, more frequent and more runs when low
@@ -501,10 +497,10 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
         end
     end
 
-    -- Lets keep count of how many auto attacks we have done, and wipe localvar for tp if this wasn't an autoattack
+    -- Lets keep count of how many auto attacks we have done and wipe localvar for tp for next mobskill
     if skill:getID() == 2340 or skill:getID() == 2341 then
         mob:setLocalVar("Hits",mob:getLocalVar("Hits")+1)
-        -- restore tp from melee swings, from SetMobSkillAttack
+        -- restore tp to emulate tp gain from melee swings, from SetMobSkillAttack
         mob:addTP(mob:getLocalVar("skill_tp"))
     else
         -- add slight delay to WS selection if not an autoattack
@@ -575,9 +571,10 @@ end
 
 darkixion.onMobFight = function(mob, target) 
     -- Since its autos are technically TP moves, lets deal with the other fancy stuff here
-    if (mob:getTP() >= 2900 and mob:getHPP() > 66) or
+    if ((mob:getTP() >= 2900 and mob:getHPP() > 66) or
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
-       (mob:getTP() >= 900 and mob:getHPP() > 0) then
+       (mob:getTP() >= 900 and mob:getHPP() > 0)) and
+       mob:getLocalVar("timeSinceWS") < os.time() - 3 then
         mob:setLocalVar("timeToWS", 1)
         mob:setLocalVar("Hits", 0)
     end
@@ -591,6 +588,9 @@ darkixion.onMobFight = function(mob, target)
         else
             if WS == 1 then 
                 mob:useMobAbility(2338, mob) -- Rampant Stance
+                if mob:getLocalVar("double") == 1 then
+                    mob:useMobAbility(2338, mob) -- Rampant Stance
+                end
             elseif WS == 2 then 
                 mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
                 local Mx = mob:getXPos()
@@ -601,60 +601,44 @@ darkixion.onMobFight = function(mob, target)
                 local Dx = Tx - Mx
                 local Dz = Tz - Mz
                 local away = {x = Mx-Dx, y = My, z = Mz-Dz}
-                mob:lookAt(away)   
+                mob:lookAt(away)
                 mob:useMobAbility(2336, mob) -- Acheron Kick
+                if mob:getLocalVar("double") == 1 then
+                    -- since no_turn is enabled, no need to change position again, just do it back to back
+                    mob:useMobAbility(2336, mob) -- Acheron Kick
+                end
             elseif WS == 3 then 
                 mob:useMobAbility(2344) -- Wrath of Zeus (target the glow first, then real WS)
             elseif WS == 4 then 
                 mob:useMobAbility(2345) -- Lightning Spear (target the glow first, then real WS)
             end
         end
+    else
 
-        if mob:getLocalVar("double") == 1 and (WS == 1 or WS == 2) then
-            if WS == 1 then
-                mob:useMobAbility(2338, mob) -- Rampant Stance
-            elseif WS == 2 then
-                mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
-                local Mx = mob:getXPos()
-                local Mz = mob:getZPos()
-                local My = mob:getYPos()
-                local Tx = target:getXPos()
-                local Tz = target:getZPos()
-                local Dx = Tx - Mx
-                local Dz = Tz - Mz
-                local away = {x = Mx-Dx, y = My, z = Mz-Dz}
-                mob:lookAt(away)  
-                mob:useMobAbility(2336, mob)
-            end
+
+        -- This is called after charging to either perform WoZ (zap2) or LS (zap)
+        if mob:getLocalVar("zap2") >= 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 and os.time() >= mob:getLocalVar("zapTime2") and mob:AnimationSub() ~= 1 then
+            mob:setLocalVar("zap2", mob:getLocalVar("zap2") - 1)
+            mob:setTP(0)
+            mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
+            mob:useMobAbility(2334, mob)
+            mob:setLocalVar("zapTime2", os.time()+7)
         end
-        mob:clearPath()
-    end
 
-
-   -- This is called after charging to either perform WoZ (zap2) or LS (zap)
-    if mob:getLocalVar("zap2") >= 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 and os.time() >= mob:getLocalVar("zapTime2") and mob:AnimationSub() ~= 1 then
-        mob:setLocalVar("zap2", mob:getLocalVar("zap2") - 1)
-        mob:setTP(0) -- in case skill gets ranged, still reset TP
-        mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
-        mob:useMobAbility(2334, mob)
-        mob:clearPath()
-        mob:setLocalVar("zapTime2", os.time()+7)
-    end
-
-    if mob:getLocalVar("zap") >= 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 and os.time() >= mob:getLocalVar("zapTime") and mob:AnimationSub() ~= 1 then
-        mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
-        mob:setTP(0) -- in case skill gets ranged, still reset TP
-        mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
-        local Mx = mob:getXPos()
-        local Mz = mob:getZPos()
-        local My = mob:getYPos()
-        local Dx = math.random(-4,4)
-        local Dz = math.random(-4,4)
-        local away = {x = Mx-Dx, y = My, z = Mz-Dz}
-        mob:lookAt(away)
-        mob:useMobAbility(2335, mob)
-        mob:clearPath()
-        mob:setLocalVar("zapTime", os.time()+7)
+        if mob:getLocalVar("zap") >= 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 and os.time() >= mob:getLocalVar("zapTime") and mob:AnimationSub() ~= 1 then
+            mob:setLocalVar("zap", mob:getLocalVar("zap") - 1)
+            mob:setTP(0)
+            mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
+            local Mx = mob:getXPos()
+            local Mz = mob:getZPos()
+            local My = mob:getYPos()
+            local Dx = math.random(-4,4)
+            local Dz = math.random(-4,4)
+            local away = {x = Mx-Dx, y = My, z = Mz-Dz}
+            mob:lookAt(away)
+            mob:useMobAbility(2335, mob)
+            mob:setLocalVar("zapTime", os.time()+7)
+        end
     end
 
     
@@ -689,35 +673,36 @@ darkixion.onMobFight = function(mob, target)
         mob:setTP(0)
     end
 
-    if mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) >= 3 then
+    if mob:getLocalVar("charging") == 1 then
+        if mob:checkDistance(pos) >= 3 then
+            local nearbyPlayers = mob:getPlayersInRange(4)
+            if nearbyPlayers == nil then return end
 
-        local nearbyPlayers = mob:getPlayersInRange(4)
-        if nearbyPlayers == nil then return end
+            for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he runs
+                mob:setLocalVar("stomp", 0)
 
-        for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he runs
-            mob:setLocalVar("stomp", 0)
-
-            local dork = nearbyPlayers[aa]
-            if dork:isAlive() then
-                local nextHit = dork:getID()
-                if (#hitList) == 0 then
-                    table.insert(hitList, nextHit)
-                    mob:useMobAbility(2339, nextHit) -- trample
-                else
-                    for v = 1, (#hitList) do
-                        if hitList[v] == nextHit then
-                            mob:setLocalVar("stomp", mob:getLocalVar("stomp")+1)
-                        end
-                    end
-                    if mob:getLocalVar("stomp") == 0 then
-                        mob:useMobAbility(2339, dork) -- trample
+                local dork = nearbyPlayers[aa]
+                if dork:isAlive() then
+                    local nextHit = dork:getID()
+                    if (#hitList) == 0 then
                         table.insert(hitList, nextHit)
+                        mob:useMobAbility(2339, nextHit) -- trample
+                    else
+                        for v = 1, (#hitList) do
+                            if hitList[v] == nextHit then
+                                mob:setLocalVar("stomp", mob:getLocalVar("stomp")+1)
+                            end
+                        end
+                        if mob:getLocalVar("stomp") == 0 then
+                            mob:useMobAbility(2339, dork) -- trample
+                            table.insert(hitList, nextHit)
+                        end
                     end
                 end
             end
+        elseif mob:checkDistance(pos) < 2 then
+            darkixion.endStomp(mob)
         end
-    elseif mob:getLocalVar("charging") == 1 and mob:checkDistance(pos) < 2 then
-        darkixion.endStomp(mob)
     end
 
     -- TODO: Remove this when fight is tuned
