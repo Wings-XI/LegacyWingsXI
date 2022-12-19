@@ -7,6 +7,7 @@
 -----------------------------------
 require("scripts/globals/settings")
 local ID = require("scripts/zones/Cloister_of_Tremors/IDs")
+require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
@@ -17,12 +18,7 @@ function onTrigger(player, npc)
 
     -- Give Player a Tremorstone if they don't have one
     if (player:hasItem(TREMORSTONE) == false) then
-        if (player:getFreeSlotsCount() == 0) then
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, TREMORSTONE)
-        else
-            player:addItem(TREMORSTONE)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, TREMORSTONE)
-        end
+        npcUtil.giveItem(player, TREMORSTONE)
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     end
