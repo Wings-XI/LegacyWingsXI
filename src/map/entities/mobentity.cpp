@@ -1676,6 +1676,11 @@ void CMobEntity::PixieTryHealPlayer(CCharEntity* PChar)
         // Must be able to detect the player to cast
         return;
     }
+    if (PAI->IsEngaged())
+    {
+        // WINGSCUSTOM Don't cure or raise players while pixie is engaged
+        return;
+    }
     if (PChar->isDead()) {
         spell = SpellID::Raise_III;
     }
