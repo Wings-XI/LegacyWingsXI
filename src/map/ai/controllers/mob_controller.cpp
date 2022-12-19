@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -141,7 +141,7 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
 
 void CMobController::TryLink()
 {
-    // only try links if engaged and every 4 server ticks
+    // only try links if engaged and every few server ticks
     if (PTarget == nullptr || ++m_TryLinkSkippedTicks < TRY_LINK_TICK_FREQUENCY)
     {
         return;
@@ -195,7 +195,9 @@ void CMobController::TryLink()
         }
     }
 
-    if (PMob->getMobMod(MOBMOD_ATTRACT_FAMILY_NM))
+    // WINGSCUSTOM - Pixies who can heal player characters superlink with others of the same family (if the player aggros pixies due to personal pixie hate)
+    // family linking with NM or Pixie superlinking
+    if (PMob->getMobMod(MOBMOD_ATTRACT_FAMILY_NM) || PMob->getMobMod(MOBMOD_PIXIE))
     {
         uint16 family = PMob->m_Family;
         position_t locp = PMob->loc.p;
@@ -203,8 +205,19 @@ void CMobController::TryLink()
         CBattleEntity* PTarg = PTarget;
         zoneutils::GetZone(PMob->getZone())->ForEachMob([&family, &locp, &superlink, &PTarg](CMobEntity* Pnm)
             {
-            if (Pnm->m_Type & MOBTYPE_NOTORIOUS && Pnm->m_Family == family && Pnm->PAI->IsRoaming() &&
-                Pnm->CanLink(&locp, superlink))
+                CCharEntity* PChar = nullptr;
+                if (PTarg->PMaster != nullptr)
+                {
+                    PChar = static_cast<CCharEntity*>(PTarg->PMaster);
+                }
+                else if (PTarg->objtype == TYPE_PC){
+                    PChar = static_cast<CCharEntity*>(PTarg);
+                }
+            if ((Pnm->m_Type & MOBTYPE_NOTORIOUS ||
+                    Pnm->getMobMod(MOBMOD_PIXIE)) &&
+                Pnm->m_Family == family && Pnm->PAI->IsRoaming() &&
+                (Pnm->CanLink(&locp, superlink) ||
+                    (Pnm->getMobMod(MOBMOD_PIXIE) && PChar != nullptr && PChar->m_pixieHate >= Pnm->PixieGetHealHateThreshold(PChar)))) // WINGSCUSTOM - superlink for pixies (only superlink if player has enough pixie hate to not get cures)
             {
                 Pnm->PEnmityContainer->AddBaseEnmity(PTarg);
 
