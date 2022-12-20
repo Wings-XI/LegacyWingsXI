@@ -301,7 +301,7 @@ INSERT INTO `mob_groups` VALUES(6, 4046, 8, 'Tuchulcha', 0, 128, 0, 11000, 0, 81
 INSERT INTO `mob_groups` VALUES(7, 3827, 8, 'Swift_Hunter', 0, 128, 0, 5000, 0, 79, 79, 0);
 INSERT INTO `mob_groups` VALUES(8, 3613, 8, 'Shrewd_Hunter', 0, 128, 0, 5000, 0, 79, 79, 0);
 INSERT INTO `mob_groups` VALUES(9, 247, 8, 'Armored_Hunter', 0, 128, 0, 6000, 0, 79, 79, 0);
-INSERT INTO `mob_groups` VALUES(10, 3301, 8, 'Race_Runner', 0, 128, 0, 7000, 2000, 75, 75, 0);
+INSERT INTO `mob_groups` VALUES(10, 3301, 8, 'Race_Runner', 0, 128, 0, 7000, 2000, 80, 80, 0);
 -- ENM Shell We Dance? - BONEYARD_GULLY
 INSERT INTO `mob_groups` VALUES(11, 3099, 8, 'Parata', 0, 128, 0, 11000, 0, 80, 80, 0);
 INSERT INTO `mob_groups` VALUES(12, 444, 8, 'Bladmall', 0, 128, 0, 9000, 10000, 80, 80, 0);
@@ -2672,7 +2672,7 @@ INSERT INTO `mob_groups` VALUES(50, 4327, 62, 'Wheel_Wamoura', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(51, 1020, 62, 'Dextrose', 0, 128, 647, 26000, 10000, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(52, 3339, 62, 'Reacton', 0, 128, 2082, 25000, 0, 81, 83, 0);
 INSERT INTO `mob_groups` VALUES(53, 34, 62, 'Achamoth', 0, 128, 14, 38000, 0, 86, 88, 0);
-INSERT INTO `mob_groups` VALUES(54, 35, 62, 'Achamothcampa', 0, 128, 0, 8000, 0, 73, 75, 0);
+INSERT INTO `mob_groups` VALUES(54, 35, 62, 'Achamothcampa', 0, 128, 0, 4000, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(55, 36, 62, 'Achamoth_Nympha', 0, 128, 0, 12000, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(2103, 2697, 62, 'Moblin_Millionaire', 960, 0, 1712, 0, 0, 70, 75, 0);
 INSERT INTO `mob_groups` VALUES(2132, 4493, 62, 'Zazarg', 0, 0, 0, 0, 0, 0, 0, 0);

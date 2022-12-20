@@ -27,7 +27,7 @@ function onInitialize(zone)
 	else
 		SpawnMob(ID.mob.HYDRA)
 	end
-    
+
     tpz.helm.initZone(zone, tpz.helm.type.HARVESTING)
     tpz.chocobo.initZone(zone)
 end
@@ -57,13 +57,9 @@ function onRegionEnter(player, region)
 end
 
 function onEventUpdate(player, csid, option)
-    -- printf("Update CSID: %u", csid)
-    -- printf("Update RESULT: %u", option)
 end
 
 function onEventFinish(player, csid, option)
-    -- printf("Finish CSID: %u", csid)
-    -- printf("Finish RESULT: %u", option)
     if csid == 510 then
         player:setCharVar("threemenandaclosetCS", 3)
     elseif csid == 11 then

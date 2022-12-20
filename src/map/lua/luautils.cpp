@@ -2536,6 +2536,7 @@ namespace luautils
 
     int32 CheckForGearSet(CBaseEntity* PTarget)
     {
+        TracyZoneScoped;
         lua_prepscript("scripts/globals/gear_sets.lua");
 
         if (prepFile(File, "checkForGearSet"))

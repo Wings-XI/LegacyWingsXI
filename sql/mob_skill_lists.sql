@@ -439,11 +439,11 @@ INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,371);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,372);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,373);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,621);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,515);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,516);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,517);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,518);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,519);
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,515); -- toxic spit
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,516); -- geist wall
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,517); -- numbing noise
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,518); -- nimble snap
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,519); -- cyclotail
 -- 99 to 106: Elementals
 INSERT INTO `mob_skill_lists` VALUES ('Eruca',107,344);
 INSERT INTO `mob_skill_lists` VALUES ('Eruca',107,346);
@@ -2319,7 +2319,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Mammet',503,540);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,334);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,335);
 INSERT INTO `mob_skill_lists` VALUES ('Demonic_Tiphia',700,336);
--- 701 to 702: free
+INSERT INTO `mob_skill_lists` VALUES ('Fighting_Sheep_Auto_Attack',701,274); -- sheep_charge_hostile_herbivore
+INSERT INTO `mob_skill_lists` VALUES ('Fighting_Sheep',702,264); -- sheep_song
+INSERT INTO `mob_skill_lists` VALUES ('Fighting_Sheep',702,261); -- rage
 INSERT INTO `mob_skill_lists` VALUES ('Cactrot_Rapido',703,321);
 INSERT INTO `mob_skill_lists` VALUES ('Cactrot_Rapido',703,322);
 INSERT INTO `mob_skill_lists` VALUES ('Cactrot_Rapido',703,324);

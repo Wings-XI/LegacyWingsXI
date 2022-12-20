@@ -16,7 +16,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    if target:getName() == "Dark_Ixion" then
+    -- Dark Ixion doesn't hit himself with AoE mobskills
+    if target:getPool() ~= nil and target:getPool() == 915 then
         skill:setMsg(0)
         return
     end

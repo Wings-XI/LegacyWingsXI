@@ -12,38 +12,29 @@ local ID = require("scripts/zones/Aydeewa_Subterrane/IDs")
 local function spawnAdds(mob, target)
     mob:setLocalVar("MobType", math.random(1,3)) -- 1 = bats, 2 = wolf, 3 = murk 
     mob:setLocalVar("addTimer", os.time() + math.random(90, 120)) 
-    local x = mob:getXPos(target) -- does this work?
-    local y = mob:getYPos(target)
-    local z = mob:getZPos(target)
+    local x = mob:getXPos()
+    local y = mob:getYPos()
+    local z = mob:getZPos()
 
 
     if mob:getLocalVar("AF") == 1 then -- If we used astral flow
+        -- spawn 1-2 of each pet type
         for jj = 1, 3 do
             mob:setLocalVar("adds", math.random(0,1))
 
-            if jj == 1 then
-                mob:setLocalVar("offset", 1)
-            elseif jj == 2 then
-                mob:setLocalVar("offset", 4)
-            elseif jj == 3 then
-                mob:setLocalVar("offset", 7)
-            end
+            mob:setLocalVar("offset", 1 + 3 * (jj - 1))
 
             for ii = ID.mob.NOSFERATU + mob:getLocalVar("offset"), ID.mob.NOSFERATU + mob:getLocalVar("offset") + mob:getLocalVar("adds") do
                 local pet = GetMobByID(ii)
                 pet:setSpawn(x + math.random(-2, 2), y, z + math.random(-2, 2))
                 pet:spawn()
-                GetMobByID(ii):setLocalVar("AF", 1)
+                pet:setLocalVar("AF", 1)
                 pet:updateEnmity(target)
             end
         end
     else -- regular mob spawning
-        if mob:getLocalVar("MobType") == 1 then
-            mob:setLocalVar("offset", 1)
-        elseif mob:getLocalVar("MobType") == 2 then
-            mob:setLocalVar("offset", 4)
-        elseif mob:getLocalVar("MobType") == 3 then
-            mob:setLocalVar("offset", 7)
+        if mob:getLocalVar("MobType") > 0 then
+            mob:setLocalVar("offset", 1 + 3 * (mob:getLocalVar("MobType") - 1))
         end
 
         for ii = ID.mob.NOSFERATU + mob:getLocalVar("offset"), ID.mob.NOSFERATU + mob:getLocalVar("offset") + 2 do

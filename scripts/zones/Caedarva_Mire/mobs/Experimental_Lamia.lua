@@ -47,6 +47,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("adds", 0)   
     mob:setLocalVar("dances", 0)
     mob:setLocalVar("tailSlap", 0)   
+    mob:setMod(tpz.mod.GRAVITYRES, 100)
     mob:AnimationSub(0)       
 end     
 
@@ -64,30 +65,24 @@ function onMobFight(mob, target)
     end 
 
     if mob:getLocalVar("dances") > 0 then
-        mob:setTP(3000)
-    end
-end
-
-function onMobWeaponSkillPrepare(mob)
-    if mob:getLocalVar("dances") > 0 then
-        return 1762
+        mob:setLocalVar("dances", mob:getLocalVar("dances") - 1)
+        mob:useMobAbility(1762)
+    elseif mob:getLocalVar("tailSlap") == 1 then
+        -- use arrow_deluge after tail_slap, after belly dances
+        mob:setLocalVar("tailSlap", 0)
+        mob:useMobAbility(1761)
     end
 end
 
 function onMobWeaponSkill(target, mob, skill)
     if skill:getID() == 1758 then -- Tail Slap
-        mob:useMobAbility(1761)
-    end
-
-    if skill:getID() == 1762 then -- Belly Dance
-        mob:setLocalVar("dances", mob:getLocalVar("dances") - 1)
-        mob:setTP(0)
+        mob:setLocalVar("tailSlap", 1)
     end
 end
 
 function onCriticalHit(mob)
     local RND = math.random(1, 100)
-    if mob:AnimationSub() == 0 and RND >= 5 then
+    if mob:AnimationSub() == 0 and RND <= 5 then
         mob:AnimationSub(1)
     end
 end

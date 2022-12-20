@@ -32,6 +32,12 @@ end
 
 
 function onMobSpawn(mob)
+    local mother = GetMobByID(ID.mob.ACHAMOTH)
+    local motherTarget = mother:getTarget()
+    -- "If a pet/avatar/automaton/wyvern has Achamoth's attention when the Achamothcampa spawns, the baby will depop."
+    if motherTarget ~= nil and motherTarget:isPet() then
+        DespawnMob(mob:getID())
+    end
    -- mob:setMod(tpz.mobMod.DAMAGE_ENMITY_PERC, 50)
     mob:setLocalVar("clock", os.time() + 40) 
     if math.random(1,2) == 1 then

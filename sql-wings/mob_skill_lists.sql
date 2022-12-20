@@ -144,12 +144,12 @@ INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 844);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 845);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 846);
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ifrit', 38, 847);
---INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2344); -- glow
---INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2345); -- glow
---INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336); -- acheron_kick
---INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2337); -- damsel_memento
---INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2338); -- rampant stance
---INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2339); -- di trample
+-- INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2344); -- glow
+-- INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2345); -- glow
+-- INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2336); -- acheron_kick
+-- INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2337); -- damsel_memento
+-- INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2338); -- rampant stance
+-- INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2339); -- di trample
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2340); -- di hoof attack
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Ixion', 39, 2341); -- di horn attack
 INSERT INTO `mob_skill_lists` VALUES('Avatar-Leviathan', 40, 858);
@@ -410,10 +410,10 @@ INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Goblin', 92, 1114);
 INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Goblin', 92, 1115);
 INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Orc', 93, 1110);
 INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Orc', 93, 1111);
-INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Quadav', 94, 1112);
-INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Quadav', 94, 1113);
-INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Yagudo', 95, 1116);
-INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Yagudo', 95, 1117);
+INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Quadav', 94, 1116);
+INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Quadav', 94, 1117);
+INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Yagudo', 95, 1112);
+INSERT INTO `mob_skill_lists` VALUES('DynamisStatue-Yagudo', 95, 1113);
 INSERT INTO `mob_skill_lists` VALUES('Nandi', 96, 287);
 INSERT INTO `mob_skill_lists` VALUES('IceLizard', 97, 366);
 INSERT INTO `mob_skill_lists` VALUES('IceLizard', 97, 368);
@@ -423,11 +423,11 @@ INSERT INTO `mob_skill_lists` VALUES('IceLizard', 97, 371);
 INSERT INTO `mob_skill_lists` VALUES('IceLizard', 97, 372);
 INSERT INTO `mob_skill_lists` VALUES('IceLizard', 97, 373);
 INSERT INTO `mob_skill_lists` VALUES('IceLizard', 97, 621);
-INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 515);
-INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 516);
-INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 517);
-INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 518);
-INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 519);
+INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 515); -- toxic spit
+INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 516); -- geist wall
+INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 517); -- numbing noise
+INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 518); -- nimble snap
+INSERT INTO `mob_skill_lists` VALUES('Eft', 98, 519); -- cyclotail
 INSERT INTO `mob_skill_lists` VALUES('Eruca', 107, 344);
 INSERT INTO `mob_skill_lists` VALUES('Eruca', 107, 346);
 INSERT INTO `mob_skill_lists` VALUES('Eruca', 107, 1791);
@@ -1357,7 +1357,6 @@ INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2111); -- Eternal Damnati
 INSERT INTO `mob_skill_lists` VALUES('Nosferatu', 309, 2112); -- Nocturnal Servitude
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1753);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1758);
-INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1761);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1929);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1754);
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828);
@@ -2158,6 +2157,9 @@ INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 540);
 INSERT INTO `mob_skill_lists` VALUES('Demonic_Tiphia', 700, 334);
 INSERT INTO `mob_skill_lists` VALUES('Demonic_Tiphia', 700, 335);
 INSERT INTO `mob_skill_lists` VALUES('Demonic_Tiphia', 700, 336);
+INSERT INTO `mob_skill_lists` VALUES('Fighting_Sheep_Auto_Attack', 701, 274); -- sheep_charge_hostile_herbivore
+INSERT INTO `mob_skill_lists` VALUES('Fighting_Sheep', 702, 264); -- sheep_song
+INSERT INTO `mob_skill_lists` VALUES('Fighting_Sheep', 702, 261); -- rage
 INSERT INTO `mob_skill_lists` VALUES('Cactrot_Rapido', 703, 321);
 INSERT INTO `mob_skill_lists` VALUES('Cactrot_Rapido', 703, 322);
 INSERT INTO `mob_skill_lists` VALUES('Cactrot_Rapido', 703, 324);

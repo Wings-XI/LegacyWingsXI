@@ -744,6 +744,15 @@ uint16 CParty::GetMemberFlags(CBattleEntity* PEntity)
 void CParty::ReloadParty()
 {
     auto info = GetPartyInfo();
+    time_point timepointNow = std::chrono::system_clock::now();
+
+    if (timepointNow < m_TimeLastReloaded + 15s) {
+        // Suppressing another party reload, something in the codebase is spamming party reloads,
+        // maybe reloadparty happens async for each member of the alliance and creates a feedback loop?
+        return;
+    }
+
+    this->m_TimeLastReloaded = std::chrono::system_clock::now();
 
     //alliance
     if (this->m_PAlliance != nullptr)
@@ -1245,6 +1254,19 @@ bool CParty::HasTrusts()
         }
     }
     return false;
+}
+
+void CParty::ResetLastReloadTime()
+{
+    // Definitely more than 15 seconds ago
+    m_TimeLastReloaded = std::chrono::system_clock::from_time_t(0);
+    if (m_PAlliance) {
+        for (auto&& party : m_PAlliance->partyList) {
+            if (party) {
+                party->m_TimeLastReloaded = std::chrono::system_clock::from_time_t(0);
+            }
+        }
+    }
 }
 
 void CParty::RefreshFlags(std::vector<partyInfo_t>& info)

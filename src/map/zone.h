@@ -623,6 +623,7 @@ public:
     CNavMesh*       m_navMesh;              // zones navmesh for finding paths
     uint16          m_miscMask;             // битовое поле, описывающее возможности использования в зоне определенных умений
     uint8           m_fameType;             // the fame type applied the the entire area, used for item appraisal when selling items to an NPC in this zone
+    bool            m_playerAbilityHandle;  // Call player ability handler when fighting mobs
 
     CTaskMgr::CTask* ZoneTimer;             // указатель на созданный таймер - ZoneServer. необходим для возможности его остановки
     CZoneEntities* m_zoneEntities;

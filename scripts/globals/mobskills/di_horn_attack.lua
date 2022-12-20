@@ -6,7 +6,12 @@ require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    -- don't autoattack between TP moves
+    if mob:getLocalVar("timeSinceWS") > os.time() - 2 then
+        return 1
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)

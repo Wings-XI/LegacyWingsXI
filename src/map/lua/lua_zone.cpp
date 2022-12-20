@@ -397,6 +397,34 @@ int32 CLuaZone::setMusicBackgroundNight(lua_State* L)
     return 0;
 }
 
+/************************************************************************
+*  Function: getPlayerAbilitiesState()
+*  Purpose : Returns whether the zone checks for mobs that react to job abilities
+************************************************************************/
+int32 CLuaZone::getPlayerAbilitiesState(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+
+    lua_pushboolean(L, m_pLuaZone->m_playerAbilityHandle);
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: setPlayerAbilitiesState()
+*  Purpose : Sets whether the zone checks for mobs that react to job abilities
+************************************************************************/
+int32 CLuaZone::setPlayerAbilitiesState(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_pLuaZone == nullptr);
+    if (lua_isnil(L, 1) || !lua_isboolean(L, 1)) {
+        return 0;
+    }
+
+    m_pLuaZone->m_playerAbilityHandle = lua_toboolean(L, 1);
+
+    return 0;
+}
 
 /************************************************************************
 *                                                                       *
@@ -429,5 +457,7 @@ Lunar<CLuaZone>::Register_t CLuaZone::methods[] =
     LUNAR_DECLARE_METHOD(CLuaZone, setMusicBattleParty),
     LUNAR_DECLARE_METHOD(CLuaZone, setMusicBackgroundDay),
     LUNAR_DECLARE_METHOD(CLuaZone, setMusicBackgroundNight),
+    LUNAR_DECLARE_METHOD(CLuaZone, getPlayerAbilitiesState),
+    LUNAR_DECLARE_METHOD(CLuaZone, setPlayerAbilitiesState),
 {nullptr,nullptr}
 };

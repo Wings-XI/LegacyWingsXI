@@ -16,3 +16,10 @@ function onMobDeath(mob, player, isKiller)
     local dance = mother:getLocalVar("dances")  
     mother:setLocalVar("dances", dance + 1)
 end
+
+function onMobRoam(mob)
+    local mother = GetMobByID(ID.mob.EXPERIMENTAL_LAMIA)
+    if mother:isSpawned() and mother:getCurrentAction() == tpz.act.ATTACK then
+        mob:updateEnmity(mother:getTarget())
+    end
+end

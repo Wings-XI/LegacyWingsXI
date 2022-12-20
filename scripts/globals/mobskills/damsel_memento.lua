@@ -10,7 +10,7 @@ require("scripts/globals/monstertpmoves")
 require("scripts/globals/msg")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if  mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 or math.random(1,2) == 1 then
+    if  mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
         return 1
     end
 

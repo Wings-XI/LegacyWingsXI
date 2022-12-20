@@ -95,6 +95,9 @@ public:
     void PushPacket(uint32 senderID, uint16 ZoneID, CBasicPacket* packet);		// отправляем пакет всем членам группы, за исключением PPartyMember
     void PushEffectsPacket();
     void EffectsChanged();
+
+    void ResetLastReloadTime();
+
 	CAlliance* m_PAlliance;
 
     // ВНИМАНИЕ: НЕ ИЗМЕНЯТЬ ЗНАЧЕНИЯ СПИСКА ВНЕ КЛАССА ГРУППЫ
@@ -126,6 +129,7 @@ private:
     void RefreshFlags(std::vector<partyInfo_t>&);
 
     time_point m_TimeLastMemberJoined;
+    time_point m_TimeLastReloaded;
 };
 
 #endif

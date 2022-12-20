@@ -10,18 +10,25 @@ require("scripts/globals/msg")
 -----------------------------------------
 
 function onItemCheck(target, param, caster)
-    if (target:getNation() ~= tpz.nation.WINDURST) then
+    local nation = tpz.nation.WINDURST
+    -- WINGSCUSTOM signet staff usable on targets with rank 10 in nation as well as current allegiance
+    if (target:getNation() ~= nation and target:getRank(nation) ~= 10) then
         return tpz.msg.basic.ITEM_CANNOT_USE_ON
     end
 
-    -- If target's current region is not a conquest region or not a nation city involved with conquest
+    -- WINGSCUSTOM - No zone restriction on signet staves
+    --[[-- If target's current region is not a conquest region or not a nation city involved with conquest
     if (target:getCurrentRegion() > tpz.region.JEUNO) then
         return tpz.msg.basic.ITEM_UNABLE_TO_USE
-    end
+    end]]
 
     -- Can only use on targets within party or self
     if (target:getID() ~= caster:getID()) then
-        if (caster:getPartyLeader() == nil or target:getPartyLeader():getID() ~= caster:getPartyLeader():getID()) then
+        if (caster:getPartyLeader() == nil or target:getPartyLeader() == nil or target:getPartyLeader():getID() ~= caster:getPartyLeader():getID()) then
+            return tpz.msg.basic.ITEM_CANNOT_USE_ON
+        end
+        -- WINGSCUSTOM since it's usable in any zone, avoid griefing by not allowing overwriting other player's sanction/sigil outside of conquest zones
+        if (target:hasStatusEffectByFlag(tpz.effectFlag.INFLUENCE) and target:getCurrentRegion() > tpz.region.LIMBUS) then
             return tpz.msg.basic.ITEM_CANNOT_USE_ON
         end
     end
@@ -30,6 +37,8 @@ function onItemCheck(target, param, caster)
 end
 
 function onItemUse(target)
+    local nation = tpz.nation.WINDURST
     target:delStatusEffectsByFlag(tpz.effectFlag.INFLUENCE, true)
-    target:addStatusEffect(tpz.effect.SIGNET, 0, 0, 18000)
+    -- WINGSCUSTOM signet duration equals that of a guard's signet, with a minimum of original 5 hours
+    target:addStatusEffect(tpz.effect.SIGNET, 0, 0, utils.max(18000, (target:getRank(nation) + getNationRank(nation)) * 3600))
 end

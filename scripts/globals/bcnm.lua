@@ -29,7 +29,7 @@ local battlefields = {
     [tpz.zone.BONEYARD_GULLY] =
     {
         { 0,  672,    0},   -- Head Wind (PM5-3 U2)
-     -- { 1,  673,    0},   -- Like the Wind (ENM) -- TODO: mob constantly runs during battle
+        { 1,  673,    0},   -- Like the Wind (ENM)
         { 2,  674,    0},   -- Sheep in Antlion's Clothing (ENM)
         { 3,  675,    0},   -- Shell We Dance? (ENM)
      -- { 4,  676,    0},   -- Totentanz (ENM)
@@ -234,7 +234,7 @@ local battlefields = {
         { 1,    1, 1131},   -- Tails of Woe (BS40)
         { 2,    2, 1130},   -- Dismemberment Brigade (BS60)
         { 3,    3,    0},   -- The Secret Weapon (Sandy 7-2)
-     -- { 4,    4, 1177},   -- Hostile Herbivores (BS50) -- TODO: mobs need knockback on melee attacks
+        { 4,    4, 1177},   -- Hostile Herbivores (BS50)
         { 5,    5, 1426},   -- Shattering Stars (WAR LB5)
         { 6,    6, 1429},   -- Shattering Stars (BLM LB5)
         { 7,    7, 1436},   -- Shattering Stars (RNG LB5)

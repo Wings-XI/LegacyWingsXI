@@ -5258,6 +5258,7 @@ namespace charutils
 
     void SaveCharEquip(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         for (uint8 i = 0; i < 18; ++i)
         {
             if (PChar->equip[i] == 0)
@@ -5274,6 +5275,7 @@ namespace charutils
 
     void SaveCharLook(CCharEntity* PChar)
     {
+        TracyZoneScoped;
         const char* Query = "UPDATE char_look "
             "SET head = %u, body = %u, hands = %u, legs = %u, feet = %u, main = %u, sub = %u, ranged = %u "
             "WHERE charid = %u;";

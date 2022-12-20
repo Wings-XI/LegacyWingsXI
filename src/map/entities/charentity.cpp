@@ -815,6 +815,13 @@ bool CCharEntity::ReloadParty()
     return m_reloadParty;
 }
 
+void CCharEntity::ForceReloadParty()
+{
+    if (PParty) {
+        PParty->ResetLastReloadTime();
+    }
+}
+
 void CCharEntity::RemoveTrust(CTrustEntity* PTrust)
 {
     if (!PTrust->PAI->IsSpawned())
@@ -1684,7 +1691,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        //battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+        if (this->loc.zone->m_playerAbilityHandle) {
+            battleutils::HandlePlayerAbilityUsed(this, PAbility, &action);
+        }
 
         PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime);
 

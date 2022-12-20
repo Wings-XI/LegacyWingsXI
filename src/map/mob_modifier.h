@@ -113,6 +113,7 @@ enum MOBMODIFIER : int
     MOBMOD_SIGHT_ANGLE         = 84, // Angle in which a mob will detect by sight
     MOBMOD_FOMOR_HATE          = 85, // Mob aggros according to fomor hate
     MOBMOD_PIXIE               = 86, // Pixie (heals players)
+    MOBMOD_PLAYER_ABILITY      = 87, // Reacts to player abilities (currently only Tethra uses this)
 };
 
 #endif

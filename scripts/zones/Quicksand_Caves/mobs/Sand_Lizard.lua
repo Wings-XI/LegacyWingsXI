@@ -13,5 +13,7 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.NUSSKNACKER_PH, 5, 3600) -- 1 hour
+    if mob:getWeather() == tpz.weather.SAND_STORM or mob:getWeather() == tpz.weather.DUST_STORM then
+        tpz.mob.phOnDespawn(mob, ID.mob.NUSSKNACKER_PH, 5, 5400) -- 90 minutes
+    end
 end

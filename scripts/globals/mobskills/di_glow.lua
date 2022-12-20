@@ -1,9 +1,5 @@
 ---------------------------------------------
---  Lightning Spear
---
---  Description: Wide Cone Attack lightning damage (600-1500) and powerful Amnesia.
---  Type: Magical
---  Notes: Will pick a random person on the hate list for this attack.
+--  Glow before Wrath of Zeus or Lightning Spear
 ---------------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")

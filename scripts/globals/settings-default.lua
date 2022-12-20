@@ -173,6 +173,7 @@ EXP_FEST_END = 0 -- When double XP mode ends (specified using epoch time code), 
 
 -- CUSTOM BEHAVIOR OUTSIDE ERA
 TOAU_CUSTOM_RING_REACQUISITION = 0 -- Set to 1 to turn on the custom ToAU ring reacquisition quest.
+KEY_ITEMS_FOR_SOLO_GATE_BREACH = 0 -- Set to 1 to allow acquiring weighted stones, magicked astrolabe, and loadstone
 
 -- MISC
 HOMEPOINT_HEAL = 0 --Set to 1 if you want Home Points to heal you like in single-player Final Fantasy games.

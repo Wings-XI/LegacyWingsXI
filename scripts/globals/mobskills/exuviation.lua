@@ -17,15 +17,23 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local baseHeal = 500
-    local statusHeal = 300
-    local effectCount = 0
-    local dispel = mob:eraseStatusEffect()
-
-    while (dispel ~= tpz.effect.NONE)
-    do
-        effectCount = effectCount + 1
-        dispel = mob:eraseStatusEffect()
+    local statusHeal = 250
+    if mob:getID() >= 17031600 and mob:getID() <= 17031604 then
+        -- Achamoth and its pets
+        baseHeal = 1000
+        statusHeal = 750
     end
+    local effectCount = 0
+
+    for i, effect in ipairs(mob:getStatusEffects()) do
+        -- check mask bit for tpz.effectFlag.DISPELABLE
+        if bit.band(effect:getFlag(), tpz.effectFlag.WALTZABLE) == tpz.effectFlag.WALTZABLE or
+            bit.band(effect:getFlag(), tpz.effectFlag.ERASABLE) == tpz.effectFlag.ERASABLE then
+                effectCount = effectCount + 1
+        end
+    end
+    mob:delStatusEffectsByFlag(tpz.effectFlag.WALTZABLE, false)
+    mob:delStatusEffectsByFlag(tpz.effectFlag.ERASABLE, false)  -- don't think this is necessary, but look for both types just in case
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
     return MobHealMove(mob, statusHeal * effectCount + baseHeal)

@@ -84,26 +84,26 @@ function AvatarMagicalMove(pet, target, skill, tp, ele, tier)
 
     -- Base damage
     damage = math.floor(baseDMG + math.floor(pet:getStat(tpz.mod.INT)*statMod)*alpha)
-    printf("Base DMG = %i", damage)
+    -- printf("Base DMG = %i", damage)
     -- Astral Flow damage
     -- Tuned to the following source: https://www.youtube.com/watch?v=n4Ib2EIM0_g
     if (tier == 0) then
         damage = damage * 5
     end
-    printf("Astral Flow DMG = %i", damage)
+    -- printf("Astral Flow DMG = %i", damage)
     -- fTP
     damage = math.floor(damage*getAvatarfTP(tp, tier)+dINT)
-    printf("FTP DMG = %i", damage)
+    -- printf("FTP DMG = %i", damage)
     -- Resists (1, 1/2, 1/4, 1/8, or 1/16)
     totalAccBonus = utils.clamp(getSummoningSkillOverCap(pet), 0, 200) + pet:getMaster():getMerit(1284) -- avatar magic acc merit
     damage = math.floor(damage * applyPlayerResistance(pet, nil, target, pet:getStat(tpz.mod.INT)-target:getStat(tpz.mod.INT), totalAccBonus, ele-5))
-    printf("Resist damage = %i", damage)
+    -- printf("Resist damage = %i", damage)
     -- Day/Weather + MB Bonuses
     damage = mobAddBonuses(pet, nil, target, damage, ele-5)
-    printf("day/weather + MB damage = %i", damage)
+    -- printf("day/weather + MB damage = %i", damage)
     -- MAB/MDB
     damage = math.floor(damage * ((1+(pet:getMod(tpz.mod.MATT)/100))/(1+(target:getMod(tpz.mod.MDEF)/100))))
-    printf("MAB dmg = %i", damage)
+    -- printf("MAB dmg = %i", damage)
 
     return damage
 end
@@ -123,7 +123,7 @@ function AvatarPhysicalMove(avatar,target,skill,numberofhits,accmod,dmgmod,dmgmo
     local dmg = avatar:getWeaponDmg() - target:getMod(tpz.mod.VIT)/4
     local minFstr, maxFstr = avatarFSTR(avatar:getStat(tpz.mod.STR), target:getStat(tpz.mod.VIT))
     local ratio = avatar:getStat(tpz.mod.ATT) / target:getStat(tpz.mod.DEF)
-    printf("Avatar ATT = %d, target DEF = %d, Ratio = %d",avatar:getStat(tpz.mod.ATT), target:getStat(tpz.mod.DEF), ratio)
+    -- printf("Avatar ATT = %d, target DEF = %d, Ratio = %d",avatar:getStat(tpz.mod.ATT), target:getStat(tpz.mod.DEF), ratio)
     local cRatio = avatar:getStat(tpz.mod.DEX) - target:getStat(tpz.mod.AGI)
 
     -- Note: Avatars do not have any level correction. This is why they are so good on Wyrms! // https://kegsay.livejournal.com/tag/smn!
@@ -258,7 +258,7 @@ function avatarHitDmg(dmg, pdifMin, pdifMax, fstrMin, fstrMax, critrate)
     if math.random() < critrate then
         pdif = math.min(pdif + 1, 4.2)
     end
-    printf("dmg = %d, fSTR = %d, pdif = %d total = %d", dmg, fstr, pdif, (dmg + fstr) * pdif)
+    -- printf("dmg = %d, fSTR = %d, pdif = %d total = %d", dmg, fstr, pdif, (dmg + fstr) * pdif)
     return (dmg + fstr) * pdif
 end
 

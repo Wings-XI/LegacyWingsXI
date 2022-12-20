@@ -88,6 +88,11 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
     // get master to properly handle loops
     m_PMasterTarget = findMaster(PTarget);
 
+    // if DI is targetting himself with an AoE mobskill, treat it as an aoe targetting a player so the animation goes off even if nobody is hit
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBattleEntity);
+    bool isIxionSource = (PMob != nullptr && PMob->m_Pool == 915);
+    bool ixionSelfTargetAOE = (radius > 0 && m_PMasterTarget == m_PBattleEntity && isIxionSource);
+
     // no not include pets if this AoE is a buff spell
     // this is a buff because i'm targetting my self
     bool withPet = PETS_CAN_AOE_BUFF || (m_findFlags & FINDFLAGS_PET) || (m_PMasterTarget->objtype != m_PBattleEntity->objtype);
@@ -140,7 +145,7 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
     {
         // handle this as a mob
         if (m_PMasterTarget->objtype == TYPE_PC || m_PBattleEntity->allegiance == ALLEGIANCE_PLAYER ||
-            (radius > 0 && m_PMasterTarget == m_PBattleEntity && m_PBattleEntity->name == "Dark_Ixion")) // DI targetting himself with AoE mobskill
+            (ixionSelfTargetAOE == true)) // DI targetting himself with AoE mobskill
             {
                 m_findType = FIND_MONSTER_PLAYER;
         }
@@ -155,7 +160,8 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOERADIUS radiusType, f
         }
 
         if (m_findFlags & FINDFLAGS_HIT_ALL ||
-            (m_findType == FIND_MONSTER_PLAYER && (((CMobEntity*)m_PBattleEntity)->CalledForHelp() || inDynamis)))
+            (m_findType == FIND_MONSTER_PLAYER && (((CMobEntity*)m_PBattleEntity)->CalledForHelp() || inDynamis)) ||
+            (ixionSelfTargetAOE == true))
         {
             addAllInZone(m_PMasterTarget, withPet);
         }
@@ -187,8 +193,11 @@ void CTargetFind::findWithinCone(CBattleEntity* PTarget, AOERADIUS radiusType, f
 
     uint8 halfAngle = static_cast<uint8>((angle * (256.0f / 360.0f)) / 2.0f);
 
-    uint8 angleToTarget = (radiusType == AOERADIUS_ATTACKER) ? m_APoint->rotation + extraRotation : worldAngle(m_PBattleEntity->loc.p, PTarget->loc.p);
-    
+    uint8 angleToTarget = m_APoint->rotation + extraRotation;
+    if (radiusType != AOERADIUS_ATTACKER && m_PBattleEntity != PTarget) { // failback to attacker's rotation (plus extraRotation) if self-targetting
+        worldAngle(m_PBattleEntity->loc.p, PTarget->loc.p);  // always returns zero if attacker and target are the same
+    }
+
     // "Left" and "Right" are like the entity's face - "left" means "turning to the left" NOT "left when looking overhead"
     // Remember that rotation increases when turning to the right, and decreases when turning to the left
     float leftAngle = rotationToRadian(relativeAngle(angleToTarget, -halfAngle));
@@ -421,7 +430,9 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
         return true;
     }
 
-	if (m_PTarget->allegiance != PTarget->allegiance && m_PTarget->name != "Dark_Ixion")
+    CMobEntity* PMob = static_cast<CMobEntity*>(m_PBattleEntity);
+    bool isIxionSource = (PMob != nullptr && PMob->m_Pool == 915); // Dark Ixion's AoEs target himself then select other entities based on positioning, require his targets to be player-aligned
+	if ((m_PTarget->allegiance != PTarget->allegiance && !isIxionSource) || (isIxionSource && PTarget->allegiance != ALLEGIANCE_PLAYER))
 	{
 		return false;
 	}
