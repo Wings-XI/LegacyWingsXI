@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Attohwa Chasm
 --  NPC: Cradle_of_Rebirth
+--  POS: 317 -26 -13 7
 -----------------------------------
 local ID = require("scripts/zones/Attohwa_Chasm/IDs")
 require("scripts/globals/settings")
@@ -21,9 +22,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+
     if (player:hasKeyItem(tpz.ki.MIMEO_JEWEL) == true) then
         player:delKeyItem(tpz.ki.MIMEO_JEWEL)
-        player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.MIMEO_JEWEL)
         player:addKeyItem(tpz.ki.MIMEO_FEATHER)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MIMEO_FEATHER)
         player:addKeyItem(tpz.ki.SECOND_MIMEO_FEATHER)
