@@ -349,6 +349,7 @@ end
 darkixion.onZoneInit = function(zone)
     local ixionID = darkixion.zoneinfo[zone:getID()].mobID
     local ixionZoneID = GetServerVariable("DarkIxion_ZoneID")
+    local ixion = GetMobByID(ixionID)
 	-- check this on only one zone to catch when ixion has no zone assignment
 	if ixionZoneID == 0 or
         (GetServerVariable("DarkIxion_PopTime") < os.time() and ixionZoneID == zone:getID()) then
