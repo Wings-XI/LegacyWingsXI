@@ -181,6 +181,8 @@ tpz.mob.additionalEffect =
     TP_DRAIN   = 21,
     DISEASE    = 22,
     DOOM       = 23,
+    BIND       = 24,
+    WEIGHT     = 25,
 }
 tpz.mob.ae = tpz.mob.additionalEffect
 
@@ -452,6 +454,31 @@ local additionalEffects =
         power = 10,
         tick = 3,
         duration = 30,
+    },
+    [tpz.mob.ae.BIND] =
+    {
+        chance = 20,
+        ele = tpz.magic.ele.ICE,
+        sub = tpz.subEffect.BIND,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.BIND,
+        duration = 5,
+        minDuration = 1,
+        maxDuration = 15,
+    },
+    [tpz.mob.ae.WEIGHT] =
+    {
+        chance = 20,
+        ele = tpz.magic.ele.WIND,
+        sub = tpz.subEffect.WEIGHT,
+        msg = tpz.msg.basic.ADD_EFFECT_STATUS,
+        applyEffect = true,
+        eff = tpz.effect.WEIGHT,
+        power = 25,
+        duration = 5,
+        minDuration = 1,
+        maxDuration = 15,
     },
 }
 

@@ -975,7 +975,7 @@ INSERT INTO `mob_pools` VALUES(911, 'Dark_Demon', 'Dark_Demon', 169, _binary 0x0
 INSERT INTO `mob_pools` VALUES(912, 'Dark_Dragon', 'Dark_Dragon', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 1, 18, 0, 0, 0, 3, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(913, 'Dark_Elemental', 'Dark_Elemental', 100, _binary 0x0000bb0100000000000000000000000000000000, 8, 8, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 291, 131, 16, 0, 18, 0, 0, 100);
 INSERT INTO `mob_pools` VALUES(914, 'Dark_Esquire', 'Dark_Esquire', 169, _binary 0x0000ef0200000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 169);
-INSERT INTO `mob_pools` VALUES(915, 'Dark_Ixion', 'Dark_Ixion', 39, _binary 0x0000b20800000000000000000000000000000000, 1, 1, 6, 240, 125, 0, 1, 1, 0, 2, 0, 32, 2119, 6, 0, 0, 0, 0, 0, 39);
+INSERT INTO `mob_pools` VALUES(915, 'Dark_Ixion', 'Dark_Ixion', 39, _binary 0x0000b20800000000000000000000000000000000, 1, 1, 6, 240, 125, 0, 1, 1, 0, 2, 0, 32, 2119, 7, 0, 0, 0, 0, 0, 39);
 INSERT INTO `mob_pools` VALUES(916, 'Dark_Rider', 'Dark_Rider', 42, _binary 0x0000250700000000000000000000000000000000, 8, 9, 3, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 5, 0, 0, 42);
 INSERT INTO `mob_pools` VALUES(917, 'Dark_Spark', 'Dark_Spark', 56, _binary 0x0000180100000000000000000000000000000000, 8, 8, 7, 240, 100, 0, 1, 0, 0, 2, 0, 0, 1811, 131, 0, 0, 117, 0, 0, 56);
 INSERT INTO `mob_pools` VALUES(918, 'Dark_Stalker', 'Dark_Stalker', 221, _binary 0x0000150200000000000000000000000000000000, 1, 1, 3, 360, 100, 0, 1, 0, 1, 0, 0, 0, 245, 131, 0, 0, 0, 0, 0, 221);

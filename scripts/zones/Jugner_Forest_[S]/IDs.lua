@@ -2,7 +2,7 @@
 -- Area: Jugner_Forest_[S]
 -----------------------------------
 require("scripts/globals/zone")
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 zones = zones or {}

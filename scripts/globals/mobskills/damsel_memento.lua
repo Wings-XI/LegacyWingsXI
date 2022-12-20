@@ -9,30 +9,22 @@ require("scripts/globals/settings")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/msg")
 ---------------------------------------------
-
--- Animation sub stuff doesnt work yet, may need to deal with it in weaponskillprepare on mob lua
-
 function onMobSkillCheck(target, mob, skill)
+    if  mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
+        return 1
+    end
+
     return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)
     local dispel = mob:eraseStatusEffect()
-    local RND = math.random(1,100)
-
 
     while (dispel ~= tpz.effect.NONE) do
         dispel = mob:eraseStatusEffect()
     end
-
-    if mob:AnimationSub() == 2 and RND <= 5 then
-        mob:AnimationSub(3)
-    end
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
     
-    --mob:AnimationSub(0)
-    
-
     return MobHealMove(mob, mob:getMaxHP()*5/100)
 end
 
