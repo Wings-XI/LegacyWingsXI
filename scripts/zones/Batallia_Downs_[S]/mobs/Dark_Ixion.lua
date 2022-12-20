@@ -1,7 +1,7 @@
 -----------------------------------
 --  Mob: Dark Ixion
 -----------------------------------
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
@@ -10,6 +10,14 @@ end
 
 function onMobDespawn(mob)
     darkixion.onMobDespawn(mob)
+end
+
+function onCriticalHit(mob)
+    darkixion.onCriticalHit(mob)
+end
+
+function onWeaponskillHit(mob, attacker, weaponskill)
+    darkixion.onWeaponskillHit(mob, attacker, weaponskill)
 end
 
 function onMobInitialize(mob)
@@ -30,6 +38,10 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     darkixion.onMobWeaponSkill(target, mob, skill)
+end
+
+function onMobSkillFinished(mob, target, skill)
+    darkixion.onMobSkillFinished(mob, target, skill)
 end
 
 function onMobRoamAction(mob)

@@ -8,13 +8,13 @@ require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/globals/quests")
 require("scripts/globals/helm")
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
     tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
     tpz.chocobo.initZone(zone)
-    darkixion.onZoneInit(zone)
+	darkixion.onZoneInit(zone)
 end
 
 function onGameHour(zone)

@@ -9,12 +9,20 @@ require("scripts/globals/status")
 require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
---TODO check shadow behavior and silence duration
 function onMobSkillCheck(target, mob, skill)
-    return 0
+    if mob:AnimationSub() == 1 or mob:getLocalVar("charging") == 1 then
+        return 1
+    else
+        return 0
+    end
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    -- Dark Ixion doesn't hit himself with AoE mobskills
+    if target:getPool() ~= nil and target:getPool() == 915 then
+        skill:setMsg(0)
+        return
+    end
     local typeEffect = tpz.effect.SILENCE
     local duration = math.random(30, 60)
 

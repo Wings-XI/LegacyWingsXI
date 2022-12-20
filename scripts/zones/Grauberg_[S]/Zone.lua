@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Grauberg_[S]/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/status")
 require("scripts/globals/helm")
-require("scripts/globals/events/dark_ixion")
+require("scripts/globals/dark_ixion")
 -----------------------------------
 
 function onInitialize(zone)
@@ -18,7 +18,7 @@ function onInitialize(zone)
 	else
 		SpawnMob(ID.mob.SARCOPSYLLA)
     end
-    darkixion.onZoneInit(zone)
+	darkixion.onZoneInit(zone)
 end
 
 function onGameHour(zone)
