@@ -257,7 +257,7 @@ darkixion.endStomp = function(mob)
     mob:setBehaviour(0)
     pos = nil
     hitList = nil
-    
+
 end
 
 darkixion.itsStompinTime = function(mob)
@@ -296,7 +296,7 @@ darkixion.itsStompinTime = function(mob)
             local Dz = Tz - Mz
             local RSS = math.sqrt(Dx*Dx + Dz*Dz)
 
-            
+
             local Ux = Dx/RSS
             local Uz = Dz/RSS
             pos = {x = Tx + (Ux * 7), y = Ty, z = Tz + (Uz * 7)}
@@ -375,8 +375,11 @@ darkixion.onZoneGameHour = function(zone)
 			ixion:setRespawnTime(math.random(0,90))
     elseif ixion:isSpawned() and GetServerVariable("DarkIxion_ZoneID") ~= zone:getID() then
         -- really shouldn't be possible, but catch just in case
-        ixion:disengage()
-        -- DespawnMob(ixionID)
+        if ixion:isEngaged() then
+            ixion:disengage()
+        else
+            DespawnMob(ixionID)
+        end
     end
 end
 
@@ -390,10 +393,12 @@ darkixion.onMobDeath = function(mob, player, isKiller)
 end
 
 darkixion.onMobDespawn = function(mob)
-    DisallowRespawn(mob:getID())
-    darkixion.repop(mob)
-    if mob:getLocalVar("wasKilled") == 1 then
-        SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death
+    DisallowRespawn(mob:getID(), true)
+    if mob:getZoneID() == GetServerVariable("DarkIxion_ZoneID") then
+        darkixion.repop(mob)
+        if mob:getLocalVar("wasKilled") == 1 then
+            SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death
+        end
     end
 end
 
@@ -473,7 +478,7 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
     if mob:AnimationSub() ~= 3 and (skill:getID() == 2340 or skill:getID() == 2341) then
         local R = math.random(1,100)
         if R >= 70 and mob:getHPP() < 33 then
-            mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3)) 
+            mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3))
 
         elseif R >= 80 and mob:getHPP() < 50 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,2))
@@ -481,7 +486,7 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
         elseif R >= 90 then
             mob:setLocalVar("run", mob:getLocalVar("run") + 1)
         end
-        mob:setLocalVar("runTime", os.time()+5)   
+        mob:setLocalVar("runTime", os.time()+5)
     end
 
     if mob:getLocalVar("run") > 3 then -- Safety net
@@ -569,7 +574,7 @@ darkixion.onMobDisengage = function(mob)
     mob:setLocalVar("StygianLanded", 0)
 end
 
-darkixion.onMobFight = function(mob, target) 
+darkixion.onMobFight = function(mob, target)
     -- Since its autos are technically TP moves, lets deal with the other fancy stuff here
     if ((mob:getTP() >= 2900 and mob:getHPP() > 66) or
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
@@ -586,12 +591,12 @@ darkixion.onMobFight = function(mob, target)
         if math.random(1,10) == 1 then
             mob:useMobAbility(2337) -- Damsel Memento
         else
-            if WS == 1 then 
+            if WS == 1 then
                 mob:useMobAbility(2338, mob) -- Rampant Stance
                 if mob:getLocalVar("double") == 1 then
                     mob:useMobAbility(2338, mob) -- Rampant Stance
                 end
-            elseif WS == 2 then 
+            elseif WS == 2 then
                 mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
                 local Mx = mob:getXPos()
                 local Mz = mob:getZPos()
@@ -607,9 +612,9 @@ darkixion.onMobFight = function(mob, target)
                     -- since no_turn is enabled, no need to change position again, just do it back to back
                     mob:useMobAbility(2336, mob) -- Acheron Kick
                 end
-            elseif WS == 3 then 
+            elseif WS == 3 then
                 mob:useMobAbility(2344) -- Wrath of Zeus (target the glow first, then real WS)
-            elseif WS == 4 then 
+            elseif WS == 4 then
                 mob:useMobAbility(2345) -- Lightning Spear (target the glow first, then real WS)
             end
         end
@@ -641,7 +646,7 @@ darkixion.onMobFight = function(mob, target)
         end
     end
 
-    
+
 
     -- This section deals with him glowing (double TP moves)
     if os.time() >= mob:getLocalVar("PhaseChange") and mob:AnimationSub()~= 2 and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
@@ -656,10 +661,10 @@ darkixion.onMobFight = function(mob, target)
         end
     end
 
-   
 
 
-    
+
+
 
     if os.time() >= mob:getLocalVar("horn") and mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
         mob:AnimationSub(0)
