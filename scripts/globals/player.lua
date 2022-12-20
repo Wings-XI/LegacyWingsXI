@@ -230,6 +230,11 @@ function onGameIn(player, firstLogin, zoning)
         hookOnGameIn(player, firstLogin, zoning)
     end
     
+        -- CoP mission 3-3B
+        if player:hasKeyItem(tpz.ki.MIMEO_JEWEL) then
+            player:delKeyItem(tpz.ki.MIMEO_JEWEL)
+        end
+        
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 end
