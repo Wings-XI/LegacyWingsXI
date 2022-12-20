@@ -40,5 +40,5 @@ function onItemUse(target)
     local nation = tpz.nation.WINDURST
     target:delStatusEffectsByFlag(tpz.effectFlag.INFLUENCE, true)
     -- WINGSCUSTOM signet duration equals that of a guard's signet, with a minimum of original 5 hours
-    target:addStatusEffect(tpz.effect.SIGNET, 0, 0, utils.max(18000, (target:getRank(nation) + getNationRank(nation)) * 3600))
+    target:addStatusEffect(tpz.effect.SIGNET, 0, 0, math.max(18000, (target:getRank(nation) + getNationRank(nation)) * 3600))
 end
