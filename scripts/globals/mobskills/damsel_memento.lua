@@ -18,11 +18,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local dispel = mob:eraseStatusEffect()
-
-    while (dispel ~= tpz.effect.NONE) do
-        dispel = mob:eraseStatusEffect()
-    end
+    mob:delStatusEffectsByFlag(tpz.effectFlag.WALTZABLE, false)
+    mob:delStatusEffectsByFlag(tpz.effectFlag.ERASABLE, false)
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
     
     return MobHealMove(mob, mob:getMaxHP()*5/100)

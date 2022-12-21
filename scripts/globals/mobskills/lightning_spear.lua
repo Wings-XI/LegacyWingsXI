@@ -31,9 +31,7 @@ function onMobWeaponSkill(target, mob, skill)
    
     MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
 
-    local dmgmod = 7
-    local angleMultiplier = 0.2
-    dmgmod = utils.conalDamageAdjustment(mob, target, skill, dmgmod, angleMultiplier)
+    local dmgmod = 10 -- unbuffed player hit for ~2k
 
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*2, tpz.magic.ele.THUNDER, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_IGNORE_SHADOWS)

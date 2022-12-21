@@ -14,28 +14,18 @@ darkixion = {}
 
 
 -- TODOs, notes, and reminders
--- remove print statement
+
+-- grav/bind res
+
+-- for charge, hieight check.. lower to 6 from 7 or 5.5
+-- dmg taken from front/rear (if we can)
 
 
 
--- If we can find a way for TP moves to be aimed at a point instead of player, we should.
-  -- played around with this a bit, not sure it's gonna be possible
-  -- targetfind.cpp is pretty rigid with target allegiance. I don't see a way to target the mob then include players in the range
-    -- suppose if we really wanted to do it with our system
-    -- we could make it target only himself with no aoe
-    -- then inside the WoZ lua manually get all the enemy targets in 15 yalm radius and push the skill messages and dmg manually
-    -- technically possible
-
--- adjust as appropriate the tp gained from his autoattack skills (skill_tp + X)
-
--- maybe lower movement speed while its roaming, or get it to stop randomly
--- test evasion for first throw, may need to have it lowered while out of combat
-    -- lowered eva by half and have about 50% hit rate as ungeared 75 rdm with 170 throwing skill
-
-  -- Make Servervar for horn status
 
   -- for charge, idk, maybe add roam flag 512 or 256
         -- what dodoes the flag do? it works pretty good now
+        -- i think you wrote this then responded to yourself? -- mowford
 
 
 darkixion.zoneinfo =
@@ -246,7 +236,7 @@ darkixion.zoneinfo =
 
 darkixion.endStomp = function(mob)
     mob:setLocalVar("charging", 0)
-    mob:AnimationSub(mob:getLocalVar("sub"))
+    mob:AnimationSub(mob:getLocalVar("originalSub"))
     mob:speed(70)
     -- mob:setMod(tpz.mod.MOVE, 70)
     mob:SetAutoAttackEnabled(true)
@@ -264,9 +254,10 @@ darkixion.itsStompinTime = function(mob)
     local targets = {}
     hitList = {}
     mob:setLocalVar("charging", 1)
+    mob:setLocalVar("originalSub", mob:AnimationSub())
     mob:AnimationSub(1)
     -- mob:setMod(tpz.mod.MOVE, 60)
-    mob:speed(60)
+    mob:speed(90)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
     mob:SetMagicCastingEnabled(false)
@@ -328,14 +319,23 @@ darkixion.roamingMods = function(mob)
     mob:setMod(tpz.mod.UDMGBREATH , -100)
     mob:setMod(tpz.mod.UDMGMAGIC  , -100)
     mob:setMod(tpz.mod.UDMGRANGE  , -100)
-    -- easier to land ash
-    mob:setMod(tpz.mod.AGI, -1 * (mob:getStat(tpz.mod.AGI) / 2))
+
+    -- restore hp just in case something caused him to regen while roaming
     local HP = GetServerVariable("DarkIxion_HP")
     if HP == 0 then
         HP = mob:getHP()
         SetServerVariable("DarkIxion_HP", HP)
     end
     mob:setHP(HP)
+
+    -- restore horn status
+    if GetServerVariable("DarkIxion_HornStatus") == 1 then
+        mob:AnimationSub(2)
+        mob:hideHP(false)
+    else
+        mob:AnimationSub(0)
+        mob:hideHP(true)
+    end
 
     mob:SetMobSkillAttack(39)
     mob:setLocalVar("charging", 0)
@@ -388,12 +388,14 @@ darkixion.onMobDeath = function(mob, player, isKiller)
     player:addTitle(tpz.title.IXION_HORNBREAKER)
     -- only reset hp after being killed
     SetServerVariable("DarkIxion_HP", 0)
+    SetServerVariable("DarkIxion_HornStatus", 0)
     if isKiller == true then
         mob:setLocalVar("wasKilled", 1)
     end
 end
 
 darkixion.onMobDespawn = function(mob)
+    mob:removeListener("IXION_ATTACKED")
     DisallowRespawn(mob:getID(), true)
     if mob:getZoneID() == GetServerVariable("DarkIxion_ZoneID") then
         darkixion.repop(mob)
@@ -403,21 +405,23 @@ darkixion.onMobDespawn = function(mob)
     end
 end
 
-darkixion.onCriticalHit = function(mob)
+darkixion.onCriticalHit = function(mob, attacker)
     local RND = math.random(1, 100)
-    if (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) and RND == 1 then
-        mob:AnimationSub(2)
-        mob:setLocalVar("sub", 2)
-        mob:hideHP(false)
+    if (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) and
+        (attacker ~= nil and attacker:isInfront(mob)) and
+        RND <= 5 then
+            mob:AnimationSub(2)
+            mob:hideHP(false)
     end
 end
 
 darkixion.onWeaponskillHit = function(mob, attacker, weaponskill)
     local RND = math.random(1, 100)
-    if (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) and RND == 1 then
-        mob:AnimationSub(2)
-        mob:setLocalVar("sub", 2)
-        mob:hideHP(false)
+    if (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) and
+        (attacker ~= nil and attacker:isInfront(mob)) and
+        RND <= 5 then
+            mob:AnimationSub(2)
+            mob:hideHP(false)
     end
     return 0
 end
@@ -429,11 +433,8 @@ darkixion.onMobSpawn = function(mob)
     darkixion.roamingMods(mob)
     SetServerVariable("DarkIxion_PopTime", os.time())
     mob:setLocalVar("wasKilled", 0)
-    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.STUNRES, 100)
-    mob:hideHP(true)
-    mob:setLocalVar("sub", 0)
 
     mob:setMobMod(tpz.mobMod.NO_REST, 10)
     mob:setAggressive(1)
@@ -515,6 +516,9 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
     mob:setLocalVar("skill_tp", 0)
 end
 
+darkixion.onAdditionalEffect = function(mob, target, damage)
+end
+
 darkixion.onMobRoamAction = function(mob)
 end
 
@@ -552,8 +556,7 @@ darkixion.onMobEngaged = function(mob, target)
     mob:setMod(tpz.mod.UDMGBREATH , 0)
     mob:setMod(tpz.mod.UDMGMAGIC  , 0)
     mob:setMod(tpz.mod.UDMGRANGE  , 0)
-    -- revert agi back for fight
-    mob:setMod(tpz.mod.AGI, 0)
+
     mob:setLocalVar("run", 0)
     mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
     mob:speed(70) -- movement +75% = 40 * 1.75
@@ -561,6 +564,12 @@ end
 
 darkixion.onMobDisengage = function(mob)
     SetServerVariable("DarkIxion_HP", mob:getHP())
+    if mob:AnimationSub() == 2 then
+        SetServerVariable("DarkIxion_HornStatus", 1)
+    else
+        SetServerVariable("DarkIxion_HornStatus", 0)
+    end
+
     darkixion.roamingMods(mob)
     if mob:getLocalVar("RunAway") == 0 then
         -- disengage, give one window of him standing still unclaimed before "Running away"
@@ -658,7 +667,6 @@ darkixion.onMobFight = function(mob, target)
         else
             mob:setLocalVar("double", 0)
             mob:AnimationSub(0)
-            mob:setLocalVar("sub", 0)
         end
     end
 
@@ -669,7 +677,6 @@ darkixion.onMobFight = function(mob, target)
 
     if os.time() >= mob:getLocalVar("horn") and mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
         mob:AnimationSub(0)
-        mob:setLocalVar("sub", 0)
     end
 
     -- Everything below deals with his charge attack (trample)
@@ -712,9 +719,9 @@ darkixion.onMobFight = function(mob, target)
     end
 
     -- TODO: Remove this when fight is tuned
-    -- reset hp to full and run away if below 40%
-    if mob:getHPP() < 40 then
-        mob:setHP(mob:getMaxHP())
+    -- reset hp and run away if below X%
+    if mob:getHPP() < 10 then
+        mob:setHP(mob:getMaxHP() * .8)
         mob:disengage()
     end
 end
