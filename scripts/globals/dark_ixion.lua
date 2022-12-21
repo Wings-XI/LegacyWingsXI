@@ -245,15 +245,27 @@ darkixion.endStomp = function(mob)
     mob:SetMobAbilityEnabled(true)
     mob:setLocalVar("lastHit", 0)
     mob:setLocalVar("run", mob:getLocalVar("run") - 1)
+
+    -- Don't move around if doing multiple tramples
+    if mob:getLocalVar("run") > 0 then
+        mob:setLocalVar("timeSinceWS", os.time() + 2)
+    end
+    mob:timer(2000, function(mobArg)
+        if mobArg:getLocalVar("charging") ==  0 then
+            mobArg:setBehaviour(0)
+        end
+    end)
+
     mob:SetMobSkillAttack(39)
-    mob:setBehaviour(0)
     pos = nil
     hitList = nil
 
 end
 
 darkixion.itsStompinTime = function(mob)
+    printf("newStomp")
     local targets = {}
+    -- hitList is a list of all players considered for this trample. If they get out of the way, they do not get hit
     hitList = {}
     mob:setLocalVar("charging", 1)
     mob:setLocalVar("originalSub", mob:AnimationSub())
@@ -492,7 +504,7 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
     end
 
     -- determine if we want to run soon, do it randomly off autos, more frequent and more runs when low
-    if mob:AnimationSub() ~= 3 and (skill:getID() == 2340 or skill:getID() == 2341) then
+    if os.time() >= mob:getLocalVar("timeSinceWS") + 2 and mob:AnimationSub() ~= 3 and (skill:getID() == 2340 or skill:getID() == 2341) then
         local R = math.random(1,100)
         if R >= 70 and mob:getHPP() < 33 then
             mob:setLocalVar("run", mob:getLocalVar("run") + math.random(1,3))
@@ -671,8 +683,6 @@ darkixion.onMobFight = function(mob, target)
         end
     end
 
-
-
     -- This section deals with him glowing (double TP moves)
     if os.time() >= mob:getLocalVar("PhaseChange") and mob:AnimationSub()~= 2 and (mob:AnimationSub() == 0 or mob:AnimationSub() == 3) then
         mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
@@ -684,11 +694,6 @@ darkixion.onMobFight = function(mob, target)
             mob:AnimationSub(0)
         end
     end
-
-
-
-
-
 
     if os.time() >= mob:getLocalVar("horn") and mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
         mob:AnimationSub(0)
@@ -702,33 +707,43 @@ darkixion.onMobFight = function(mob, target)
     end
 
     if mob:getLocalVar("charging") == 1 then
+        -- if trample is going through tank, let tank get hit, otherwise push onto the hitList without trampling
+        -- if all other players are behind DI then tank should never get hit with trample
+        if not target:isInfront(mob, 100) then
+            table.insert(hitList, target)
+        end
         if mob:checkDistance(pos) >= 3 then
-            local nearbyPlayers = mob:getPlayersInRange(4)
-            if nearbyPlayers == nil then return end
+            local nearbyPlayers = mob:getPlayersInRange(8)
+            if nearbyPlayers ~= nil then
+                for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he tramples, hit the ones in front
+                    mob:setLocalVar("stomp", 0)
 
-            for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he runs
-                mob:setLocalVar("stomp", 0)
-
-                local dork = nearbyPlayers[aa]
-                if dork:isAlive() then
-                    local nextHit = dork:getID()
-                    if (#hitList) == 0 then
-                        table.insert(hitList, nextHit)
-                        mob:useMobAbility(2339, nextHit) -- trample
-                    else
-                        for v = 1, (#hitList) do
-                            if hitList[v] == nextHit then
-                                mob:setLocalVar("stomp", mob:getLocalVar("stomp")+1)
+                    local dork = nearbyPlayers[aa]
+                    if dork:isAlive() then
+                        local nextHit = dork:getID()
+                        if (#hitList) == 0 then
+                            table.insert(hitList, nextHit)
+                            mob:setLocalVar("stomp", 1)
+                        else
+                            for v = 1, (#hitList) do
+                                if hitList[v] == nextHit then
+                                    mob:setLocalVar("stomp", 1)
+                                end
+                            end
+                            if mob:getLocalVar("stomp") == 0 then
+                                table.insert(hitList, nextHit)
+                                mob:setLocalVar("stomp", 1)
+                            else
+                                mob:setLocalVar("stomp", 0)
                             end
                         end
-                        if mob:getLocalVar("stomp") == 0 then
+                        if dork:isInfront(mob, 10) and mob:getLocalVar("stomp") ~= 0 then
                             mob:useMobAbility(2339, dork) -- trample
-                            table.insert(hitList, nextHit)
                         end
                     end
                 end
             end
-        elseif mob:checkDistance(pos) < 2 then
+        elseif not mob:isFollowingPath() then
             darkixion.endStomp(mob)
         end
     end
