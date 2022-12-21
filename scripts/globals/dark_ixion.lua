@@ -17,8 +17,9 @@ darkixion = {}
 
 -- grav/bind res
 
--- for charge, hieight check.. lower to 6 from 7 or 5.5
+-- for charge/trample, height check.. lower to 6 from 7 or 5.5
 -- dmg taken from front/rear (if we can)
+  -- possible to edit PHYSICAL_SHIELD to do this, also possible to hack it with listeners, but both are pretty substantial things for what amounts to be a minimal mob behavior
 
 
 
@@ -316,9 +317,9 @@ end
 darkixion.roamingMods = function(mob)
     -- don't take damage until the fight officially starts
     mob:setMod(tpz.mod.UDMGPHYS   , -100)
+    mob:setMod(tpz.mod.UDMGRANGE  , -100)
     mob:setMod(tpz.mod.UDMGBREATH , -100)
     mob:setMod(tpz.mod.UDMGMAGIC  , -100)
-    mob:setMod(tpz.mod.UDMGRANGE  , -100)
 
     -- restore hp just in case something caused him to regen while roaming
     local HP = GetServerVariable("DarkIxion_HP")
@@ -553,9 +554,9 @@ darkixion.onMobEngaged = function(mob, target)
         mob:disengage()
     end
     mob:setMod(tpz.mod.UDMGPHYS   , 0)
+    mob:setMod(tpz.mod.UDMGRANGE  , 0)
     mob:setMod(tpz.mod.UDMGBREATH , 0)
     mob:setMod(tpz.mod.UDMGMAGIC  , 0)
-    mob:setMod(tpz.mod.UDMGRANGE  , 0)
 
     mob:setLocalVar("run", 0)
     mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
@@ -585,6 +586,50 @@ darkixion.onMobDisengage = function(mob)
 end
 
 darkixion.onMobFight = function(mob, target)
+
+    --[[
+        -- WIP to make dmg taken from front reduced by reducing all phys and ranged dmg then boosting it from not the front.
+        -- This may be a fool's errand, perhaps adding another type of PHYSICAL_SHEILD might be in order to simply reduce the dmg from front instead of block outright
+
+
+    mob:setMod(tpz.mod.UDMGPHYS   , -75)
+    mob:setMod(tpz.mod.UDMGRANGE  , -75)
+    mob:removeListener("IXION_TAKE_DAMAGE")
+    mob:addListener("TAKE_DAMAGE", "IXION_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
+        if attacker ~= nil and mobArg:getMod(tpz.mod.UDMGPHYS) < 0 and
+            (attackType == tpz.attackType.PHYSICAL or attackType == tpz.attackType.RANGED) and
+            not attacker:isInfront(mobArg) and amount > 0 then
+                -- dmg reduction is set to reduce dmg taken from front, real dmg should be normal from behind
+                -- dmgBonus is the missing damage due to reduction from UDMGPHYS
+                local dmgBonus = amount / (100 + mobArg:getMod(tpz.mod.UDMGPHYS)) * 100
+                mobArg:takeDamage(dmgBonus, attacker, 0, 0)
+                printf("modifiedT %u", dmgBonus)
+                amount = amount + dmgBonus
+                if attacker:isPC() then
+                    attacker:PrintToPlayer(string.format( "Adjusted damage from %s to %s from behind: %u", attacker:getName(), mobArg:getName(), amount ), 0xD)
+                end
+        end
+        -- printf("infoT %u %u", mobArg:getHP(), amount)
+    end)
+
+    -- this only fixes combat messages for auto attacks, ranged attacks and all weapon skills show the reduced dmg, but the take_damage listener makes DI take the proper amount
+    mob:removeListener("IXION_ATTACKED")
+    mob:addListener("ATTACKED", "IXION_ATTACKED", function(mobArg, attacker, action)
+        -- only called on
+        local amount = action:param(mobArg:getID())
+        if attacker ~= nil and mobArg:getMod(tpz.mod.UDMGPHYS) < 0 and
+            not attacker:isInfront(mobArg) and amount > 0 then
+                local dmgBonus = amount / (100 + mobArg:getMod(tpz.mod.UDMGPHYS)) * 100
+                -- adjusting action param for combat log to report proper dmg: attack round dmg (amount) + dmgBonus (handled in take_damage listener)
+                action:param(mobArg:getID(), amount + dmgBonus)
+                -- printf("modifiedA %u", dmgBonus)
+        end
+
+        -- printf("infoA %u %u", mobArg:getHP(), amount)
+    end)
+    ]]
+
+
     -- Since its autos are technically TP moves, lets deal with the other fancy stuff here
     if ((mob:getTP() >= 2900 and mob:getHPP() > 66) or
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
