@@ -447,7 +447,8 @@ end
 darkixion.onMobSpawn = function(mob)
     -- "Dark Ixion takes much less damage from the front (50-75% less) and full damage from behind it"
     mob:addListener("TAKE_DAMAGE", "IXION_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
-        if attacker ~= nil and
+        -- dmg reduction only when horn is intact
+        if attacker ~= nil and mobArg:AnimationSub() ~= 2 and
             attacker:isInfront(mobArg, 128) and amount > 0 then
                 -- add the HP difference between dmg taken and what it should have taken
                 local dmgReduction = amount * math.random(50, 75) / 100
@@ -704,10 +705,11 @@ darkixion.onMobFight = function(mob, target)
 
 
     -- Everything below deals with his charge attack (trample)
-
-    if mob:getLocalVar("run") >= 1 and os.time() >= mob:getLocalVar("runTime") and mob:getLocalVar("charging") == 0 and mob:AnimationSub() ~= 3 then
-        darkixion.itsStompinTime(mob)
-        mob:setTP(0)
+    if mob:getLocalVar("run") >= 1 and os.time() >= mob:getLocalVar("runTime") and
+        mob:getLocalVar("charging") == 0 and
+        mob:AnimationSub() < 2 then -- don't trample if horn is broken
+            darkixion.itsStompinTime(mob)
+            mob:setTP(0)
     end
 
     if mob:getLocalVar("charging") == 1 then
