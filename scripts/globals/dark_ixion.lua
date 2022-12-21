@@ -263,7 +263,6 @@ darkixion.endStomp = function(mob)
 end
 
 darkixion.itsStompinTime = function(mob)
-    printf("newStomp")
     local targets = {}
     -- hitList is a list of all players considered for this trample. If they get out of the way, they do not get hit
     hitList = {}
@@ -425,6 +424,7 @@ darkixion.onCriticalHit = function(mob, attacker)
         (attacker ~= nil and attacker:isInfront(mob)) and
         RND <= 5 then
             mob:AnimationSub(2)
+            mob:setLocalVar("double", 0)
             mob:hideHP(false)
     end
 end
@@ -435,6 +435,7 @@ darkixion.onWeaponskillHit = function(mob, attacker, weaponskill)
         (attacker ~= nil and attacker:isInfront(mob)) and
         RND <= 5 then
             mob:AnimationSub(2)
+            mob:setLocalVar("double", 0)
             mob:hideHP(false)
     end
     return 0
@@ -527,7 +528,13 @@ darkixion.onMobSkillFinished = function(mob, target, skill)
         if mob:AnimationSub() == 2 and math.random(1,100) <= 25 then
             mob:AnimationSub(3)
             mob:hideHP(true)
-            mob:setLocalVar("horn", os.time() + 5)
+            mob:setLocalVar("double", 0)
+            -- reset phasechange timer
+            mob:setLocalVar("PhaseChange", os.time() + math.random(60, 240))
+            -- If horn is restored by heal, we don't want to glow longterm, but animation sub cannot be changed back to back
+            mob:timer(2000, function(mobArg)
+                mobArg:AnimationSub(0)
+            end)
         end
     end
 
@@ -695,9 +702,6 @@ darkixion.onMobFight = function(mob, target)
         end
     end
 
-    if os.time() >= mob:getLocalVar("horn") and mob:AnimationSub() == 3 and mob:getLocalVar("double") == 0 then -- Purpose is if horn is restored by heal, we don't want to glow
-        mob:AnimationSub(0)
-    end
 
     -- Everything below deals with his charge attack (trample)
 
