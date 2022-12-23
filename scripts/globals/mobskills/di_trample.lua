@@ -34,9 +34,10 @@ function onMobWeaponSkill(target, mob, skill)
         dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOBPARAM_IGNORE_SHADOWS)
         target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
         target:setMP(newMP)
-        MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
         skill:setMsg(tpz.msg.basic.HIT_DMG)
-        if dmg > 0 then target:tryInterruptSpell(mob, info.hitslanded) end
+        -- knockback instead of bind, according to videos of the fight
+        -- MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
+        -- if dmg > 0 then target:tryInterruptSpell(mob, info.hitslanded) end
     else
         skill:setMsg(tpz.msg.basic.EVADES)
         return
