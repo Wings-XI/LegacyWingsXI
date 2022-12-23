@@ -23838,6 +23838,7 @@ INSERT INTO `item_mods` VALUES (19209,11,25);     -- Molybdosis (iLvl 119): AGI 
 INSERT INTO `item_mods` VALUES (19209,24,45);     -- Ranged Attack +45
 INSERT INTO `item_mods` VALUES (19209,28,30);     -- Magic Atk. Bonus +30
 INSERT INTO `item_mods` VALUES (19209,421,10);    -- Critical hit damage +10%
+INSERT INTO `item_mods` VALUES (19210,26,150);
 INSERT INTO `item_mods` VALUES (19211,23,10);
 INSERT INTO `item_mods` VALUES (19212,9,1);
 INSERT INTO `item_mods` VALUES (19212,23,4);
