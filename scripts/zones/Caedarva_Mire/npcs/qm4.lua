@@ -8,8 +8,9 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 2593) and npcUtil.popFromQM(player, npc, ID.mob.TYGER) then -- Singed Buffalo
+    if npcUtil.tradeHas(trade, 2593) and npcUtil.popFromQM(player, npc, ID.mob.TYGER) then -- Chunk of Singed Buffalo
         player:confirmTrade()
+        player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end
 
