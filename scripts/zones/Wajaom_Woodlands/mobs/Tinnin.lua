@@ -14,6 +14,11 @@ require("scripts/globals/magic")
 require("scripts/globals/status")
 -----------------------------------
 
+--[[ used only when second (Hydra's right-- our left) head is alive:
+
+    Polar Blast: Ice-based Breath Attack Resist Vs. Ice and Paralyze Paralyze; wipes shadows
+    Pyric Blast: Fire-based Breath Attack Resist Vs. Fire and Plague Plague; wipes shadows]]
+
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
@@ -69,6 +74,19 @@ function onMobRoam(mob)
 end
 
 function onMobFight(mob, target)
+    -- Mowford, I cant test locally right away if you can help me with the animation subs below
+    -- There are two skill lists Hyrda can do depending on if Hydra's right-- our left) head is alive
+
+    if mob:AnimationSub() == 1 then -- I want this to be the case if the above head is DEAD (check animaiton sub please)
+        -- There may be 2 animation subs (one for all heads dead, one for only the left being dead)
+        mob:setSkillList(5307) 
+    else -- Any other animation sub, but the left head is alive (meaning all heads up, or right head only is dead)
+        mob:setSkillList(313)
+    end
+
+
+
+    -- Mowford, the stuff i added is above this line :)
     local headTimer = mob:getLocalVar("headTimer")
     if (mob:AnimationSub() == 2 and os.time() > headTimer) then
         mob:AnimationSub(1)

@@ -6,7 +6,11 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+--[[Howls (visible animation) a few seconds before using Tourbillion
+, making it easy to avoid damage by casting your shadows in time to absorb all three hits.]]
 
+-- We can try using sara's howl animation to see if it works, its technically a TP move.
+-- Eden has Khim howling, we don't, so we would have to dig around and find the animation for this if saras looks weird.
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.SLEEPRES, 30)
     mob:addMod(tpz.mod.BINDRES, 30)
