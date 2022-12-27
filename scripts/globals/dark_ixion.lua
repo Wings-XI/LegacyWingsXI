@@ -753,11 +753,4 @@ darkixion.onMobFight = function(mob, target)
             darkixion.endStomp(mob)
         end
     end
-
-    -- TODO: Remove this when fight is tuned
-    -- reset hp and run away if below X%
-    if tonumber(os.date("%Y")) < 2023 and tonumber(os.date("%d")) < 25 and mob:getHPP() < 10  then
-        mob:setHP(mob:getMaxHP() * .8)
-        mob:disengage()
-    end
 end
