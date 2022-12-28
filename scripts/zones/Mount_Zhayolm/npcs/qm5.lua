@@ -10,7 +10,6 @@ require("scripts/globals/npc_util")
 function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, 2583) and npcUtil.popFromQM(player, npc, ID.mob.SARAMEYA, {hide = 0}) then -- Chunk of Buffalo Corpse
         player:confirmTrade()
-        player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end
 

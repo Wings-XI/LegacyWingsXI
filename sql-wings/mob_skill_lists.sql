@@ -1375,7 +1375,7 @@ INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1789); -- mag hop
 INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1790); -- goh
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2022); -- ten mist
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2023); -- thunderstrike
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 4262); -- howl
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 3267); -- howl
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2025); -- dreadstorm
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2026); -- foss breath
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027); -- plague swipe

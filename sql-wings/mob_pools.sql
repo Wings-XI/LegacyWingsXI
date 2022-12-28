@@ -3982,7 +3982,7 @@ INSERT INTO `mob_pools` VALUES(3918, 'Tieholtsodi', 'Tieholtsodi', 219, _binary 
 INSERT INTO `mob_pools` VALUES(3919, 'Tigerbane_Bakdak', 'Tigerbane_Bakdak', 334, _binary 0x0000680200000000000000000000000000000000, 8, 8, 5, 240, 100, 0, 1, 0, 1, 2, 0, 32, 1871, 155, 0, 0, 5, 0, 0, 334);
 INSERT INTO `mob_pools` VALUES(3920, 'Time_Bomb', 'Time_Bomb', 56, _binary 0x0000180100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 2, 47, 0, 0, 3, 0, 0, 0, 0, 0, 56);
 INSERT INTO `mob_pools` VALUES(3921, 'Tind', 'Tind', 358, _binary 0x0000f20200000000000000000000000000000000, 8, 8, 1, 240, 100, 0, 1, 1, 1, 16, 0, 0, 0, 3, 0, 0, 5, 0, 0, 358);
-INSERT INTO `mob_pools` VALUES(3922, 'Tinnin', 'Tinnin', 313, _binary 0x0000040700000000000000000000000000000000, 1, 1, 7, 240, 100, 1024, 1, 0, 0, 2, 9, 32, 0, 3, 2, 0, 0, 0, 0, 313);
+INSERT INTO `mob_pools` VALUES(3922, 'Tinnin', 'Tinnin', 313, _binary 0x0000040700000000000000000000000000000000, 1, 1, 7, 240, 100, 1024, 0, 0, 0, 2, 9, 32, 0, 3, 2, 0, 0, 0, 0, 313);
 INSERT INTO `mob_pools` VALUES(3923, 'Tiny_Lycopodium', 'Tiny_Lycopodium', 178, _binary 0x0000c70800000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 1, 0, 0, 0, 0, 0, 471, 129, 0, 0, 0, 0, 0, 1146);
 INSERT INTO `mob_pools` VALUES(3924, 'Tiny_Mandragora', 'Tiny_Mandragora', 178, _binary 0x00002c0100000000000000000000000000000000, 2, 2, 3, 480, 100, 0, 0, 0, 0, 0, 0, 0, 290, 641, 0, 0, 0, 0, 0, 178);
 INSERT INTO `mob_pools` VALUES(3925, 'Tipha', 'Tipha', 188, _binary 0x0000a00100000000000000000000000000000000, 1, 1, 7, 200, 100, 0, 1, 1, 1, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 188);

@@ -1,8 +1,8 @@
 -----------------------------------
 -- Area: Wajaom Woodlands
 --  ZNM: Tinnin
--- !pos 276 0 -694
--- Spawned with Monkey Wine: @additem 2573
+-- !pos 276 0 -694 51
+-- Spawned with Monkey Wine: !additem 2573
 -- Wiki: http://ffxiclopedia.wikia.com/wiki/Tinnin
 -----------------------------------
 mixins =
@@ -14,10 +14,17 @@ require("scripts/globals/magic")
 require("scripts/globals/status")
 -----------------------------------
 
---[[ used only when second (Hydra's right-- our left) head is alive:
+--[[
+    Serpentine Tail: Heavy damage single target or cone attack triggered when someone gets hate from behind.
+    If drawn in, you are not automatically the target of the TP move, so it is still important not to get hate from behind as this can result in a Serpentine Tail
+      -- seems pretty likely there needs to be explicit code to serp tail if target is behind
+      -- could do this in the onmobskillprepare, if target behind then use tail move. Hydra does not have this functionality currently
 
-    Polar Blast: Ice-based Breath Attack Resist Vs. Ice and Paralyze Paralyze; wipes shadows
-    Pyric Blast: Fire-based Breath Attack Resist Vs. Fire and Plague Plague; wipes shadows]]
+    Because Tinnin is generally more aggressive while at lower HP, it is advisable to not engage upon spawning in order to allow it to regenerate both of its heads before starting to attack it.
+      -- i set him to not claim on trade, but this may be exploitable?
+
+    Has Alliance Hate.
+]]
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
@@ -74,19 +81,6 @@ function onMobRoam(mob)
 end
 
 function onMobFight(mob, target)
-    -- Mowford, I cant test locally right away if you can help me with the animation subs below
-    -- There are two skill lists Hyrda can do depending on if Hydra's right-- our left) head is alive
-
-    if mob:AnimationSub() == 1 then -- I want this to be the case if the above head is DEAD (check animaiton sub please)
-        -- There may be 2 animation subs (one for all heads dead, one for only the left being dead)
-        mob:setSkillList(5307) 
-    else -- Any other animation sub, but the left head is alive (meaning all heads up, or right head only is dead)
-        mob:setSkillList(313)
-    end
-
-
-
-    -- Mowford, the stuff i added is above this line :)
     local headTimer = mob:getLocalVar("headTimer")
     if (mob:AnimationSub() == 2 and os.time() > headTimer) then
         mob:AnimationSub(1)
@@ -102,9 +96,8 @@ function onMobFight(mob, target)
         if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- disable no turning for the forced mobskills upon head growth
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
         end
-        -- These need to be listed in reverse order as forced moves are added to the top of the queue.
-        mob:useMobAbility(1830) -- Polar Blast
         mob:useMobAbility(1832) -- Barofield
+        mob:useMobAbility(1830) -- Polar Blast
 
     elseif (mob:AnimationSub() == 1 and os.time() > headTimer) then
         mob:AnimationSub(0)
@@ -122,10 +115,9 @@ function onMobFight(mob, target)
         if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- disable no turning for the forced mobskills upon head growth
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
         end
-        -- Reverse order, same deal.
-        mob:useMobAbility(1828) -- Pyric Blast
-        mob:useMobAbility(1830) -- Polar Blast
         mob:useMobAbility(1832) -- Barofield
+        mob:useMobAbility(1830) -- Polar Blast
+        mob:useMobAbility(1828) -- Pyric Blast
     end
 end
 
