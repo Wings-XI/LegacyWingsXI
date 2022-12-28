@@ -22,7 +22,7 @@ function onMobInitialize(mob)
 end
 
 function howlSequence(mob) 
-    if mob:getHPP() <= 25
+    if mob:getHPP() <= 25 then
         mob:useMobAbility(1789) -- Magma Hoplon
         mob:castSpell(175) -- Firaga III
         mob:useMobAbility(1178) -- Ullulation

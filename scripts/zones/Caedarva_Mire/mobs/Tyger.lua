@@ -16,6 +16,13 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.BINDRES, 30)
     mob:addMod(tpz.mod.GRAVITYRES, 30)
     mob:addMod(tpz.mod.ATT, 200)
+    mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
+end
+
+function onMobSkillFinished(mob, target, skill)
+    if skill:getID() == 4262 then -- howl
+        mob:useMobAbility(2024) -- Torb
+    end
 end
 
 function onMobDeath(mob, player, isKiller)
