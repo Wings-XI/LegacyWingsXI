@@ -5,10 +5,24 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
-local entity = {}
 
-entity.onMobInitialize = function(mob)
-    mob:setMod(xi.mod.SLEEPRES, 50)
+function onMobInitialize(mob)
+    mob:setMod(tpz.mod.SLEEPRES, 50)
 end
 
-return entity
+function onMobEngaged(mob)
+    if mob:getLocalVar("deathID") > 0 then
+        mob:useMobAbility(1362)
+    end
+end
+
+function onMobDeath(mob)
+    if mob:getLocalVar("deathID") > 0 then
+        local rabbitID = mob:getID() - mob:getLocalVar("deathID")
+        for i = 1, 5 do
+            if GetMobByID(rabbitID + i):isAlive() then
+                GetMobByID(rabbitID + i):setHP(0)
+            end
+        end
+    end
+end
