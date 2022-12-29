@@ -754,3 +754,12 @@ darkixion.onMobFight = function(mob, target)
         end
     end
 end
+
+darkixion.onTradeFaySpring = function(player, npc)
+    local amity = GetServerVariable("PixieAmity")
+    if amity == 255 then
+        player:PrintToPlayer(string.format("Fay Spring : The Pixies are now happy, but something else has been disturbed from its slumber...! Dark Ixion now roams (if he wasn't already)!"), 0xD)
+        -- reset DI ToD/next pop so on next game hour he begins roaming in his already-selected, random zone
+        SetServerVariable("DarkIxion_PopTime", os.time())
+    end
+end
