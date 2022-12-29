@@ -22,6 +22,7 @@ function onTrade(player, npc, trade)
 		hate = hate - 5
 		player:setPixieHate(utils.clamp(hate, 0, 60))
         player:startEvent(501, 0, 0, 0, 2)
+        darkixion.onTradeFaySpring(player, npc)
     end
 end
 
