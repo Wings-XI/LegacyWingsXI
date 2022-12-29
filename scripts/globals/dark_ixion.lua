@@ -61,3 +61,6 @@ end
 
 darkixion.onMobInitialize = function(mob)
 end
+
+darkixion.onTradeFaySpring = function(player, npc)
+end
