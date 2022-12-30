@@ -817,7 +817,8 @@ bool CCharEntity::ReloadParty()
 
 void CCharEntity::ForceReloadParty()
 {
-    if (PParty) {
+    time_point timepointNow = std::chrono::system_clock::now();
+    if (PParty && timepointNow < PParty->GetLastReloadTime() + 3s) {
         PParty->ResetLastReloadTime();
     }
 }
