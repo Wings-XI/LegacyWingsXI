@@ -4,8 +4,8 @@
 -- ENM: When Hell Freezes Over
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 -----------------------------------
-local entity = {}
 
 local controlBombs =
 {
@@ -14,10 +14,12 @@ local controlBombs =
     {16801832, 16801835},
 }
 
-entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.SLEEPRES, 75)
-    mob:setMod(xi.mod.LULLABYRES, 75)
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.SLEEPRES, 75)
+    mob:setMod(tpz.mod.LULLABYRES, 75)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 50)
 
+    -- 1s timer as the first mobs to spawn in a battlefield cannot query their battlefield info
     mob:timer(1, function(mobArg)
         local bfNum = mobArg:getBattlefield():getArea()
         local bf = mobArg:getBattlefield()
@@ -28,19 +30,17 @@ entity.onMobSpawn = function(mob)
                 bf:setLocalVar("controlBombID", controlBombs[bfNum][i])
                 bf:setLocalVar("adds", math.random(0,2))
 
-                if bf:getLocalVar("wave") == 0 then
-                    bf:setLocalVar("adds", 2)
-                else
-                    for y = 1, bf:getLocalVar("adds") do
-                        SpawnMob(mobArg:getID() + y)
-                    end
+                -- "Each wave has a random number of Snow Devils ranging between 1 and 3. There are a total of 4 waves of Snow Devils."
+                -- "Thus, the total number of Snow Devils fought for this ENM is between 4 and 12."
+                for y = 1, bf:getLocalVar("adds") do
+                    SpawnMob(mobArg:getID() + y)
                 end
             end
         end
     end)
 
     mob:addListener("TAKE_DAMAGE", "DEVIL_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
-        if amount > mobArg:getHP() then
+        if amount >= mobArg:getHP() then
             local bfNum = mob:getBattlefield():getArea()
             local bf = mob:getBattlefield()
             bf:setLocalVar("mobsDead", bf:getLocalVar("mobsDead") + 1)
@@ -60,6 +60,5 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
+    mob:removeListener("DEVIL_TAKE_DAMAGE")
 end
-
-return entity
