@@ -2,6 +2,7 @@
 -- Follow the White Rabbit
 -- Bearclaw Pinnacle ENM, Zephyr Fan
 -- !addkeyitem ZEPHYR_FAN
+-- !pos 122 -171.5 757 6
 -----------------------------------
 require("scripts/globals/battlefield")
 require("scripts/globals/keyitems")

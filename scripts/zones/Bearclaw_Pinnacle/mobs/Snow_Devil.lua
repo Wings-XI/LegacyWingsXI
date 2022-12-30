@@ -19,10 +19,10 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.LULLABYRES, 75)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 50)
 
-    -- 1s timer as the first mobs to spawn in a battlefield cannot query their battlefield info
-    mob:timer(1, function(mobArg)
-        local bfNum = mobArg:getBattlefield():getArea()
+    -- timer as the first mobs to spawn in a battlefield cannot query their battlefield info
+    mob:timer(100, function(mobArg)
         local bf = mobArg:getBattlefield()
+        local bfNum = bf:getArea()
 
         for i = 1, 2 do
             if mobArg:getID() == controlBombs[bfNum][i] then
@@ -41,8 +41,8 @@ function onMobSpawn(mob)
 
     mob:addListener("TAKE_DAMAGE", "DEVIL_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
         if amount >= mobArg:getHP() then
-            local bfNum = mob:getBattlefield():getArea()
-            local bf = mob:getBattlefield()
+            local bf = mobArg:getBattlefield()
+            local bfNum = bf:getArea()
             bf:setLocalVar("mobsDead", bf:getLocalVar("mobsDead") + 1)
             if
                 bf:getLocalVar("mobsDead") >= bf:getLocalVar("adds") + 1 and
@@ -59,6 +59,6 @@ function onMobSpawn(mob)
     end)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobDeath(mob, player, isKiller)
     mob:removeListener("DEVIL_TAKE_DAMAGE")
 end
