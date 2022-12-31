@@ -8,7 +8,7 @@ License: GPLv3
 
 import sys
 import mysql
-import mysql.connector
+import mariadb
 
 MAP_HOST = "127.0.0.1"
 MAP_USER = "topaz"
@@ -102,8 +102,8 @@ def migrate_chars(map_con, login_con, world_id):
     map_cur.close()
 
 def main(argv):
-    map_con = mysql.connector.connect(host=MAP_HOST, user=MAP_USER, password=MAP_PASS, database=MAP_DB)
-    login_con = mysql.connector.connect(host=LOGIN_HOST, user=LOGIN_USER, password=LOGIN_PASS, database=LOGIN_DB)
+    map_con = mariadb.connect(host=MAP_HOST, user=MAP_USER, password=MAP_PASS, database=MAP_DB)
+    login_con = mariadb.connect(host=LOGIN_HOST, user=LOGIN_USER, password=LOGIN_PASS, database=LOGIN_DB)
     migrate_accounts(map_con, login_con)
     migrate_chars(map_con, login_con, WORLD_ID)
     update_char_content_id(map_con, login_con, WORLD_ID)

@@ -1,4 +1,4 @@
-import mysql.connector
+import mariadb
 from migrations import utils
 
 # Database change:
@@ -22,5 +22,5 @@ def migrate(cur, db):
 	try:
 		cur.execute("ALTER TABLE {}.accounts MODIFY COLUMN `ip_exempt` smallint(3) unsigned NOT NULL DEFAULT 0".format(dbname))
 		db.commit()
-	except mysql.connector.Error as err:
+	except mariadb.Error as err:
 		print("Something went wrong: {}".format(err))

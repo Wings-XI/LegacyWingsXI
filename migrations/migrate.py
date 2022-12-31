@@ -1,5 +1,4 @@
-import mysql.connector
-from mysql.connector import Error
+import mariadb
 import re
 import spell_blobs_to_spell_table
 import unnamed_flags
@@ -42,7 +41,7 @@ def connect():
 
     print(database, host, port, login, password)
 
-    db = mysql.connector.connect(host=host,
+    db = mariadb.connect(host=host,
             user=login,
             passwd=password,
             db=database,

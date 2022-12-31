@@ -1,4 +1,5 @@
 import re
+import mariadb
 
 dbname = None
 
@@ -78,5 +79,5 @@ def run_login_sql_file(file, cur):
 
 			# switch back to normal database
 			cur.execute("use {}".format(dbname[0]))
-	except mysql.connector.Error as err:
+	except mariadb.Error as err:
 		print("Something went wrong with file {}: {}".format(file, err))
