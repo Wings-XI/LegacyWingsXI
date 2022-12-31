@@ -93,18 +93,18 @@ function onGameHour(zone)
     local qmFaith = GetNPCByID(ID.npc.QM_JAILER_OF_FAITH) -- JoF QM
     local Faith = GetMobByID(ID.mob.JAILER_OF_FAITH) -- Jailer of Faith
 
-    if qmFaith:getStatus() == STATUS_NORMAL and qmFaith:getLocalVar("nextMove") == 0 then
+    if qmFaith:getStatus() == tpz.status.NORMAL and qmFaith:getLocalVar("nextMove") == 0 then
         qmFaith:setLocalVar("nextMove", os.time() + math.random(900, 1800)) -- wait time till change to next spawn pos for jailor of faith, random 15~30 mins.
     end
 
     -- Jailer of Faith spawn randomiser
-    if not Faith:isAlive() and qmFaith:getLocalVar("nextMove") > os.time() then
+    if not Faith:isAlive() and qmFaith:getLocalVar("nextMove") < os.time() then
         qmFaith:hideNPC(60) -- Hide it for 60 seconds
         qmFaith:setPos(unpack(ID.npc.QM_JAILER_OF_FAITH_POS[math.random(1, 5)])) -- Set the new position
         qmFaith:setLocalVar("nextMove", 0)
     end
 
-    -- Ix'DRK spawn randomiser
+    -- Ix'DRK spawn randomizer
     if qmDrk:getStatus() ~= tpz.status.DISAPPEAR and qmDrk:getLocalVar("nextMove") < os.time() then -- Change ??? position every 30 mins
         qmDrk:hideNPC(30)
         local qmDrkPos = math.random(1, 4)
