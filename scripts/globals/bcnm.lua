@@ -641,9 +641,9 @@ function checkReqs(player, npc, bfid, registrant)
         [ 608] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WATER)                                                                                         ) end, -- Quest: Trial by Water
         [ 609] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Water
         [ 611] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)                                               ) end, -- ASA4: Sugar-coated Directive
-        [ 640] = function() return ( cop == mi.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 6                                                               ) end, -- PM5-3 U3: Flames for the Dead
-        [ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: Follow the White Rabbit
-        [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                                   ) end, -- ENM: When Hell Freezes Over
+        [ 640] = function() return ( cop == mi.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 6 and npcid == 16801888                                         ) end, -- PM5-3 U3: Flames for the Dead
+        [ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN) and npcid == 16801890                                                                             ) end, -- ENM: Follow the White Rabbit
+        [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN) and npcid == 16801892                                                                             ) end, -- ENM: When Hell Freezes Over
         [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN) and npcid == 16801894                                                                             ) end, -- ENM: Brothers
         [ 644] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN) and npcid == 16801896                                                                             ) end, -- ENM: Holy Cow
         [ 672] = function() return ( cop == mi.cop.THREE_PATHS and player:getCharVar("COP_Ulmia_s_Path") == 5                                                               ) end, -- PM5-3 U2: Head Wind
@@ -1077,7 +1077,7 @@ function EventTriggerBCNM(player, npc)
         end
 
     end
-
+    
     return false
 end
 

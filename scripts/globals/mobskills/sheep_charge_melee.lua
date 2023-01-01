@@ -14,5 +14,6 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local dmg = 0
+    skill:setMsg(0)
     return dmg
 end

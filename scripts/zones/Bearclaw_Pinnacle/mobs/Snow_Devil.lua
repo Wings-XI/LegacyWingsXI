@@ -18,9 +18,13 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLEEPRES, 75)
     mob:setMod(tpz.mod.LULLABYRES, 75)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 50)
+    mob:setUnkillable(true)
+    mob:setLocalVar("unkillable", 1)
 
-    -- timer as the first mobs to spawn in a battlefield cannot query their battlefield info
-    mob:timer(100, function(mobArg)
+    -- timer because
+        -- the first mobs to spawn in a battlefield cannot query their battlefield info
+        -- also so new waves reset battlefield localvars _after_ all take_damage listeners resolve
+    mob:timer(1000, function(mobArg)
         local bf = mobArg:getBattlefield()
         local bfNum = bf:getArea()
 
@@ -39,26 +43,49 @@ function onMobSpawn(mob)
         end
     end)
 
+    -- avoid duplicate listeners, putting this in onMobDeath didn't always remove it
+    mob:removeListener("DEVIL_TAKE_DAMAGE")
     mob:addListener("TAKE_DAMAGE", "DEVIL_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
         if amount >= mobArg:getHP() then
             local bf = mobArg:getBattlefield()
             local bfNum = bf:getArea()
-            bf:setLocalVar("mobsDead", bf:getLocalVar("mobsDead") + 1)
-            if
-                bf:getLocalVar("mobsDead") >= bf:getLocalVar("adds") + 1 and
-                bf:getLocalVar("wave") < 3
-            then
-                bf:setLocalVar("wave", bf:getLocalVar("wave") + 1)
-                if bf:getLocalVar("controlBombID") == controlBombs[bfNum][1] then
-                    SpawnMob(controlBombs[bfNum][2])
-                else
-                    SpawnMob(controlBombs[bfNum][1])
+            local controlID = bf:getLocalVar("controlBombID")
+            if mobArg:getLocalVar("unkillable") == 0 then
+                bf:setLocalVar("mobsDead", bf:getLocalVar("mobsDead") + 1)
+                if
+                    bf:getLocalVar("mobsDead") >= bf:getLocalVar("adds") + 1 and
+                    bf:getLocalVar("wave") < 3
+                then
+                    bf:setLocalVar("wave", bf:getLocalVar("wave") + 1)
+                    bf:setLocalVar("lastWaveStart", os.time())
+                    if bf:getLocalVar("controlBombID") == controlBombs[bfNum][1] then
+                        SpawnMob(controlBombs[bfNum][2])
+                    else
+                        SpawnMob(controlBombs[bfNum][1])
+                    end
                 end
             end
         end
     end)
 end
 
+function onMobFight(mob, target)
+    local bf = mob:getBattlefield()
+    -- Take note that killing a wave before the previous despawned will complete the battlefield early.
+        -- This should be impossible without GM powers, but we should protect regardless (15s despawn timer + death animation)
+    if mob:getLocalVar("unkillable") == 1 and bf:getLocalVar("lastWaveStart") + 20 < os.time() then
+        mob:setUnkillable(false)
+        mob:setLocalVar("unkillable", 0)
+    end
+end
+
+function onMobRoam(mob, target)
+    local bf = mob:getBattlefield()
+    if mob:getLocalVar("unkillable") == 1 and bf:getLocalVar("lastWaveStart") + 20 < os.time() then
+        mob:setUnkillable(false)
+        mob:setLocalVar("unkillable", 0)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
-    mob:removeListener("DEVIL_TAKE_DAMAGE")
 end

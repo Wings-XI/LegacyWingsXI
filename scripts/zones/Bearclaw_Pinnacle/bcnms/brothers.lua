@@ -3,6 +3,7 @@
 -- Bearclaw Pinnacle ENM, Zephyr Fan
 -- !addkeyitem ZEPHYR_FAN
 -- !pos 122 -171.5 757 6
+-- Pillar ID: 16801894
 -----------------------------------
 require("scripts/globals/battlefield")
 require("scripts/globals/keyitems")
