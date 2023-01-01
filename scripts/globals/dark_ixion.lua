@@ -760,6 +760,10 @@ darkixion.onTradeFaySpring = function(player, npc)
     if amity == 255 then
         player:PrintToPlayer(string.format("Fay Spring : The Pixies are now happy, but something else has been disturbed from its slumber...! Dark Ixion now roams (if he wasn't already)!"), 0xD)
         -- reset DI ToD/next pop so on next game hour he begins roaming in his already-selected, random zone
+        if GetServerVariable("DarkIxion_PopTime") + 1200 < os.time() then
+            -- break horn if he is already up
+            SetServerVariable("DarkIxion_HornStatus", 1)
+        end
         SetServerVariable("DarkIxion_PopTime", os.time())
     end
 end
