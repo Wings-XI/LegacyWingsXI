@@ -4567,6 +4567,10 @@ INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 103, 1, 255); 
 INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 104, 1, 255); -- Enthunder
 INSERT INTO `mob_spell_lists` VALUES('Armed_Gears_Enspells', 562, 105, 1, 255); -- Enwater
 
+-- Snow Devil (513)
+INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 563, 152, 1, 255); -- Blizzard IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 563, 181, 1, 255); -- Blizzaga III (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 563, 455, 1, 255); -- Ice Threnody (1~255)
 
 --
 -- Indexes for dumped tables
