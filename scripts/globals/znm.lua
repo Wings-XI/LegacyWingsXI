@@ -17,6 +17,7 @@ require("scripts/globals/msg")
 require("scripts/globals/npc_util")
 require("scripts/globals/pankration")
 require("scripts/globals/utils")
+require("scripts/globals/events/zeni_fest")
 ---------------------------------------------------------------------------------
 local FAUNA_LIMIT = 7500 -- Zeni handed out per Fauna (NM)
 local SUBJECT_OF_INTEREST_LIMIT = 10000 -- Zeni handed out per SubjectsOfInterest
@@ -796,6 +797,7 @@ tpz.znm.sanraku.onEventFinish = function(player, csid, option)
         player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", 0)
 
         player:addCurrency("zeni_point", zeniValue)
+        zeni_fest.onSanrakuPlateTradeComplete(player, zeniValue)
     elseif csid == 908 then
         player:setCharVar("[ZNM]SanrakuIntro", 1)
     end
