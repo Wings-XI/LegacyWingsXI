@@ -11,7 +11,7 @@ zeni_fest = {}
 
 zeni_fest.params = {
     PercOfZeniAsBonusISP = 20,
-    MaxBonusZeni = 10000,
+    MaxBonusZeni = 5000,
 }
 
 zeni_fest.onSanrakuPlateTradeComplete = function(player, zeni_base)
