@@ -21,8 +21,7 @@ darkixion = {}
 -- Cleanup dmg taken from front/rear (if we can)
   -- possible to edit PHYSICAL_SHIELD to do this, but a pretty substantial thing for what amounts to be a minimal combat log issue
   -- suspect LSB has functionality to do this more cleanly
-
-
+  -- TODO figure out how to make TAKE_DAMAGE listener not crash zone <.<
 
 
   -- for charge, idk, maybe add roam flag 512 or 256
@@ -446,7 +445,7 @@ end
 
 darkixion.onMobSpawn = function(mob)
     -- "Dark Ixion takes much less damage from the front (50-75% less) and full damage from behind it"
-    mob:addListener("TAKE_DAMAGE", "IXION_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
+    --[[mob:addListener("TAKE_DAMAGE", "IXION_TAKE_DAMAGE", function(mobArg, amount, attacker, attackType, damageType)
         -- dmg reduction only when horn is intact
         if attacker ~= nil and mobArg:AnimationSub() ~= 2 and
             attacker:isInfront(mobArg, 128) and amount > 0 then
@@ -458,7 +457,7 @@ darkixion.onMobSpawn = function(mob)
                     attacker:PrintToPlayer(string.format( "Adjusted damage from %s to %s from front: %u", attacker:getName(), mobArg:getName(), amount - dmgReduction ), 0xD)
                 end
         end
-    end)
+    end)]]
     darkixion.roamingMods(mob)
     SetServerVariable("DarkIxion_PopTime", os.time())
     mob:setLocalVar("wasKilled", 0)
@@ -624,7 +623,8 @@ darkixion.onMobFight = function(mob, target)
     if ((mob:getTP() >= 2900 and mob:getHPP() > 66) or
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
        (mob:getTP() >= 900 and mob:getHPP() > 0)) and
-       mob:getLocalVar("timeSinceWS") < os.time() - 3 then
+       mob:getLocalVar("timeSinceWS") < os.time() - 3 and
+       mob:actionQueueEmpty() then
         mob:setLocalVar("timeToWS", 1)
         mob:setLocalVar("Hits", 0)
     end
@@ -718,7 +718,7 @@ darkixion.onMobFight = function(mob, target)
         if not target:isInfront(mob, 100) then
             table.insert(hitList, target)
         end
-        if mob:checkDistance(pos) >= 3 then
+        if mob:checkDistance(pos) >= 2 then
             local nearbyPlayers = mob:getPlayersInRange(8)
             if nearbyPlayers ~= nil then
                 for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he tramples, hit the ones in front
@@ -743,13 +743,13 @@ darkixion.onMobFight = function(mob, target)
                                 mob:setLocalVar("stomp", 0)
                             end
                         end
-                        if dork:isInfront(mob, 10) and mob:getLocalVar("stomp") ~= 0 then
+                        if dork:isInfront(mob, 20) and mob:getLocalVar("stomp") ~= 0 then
                             mob:useMobAbility(2339, dork) -- trample
                         end
                     end
                 end
             end
-        elseif not mob:isFollowingPath() then
+        else
             darkixion.endStomp(mob)
         end
     end
