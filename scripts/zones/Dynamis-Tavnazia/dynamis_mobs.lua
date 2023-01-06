@@ -58,19 +58,35 @@ mobList[zone] =
     [16949318] = { id = 16949318}, -- wave 1 floor 1 nightmare makura
     [16949319] = { id = 16949319}, -- wave 1 floor 1 nightmare makura
     [16949320] = { id = 16949320}, -- wave 1 floor 1 nightmare makura
-    [16949321] = { id = 16949321}, -- wave 2 floor 1 nightmare makura
-    [16949266] = { id = 16949266}, -- wave 2 floor 1 nightmare makura
-    [16949267] = { id = 16949267}, -- wave 2 floor 1 nightmare makura
-    [16949268] = { id = 16949268}, -- wave 2 floor 1 nightmare makura
+    [16949321] = { id = 16949321}, -- wave 1 floor 1 nightmare makura
+    [16949266] = { id = 16949266}, -- wave 1 floor 1 nightmare makura
+    [16949267] = { id = 16949267}, -- wave 1 floor 1 nightmare makura
+    [16949268] = { id = 16949268}, -- wave 1 floor 1 nightmare makura
+    [16949405] = { id = 16949405}, -- wave 2 floor 1 nightmare makura
+    [16949406] = { id = 16949406}, -- wave 2 floor 1 nightmare makura
+    [16949407] = { id = 16949407}, -- wave 2 floor 1 nightmare makura
+    [16949408] = { id = 16949408}, -- wave 2 floor 1 nightmare makura
+    [16949409] = { id = 16949409}, -- wave 2 floor 1 nightmare makura
+    [16949410] = { id = 16949410}, -- wave 2 floor 1 nightmare makura
+    [16949411] = { id = 16949411}, -- wave 2 floor 1 nightmare makura
+    [16949412] = { id = 16949412}, -- wave 2 floor 1 nightmare makura
 
     [16949341] = { id = 16949341}, -- wave 1 floor 1 nightmare leech
     [16949342] = { id = 16949342}, -- wave 1 floor 1 nightmare leech
     [16949343] = { id = 16949343}, -- wave 1 floor 1 nightmare leech
     [16949344] = { id = 16949344}, -- wave 1 floor 1 nightmare leech
-    [16949345] = { id = 16949345}, -- wave 2 floor 1 nightmare leech
-    [16949346] = { id = 16949346}, -- wave 2 floor 1 nightmare leech
-    [16949347] = { id = 16949347}, -- wave 2 floor 1 nightmare leech
-    [16949348] = { id = 16949348}, -- wave 2 floor 1 nightmare leech
+    [16949345] = { id = 16949345}, -- wave 1 floor 1 nightmare leech
+    [16949346] = { id = 16949346}, -- wave 1 floor 1 nightmare leech
+    [16949347] = { id = 16949347}, -- wave 1 floor 1 nightmare leech
+    [16949348] = { id = 16949348}, -- wave 1 floor 1 nightmare leech
+    [16949418] = { id = 16949418}, -- wave 2 floor 1 nightmare leech
+    [16949419] = { id = 16949419}, -- wave 2 floor 1 nightmare leech
+    [16949420] = { id = 16949420}, -- wave 2 floor 1 nightmare leech
+    [16949421] = { id = 16949421}, -- wave 2 floor 1 nightmare leech
+    [16949422] = { id = 16949422}, -- wave 2 floor 1 nightmare leech
+    [16949423] = { id = 16949423}, -- wave 2 floor 1 nightmare leech
+    [16949424] = { id = 16949424}, -- wave 2 floor 1 nightmare leech
+    [16949425] = { id = 16949425}, -- wave 2 floor 1 nightmare leech
 
 
     -- floor 2
@@ -107,20 +123,20 @@ mobList[zone] =
     [16949264] = { id = 16949264}, -- wave 3 floor 2 nightmare hornet
     [16949265] = { id = 16949265}, -- wave 3 floor 2 nightmare hornet
 
-    [16949332] = { id = 16949332}, -- wave 1 floor 2 nightmare leech
-    [16949333] = { id = 16949333}, -- wave 1 floor 2 nightmare leech
-    [16949334] = { id = 16949334}, -- wave 1 floor 2 nightmare leech
-    [16949335] = { id = 16949335}, -- wave 1 floor 2 nightmare leech
-    [16949336] = { id = 16949336}, -- wave 1 floor 2 nightmare leech
-    [16949337] = { id = 16949337}, -- wave 1 floor 2 nightmare leech
-    [16949338] = { id = 16949338}, -- wave 1 floor 2 nightmare leech
-    [16949339] = { id = 16949339}, -- wave 3 floor 2 nightmare leech
-    [16949340] = { id = 16949340}, -- wave 3 floor 2 nightmare leech
-    [16949388] = { id = 16949388}, -- wave 3 floor 2 nightmare leech
-    [16949389] = { id = 16949389}, -- wave 3 floor 2 nightmare leech
-    [16949395] = { id = 16949395}, -- wave 3 floor 2 nightmare leech
-    [16949403] = { id = 16949403}, -- wave 3 floor 2 nightmare leech
-    [16949404] = { id = 16949404}, -- wave 3 floor 2 nightmare leech
+    [16949332] = { id = 16949332}, -- wave 1 floor 2 nightmare cluster
+    [16949333] = { id = 16949333}, -- wave 1 floor 2 nightmare cluster
+    [16949334] = { id = 16949334}, -- wave 1 floor 2 nightmare cluster
+    [16949335] = { id = 16949335}, -- wave 1 floor 2 nightmare cluster
+    [16949336] = { id = 16949336}, -- wave 1 floor 2 nightmare cluster
+    [16949337] = { id = 16949337}, -- wave 1 floor 2 nightmare cluster
+    [16949338] = { id = 16949338}, -- wave 1 floor 2 nightmare cluster
+    [16949339] = { id = 16949339}, -- wave 3 floor 2 nightmare cluster
+    [16949340] = { id = 16949340}, -- wave 3 floor 2 nightmare cluster
+    [16949388] = { id = 16949388}, -- wave 3 floor 2 nightmare cluster
+    [16949389] = { id = 16949389}, -- wave 3 floor 2 nightmare cluster
+    [16949395] = { id = 16949395}, -- wave 3 floor 2 nightmare cluster
+    [16949403] = { id = 16949403}, -- wave 3 floor 2 nightmare cluster
+    [16949404] = { id = 16949404}, -- wave 3 floor 2 nightmare cluster
 
 
     -- All children
@@ -132,7 +148,7 @@ mobList[zone].zoneID = zone
 -- set positions for mobs that have placements (x,y,z,rot) and rotation is required
 -- child monsters' positions are optional. if left unset, they are randomly placed closely around their parent monster when the parent mob engages
 -- Floor 0
-mobList[zone][16949255].pos = { 27.9, -12, 40, 177     } -- nightmare bugard
+mobList[zone][16949255].pos = { 27.9, -12, 40, 58     } -- nightmare bugard
 -- Floor 1
 mobList[zone][16949257].pos = {  1.000, -23.351, 25.521, 110     } -- nightmare worm
 mobList[zone][16949269].pos = { -0098.0, -0027.0,0008.4,195   } -- floor 1 vanguard eye qm3
@@ -160,23 +176,39 @@ mobList[zone][16949259].pos = { -0054.8, -0022.0,0044.0,131   } -- floor 1 night
 mobList[zone][16949260].pos = { -0032.5, -0022.0,-0032.0,014   } -- floor 1 nightmare hornet
 mobList[zone][16949261].pos = { -0056.8, -0022.0,-0043.5,128   } -- floor 1 nightmare hornet
 
-mobList[zone][16949317].pos = { -0087.0, -0014.0,-0038.5,064   } -- floor 1 nightmare makura
-mobList[zone][16949318].pos = { -0090.0, -0020.0,-0067.5,211   } -- floor 1 nightmare makura
-mobList[zone][16949319].pos = { -0076.0, -0011.0,-0027.5,206   } -- floor 1 nightmare makura
-mobList[zone][16949320].pos = { -0086.0, -0012.0,-0007.0,003   } -- floor 1 nightmare makura
-mobList[zone][16949321].pos = { -0087.0, -0014.0,-0038.5,192   } -- floor 1 nightmare makura
-mobList[zone][16949266].pos = { -0090.0, -0020.0,-0067.5,084   } -- floor 1 nightmare makura
-mobList[zone][16949267].pos = { -0076.0, -0011.0,-0027.5,079   } -- floor 1 nightmare makura
-mobList[zone][16949268].pos = { -0086.0, -0012.0,-0007.0,131   } -- floor 1 nightmare makura
+mobList[zone][16949317].pos = { -0076.5, -0020.0,-0071.2,170   } -- floor 1 nightmare makura
+mobList[zone][16949318].pos = { -0089.5, -0020.0,-0072.5,205   } -- floor 1 nightmare makura
+mobList[zone][16949319].pos = { -0089.0, -0015.5,-0049.5,052   } -- floor 1 nightmare makura
+mobList[zone][16949320].pos = { -0084.5, -0013.2,-0035.5,074   } -- floor 1 nightmare makura
+mobList[zone][16949321].pos = { -0074.7, -0010.8,-0023.5,087   } -- floor 1 nightmare makura
+mobList[zone][16949266].pos = { -0070.0, -0011.0,-0008.0,093   } -- floor 1 nightmare makura
+mobList[zone][16949267].pos = { -0080.5, -0011.5,-0005.7,031   } -- floor 1 nightmare makura
+mobList[zone][16949268].pos = { -0091.1, -0013.0,-0009.5,250   } -- floor 1 nightmare makura
+mobList[zone][16949405].pos = { -0076.5, -0020.0,-0071.2,043   } -- floor 1 nightmare makura
+mobList[zone][16949406].pos = { -0089.5, -0020.0,-0072.5,078   } -- floor 1 nightmare makura
+mobList[zone][16949407].pos = { -0089.0, -0015.5,-0049.5,180   } -- floor 1 nightmare makura
+mobList[zone][16949408].pos = { -0084.5, -0013.2,-0035.5,202   } -- floor 1 nightmare makura
+mobList[zone][16949409].pos = { -0074.7, -0010.8,-0023.5,215   } -- floor 1 nightmare makura
+mobList[zone][16949410].pos = { -0070.0, -0011.0,-0008.0,221   } -- floor 1 nightmare makura
+mobList[zone][16949411].pos = { -0080.5, -0011.5,-0005.7,159   } -- floor 1 nightmare makura
+mobList[zone][16949412].pos = { -0091.1, -0013.0,-0009.5,123   } -- floor 1 nightmare makura
 
-mobList[zone][16949341].pos = { -0089.0, -0020.0,0071.5,054   } -- floor 1 nightmare leech
-mobList[zone][16949342].pos = { -0082.0, -0012.5,0033.5,081   } -- floor 1 nightmare leech
-mobList[zone][16949343].pos = { -0072.5, -0011.0,0011.0,076   } -- floor 1 nightmare leech
-mobList[zone][16949344].pos = { -0087.5, -0012.5,0008.3,003   } -- floor 1 nightmare leech
-mobList[zone][16949345].pos = { -0089.0, -0020.0,0071.5,182   } -- floor 1 nightmare leech
-mobList[zone][16949346].pos = { -0082.0, -0012.5,0033.5,209   } -- floor 1 nightmare leech
-mobList[zone][16949347].pos = { -0072.5, -0011.0,0011.0,204   } -- floor 1 nightmare leech
-mobList[zone][16949348].pos = { -0087.5, -0012.5,0008.3,131   } -- floor 1 nightmare leech
+mobList[zone][16949341].pos = { -0076.5, -0020.0,0071.2,085   } -- floor 1 nightmare leech
+mobList[zone][16949342].pos = { -0089.5, -0020.0,0072.5,050   } -- floor 1 nightmare leech
+mobList[zone][16949343].pos = { -0089.0, -0015.5,0049.5,203   } -- floor 1 nightmare leech
+mobList[zone][16949344].pos = { -0084.5, -0013.2,0035.5,181   } -- floor 1 nightmare leech
+mobList[zone][16949345].pos = { -0074.7, -0010.8,0023.5,168   } -- floor 1 nightmare leech
+mobList[zone][16949346].pos = { -0070.0, -0011.0,0008.0,162   } -- floor 1 nightmare leech
+mobList[zone][16949347].pos = { -0080.5, -0011.5,0005.7,224   } -- floor 1 nightmare leech
+mobList[zone][16949348].pos = { -0091.1, -0013.0,0009.5,005   } -- floor 1 nightmare leech
+mobList[zone][16949418].pos = { -0076.5, -0020.0,0071.2,213   } -- floor 1 nightmare leech
+mobList[zone][16949419].pos = { -0089.5, -0020.0,0072.5,178   } -- floor 1 nightmare leech
+mobList[zone][16949420].pos = { -0089.0, -0015.5,0049.5,076   } -- floor 1 nightmare leech
+mobList[zone][16949421].pos = { -0084.5, -0013.2,0035.5,054   } -- floor 1 nightmare leech
+mobList[zone][16949422].pos = { -0074.7, -0010.8,0023.5,041   } -- floor 1 nightmare leech
+mobList[zone][16949423].pos = { -0070.0, -0011.0,0008.0,035   } -- floor 1 nightmare leech
+mobList[zone][16949424].pos = { -0080.5, -0011.5,0005.7,097   } -- floor 1 nightmare leech
+mobList[zone][16949425].pos = { -0091.1, -0013.0,0009.5,133   } -- floor 1 nightmare leech
 
 
 -- Floor 2
@@ -212,20 +244,20 @@ mobList[zone][16949263].pos = { 0061.0, -0036.0,0043.8,252   } -- floor 2 nightm
 mobList[zone][16949264].pos = { 0031.8, -0036.0,-0031.5,028   } -- floor 2 nightmare hornet
 mobList[zone][16949265].pos = { 0058.5, -0036.0,-0043.8,001   } -- floor 2 nightmare hornet
 
-mobList[zone][16949332].pos = { 0087.5, -0028.0,0039.5,200   } -- floor 2 nightmare leech
-mobList[zone][16949333].pos = { 0074.0, -0025.0,0020.0,184   } -- floor 2 nightmare leech
-mobList[zone][16949334].pos = { 0074.0, -0025.0,0003.8,198   } -- floor 2 nightmare leech
-mobList[zone][16949335].pos = { 0080.0, -0025.0,-0001.7,011   } -- floor 2 nightmare leech
-mobList[zone][16949336].pos = { 0074.0, -0025.0,-0010.5,058   } -- floor 2 nightmare leech
-mobList[zone][16949337].pos = { 0080.5, -0025.5,-0031.0,027   } -- floor 2 nightmare leech
-mobList[zone][16949338].pos = { 0088.0, -0030.0,-0052.0,052   } -- floor 2 nightmare leech
-mobList[zone][16949339].pos = { 0087.5, -0028.0,0039.5,073   } -- floor 2 nightmare leech
-mobList[zone][16949340].pos = { 0074.0, -0025.0,0020.0,057   } -- floor 2 nightmare leech
-mobList[zone][16949388].pos = { 0074.0, -0025.0,0003.8,071   } -- floor 2 nightmare leech
-mobList[zone][16949389].pos = { 0080.0, -0025.0,-0001.7,139   } -- floor 2 nightmare leech
-mobList[zone][16949395].pos = { 0074.0, -0025.0,-0010.5,186   } -- floor 2 nightmare leech
-mobList[zone][16949403].pos = { 0080.5, -0025.5,-0031.0,155   } -- floor 2 nightmare leech
-mobList[zone][16949404].pos = { 0088.0, -0030.0,-0052.0,180   } -- floor 2 nightmare leech
+mobList[zone][16949332].pos = { 0087.5, -0028.0,0039.5,200   } -- floor 2 nightmare cluster
+mobList[zone][16949333].pos = { 0074.0, -0025.0,0020.0,184   } -- floor 2 nightmare cluster
+mobList[zone][16949334].pos = { 0074.0, -0025.0,0003.8,198   } -- floor 2 nightmare cluster
+mobList[zone][16949335].pos = { 0080.0, -0025.0,-0001.7,011   } -- floor 2 nightmare cluster
+mobList[zone][16949336].pos = { 0074.0, -0025.0,-0010.5,058   } -- floor 2 nightmare cluster
+mobList[zone][16949337].pos = { 0080.5, -0025.5,-0031.0,027   } -- floor 2 nightmare cluster
+mobList[zone][16949338].pos = { 0088.0, -0030.0,-0052.0,052   } -- floor 2 nightmare cluster
+mobList[zone][16949339].pos = { 0087.5, -0028.0,0039.5,073   } -- floor 2 nightmare cluster
+mobList[zone][16949340].pos = { 0074.0, -0025.0,0020.0,057   } -- floor 2 nightmare cluster
+mobList[zone][16949388].pos = { 0074.0, -0025.0,0003.8,071   } -- floor 2 nightmare cluster
+mobList[zone][16949389].pos = { 0080.0, -0025.0,-0001.7,139   } -- floor 2 nightmare cluster
+mobList[zone][16949395].pos = { 0074.0, -0025.0,-0010.5,186   } -- floor 2 nightmare cluster
+mobList[zone][16949403].pos = { 0080.5, -0025.5,-0031.0,155   } -- floor 2 nightmare cluster
+mobList[zone][16949404].pos = { 0088.0, -0030.0,-0052.0,180   } -- floor 2 nightmare cluster
 
 
 -- -- set statue eye color
@@ -285,6 +317,7 @@ mobList[zone][16949384].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949385].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949386].waves = { nil, nil, 3, nil, nil }
 
+-- hornets
 mobList[zone][16949273].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949274].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949275].waves = { 1, nil, nil, nil, nil }
@@ -302,24 +335,43 @@ mobList[zone][16949263].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949264].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949265].waves = { nil, nil, 3, nil, nil }
 
+-- makura
 mobList[zone][16949317].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949318].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949319].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949320].waves = { 1, nil, nil, nil, nil }
-mobList[zone][16949321].waves = { nil, 2, nil, nil, nil }
-mobList[zone][16949266].waves = { nil, 2, nil, nil, nil }
-mobList[zone][16949267].waves = { nil, 2, nil, nil, nil }
-mobList[zone][16949268].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949321].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949266].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949267].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949268].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949405].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949406].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949407].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949408].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949409].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949410].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949411].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949412].waves = { nil, 2, nil, nil, nil }
 
+-- leech
 mobList[zone][16949341].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949342].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949343].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949344].waves = { 1, nil, nil, nil, nil }
-mobList[zone][16949345].waves = { nil, 2, nil, nil, nil }
-mobList[zone][16949346].waves = { nil, 2, nil, nil, nil }
-mobList[zone][16949347].waves = { nil, 2, nil, nil, nil }
-mobList[zone][16949348].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949345].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949346].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949347].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949348].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949418].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949419].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949420].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949421].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949422].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949423].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949424].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949425].waves = { nil, 2, nil, nil, nil }
 
+-- cluster
 mobList[zone][16949332].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949333].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949334].waves = { 1, nil, nil, nil, nil }
@@ -335,50 +387,122 @@ mobList[zone][16949395].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949403].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949404].waves = { nil, nil, 3, nil, nil }
 
--- Wave 2: floor 1 qm3
---mobList[zone][DMB+51 ].waves = { nil, 2, nil, nil, nil }
--- Wave 3: floor 2 qm3
---mobList[zone][SMB+55 ].waves = { nil, nil, 3, nil, nil }
-
 -- set what mobIDs i will spawn when i engage (such as NMs or other statues)
--- mobList[zone][SMB+1  ].specificChildren = { SMB+2, SMB+3, SMB+4 } -- example
--- Floor 1
--- Hornet
--- mobList[zone][DMB+51 ].specificChildren = { true, DMB+54, DMB+55                                                    }
--- Leech
--- Makara
--- Hydra
+-- Statues
 
--- Floor 2
--- Hornet
--- mobList[zone][DMB+51 ].specificChildren = { true, DMB+54, DMB+55                                                    }
--- mobList[zone][SMB+494].randomChildrenCount = 6
--- mobList[zone][SMB+4  ].randomChildrenList = { 6 }
--- Cluster
--- Hydra
+-- hornets
+mobList[zone][16949273].randomChildrenCount = 2 ; mobList[zone][16949273].randomChildrenList = 1
+mobList[zone][16949274].randomChildrenCount = 2 ; mobList[zone][16949274].randomChildrenList = 1
+mobList[zone][16949275].randomChildrenCount = 2 ; mobList[zone][16949275].randomChildrenList = 1
+mobList[zone][16949276].randomChildrenCount = 2 ; mobList[zone][16949276].randomChildrenList = 1
+mobList[zone][16949258].randomChildrenCount = 2 ; mobList[zone][16949258].randomChildrenList = 1
+mobList[zone][16949259].randomChildrenCount = 2 ; mobList[zone][16949259].randomChildrenList = 1
+mobList[zone][16949260].randomChildrenCount = 2 ; mobList[zone][16949260].randomChildrenList = 1
+mobList[zone][16949261].randomChildrenCount = 2 ; mobList[zone][16949261].randomChildrenList = 1
+mobList[zone][16949277].randomChildrenCount = 2 ; mobList[zone][16949277].randomChildrenList = 1
+mobList[zone][16949278].randomChildrenCount = 2 ; mobList[zone][16949278].randomChildrenList = 1
+mobList[zone][16949279].randomChildrenCount = 2 ; mobList[zone][16949279].randomChildrenList = 1
+mobList[zone][16949280].randomChildrenCount = 2 ; mobList[zone][16949280].randomChildrenList = 1
+mobList[zone][16949262].randomChildrenCount = 2 ; mobList[zone][16949262].randomChildrenList = 1
+mobList[zone][16949263].randomChildrenCount = 2 ; mobList[zone][16949263].randomChildrenList = 1
+mobList[zone][16949264].randomChildrenCount = 2 ; mobList[zone][16949264].randomChildrenList = 1
+mobList[zone][16949265].randomChildrenCount = 2 ; mobList[zone][16949265].randomChildrenList = 1
+
+-- makura
+mobList[zone][16949317].randomChildrenCount = 1 ; mobList[zone][16949317].randomChildrenList = 4
+mobList[zone][16949318].randomChildrenCount = 2 ; mobList[zone][16949318].randomChildrenList = 4
+mobList[zone][16949319].randomChildrenCount = 1 ; mobList[zone][16949319].randomChildrenList = 4
+mobList[zone][16949320].randomChildrenCount = 2 ; mobList[zone][16949320].randomChildrenList = 4
+mobList[zone][16949321].randomChildrenCount = 1 ; mobList[zone][16949321].randomChildrenList = 4
+mobList[zone][16949266].randomChildrenCount = 2 ; mobList[zone][16949266].randomChildrenList = 4
+mobList[zone][16949267].randomChildrenCount = 1 ; mobList[zone][16949267].randomChildrenList = 4
+mobList[zone][16949268].randomChildrenCount = 2 ; mobList[zone][16949268].randomChildrenList = 4
+mobList[zone][16949405].randomChildrenCount = 1 ; mobList[zone][16949405].randomChildrenList = 4
+mobList[zone][16949406].randomChildrenCount = 2 ; mobList[zone][16949406].randomChildrenList = 4
+mobList[zone][16949407].randomChildrenCount = 1 ; mobList[zone][16949407].randomChildrenList = 4
+mobList[zone][16949408].randomChildrenCount = 2 ; mobList[zone][16949408].randomChildrenList = 4
+mobList[zone][16949409].randomChildrenCount = 1 ; mobList[zone][16949409].randomChildrenList = 4
+mobList[zone][16949410].randomChildrenCount = 2 ; mobList[zone][16949410].randomChildrenList = 4
+mobList[zone][16949411].randomChildrenCount = 1 ; mobList[zone][16949411].randomChildrenList = 4
+mobList[zone][16949412].randomChildrenCount = 2 ; mobList[zone][16949412].randomChildrenList = 4
+
+
+-- leech
+mobList[zone][16949341].randomChildrenCount = 1 ; mobList[zone][16949341].randomChildrenList = 3
+mobList[zone][16949342].randomChildrenCount = 2 ; mobList[zone][16949342].randomChildrenList = 3
+mobList[zone][16949343].randomChildrenCount = 1 ; mobList[zone][16949343].randomChildrenList = 3
+mobList[zone][16949344].randomChildrenCount = 2 ; mobList[zone][16949344].randomChildrenList = 3
+mobList[zone][16949345].randomChildrenCount = 1 ; mobList[zone][16949345].randomChildrenList = 3
+mobList[zone][16949346].randomChildrenCount = 2 ; mobList[zone][16949346].randomChildrenList = 3
+mobList[zone][16949347].randomChildrenCount = 1 ; mobList[zone][16949347].randomChildrenList = 3
+mobList[zone][16949348].randomChildrenCount = 2 ; mobList[zone][16949348].randomChildrenList = 3
+mobList[zone][16949418].randomChildrenCount = 1 ; mobList[zone][16949418].randomChildrenList = 3
+mobList[zone][16949419].randomChildrenCount = 2 ; mobList[zone][16949419].randomChildrenList = 3
+mobList[zone][16949420].randomChildrenCount = 1 ; mobList[zone][16949420].randomChildrenList = 3
+mobList[zone][16949421].randomChildrenCount = 2 ; mobList[zone][16949421].randomChildrenList = 3
+mobList[zone][16949422].randomChildrenCount = 1 ; mobList[zone][16949422].randomChildrenList = 3
+mobList[zone][16949423].randomChildrenCount = 2 ; mobList[zone][16949423].randomChildrenList = 3
+mobList[zone][16949424].randomChildrenCount = 1 ; mobList[zone][16949424].randomChildrenList = 3
+mobList[zone][16949425].randomChildrenCount = 2 ; mobList[zone][16949425].randomChildrenList = 3
+
+-- clusters
+mobList[zone][16949332].randomChildrenCount = 2 ; mobList[zone][16949332].randomChildrenList = 2
+mobList[zone][16949333].randomChildrenCount = 2 ; mobList[zone][16949333].randomChildrenList = 2
+mobList[zone][16949334].randomChildrenCount = 2 ; mobList[zone][16949334].randomChildrenList = 2
+mobList[zone][16949335].randomChildrenCount = 2 ; mobList[zone][16949335].randomChildrenList = 2
+mobList[zone][16949336].randomChildrenCount = 2 ; mobList[zone][16949336].randomChildrenList = 2
+mobList[zone][16949337].randomChildrenCount = 2 ; mobList[zone][16949337].randomChildrenList = 2
+mobList[zone][16949338].randomChildrenCount = 2 ; mobList[zone][16949338].randomChildrenList = 2
+mobList[zone][16949339].randomChildrenCount = 2 ; mobList[zone][16949339].randomChildrenList = 2
+mobList[zone][16949340].randomChildrenCount = 2 ; mobList[zone][16949340].randomChildrenList = 2
+mobList[zone][16949388].randomChildrenCount = 2 ; mobList[zone][16949388].randomChildrenList = 2
+mobList[zone][16949389].randomChildrenCount = 2 ; mobList[zone][16949389].randomChildrenList = 2
+mobList[zone][16949395].randomChildrenCount = 2 ; mobList[zone][16949395].randomChildrenList = 2
+mobList[zone][16949403].randomChildrenCount = 2 ; mobList[zone][16949403].randomChildrenList = 2
+mobList[zone][16949404].randomChildrenCount = 2 ; mobList[zone][16949404].randomChildrenList = 2
+
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
+-- building out enough for 3 fights at a time
 randomChildrenList[zone] = 
 {
-    -- hornets
+    -- hornets 2 children per
     [1] =
     {
-
+        16949431,
+        16949432,
+        16949433,
+        16949434,
+        16949435,
+        16949436,
     },
-    -- clusters
+    -- clusters 2 children per
     [2] =
     {
-
+        16949437,
+        16949438,
+        16949439,
+        16949440,
+        16949441,
+        16949442,
     },
-    -- leech
+    -- leech avg 1.5 children per
     [3] =
     {
-
+        16949426,
+        16949427,
+        16949428,
+        16949429,
+        16949430,
     },
-    -- makara
+    -- makara avg 1.5 children per
     [4] =
     {
-
+        16949413,
+        16949414,
+        16949415,
+        16949416,
+        16949417,
     },
 }
 
