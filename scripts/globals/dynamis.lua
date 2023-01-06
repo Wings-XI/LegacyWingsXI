@@ -12,6 +12,7 @@ require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
 require("scripts/globals/pathfind")
+require("scripts/globals/monstertpmoves")
 ------------------------------------
 
 dynamis = {}
@@ -189,10 +190,10 @@ dynamis.entryInfo =
         csFirst = 614,
         csWin = 615,
         csDyna = 588,
-        enabled = false,
+        enabled = true,
         winVar = "DynaTavnazia_Win",
         hasEnteredVar = "DynaTavnazia_HasEntered",
-        hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
+        hasSeenWinCSVar = "DynaTavnazia_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_TAVNAZIA_SLIVER,
         enterPos = {0.1, -7, -21, 190, 42},
         reqs =
@@ -375,11 +376,12 @@ dynamis.dynaInfo =
     {
         winVar = "DynaTavnazia_Win",
         hasEnteredVar = "DynaTavnazia_HasEntered",
-        hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
+        hasSeenWinCSVar = "DynaTavnazia_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_TAVNAZIA_SLIVER,
         winTitle = tpz.title.DYNAMIS_TAVNAZIA_INTERLOPER,
         entryPos = {0.1, -7, -21, 190, tpz.zone.DYNAMIS_TAVNAZIA},
         ejectPos = {0  , -7, -23, 195, tpz.zone.TAVNAZIAN_SAFEHOLD},
+        sjRestriction = true,
     },
     [tpz.zone.TAVNAZIAN_SAFEHOLD] =
     {

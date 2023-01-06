@@ -32,16 +32,30 @@ zones[tpz.zone.DYNAMIS_TAVNAZIA] =
     {
         QM =
         {
-            [16949396] =
-            {
-                param = {3459, 3483, 3484, 3485, 3486},
-                trade =
-                {
-                    {item = 3459,                     mob = {16949249, 16949250, 16949251, 16949252}}, -- Diabolos Spade/Heart/Diamond/Club
-                    {item = {3483, 3484, 3485, 3486}, mob = {16949326, 16949327, 16949328, 16949329}}, -- Diabolos Somnus/Nox/Umbra/Letum
-                }
-            },
+            -- [16949396] =
+            -- {
+            --     param = {3459, 3483, 3484, 3485, 3486},
+            --     trade =
+            --     {
+            --         {item = 3459,                     mob = {16949249, 16949250, 16949251, 16949252}}, -- Diabolos Spade/Heart/Diamond/Club
+            --         {item = {3483, 3484, 3485, 3486}, mob = {16949326, 16949327, 16949328, 16949329}}, -- Diabolos Somnus/Nox/Umbra/Letum
+            --     }
+            -- },
         },
+    },
+    mobs =
+    {
+        DIABOLOS = {
+            16949249, -- Diabolos_Spade
+            16949250, -- Diabolos_Heart
+            16949251, -- Diabolos_Diamond
+            16949252, -- Diabolos_Club
+        },
+        Nightmare_Bugard = 16949255,
+        Nightmare_Worm = 16949257,
+        Nightmare_Antlion = 16949256,
+        winQM = 16949396,
+        -- Megaboss = 1,
     },
 }
 

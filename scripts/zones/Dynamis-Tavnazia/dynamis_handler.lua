@@ -24,6 +24,10 @@ function onDynamisNewInstance()
     package.loaded["scripts/zones/Dynamis-Tavnazia/dynamis_mobs"] = nil
     require("scripts/zones/Dynamis-Tavnazia/dynamis_mobs")
     
+    -- dyna-Tav the only one with starting time not equal to 1h, so subtract 45 minutes as soon as it's built
+    local extendMsg = 7315
+    local timeShifted = false
+
     local iStart = 4096*4096+(4096*zone)
     local i = iStart
     local iEnd = iStart + 1023
@@ -34,9 +38,15 @@ function onDynamisNewInstance()
     while i <= iEnd do
         entity = GetEntityByID(i)
         if entity ~= nil and entity:isNPC() then entity:setStatus(tpz.status.DISAPPEAR) end
-        
         if mobList[zone][i] ~= nil then
             local mob = GetMobByID(i)
+
+            if timeShifted == false then
+                if mob then
+                    mob:addTimeToDynamis(-44, extendMsg)
+                    timeShifted = true
+                end
+            end
             mob:setNM(true)
             mob:resetLocalVars()
             if mobList[zone][i].pos ~= nil then
@@ -68,6 +78,7 @@ function onDynamisCleanup()
         end
         i = i + 1
     end
+    SetServerVariable(string.format("DynamisSJRestriction_%s", zone), 0)
 end
 
 function onDynamisEjectPlayer(player, immediate)

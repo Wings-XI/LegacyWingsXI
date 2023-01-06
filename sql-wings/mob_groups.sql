@@ -1931,6 +1931,7 @@ INSERT INTO `mob_groups` VALUES(59, 2247, 42, 'Kindreds_Wyvern', 0, 128, 0, 3300
 INSERT INTO `mob_groups` VALUES(60, 4149, 42, 'Vanguard_Eye', 0, 128, 2561, 2000, 2000, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(61, 5121, 42, 'Prototype_Eye', 0, 128, 0, 2000, 2000, 80, 82, 0);
 INSERT INTO `mob_groups` VALUES(62, 6052, 42, 'Diabolos_Somnus', 0, 128, 3137, 15000, 0, 105, 105, 0);
+INSERT INTO `mob_groups` VALUES(63, 6934, 42, 'Nightmare_Antlion', 0, 128, 1795, 5000, 0, 78, 80, 0);
 INSERT INTO `mob_groups` VALUES(1443, 1361, 44, 'Flammen-Brenner', 0, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1444, 3190, 44, 'Posten', 0, 128, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_groups` VALUES(1, 3409, 45, 'Rubicund_Adenium', 0, 0, 0, 0, 0, 78, 82, 0);
