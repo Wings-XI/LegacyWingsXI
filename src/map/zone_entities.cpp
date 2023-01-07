@@ -482,12 +482,17 @@ void CZoneEntities::DespawnPC(CCharEntity* PChar)
 void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 {
     TracyZoneScoped;
+
+    float renderDistSquared = 50.0f * 50.0f;
+    float eraseDistSquared = 60.0f * 60.0f;
+
     for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
     {
         CMobEntity* PCurrentMob = (CMobEntity*)it->second;
         SpawnIDList_t::iterator MOB = PChar->SpawnMOBList.lower_bound(PCurrentMob->id);
+        float distSquared = distanceSquared(PChar->loc.p, PCurrentMob->loc.p);
 
-        if (PCurrentMob->status != STATUS_DISAPPEAR && distanceSquared(PChar->loc.p, PCurrentMob->loc.p) < 50.0f * 50.0f)
+        if (distSquared < renderDistSquared && PCurrentMob->status != STATUS_DISAPPEAR)
         {
             if (MOB == PChar->SpawnMOBList.end() || PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first))
             {
@@ -518,7 +523,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
         }
         else
         {
-            if (MOB != PChar->SpawnMOBList.end() && !(PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first)))
+            if (distSquared > eraseDistSquared && MOB != PChar->SpawnMOBList.end() && !(PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first)))
             {
                 PChar->SpawnMOBList.erase(MOB);
                 PChar->pushPacket(new CEntityUpdatePacket(PCurrentMob, ENTITY_DESPAWN, UPDATE_NONE));
