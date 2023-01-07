@@ -483,8 +483,21 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 {
     TracyZoneScoped;
 
-    float renderDistSquared = 50.0f * 50.0f;
-    float eraseDistSquared = 60.0f * 60.0f;
+    // default: render mobs when they get within 50 yalms, erase from render list at 55 yalms
+    uint8 renderDist = 50;
+    float eraseDistSquared = 55.0f * 55.0f;
+
+    if (!PChar->m_packetLimiterEnabled)
+    {
+        // minimum render range on zone-in
+        renderDist = 30;
+    }else
+    {
+        // tighten the render range when player's render list grows (1 yalm ever 1.5 mobs, or ~36 yalm render range with 20 mobs nearby, etc)
+        renderDist = renderDist - std::clamp<uint8>(2 * PChar->SpawnMOBList.size() / 3, 0, 20);
+    }
+
+    float renderDistSquared = renderDist * renderDist;
 
     for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
     {
