@@ -139,7 +139,7 @@ mobList[zone] =
     [16949404] = { id = 16949404}, -- wave 3 floor 2 nightmare cluster
 
 
-    -- All children
+    -- All children: some simply set to 1,1,1,0 in mob_spawn_points
 
 }
 
@@ -463,7 +463,8 @@ mobList[zone][16949404].randomChildrenCount = 2 ; mobList[zone][16949404].random
 
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
--- building out enough for 3 fights at a time
+-- building out enough extra for 3 fights at a time
+-- but as wave 1 parents are killed, need to figure out how to include them as potential children
 randomChildrenList[zone] = 
 {
     -- hornets 2 children per
@@ -475,6 +476,14 @@ randomChildrenList[zone] =
         16949434,
         16949435,
         16949436,
+        -- 16949273,
+        -- 16949274,
+        -- 16949275,
+        -- 16949276,
+        -- 16949277,
+        -- 16949278,
+        -- 16949279,
+        -- 16949280,
     },
     -- clusters 2 children per
     [2] =
@@ -485,6 +494,13 @@ randomChildrenList[zone] =
         16949440,
         16949441,
         16949442,
+        -- 16949332,
+        -- 16949333,
+        -- 16949334,
+        -- 16949335,
+        -- 16949336,
+        -- 16949337,
+        -- 16949338,
     },
     -- leech avg 1.5 children per
     [3] =
@@ -494,6 +510,14 @@ randomChildrenList[zone] =
         16949428,
         16949429,
         16949430,
+        -- 16949341,
+        -- 16949342,
+        -- 16949343,
+        -- 16949344,
+        -- 16949345,
+        -- 16949346,
+        -- 16949347,
+        -- 16949348,
     },
     -- makara avg 1.5 children per
     [4] =
@@ -503,6 +527,14 @@ randomChildrenList[zone] =
         16949415,
         16949416,
         16949417,
+        -- 16949317,
+        -- 16949318,
+        -- 16949319,
+        -- 16949320,
+        -- 16949321,
+        -- 16949266,
+        -- 16949267,
+        -- 16949268,
     },
 }
 

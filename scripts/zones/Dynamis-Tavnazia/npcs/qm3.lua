@@ -7,12 +7,13 @@ require("scripts/globals/dynamis")
 -----------------------------------
 
 function onTrigger(player, npc)
+    local ID = require("scripts/zones/Dynamis-Tavnazia/IDs")
     local extendMsg = 7315
 
     if npc:getLocalVar("activated") == 0 then
         player:addTimeToDynamis(30, extendMsg)
         local wave = 0
-        if npc:getID() == 16949399 then
+        if npc:getID() == ID.mobs.QM3_Floor1 then
             wave = 2
         else
             wave = 3

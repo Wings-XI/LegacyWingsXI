@@ -666,7 +666,7 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
                 local home = child:getSpawnPos()
                 local randomSpawn = false
                 if home.x == 1 and home.y == 1 and home.z == 1 then
-                    child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
+                    child:setSpawn(mob:getXPos()+math.random(-2,2), mob:getYPos()-0.3, mob:getZPos()+math.random(-2,2), mob:getRotPos())
                     randomSpawn = true
                 end
                 SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)

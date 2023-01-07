@@ -21,13 +21,13 @@ function onMobDeath(mob, player, isKiller)
     dynamis.mobOnDeath(mob, mobList[zone], ID.text.DYNAMIS_TIME_EXTEND)
 
     local mobID = mob:getID()
-    if mobID == 16949269 or mobID == 16949270 then
+    if mobID == ID.mobs.Eye_Floor1[1] or mobID == ID.mobs.Eye_Floor1[2] then
         -- floor 1 qm3 spawn
-        local npc = GetNPCByID(16949399)
+        local npc = GetNPCByID(ID.mobs.QM3_Floor1)
         npc:setStatus(tpz.status.NORMAL)
-    elseif mobID == 16949325 or mobID == 16949356 then
+    elseif mobID == ID.mobs.Eye_Floor2[1] or mobID == ID.mobs.Eye_Floor2[2] then
         -- floor 2 qm3 spawn
-        local npc = GetNPCByID(16949400)
+        local npc = GetNPCByID(ID.mobs.QM3_Floor2)
         npc:setStatus(tpz.status.NORMAL)
     end
 end

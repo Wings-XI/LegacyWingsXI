@@ -51,6 +51,16 @@ zones[tpz.zone.DYNAMIS_TAVNAZIA] =
             16949251, -- Diabolos_Diamond
             16949252, -- Diabolos_Club
         },
+        Eye_Floor1 = {
+            16949269,
+            16949270,
+        },
+        QM3_Floor1 = 16949399,
+        Eye_Floor2 = {
+            16949325,
+            16949356,
+        },
+        QM3_Floor2 = 16949400,
         Nightmare_Bugard = 16949255,
         Nightmare_Worm = 16949257,
         Nightmare_Antlion = 16949256,
