@@ -21,7 +21,7 @@ KORROLOKA_TUNNEL = {
             [5] = function (x) npc:setPos(-373.924, -10.548, -27.850) end,
             [6] = function (x) npc:setPos(-376.787, -8.574, -54.842) end,
         }
-        npc:timer(900000, function(npc) KORROLOKA_TUNNEL.moveMorionWormQM() end)
+        npc:timer(900 * 1000, function(npc) KORROLOKA_TUNNEL.moveMorionWormQM() end) -- 15 minutes
     end
 }
 
