@@ -6046,7 +6046,7 @@ namespace charutils
 
         time_point timepointNow = std::chrono::system_clock::now();
 
-        if (timepointNow < PChar->PParty->GetLastReloadTime() + 15s) {
+        if (PChar->PParty && timepointNow < PChar->PParty->GetLastReloadTime() + 15s) {
             // Suppressing another party reload, something in the codebase is spamming party reloads,
             // maybe reloadparty happens async for each member of the alliance and creates a feedback loop?
             return;
