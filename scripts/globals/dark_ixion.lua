@@ -401,8 +401,14 @@ darkixion.onMobDeath = function(mob, player, isKiller)
     -- only reset hp after being killed
     SetServerVariable("DarkIxion_HP", 0)
     SetServerVariable("DarkIxion_HornStatus", 0)
+    if player then
+        player:PrintToPlayer(string.format("%s : The pixies ... will ... not be ... happy about ... thisssss", mob:getName()), 0xD)
+    end
     if isKiller == true then
         mob:setLocalVar("wasKilled", 1)
+        -- reduce pixie amity by 1/4th when he's killed
+        local amity = GetServerVariable("PixieAmity")
+        SetServerVariable("PixieAmity", utils.clamp(math.floor((amity + 255) * .75) - 255, -255, 255))
     end
 end
 
