@@ -21,6 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     local typeEffect = tpz.effect.WEIGHT
     local duration = math.random(3, 15)
+    local power = 50
 
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = 0
@@ -32,7 +33,7 @@ function onMobWeaponSkill(target, mob, skill)
     end
 	if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
         if math.random(100) <= 75 then
-            MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
+            MobStatusEffectMove(mob, target, typeEffect, power, 0, duration)
         end
         target:tryInterruptSpell(mob, info.hitslanded)
 
