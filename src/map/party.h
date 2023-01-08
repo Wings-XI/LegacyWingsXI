@@ -96,6 +96,7 @@ public:
     void PushEffectsPacket();
     void EffectsChanged();
 
+    time_point GetLastReloadTime();
     void ResetLastReloadTime();
 
 	CAlliance* m_PAlliance;

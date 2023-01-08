@@ -856,6 +856,14 @@ void CParty::ReloadParty()
 
 void CParty::ReloadPartyMembers(CCharEntity* PChar)
 {
+    time_point timepointNow = std::chrono::system_clock::now();
+
+    if (timepointNow < m_TimeLastReloaded + 3s) { // lower rate limit as this is due to client request for party update
+        // Suppressing another party reload, something in the codebase is spamming party reloads,
+        // maybe reloadparty happens async for each member of the alliance and creates a feedback loop?
+        return;
+    }
+
     PChar->ReloadPartyDec();
     PChar->pushPacket(new CPartyDefinePacket(this));
 
@@ -1254,6 +1262,11 @@ bool CParty::HasTrusts()
         }
     }
     return false;
+}
+
+time_point CParty::GetLastReloadTime()
+{
+    return m_TimeLastReloaded;
 }
 
 void CParty::ResetLastReloadTime()
