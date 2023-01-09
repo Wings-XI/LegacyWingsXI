@@ -12,6 +12,7 @@ local function phaseChange(mob)
     -- shouldn't happen, but let's make sure we do not exceed phase 4
     local phase = mob:getLocalVar("phase") + 1
     mob:setLocalVar("phase", phase)
+    mob:setLocalVar("phaseChange", 0)
 
     -- disable and disappear for a second
     mob:setStatus(tpz.status.INVISIBLE)
@@ -58,22 +59,24 @@ end
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 4500)
     mob:setLocalVar("phase", 1)
-    mob:setLocalVar("phaseChange", 0)
     mob:setUnkillable(true)
 end
 
 function onMobFight(mob, target)
-    if mob:getHP() == 1 and mob:getLocalVar("phase") < 4 and mob:getLocalVar("phaseChange") == 0 then
+    if mob:getHP() <= 100 and mob:getLocalVar("phase") < 4 and mob:getLocalVar("phaseChange") == 0 then
         -- trigger the phase change
         mob:setLocalVar("phaseChange", 1)
-        mob:setTP(3000)
+        if mob:getLocalVar("phase") < 4 then
+            mob:timer(4000, function(mobArg)
+                phaseChange(mobArg)
+            end)
+        end
+        mob:useMobAbility(317)
+        -- mob:setTP(3000)
     end
 end
 
 function onMobWeaponSkillPrepare(mob, target)
-    if mob:getLocalVar("phaseChange") > 0 then
-        return 317
-    end
 end
 
 function onAdditionalEffect(mob, target, damage)
@@ -81,11 +84,6 @@ function onAdditionalEffect(mob, target, damage)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    if mob:getLocalVar("phaseChange") == 1 and mob:getLocalVar("phase") < 4 and skill:getID() == 317 then
-        -- phase changed was triggered
-        mob:setLocalVar("phaseChange", 0)
-        phaseChange(mob)
-    end
 end
 
 function onMobDeath(mob, player, isKiller)
