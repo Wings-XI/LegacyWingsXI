@@ -1,10 +1,18 @@
 ---------------------------------------------------------------
 -- Exp fest - Double xp for everyone!                        --
 --(C) 2022 Wings Project. Coded by Twilight.                 --
+-- !enablefest or events/fests.lua for details
 ---------------------------------------------------------------
-
+require("scripts/globals/events/fests")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+
+exp_fest.params = {
+    festType = 1,
+}
+
+EXP_FEST_START = GetServerVariable("[Fest]Type") == exp_fest.params and GetServerVariable("[Fest]Start") or 0
+EXP_FEST_END = GetServerVariable("[Fest]Type") == exp_fest.params and GetServerVariable("[Fest]End") or 0
 
 function ExpFestEnable(player, showmsg)
     
@@ -63,7 +71,7 @@ function ExpFestEnable(player, showmsg)
     -- Friendly user message
     if showmsg ~= nil and showmsg then
         player:timer(2000, function(player) 
-            player:PrintToPlayer(os.date("Exp fest has begun! All experience gained is now doubled, no cap.\nThe event lasts until %a, %Y/%m/%d %H:%M:%S UTC", EXP_FEST_END))
+            player:PrintToPlayer(os.date("Exp fest has begun! All experience gained is now doubled, no cap.\nThe event lasts until %a, %Y/%m/%d %H:%M:%S server time", EXP_FEST_END))
         end)
     end
     

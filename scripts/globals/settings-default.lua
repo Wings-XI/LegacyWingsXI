@@ -168,10 +168,6 @@ STARLIGHT_2007 = 0 -- Set to 1 to Enable the 2005 version of the Starlight Festi
 STARLIGHT_YEAR_ROUND = 0 -- Set to 1 to have the Starlight Festival initialize outside of normal times.
 Anniversary_Event_2021 = 0 -- Set to 1 to turn on Tidal quest.
 Anniversary_Event = 0 -- Set to 2022 to enable 2022 anniversary battle events
-EXP_FEST_START = 0 -- When double XP mode begins (specified using epoch time code), set to zero to disable
-EXP_FEST_END = 0 -- When double XP mode ends (specified using epoch time code), must be bigger (i.e. later) than start
-ZENI_FEST_BEGIN = 0 -- similar to EXP_FEST above, epoch timestamp of when to start and when to stop
-ZENI_FEST_END = 0
 
 -- CUSTOM BEHAVIOR OUTSIDE ERA
 TOAU_CUSTOM_RING_REACQUISITION = 0 -- Set to 1 to turn on the custom ToAU ring reacquisition quest.

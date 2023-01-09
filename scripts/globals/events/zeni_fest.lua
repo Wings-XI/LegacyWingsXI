@@ -1,8 +1,9 @@
 ---------------------------------------------------------------
 -- Zeni fest - bonus zeni and ISP for soul plates!          --
 --(C) 2022 Wings Project. Coded by MowFord.                 --
+-- !enablefest or events/fests.lua for details
 ---------------------------------------------------------------
-
+require("scripts/globals/events/fests")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -10,21 +11,24 @@ require("scripts/globals/msg")
 zeni_fest = {}
 
 zeni_fest.params = {
+    festType = 2,
     PercOfZeniAsBonusISP = 20,
     MaxBonusZeni = 5000,
 }
 
 zeni_fest.onSanrakuPlateTradeComplete = function(player, zeni_base)
-    
+    local ZENI_FEST_START = GetServerVariable("[Fest]Start")
+    local ZENI_FEST_END = GetServerVariable("[Fest]End")
     -- Sanity check
     local now = os.time()
-    if ZENI_FEST_BEGIN == nil or ZENI_FEST_BEGIN >= now or
+    if GetServerVariable("[Fest]Type") ~= zeni_fest.params.festType or
+        ZENI_FEST_START == nil or ZENI_FEST_START >= now or
         ZENI_FEST_END == nil or ZENI_FEST_END <= now then
             return
     end
     
     -- reset bonus zeni counter for this zeni_fest period
-    if player:getCharVar("[ZENI_FEST]LastZeniBonus") < ZENI_FEST_BEGIN then
+    if player:getCharVar("[ZENI_FEST]LastZeniBonus") < ZENI_FEST_START then
         player:timer(1000, function(playerArg)
             playerArg:PrintToPlayer(string.format("Sanraku : This is your first turnin during ZeniFest! Every turn-in yields bonus Zeni up to a total of %u, also %u%% of all Zeni gained as ISP!", math.floor(zeni_fest.params.MaxBonusZeni), math.floor(zeni_fest.params.PercOfZeniAsBonusISP)), 0xD)
         end)
@@ -45,8 +49,8 @@ zeni_fest.onSanrakuPlateTradeComplete = function(player, zeni_base)
         player:setCharVar("[ZENI_FEST]TotalZeniBonus", totalBonusThisPeriod + bonusZeni)
         player:addCurrency("zeni_point", bonusZeni)
         player:addCurrency("imperial_standing", bonusISP)
-        player:PrintToPlayer(string.format("Sanraku : ZeniFest is currently active. You get %u bonus zeni and %u bonus ISP! %u remaining bonus Zeni during this ZeniFest.", bonusZeni, bonusISP, zeni_fest.params.MaxBonusZeni - totalBonusThisPeriod - bonusZeni), 0xD)
+        player:PrintToPlayer(string.format("Sanraku : ZeniFest ends %s. You get %u bonus zeni and %u bonus ISP! %u remaining bonus Zeni during this ZeniFest.", os.date("%Y/%m/%d %H:%M:%S(server time)", ZENI_FEST_END), bonusZeni, bonusISP, zeni_fest.params.MaxBonusZeni - totalBonusThisPeriod - bonusZeni), 0xD)
     else
-        player:PrintToPlayer(string.format("Sanraku : ZeniFest is currently active. Turn in higher-tier Soul Plates for the bonus.", bonusZeni, bonusISP), 0xD)
+        player:PrintToPlayer(string.format("Sanraku : ZeniFest ends %s. Turn in higher-tier Soul Plates for the bonus.", os.date("%Y/%m/%d %H:%M:%S(server time)", ZENI_FEST_END), bonusZeni, bonusISP), 0xD)
     end
 end
