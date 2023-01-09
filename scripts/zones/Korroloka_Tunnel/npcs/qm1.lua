@@ -9,12 +9,18 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onSpawn(npc)
-    npc:timer(900000, function(npc) KORROLOKA_TUNNEL.moveMorionWormQM() end)
+    KORROLOKA_TUNNEL.moveMorionWormQM()
 end
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 643) and npcUtil.popFromQM(player, npc, ID.mob.MORION_WORM, {radius=1}) then -- Iron Ore
+    if
+        npc:getStatus() ~= tpz.status.DISAPPEAR and
+        npcUtil.tradeHas(trade, 643) and -- Iron Ore
+        npcUtil.popFromQM(player, npc, ID.mob.MORION_WORM, {radius=1, hide=0})
+    then
         player:confirmTrade()
+        npc:setStatus(tpz.status.DISAPPEAR)
+        npc:updateNPCHideTime(math.random(600, 900))
     end
 end
 
