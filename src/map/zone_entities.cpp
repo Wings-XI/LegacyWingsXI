@@ -486,15 +486,21 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
     // default: render mobs when they get within 50 yalms, erase from render list at 55 yalms
     uint8 renderDist = 50;
     float eraseDistSquared = 55.0f * 55.0f;
+    float distSquared;
 
-    if (!PChar->m_packetLimiterEnabled)
+    if (m_zone->GetType() == ZONETYPE_DYNAMIS)
     {
-        // minimum render range on zone-in
-        renderDist = 30;
-    }else
-    {
-        // tighten the render range when player's render list grows (1 yalm ever 1.5 mobs, or ~36 yalm render range with 20 mobs nearby, etc)
-        renderDist = renderDist - std::clamp<uint8>(2 * PChar->SpawnMOBList.size() / 3, 0, 20);
+        if (!PChar->m_packetLimiterEnabled)
+        {
+            // minimum render range on zone-in
+            renderDist = 30;
+        }else
+        {
+            // tighten the render range when player's render list grows
+            // Generic thought: 1 yalm ever 1.5 mobs, or ~36 yalm render range with 20 mobs nearby, etc,
+            // but for now limited to dynamis and tightened to 1 yalm per mob
+            renderDist = renderDist - std::clamp<uint8>(PChar->SpawnMOBList.size(), 0, 20);
+        }
     }
 
     float renderDistSquared = renderDist * renderDist;
@@ -503,7 +509,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
     {
         CMobEntity* PCurrentMob = (CMobEntity*)it->second;
         SpawnIDList_t::iterator MOB = PChar->SpawnMOBList.lower_bound(PCurrentMob->id);
-        float distSquared = distanceSquared(PChar->loc.p, PCurrentMob->loc.p);
+        distSquared = distanceSquared(PChar->loc.p, PCurrentMob->loc.p);
 
         if (distSquared < renderDistSquared && PCurrentMob->status != STATUS_DISAPPEAR)
         {
