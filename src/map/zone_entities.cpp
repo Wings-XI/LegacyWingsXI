@@ -482,12 +482,36 @@ void CZoneEntities::DespawnPC(CCharEntity* PChar)
 void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 {
     TracyZoneScoped;
+
+    // default: render mobs when they get within 50 yalms, erase from render list at 55 yalms
+    uint8 renderDist = 50;
+    float eraseDistSquared = 55.0f * 55.0f;
+    float distSquared;
+
+    if (m_zone->GetType() == ZONETYPE_DYNAMIS)
+    {
+        if (!PChar->m_packetLimiterEnabled)
+        {
+            // minimum render range on zone-in
+            renderDist = 30;
+        }else
+        {
+            // tighten the render range when player's render list grows
+            // Generic thought: 1 yalm ever 1.5 mobs, or ~36 yalm render range with 20 mobs nearby, etc,
+            // but for now limited to dynamis and tightened to 1 yalm per mob
+            renderDist = renderDist - std::clamp<uint8>(PChar->SpawnMOBList.size(), 0, 20);
+        }
+    }
+
+    float renderDistSquared = renderDist * renderDist;
+
     for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
     {
         CMobEntity* PCurrentMob = (CMobEntity*)it->second;
         SpawnIDList_t::iterator MOB = PChar->SpawnMOBList.lower_bound(PCurrentMob->id);
+        distSquared = distanceSquared(PChar->loc.p, PCurrentMob->loc.p);
 
-        if (PCurrentMob->status != STATUS_DISAPPEAR && distanceSquared(PChar->loc.p, PCurrentMob->loc.p) < 50.0f * 50.0f)
+        if (distSquared < renderDistSquared && PCurrentMob->status != STATUS_DISAPPEAR)
         {
             if (MOB == PChar->SpawnMOBList.end() || PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first))
             {
@@ -518,7 +542,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
         }
         else
         {
-            if (MOB != PChar->SpawnMOBList.end() && !(PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first)))
+            if (distSquared > eraseDistSquared && MOB != PChar->SpawnMOBList.end() && !(PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first)))
             {
                 PChar->SpawnMOBList.erase(MOB);
                 PChar->pushPacket(new CEntityUpdatePacket(PCurrentMob, ENTITY_DESPAWN, UPDATE_NONE));
