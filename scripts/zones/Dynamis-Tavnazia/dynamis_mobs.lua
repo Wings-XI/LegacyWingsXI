@@ -139,7 +139,69 @@ mobList[zone] =
     [16949404] = { id = 16949404}, -- wave 3 floor 2 nightmare cluster
 
 
-    -- All children: some simply set to 1,1,1,0 in mob_spawn_points
+    -- All children set to 1,1,1,0 in mob_spawn_points but listed here as a failsafe
+    [16949431] = { id = 16949431}, -- child
+    [16949432] = { id = 16949432}, -- child
+    [16949433] = { id = 16949433}, -- child
+    [16949434] = { id = 16949434}, -- child
+    [16949435] = { id = 16949435}, -- child
+    [16949436] = { id = 16949436}, -- child
+    [16949437] = { id = 16949437}, -- child
+    [16949438] = { id = 16949438}, -- child
+    [16949439] = { id = 16949439}, -- child
+    [16949440] = { id = 16949440}, -- child
+    [16949441] = { id = 16949441}, -- child
+    [16949442] = { id = 16949442}, -- child
+    [16949426] = { id = 16949426}, -- child
+    [16949427] = { id = 16949427}, -- child
+    [16949428] = { id = 16949428}, -- child
+    [16949429] = { id = 16949429}, -- child
+    [16949430] = { id = 16949430}, -- child
+    [16949413] = { id = 16949413}, -- child
+    [16949414] = { id = 16949414}, -- child
+    [16949415] = { id = 16949415}, -- child
+    [16949416] = { id = 16949416}, -- child
+    [16949417] = { id = 16949417}, -- child
+    [16949281] = { id = 16949281}, -- child
+    [16949282] = { id = 16949282}, -- child
+    [16949283] = { id = 16949283}, -- child
+    [16949284] = { id = 16949284}, -- child
+    [16949285] = { id = 16949285}, -- child
+    [16949286] = { id = 16949286}, -- child
+    [16949293] = { id = 16949293}, -- child
+    [16949294] = { id = 16949294}, -- child
+    [16949295] = { id = 16949295}, -- child
+    [16949298] = { id = 16949298}, -- child
+    [16949299] = { id = 16949299}, -- child
+    [16949300] = { id = 16949300}, -- child
+    [16949287] = { id = 16949287}, -- child
+    [16949296] = { id = 16949296}, -- child
+    [16949301] = { id = 16949301}, -- child
+    [16949307] = { id = 16949307}, -- child
+    [16949308] = { id = 16949308}, -- child
+    [16949309] = { id = 16949309}, -- child
+    [16949310] = { id = 16949310}, -- child
+    [16949311] = { id = 16949311}, -- child
+    [16949312] = { id = 16949312}, -- child
+    [16949313] = { id = 16949313}, -- child
+    [16949314] = { id = 16949314}, -- child
+    [16949315] = { id = 16949315}, -- child
+    [16949316] = { id = 16949316}, -- child
+    [16949349] = { id = 16949349}, -- child
+    [16949350] = { id = 16949350}, -- child
+    [16949353] = { id = 16949353}, -- child
+    [16949354] = { id = 16949354}, -- child
+    [16949355] = { id = 16949355}, -- child
+    [16949359] = { id = 16949359}, -- child
+    [16949360] = { id = 16949360}, -- child
+    [16949361] = { id = 16949361}, -- child
+    [16949365] = { id = 16949365}, -- child
+    [16949366] = { id = 16949366}, -- child
+    [16949372] = { id = 16949372}, -- child
+    [16949373] = { id = 16949373}, -- child
+    [16949351] = { id = 16949351}, -- child
+    [16949367] = { id = 16949367}, -- child
+    [16949374] = { id = 16949374}, -- child
 
 }
 
@@ -158,7 +220,7 @@ mobList[zone][16949272].pos = { -0096.0, -0027.0,0041.3,063   } -- floor 1 vangu
 mobList[zone][16949289].pos = { -0110.0, -0027.0,0042.0,048   } -- floor 1 vanguard eye
 mobList[zone][16949290].pos = { -0079.0, -0022.0,-0050.5,202   } -- floor 1 vanguard eye
 mobList[zone][16949291].pos = { -0097.8, -0027.0,-0049.0,189   } -- floor 1 vanguard eye
-mobList[zone][16949292].pos = { 0012.0, -0027.0,-0047.5,196   } -- floor 1 vanguard eye
+mobList[zone][16949292].pos = { -0112.0, -0027.0,-0047.5,196   } -- floor 1 vanguard eye
 mobList[zone][16949303].pos = { -0098.0, -0027.0,0008.4,195   } -- floor 1 vanguard eye
 mobList[zone][16949304].pos = { -0098.0, -0027.0,-0006.4,060   } -- floor 1 vanguard eye
 mobList[zone][16949305].pos = { -0078.0, -0021.5,0054.5,191   } -- floor 1 vanguard eye
@@ -388,78 +450,145 @@ mobList[zone][16949403].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949404].waves = { nil, nil, 3, nil, nil }
 
 -- set what mobIDs i will spawn when i engage (such as NMs or other statues)
--- Statues
+-- Statues primary childgroups
+mobList[zone][16949269].randomChildrenCount1 = 4 ; mobList[zone][16949269].randomChildrenList1 = 5  -- floor 1 vanguard eye qm3
+mobList[zone][16949270].randomChildrenCount1 = 3 ; mobList[zone][16949270].randomChildrenList1 = 6  -- floor 1 vanguard eye qm3
+mobList[zone][16949271].randomChildrenCount1 = 3 ; mobList[zone][16949271].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949272].randomChildrenCount1 = 1 ; mobList[zone][16949272].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949289].randomChildrenCount1 = 4 ; mobList[zone][16949289].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949290].randomChildrenCount1 = 3 ; mobList[zone][16949290].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949291].randomChildrenCount1 = 4 ; mobList[zone][16949291].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949292].randomChildrenCount1 = 5 ; mobList[zone][16949292].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949303].randomChildrenCount1 = 4 ; mobList[zone][16949303].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949304].randomChildrenCount1 = 2 ; mobList[zone][16949304].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949305].randomChildrenCount1 = 3 ; mobList[zone][16949305].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949306].randomChildrenCount1 = 3 ; mobList[zone][16949306].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949322].randomChildrenCount1 = 2 ; mobList[zone][16949322].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949323].randomChildrenCount1 = 4 ; mobList[zone][16949323].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949324].randomChildrenCount1 = 4 ; mobList[zone][16949324].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949325].randomChildrenCount1 = 3 ; mobList[zone][16949325].randomChildrenList1 = 8  -- floor 2 vanguard eye qm3
+mobList[zone][16949356].randomChildrenCount1 = 2 ; mobList[zone][16949356].randomChildrenList1 = 8  -- floor 2 vanguard eye qm3
+mobList[zone][16949357].randomChildrenCount1 = 2 ; mobList[zone][16949357].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949358].randomChildrenCount1 = 2 ; mobList[zone][16949358].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949362].randomChildrenCount1 = 2 ; mobList[zone][16949362].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949363].randomChildrenCount1 = 2 ; mobList[zone][16949363].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949364].randomChildrenCount1 = 2 ; mobList[zone][16949364].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949369].randomChildrenCount1 = 3 ; mobList[zone][16949369].randomChildrenList1 = 9  -- floor 2 vanguard eye
+mobList[zone][16949370].randomChildrenCount1 = 3 ; mobList[zone][16949370].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949371].randomChildrenCount1 = 2 ; mobList[zone][16949371].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949376].randomChildrenCount1 = 3 ; mobList[zone][16949376].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949377].randomChildrenCount1 = 1 ; mobList[zone][16949377].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949378].randomChildrenCount1 = 2 ; mobList[zone][16949378].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949379].randomChildrenCount1 = 2 ; mobList[zone][16949379].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949380].randomChildrenCount1 = 2 ; mobList[zone][16949380].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949381].randomChildrenCount1 = 2 ; mobList[zone][16949381].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949382].randomChildrenCount1 = 2 ; mobList[zone][16949382].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949383].randomChildrenCount1 = 3 ; mobList[zone][16949383].randomChildrenList1 = 9  -- floor 2 vanguard eye
+mobList[zone][16949384].randomChildrenCount1 = 3 ; mobList[zone][16949384].randomChildrenList1 = 7  -- floor 2 vanguard eye
+mobList[zone][16949385].randomChildrenCount1 = 4 ; mobList[zone][16949385].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949386].randomChildrenCount1 = 2 ; mobList[zone][16949386].randomChildrenList1 = 8  -- floor 2 vanguard eye
+
+-- Statues secondary childgroups
+mobList[zone][16949272].randomChildrenCount2 = 2 ; mobList[zone][16949272].randomChildrenList2 = 6  -- floor 1 vanguard eye
+mobList[zone][16949289].randomChildrenCount2 = 1 ; mobList[zone][16949289].randomChildrenList2 = 6  -- floor 1 vanguard eye
+mobList[zone][16949304].randomChildrenCount2 = 1 ; mobList[zone][16949304].randomChildrenList2 = 6  -- floor 1 vanguard eye
+mobList[zone][16949305].randomChildrenCount2 = 1 ; mobList[zone][16949305].randomChildrenList2 = 6  -- floor 1 vanguard eye
+mobList[zone][16949322].randomChildrenCount2 = 2 ; mobList[zone][16949322].randomChildrenList2 = 6  -- floor 1 vanguard eye
+mobList[zone][16949356].randomChildrenCount2 = 1 ; mobList[zone][16949356].randomChildrenList2 = 7  -- floor 2 vanguard eye qm3
+mobList[zone][16949357].randomChildrenCount2 = 1 ; mobList[zone][16949357].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949358].randomChildrenCount2 = 1 ; mobList[zone][16949358].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949362].randomChildrenCount2 = 1 ; mobList[zone][16949362].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949363].randomChildrenCount2 = 1 ; mobList[zone][16949363].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949364].randomChildrenCount2 = 1 ; mobList[zone][16949364].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949370].randomChildrenCount2 = 1 ; mobList[zone][16949370].randomChildrenList2 = 9  -- floor 2 vanguard eye
+mobList[zone][16949371].randomChildrenCount2 = 1 ; mobList[zone][16949371].randomChildrenList2 = 9  -- floor 2 vanguard eye
+mobList[zone][16949376].randomChildrenCount2 = 1 ; mobList[zone][16949376].randomChildrenList2 = 9  -- floor 2 vanguard eye
+mobList[zone][16949377].randomChildrenCount2 = 3 ; mobList[zone][16949377].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949378].randomChildrenCount2 = 1 ; mobList[zone][16949378].randomChildrenList2 = 9  -- floor 2 vanguard eye
+mobList[zone][16949379].randomChildrenCount2 = 2 ; mobList[zone][16949379].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949380].randomChildrenCount2 = 2 ; mobList[zone][16949380].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949381].randomChildrenCount2 = 1 ; mobList[zone][16949381].randomChildrenList2 = 9  -- floor 2 vanguard eye
+mobList[zone][16949382].randomChildrenCount2 = 1 ; mobList[zone][16949382].randomChildrenList2 = 9  -- floor 2 vanguard eye
+mobList[zone][16949386].randomChildrenCount2 = 1 ; mobList[zone][16949386].randomChildrenList2 = 7  -- floor 2 vanguard eye
+
+-- Statues tertiary childgroups
+mobList[zone][16949357].randomChildrenCount3 = 1 ; mobList[zone][16949357].randomChildrenList3 = 9  -- floor 2 vanguard eye
+mobList[zone][16949363].randomChildrenCount3 = 1 ; mobList[zone][16949363].randomChildrenList3 = 9  -- floor 2 vanguard eye
+mobList[zone][16949364].randomChildrenCount3 = 1 ; mobList[zone][16949364].randomChildrenList3 = 9  -- floor 2 vanguard eye
+mobList[zone][16949378].randomChildrenCount3 = 2 ; mobList[zone][16949378].randomChildrenList3 = 7  -- floor 2 vanguard eye
+mobList[zone][16949381].randomChildrenCount3 = 2 ; mobList[zone][16949381].randomChildrenList3 = 7  -- floor 2 vanguard eye
+mobList[zone][16949382].randomChildrenCount3 = 2 ; mobList[zone][16949382].randomChildrenList3 = 7  -- floor 2 vanguard eye
 
 -- hornets
-mobList[zone][16949273].randomChildrenCount = 2 ; mobList[zone][16949273].randomChildrenList = 1
-mobList[zone][16949274].randomChildrenCount = 2 ; mobList[zone][16949274].randomChildrenList = 1
-mobList[zone][16949275].randomChildrenCount = 2 ; mobList[zone][16949275].randomChildrenList = 1
-mobList[zone][16949276].randomChildrenCount = 2 ; mobList[zone][16949276].randomChildrenList = 1
-mobList[zone][16949258].randomChildrenCount = 2 ; mobList[zone][16949258].randomChildrenList = 1
-mobList[zone][16949259].randomChildrenCount = 2 ; mobList[zone][16949259].randomChildrenList = 1
-mobList[zone][16949260].randomChildrenCount = 2 ; mobList[zone][16949260].randomChildrenList = 1
-mobList[zone][16949261].randomChildrenCount = 2 ; mobList[zone][16949261].randomChildrenList = 1
-mobList[zone][16949277].randomChildrenCount = 2 ; mobList[zone][16949277].randomChildrenList = 1
-mobList[zone][16949278].randomChildrenCount = 2 ; mobList[zone][16949278].randomChildrenList = 1
-mobList[zone][16949279].randomChildrenCount = 2 ; mobList[zone][16949279].randomChildrenList = 1
-mobList[zone][16949280].randomChildrenCount = 2 ; mobList[zone][16949280].randomChildrenList = 1
-mobList[zone][16949262].randomChildrenCount = 2 ; mobList[zone][16949262].randomChildrenList = 1
-mobList[zone][16949263].randomChildrenCount = 2 ; mobList[zone][16949263].randomChildrenList = 1
-mobList[zone][16949264].randomChildrenCount = 2 ; mobList[zone][16949264].randomChildrenList = 1
-mobList[zone][16949265].randomChildrenCount = 2 ; mobList[zone][16949265].randomChildrenList = 1
+mobList[zone][16949273].randomChildrenCount = 2 ; mobList[zone][16949273].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949274].randomChildrenCount = 2 ; mobList[zone][16949274].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949275].randomChildrenCount = 2 ; mobList[zone][16949275].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949276].randomChildrenCount = 2 ; mobList[zone][16949276].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949258].randomChildrenCount = 2 ; mobList[zone][16949258].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949259].randomChildrenCount = 2 ; mobList[zone][16949259].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949260].randomChildrenCount = 2 ; mobList[zone][16949260].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949261].randomChildrenCount = 2 ; mobList[zone][16949261].randomChildrenList = 1  -- floor 1 nightmare hornet
+mobList[zone][16949277].randomChildrenCount = 2 ; mobList[zone][16949277].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949278].randomChildrenCount = 2 ; mobList[zone][16949278].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949279].randomChildrenCount = 2 ; mobList[zone][16949279].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949280].randomChildrenCount = 2 ; mobList[zone][16949280].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949262].randomChildrenCount = 2 ; mobList[zone][16949262].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949263].randomChildrenCount = 2 ; mobList[zone][16949263].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949264].randomChildrenCount = 2 ; mobList[zone][16949264].randomChildrenList = 1  -- floor 2 nightmare hornet
+mobList[zone][16949265].randomChildrenCount = 2 ; mobList[zone][16949265].randomChildrenList = 1  -- floor 2 nightmare hornet
 
 -- makura
-mobList[zone][16949317].randomChildrenCount = 1 ; mobList[zone][16949317].randomChildrenList = 4
-mobList[zone][16949318].randomChildrenCount = 2 ; mobList[zone][16949318].randomChildrenList = 4
-mobList[zone][16949319].randomChildrenCount = 1 ; mobList[zone][16949319].randomChildrenList = 4
-mobList[zone][16949320].randomChildrenCount = 2 ; mobList[zone][16949320].randomChildrenList = 4
-mobList[zone][16949321].randomChildrenCount = 1 ; mobList[zone][16949321].randomChildrenList = 4
-mobList[zone][16949266].randomChildrenCount = 2 ; mobList[zone][16949266].randomChildrenList = 4
-mobList[zone][16949267].randomChildrenCount = 1 ; mobList[zone][16949267].randomChildrenList = 4
-mobList[zone][16949268].randomChildrenCount = 2 ; mobList[zone][16949268].randomChildrenList = 4
-mobList[zone][16949405].randomChildrenCount = 1 ; mobList[zone][16949405].randomChildrenList = 4
-mobList[zone][16949406].randomChildrenCount = 2 ; mobList[zone][16949406].randomChildrenList = 4
-mobList[zone][16949407].randomChildrenCount = 1 ; mobList[zone][16949407].randomChildrenList = 4
-mobList[zone][16949408].randomChildrenCount = 2 ; mobList[zone][16949408].randomChildrenList = 4
-mobList[zone][16949409].randomChildrenCount = 1 ; mobList[zone][16949409].randomChildrenList = 4
-mobList[zone][16949410].randomChildrenCount = 2 ; mobList[zone][16949410].randomChildrenList = 4
-mobList[zone][16949411].randomChildrenCount = 1 ; mobList[zone][16949411].randomChildrenList = 4
-mobList[zone][16949412].randomChildrenCount = 2 ; mobList[zone][16949412].randomChildrenList = 4
+mobList[zone][16949317].randomChildrenCount = 1 ; mobList[zone][16949317].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949318].randomChildrenCount = 2 ; mobList[zone][16949318].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949319].randomChildrenCount = 1 ; mobList[zone][16949319].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949320].randomChildrenCount = 2 ; mobList[zone][16949320].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949321].randomChildrenCount = 1 ; mobList[zone][16949321].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949266].randomChildrenCount = 2 ; mobList[zone][16949266].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949267].randomChildrenCount = 1 ; mobList[zone][16949267].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949268].randomChildrenCount = 2 ; mobList[zone][16949268].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949405].randomChildrenCount = 1 ; mobList[zone][16949405].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949406].randomChildrenCount = 2 ; mobList[zone][16949406].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949407].randomChildrenCount = 1 ; mobList[zone][16949407].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949408].randomChildrenCount = 2 ; mobList[zone][16949408].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949409].randomChildrenCount = 1 ; mobList[zone][16949409].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949410].randomChildrenCount = 2 ; mobList[zone][16949410].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949411].randomChildrenCount = 1 ; mobList[zone][16949411].randomChildrenList = 4  -- floor 1 nightmare makura
+mobList[zone][16949412].randomChildrenCount = 2 ; mobList[zone][16949412].randomChildrenList = 4  -- floor 1 nightmare makura
 
 
 -- leech
-mobList[zone][16949341].randomChildrenCount = 1 ; mobList[zone][16949341].randomChildrenList = 3
-mobList[zone][16949342].randomChildrenCount = 2 ; mobList[zone][16949342].randomChildrenList = 3
-mobList[zone][16949343].randomChildrenCount = 1 ; mobList[zone][16949343].randomChildrenList = 3
-mobList[zone][16949344].randomChildrenCount = 2 ; mobList[zone][16949344].randomChildrenList = 3
-mobList[zone][16949345].randomChildrenCount = 1 ; mobList[zone][16949345].randomChildrenList = 3
-mobList[zone][16949346].randomChildrenCount = 2 ; mobList[zone][16949346].randomChildrenList = 3
-mobList[zone][16949347].randomChildrenCount = 1 ; mobList[zone][16949347].randomChildrenList = 3
-mobList[zone][16949348].randomChildrenCount = 2 ; mobList[zone][16949348].randomChildrenList = 3
-mobList[zone][16949418].randomChildrenCount = 1 ; mobList[zone][16949418].randomChildrenList = 3
-mobList[zone][16949419].randomChildrenCount = 2 ; mobList[zone][16949419].randomChildrenList = 3
-mobList[zone][16949420].randomChildrenCount = 1 ; mobList[zone][16949420].randomChildrenList = 3
-mobList[zone][16949421].randomChildrenCount = 2 ; mobList[zone][16949421].randomChildrenList = 3
-mobList[zone][16949422].randomChildrenCount = 1 ; mobList[zone][16949422].randomChildrenList = 3
-mobList[zone][16949423].randomChildrenCount = 2 ; mobList[zone][16949423].randomChildrenList = 3
-mobList[zone][16949424].randomChildrenCount = 1 ; mobList[zone][16949424].randomChildrenList = 3
-mobList[zone][16949425].randomChildrenCount = 2 ; mobList[zone][16949425].randomChildrenList = 3
+mobList[zone][16949341].randomChildrenCount = 1 ; mobList[zone][16949341].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949342].randomChildrenCount = 2 ; mobList[zone][16949342].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949343].randomChildrenCount = 1 ; mobList[zone][16949343].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949344].randomChildrenCount = 2 ; mobList[zone][16949344].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949345].randomChildrenCount = 1 ; mobList[zone][16949345].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949346].randomChildrenCount = 2 ; mobList[zone][16949346].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949347].randomChildrenCount = 1 ; mobList[zone][16949347].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949348].randomChildrenCount = 2 ; mobList[zone][16949348].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949418].randomChildrenCount = 1 ; mobList[zone][16949418].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949419].randomChildrenCount = 2 ; mobList[zone][16949419].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949420].randomChildrenCount = 1 ; mobList[zone][16949420].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949421].randomChildrenCount = 2 ; mobList[zone][16949421].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949422].randomChildrenCount = 1 ; mobList[zone][16949422].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949423].randomChildrenCount = 2 ; mobList[zone][16949423].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949424].randomChildrenCount = 1 ; mobList[zone][16949424].randomChildrenList = 3  -- floor 1 nightmare leech
+mobList[zone][16949425].randomChildrenCount = 2 ; mobList[zone][16949425].randomChildrenList = 3  -- floor 1 nightmare leech
 
 -- clusters
-mobList[zone][16949332].randomChildrenCount = 2 ; mobList[zone][16949332].randomChildrenList = 2
-mobList[zone][16949333].randomChildrenCount = 2 ; mobList[zone][16949333].randomChildrenList = 2
-mobList[zone][16949334].randomChildrenCount = 2 ; mobList[zone][16949334].randomChildrenList = 2
-mobList[zone][16949335].randomChildrenCount = 2 ; mobList[zone][16949335].randomChildrenList = 2
-mobList[zone][16949336].randomChildrenCount = 2 ; mobList[zone][16949336].randomChildrenList = 2
-mobList[zone][16949337].randomChildrenCount = 2 ; mobList[zone][16949337].randomChildrenList = 2
-mobList[zone][16949338].randomChildrenCount = 2 ; mobList[zone][16949338].randomChildrenList = 2
-mobList[zone][16949339].randomChildrenCount = 2 ; mobList[zone][16949339].randomChildrenList = 2
-mobList[zone][16949340].randomChildrenCount = 2 ; mobList[zone][16949340].randomChildrenList = 2
-mobList[zone][16949388].randomChildrenCount = 2 ; mobList[zone][16949388].randomChildrenList = 2
-mobList[zone][16949389].randomChildrenCount = 2 ; mobList[zone][16949389].randomChildrenList = 2
-mobList[zone][16949395].randomChildrenCount = 2 ; mobList[zone][16949395].randomChildrenList = 2
-mobList[zone][16949403].randomChildrenCount = 2 ; mobList[zone][16949403].randomChildrenList = 2
-mobList[zone][16949404].randomChildrenCount = 2 ; mobList[zone][16949404].randomChildrenList = 2
+mobList[zone][16949332].randomChildrenCount = 2 ; mobList[zone][16949332].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949333].randomChildrenCount = 2 ; mobList[zone][16949333].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949334].randomChildrenCount = 2 ; mobList[zone][16949334].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949335].randomChildrenCount = 2 ; mobList[zone][16949335].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949336].randomChildrenCount = 2 ; mobList[zone][16949336].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949337].randomChildrenCount = 2 ; mobList[zone][16949337].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949338].randomChildrenCount = 2 ; mobList[zone][16949338].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949339].randomChildrenCount = 2 ; mobList[zone][16949339].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949340].randomChildrenCount = 2 ; mobList[zone][16949340].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949388].randomChildrenCount = 2 ; mobList[zone][16949388].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949389].randomChildrenCount = 2 ; mobList[zone][16949389].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949395].randomChildrenCount = 2 ; mobList[zone][16949395].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949403].randomChildrenCount = 2 ; mobList[zone][16949403].randomChildrenList = 2  -- floor 2 nightmare cluster
+mobList[zone][16949404].randomChildrenCount = 2 ; mobList[zone][16949404].randomChildrenList = 2  -- floor 2 nightmare cluster
 
 
 -- random children list, i.e. a statue can pick from a long list of mobs with varying jobs
@@ -536,6 +665,66 @@ randomChildrenList[zone] =
         -- 16949267,
         -- 16949268,
     },
+    -- hydra
+    [5] =
+    {
+        16949281, -- 'Hydra_Warrior
+        16949282, -- 'Hydra_Red_Mage',
+        16949283, -- 'Hydra_Paladin
+        16949284, -- 'Hydra_Ninja
+        16949285, -- 'Hydra_Monk
+        16949286, -- 'Hydra_White_Mage',
+        16949293, -- 'Hydra_Black_Mage',
+        16949294, -- 'Hydra_Dark_Knight',
+        16949295, -- 'Hydra_Bard'
+        16949298, -- 'Hydra_Thief'
+        16949299, -- 'Hydra_Ranger'
+        16949300, -- 'Hydra_Samurai'
+    },
+    -- hydra with pets
+    [6] =
+    {
+        16949287, -- 'Hydra_Beastmaster
+        16949296, -- 'Hydra_Dragoon'
+        16949301, -- 'Hydra_Summoner'
+    },
+    -- Nightmare Taurus
+    [7] =
+    {
+        16949307, -- 'Nightmare_Taurus'
+        16949308, -- 'Nightmare_Taurus'
+        16949309, -- 'Nightmare_Taurus'
+        16949310, -- 'Nightmare_Taurus'
+        16949311, -- 'Nightmare_Taurus'
+        16949312, -- 'Nightmare_Taurus'
+        16949313, -- 'Nightmare_Taurus'
+        16949314, -- 'Nightmare_Taurus'
+        16949315, -- 'Nightmare_Taurus'
+        16949316, -- 'Nightmare_Taurus'
+    },
+    -- kindred
+    [8] =
+    {
+        16949349, -- 'Kindred_Monk
+        16949350, -- 'Kindred_Black_Mage
+        16949353, -- 'Kindred_White_Mage
+        16949354, -- 'Kindred_Dark_Knight
+        16949355, -- 'Kindred_Ranger
+        16949359, -- 'Kindred_Red_Mage
+        16949360, -- 'Kindred_Paladin
+        16949361, -- 'Kindred_Samurai
+        16949365, -- 'Kindred_Warrior
+        16949366, -- 'Kindred_Thief
+        16949372, -- 'Kindred_Bard
+        16949373, -- 'Kindred_Ninja
+    },
+    -- kindred with pets
+    [9] =
+    {
+        16949351, -- 'Kindred_Beastmaster
+        16949367, -- 'Kindred_Summoner
+        16949374, -- 'Kindred_Dragoon
+    }
 }
 
 -- NPC list, only really need to add NPCs that need to be spawned at the start
