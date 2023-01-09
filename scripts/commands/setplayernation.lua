@@ -46,5 +46,8 @@ function onTrigger(player, arg1, arg2)
 
     -- set nation
     targ:setNation( nation )
+    -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
+    -- rather than reinvent the getConquestTally function in cpp, just adding this to each allegiance npc
+    targ:setCharVar("supplyQuest_nextSupplies", getConquestTally())
     player:PrintToPlayer( string.format("Set %s's home nation to %s.", targ:getName(), nationByNum[nation]) )
 end

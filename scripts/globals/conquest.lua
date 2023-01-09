@@ -82,7 +82,14 @@ local outposts =
 }
 
 local function hasOutpost(player, region)
-    local hasOP = player:hasTeleport(player:getNation(), region + 5)
+    local hasOP = false
+    for nation = tpz.nation.SANDORIA, tpz.nation.WINDURST do
+        if player:getNation() == nation or
+            player:getRank(nation) == 10 -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
+            then
+                hasOP = player:hasTeleport(nation, region + 5)
+        end
+    end
     if not hasOP then
         if UNLOCK_OUTPOST_WARPS == 2 then
             hasOP = true
@@ -145,8 +152,10 @@ end
 local function suppliesAvailableBitmask(player, nation)
     local mask = 2130706463
 
-    if player:getCharVar("supplyQuest_started") == vanaDay() then
-        mask = 4294967295 -- Need to wait 1 vanadiel day
+    if player:getCharVar("supplyQuest_started") == vanaDay() or
+        player:getCharVar("supplyQuest_nextSupplies") > os.time() -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
+        then
+            mask = 4294967295 -- Need to wait 1 vanadiel day
     end
 
     for k, v in pairs(outposts) do
@@ -1083,6 +1092,10 @@ tpz.conquest.overseerOnTrigger = function(player, npc, guardNation, guardType, g
         local a8 = getExForceReward(player, guardNation)
 
         player:startEvent(guardEvent, a1, a2, a3, a4, a5, a6, a7, a8)
+        -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
+        if player:getCharVar("supplyQuest_nextSupplies") > os.time() then
+            player:PrintToPlayer("NOTICE : OOE change to allow access to all outposts also restricts delivering outpost supplies until conquest reset after nation change.",29)
+        end
 
     -- OUTPOST AND BORDER OVERSEERS
     elseif guardType >= tpz.conquest.guard.OUTPOST then
