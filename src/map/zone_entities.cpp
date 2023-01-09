@@ -542,10 +542,13 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
         }
         else
         {
-            if (distSquared > eraseDistSquared && MOB != PChar->SpawnMOBList.end() && !(PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first)))
+            if (MOB != PChar->SpawnMOBList.end() && !(PChar->SpawnMOBList.key_comp()(PCurrentMob->id, MOB->first)))
             {
-                PChar->SpawnMOBList.erase(MOB);
-                PChar->pushPacket(new CEntityUpdatePacket(PCurrentMob, ENTITY_DESPAWN, UPDATE_NONE));
+                if (distSquared > eraseDistSquared || PCurrentMob->status == STATUS_DISAPPEAR)
+                {
+                    PChar->SpawnMOBList.erase(MOB);
+                    PChar->pushPacket(new CEntityUpdatePacket(PCurrentMob, ENTITY_DESPAWN, UPDATE_NONE));
+                }
             }
         }
     }
