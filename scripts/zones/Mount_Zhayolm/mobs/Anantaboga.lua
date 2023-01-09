@@ -35,6 +35,14 @@ function onMobSpawn(mob)
     end)
 end
 
+function onMobRoam(mob)
+    -- do not delay roaming back to spawn and don't do a direct path when over 20 yalms away (in case he charms all players on hate table)
+    if not mob:isFollowingPath() then
+        local spawn = mob:getSpawnPos()
+        mob:pathTo(spawn.x, spawn.y, spawn.z)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
 end
 
