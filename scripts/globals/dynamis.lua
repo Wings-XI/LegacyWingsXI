@@ -12,6 +12,7 @@ require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
 require("scripts/globals/pathfind")
+require("scripts/globals/monstertpmoves")
 ------------------------------------
 
 dynamis = {}
@@ -406,8 +407,8 @@ dynamis.maxchars = 64
 
 dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level, message_another_group, message_cannot_enter)
     -- rate limit hourglass trades
-    if npc:getLocalVar("LastTrade") > os.time() - 2 then
-        player:PrintToPlayer("DynamisTrade: Please wait 2s between hourglass trades!", 0xD)
+    if npc:getLocalVar("LastTrade") > os.time() - 8 then
+        player:PrintToPlayer("DynamisTrade: Please wait 8s between hourglass trades!", 0xD)
         return
     end
     npc:setLocalVar("LastTrade", os.time())
