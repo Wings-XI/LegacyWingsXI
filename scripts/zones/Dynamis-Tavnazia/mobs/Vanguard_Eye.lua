@@ -44,30 +44,24 @@ function onMobEngaged(mob, target)
     require("scripts/zones/Dynamis-Tavnazia/dynamis_mobs")
 
     if mob:getLocalVar("dynaReadyToSpawnChildren") == 1 then
-        printf("1")
         randomChildrenListArg = nil
         if mobList[zone][mob:getID()] ~= nil and mobList[zone][mob:getID()].randomChildrenList1 ~= nil then
-            printf("1")
             randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList1]
             mobList[zone][mob:getID()].randomChildrenCount = mobList[zone][mob:getID()].randomChildrenCount1
             dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
         end
 
-        printf("2")
         mob:setLocalVar("dynaReadyToSpawnChildren", 1)
         randomChildrenListArg = nil
         if mobList[zone][mob:getID()] ~= nil and mobList[zone][mob:getID()].randomChildrenList2 ~= nil then
-            printf("2")
             randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList2]
             mobList[zone][mob:getID()].randomChildrenCount = mobList[zone][mob:getID()].randomChildrenCount2
             dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
         end
 
-        printf("3")
-        mob:setLocalVar("dynaReadyToSpawnChildren", 0)
+        mob:setLocalVar("dynaReadyToSpawnChildren", 1)
         randomChildrenListArg = nil
         if mobList[zone][mob:getID()] ~= nil and mobList[zone][mob:getID()].randomChildrenList3 ~= nil then
-            printf("3")
             randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList3]
             mobList[zone][mob:getID()].randomChildrenCount = mobList[zone][mob:getID()].randomChildrenCount3
             dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
