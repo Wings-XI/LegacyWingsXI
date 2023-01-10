@@ -27,5 +27,5 @@ function onTrigger(player)
         return
     end
 
-    player:PrintToPlayer(string.format("%s Fest starts at %s and ends at %s (server time)", festsData[festType].name, os.date("%Y/%m/%d %H:%M:%S", startTime), os.date("%Y/%m/%d %H:%M:%S", endTime)))
+    player:PrintToPlayer(string.format("%s Fest starts at %s and ends at %s (server time)", festsData[festType].name, os.date("%Y/%m/%d %H:%M:%S", FEST_START), os.date("%Y/%m/%d %H:%M:%S", FEST_END)))
 end
