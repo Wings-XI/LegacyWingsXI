@@ -819,7 +819,7 @@ void CCharEntity::ForceReloadParty()
 {
     time_point timepointNow = std::chrono::system_clock::now();
     // only allow force reload via !re every 5s (avoid multiple people doing !re at the same time, as refreshes the party list for everyone)
-    if (PParty && timepointNow < PParty->GetLastReloadTime() + 5s) {
+    if (PParty && timepointNow > PParty->GetLastReloadTime() + 5s) {
         PParty->ResetLastReloadTime();
     }
 }
