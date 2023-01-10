@@ -30,6 +30,10 @@ function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
 end
 
+function onMobWeaponSkillPrepare(mob, target)
+    return 1847
+end
+
 function onMobEngaged(mob, target)
     require("scripts/zones/Dynamis-Tavnazia/dynamis_mobs")
     randomChildrenListArg = nil

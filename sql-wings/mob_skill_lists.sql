@@ -3516,6 +3516,10 @@ INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1695); -- hypnic lamp
 INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1697); -- SeaSpray
 INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1694); -- Vile Belch
 INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1696); -- Seismic Tail
+-- Nightmare Hornet
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 334);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 1847);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 336);
 
 --
 -- Indexes for dumped tables
