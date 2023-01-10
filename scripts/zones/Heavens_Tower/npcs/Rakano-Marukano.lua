@@ -58,6 +58,9 @@ function onEventFinish(player, csid, option)
         end
 
         player:setNation(newNation)
+        -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
+        -- rather than reinvent the getConquestTally function in cpp, just adding this to each allegiance npc
+        player:setCharVar("supplyQuest_nextSupplies", getConquestTally())
         player:setGil(player:getGil() - cost)
         player:setRankPoints(0)
         player:addItem(536)
