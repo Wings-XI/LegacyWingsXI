@@ -50,6 +50,13 @@ function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
 end
 
+function onMobWeaponSkill(target, mob, skill)
+    -- Draw In: Always used before a TP move; draws in the person with the most hate and anyone in his alliance regardless of their position in the zone.
+    for _, member in pairs(target:getAlliance()) do
+        mob:triggerDrawIn(false, 1, nil, member)
+    end
+end
+
 function onMobEngaged(mob, target)
     require("scripts/zones/Dynamis-Tavnazia/dynamis_mobs")
     randomChildrenListArg = nil
