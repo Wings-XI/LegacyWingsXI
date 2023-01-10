@@ -16,6 +16,10 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.ATTACK_DOWN
     local power = 50
+    --  Nightmare Leeches in Dynamis - Tavnazia use an enhanced version that reduces attack all the way down to 1.
+    if mob:getZoneID() == 42 then
+        power = 99
+    end
     local duration = 120
 
     MobStatusEffectMove(mob, target, typeEffect, power, 0, duration)
