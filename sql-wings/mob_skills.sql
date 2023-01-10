@@ -489,6 +489,7 @@ INSERT INTO `mob_skills` VALUES(567, 866, 'sling_bomb', 0, 7.0, 2000, 1500, 4, 0
 INSERT INTO `mob_skills` VALUES(568, 867, 'formation_attack', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(569, 868, 'refueling', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(570, 869, 'circle_of_flames', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(571, 874, 'self-destruct_cluster', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(576, 910, 'back_heel', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(578, 912, 'nihility_song', 1, 12.5, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(581, 325, 'blow', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);

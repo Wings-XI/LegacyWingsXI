@@ -273,6 +273,7 @@ INSERT INTO `mob_skill_lists` VALUES('Cluster', 68, 567);
 INSERT INTO `mob_skill_lists` VALUES('Cluster', 68, 568);
 INSERT INTO `mob_skill_lists` VALUES('Cluster', 68, 569);
 INSERT INTO `mob_skill_lists` VALUES('Cluster', 68, 570);
+INSERT INTO `mob_skill_lists` VALUES('Cluster', 68, 571);
 INSERT INTO `mob_skill_lists` VALUES('Cluster', 69, 567);
 INSERT INTO `mob_skill_lists` VALUES('Cluster', 69, 568);
 INSERT INTO `mob_skill_lists` VALUES('Cluster', 69, 569);
