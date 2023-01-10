@@ -15,7 +15,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:messageSpecial(ID.text.ANANTABOGA)
+    player:messageSpecial(ID.text.STIFLING_STENCH)
 end
 
 function onEventUpdate(player, csid, option)
