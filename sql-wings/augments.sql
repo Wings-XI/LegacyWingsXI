@@ -189,7 +189,7 @@ INSERT INTO `augments` VALUES(125, 0, 30, 1, 1, 0);
 INSERT INTO `augments` VALUES(125, 0, 311, 1, 1, 0);
 INSERT INTO `augments` VALUES(126, 0, 311, 1, 1, 0);
 INSERT INTO `augments` VALUES(127, 0, 163, -1, 1, 0);
-INSERT INTO `augments` VALUES(128, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES(128, 0, 30, 1, 1, 0);
 INSERT INTO `augments` VALUES(129, 0, 25, 1, 0, 0);
 INSERT INTO `augments` VALUES(129, 0, 26, 1, 0, 0);
 INSERT INTO `augments` VALUES(130, 0, 23, 1, 0, 0);
