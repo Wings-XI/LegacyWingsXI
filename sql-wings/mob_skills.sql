@@ -489,6 +489,7 @@ INSERT INTO `mob_skills` VALUES(567, 866, 'sling_bomb', 0, 7.0, 2000, 1500, 4, 0
 INSERT INTO `mob_skills` VALUES(568, 867, 'formation_attack', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(569, 868, 'refueling', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(570, 869, 'circle_of_flames', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(571, 874, 'self-destruct_cluster', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(576, 910, 'back_heel', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(578, 912, 'nihility_song', 1, 12.5, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(581, 325, 'blow', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1327,6 +1328,7 @@ INSERT INTO `mob_skills` VALUES(1837, 1314, 'feeble_bleat', 1, 18.0, 2000, 1500,
 INSERT INTO `mob_skills` VALUES(1838, 1221, 'mine_blast', 1, 10.0, 2000, 1500, 4, 24, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1839, 1147, 'rushing_slash', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1840, 1148, 'rushing_stab', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1847, 79, 'frenzy_pollen', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1893, 438, 'spirit_surge', 0, 7.0, 2000, 0, 1, 0, 30, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1894, 1241, 'potent_lunge', 0, 7.0, 2000, 1000, 4, 0, 0, 3, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1895, 1242, 'overthrow', 0, 7.0, 2000, 1500, 4, 0, 0, 3, 0, 0, 0);

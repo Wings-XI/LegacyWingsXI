@@ -4572,6 +4572,15 @@ INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 563, 152, 1, 255); -- Blizzar
 INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 563, 181, 1, 255); -- Blizzaga III (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Snow_Devil', 563, 455, 1, 255); -- Ice Threnody (1~255)
 
+-- Nightmare Worm
+INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 192, 1, 255); -- stonega_iv
+INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 255, 1, 255); -- break
+INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 163, 1, 255); -- stone v
+INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 210, 1, 255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 54 , 1, 255); -- stoneskin
+INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 238, 1, 255); -- rasp
+
+
 --
 -- Indexes for dumped tables
 --

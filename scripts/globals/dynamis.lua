@@ -190,10 +190,10 @@ dynamis.entryInfo =
         csFirst = 614,
         csWin = 615,
         csDyna = 588,
-        enabled = false,
+        enabled = true,
         winVar = "DynaTavnazia_Win",
         hasEnteredVar = "DynaTavnazia_HasEntered",
-        hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
+        hasSeenWinCSVar = "DynaTavnazia_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_TAVNAZIA_SLIVER,
         enterPos = {0.1, -7, -21, 190, 42},
         reqs =
@@ -376,11 +376,12 @@ dynamis.dynaInfo =
     {
         winVar = "DynaTavnazia_Win",
         hasEnteredVar = "DynaTavnazia_HasEntered",
-        hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
+        hasSeenWinCSVar = "DynaTavnazia_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_TAVNAZIA_SLIVER,
         winTitle = tpz.title.DYNAMIS_TAVNAZIA_INTERLOPER,
         entryPos = {0.1, -7, -21, 190, tpz.zone.DYNAMIS_TAVNAZIA},
         ejectPos = {0  , -7, -23, 195, tpz.zone.TAVNAZIAN_SAFEHOLD},
+        sjRestriction = true,
     },
     [tpz.zone.TAVNAZIAN_SAFEHOLD] =
     {
@@ -665,7 +666,7 @@ dynamis.statueOnEngaged = function(mob, target, mobList, randomChildrenList)
                 local home = child:getSpawnPos()
                 local randomSpawn = false
                 if home.x == 1 and home.y == 1 and home.z == 1 then
-                    child:setSpawn(mob:getXPos()+math.random()*6-3, mob:getYPos()-0.3, mob:getZPos()+math.random()*6-3, mob:getRotPos())
+                    child:setSpawn(mob:getXPos()+math.random(-2,2), mob:getYPos()-0.3, mob:getZPos()+math.random(-2,2), mob:getRotPos())
                     randomSpawn = true
                 end
                 SpawnMob(randomChildrenList[randomChildrenCount][roll]):updateEnmity(target)
