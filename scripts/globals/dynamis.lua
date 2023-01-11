@@ -427,7 +427,7 @@ dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level
     local remaining = GetDynaTimeRemaining(dynamis.entryInfo[playerZoneID].enterPos[5])
     local hasEntered = player:getCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar)
     local timeSinceLastDynaReservation = player:timeSinceLastDynaReservation()
-    local maxchars = dynamis.entryInfo[playerZoneID].maxchars > 0 and dynamis.entryInfo[playerZoneID].maxchars or dynamis.maxchars
+    local maxchars = dynamis.entryInfo[playerZoneID].maxchars ~= nil and dynamis.entryInfo[playerZoneID].maxchars or dynamis.maxchars
 
     if npcUtil.tradeHas(trade, dynamis.timeless, true, false) then -- timeless hourglass, attempting to trade for a perpetual hourglass
         if remaining > 0 then
