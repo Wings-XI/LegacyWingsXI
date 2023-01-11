@@ -203,6 +203,10 @@ mobList[zone] =
     [16949367] = { id = 16949367}, -- child
     [16949374] = { id = 16949374}, -- child
 
+    [16949443] = { id = 16949443}, -- Dummy Worm
+    [16949444] = { id = 16949444}, -- Dummy Worm
+    [16949445] = { id = 16949445}, -- Dummy Worm
+
 }
 
 mobList[zone].zoneID = zone
@@ -275,6 +279,9 @@ mobList[zone][16949425].pos = { -0091.1, -0013.0,0009.5,133   } -- floor 1 night
 
 -- Floor 2
 mobList[zone][16949256].pos = { 17    ,     -36,     19,   0     } -- nightmare antlion
+mobList[zone][16949443].pos = { 17    ,     -36,     19,   0     } -- dummy worm
+mobList[zone][16949444].pos = { 17    ,     -36,     19,   0     } -- dummy worm
+mobList[zone][16949445].pos = { 17    ,     -36,     19,   0     } -- dummy worm
 mobList[zone][16949325].pos = { 0098.0, -0041.0,0006.0,188   } -- floor 2 vanguard eye qm3
 mobList[zone][16949356].pos = { 0098.0, -0041.0,-0006.0,063   } -- floor 2 vanguard eye qm3
 mobList[zone][16949357].pos = { 0078.0, -0038.0,0029.0,161   } -- floor 2 vanguard eye
@@ -340,6 +347,10 @@ mobList[zone].waveDefeatRequirements[1] = { } -- always leave this empty
 mobList[zone][16949255].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949257].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949256].waves = { 1, nil, nil, nil, nil }
+
+mobList[zone][16949443].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949444].waves = { 1, nil, nil, nil, nil }
+mobList[zone][16949445].waves = { 1, nil, nil, nil, nil }
 
 -- Statues
 mobList[zone][16949269].waves = { 1, nil, nil, nil, nil }

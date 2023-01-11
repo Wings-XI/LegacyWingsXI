@@ -10,7 +10,7 @@ require("scripts/globals/dynamis")
 
 local zone = 42
 
-
+-- code assumes exactly 4 spawnspots and exactly 3 dummyWorms
 local spawnSpots = {
    { 17,    -36,     19}, -- NE
    {-20,    -36,     19}, -- NW
@@ -18,15 +18,11 @@ local spawnSpots = {
    { 17,    -36,    -19}, -- SE
 }
 
---[[function onMobSpawn(mob)
-    mob:setLocalVar("dynamis_currency", 1455)
-    mob:setMobMod(tpz.mobMod.ROAM_TURNS, 0)
-    mob:setMobMod(tpz.mobMod.ROAM_RATE, 0)
-    mob:setMobMod(tpz.mobMod.ROAM_DISTANCE, 0)
-    mob:setLocalVar("spawnSpot", math.random(#spawnSpots))
-
-    mob:setPos(spawnSpots[mob:getLocalVar("spawnSpot")])
-end]]
+local dummyWorms = {
+    16949443,
+    16949444,
+    16949445,
+}
 
 function onMobSpawn(mob)
     require("scripts/zones/Dynamis-Tavnazia/dynamis_mobs")
@@ -51,6 +47,11 @@ function onMobDeath(mob, player, isKiller)
         SetServerVariable(string.format("DynamisSJRestriction_%s", zone), 1)
         dynamis.sjQMOnTrigger(winQM, winQM)
     end
+
+
+    for i = 1, 3 do
+        DespawnMob(dummyWorms[i])
+    end
 end
 
 function onMobRoamAction(mob)
@@ -59,6 +60,17 @@ end
 
 function onMobRoam(mob)
     dynamis.mobOnRoam(mob)
+
+    for i = 1, 3 do
+        local wormID = dummyWorms[i]
+        local worm = GetMobByID(wormID)
+        local wormPos = i
+        if i >= mob:getLocalVar("spawnSpot") then
+            wormPos = i + 1
+        end
+        worm:setSpawn(spawnSpots[wormPos])
+        worm:setPos(spawnSpots[wormPos])
+    end
 end
 
 function onMobEngaged(mob, target)
