@@ -145,9 +145,8 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaValkurm_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_VALKURM_SLIVER,
         enterPos = {100, -8, 131, 47, 39},
-        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
-
-
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND},
+        maxchars = 36,
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
     {
@@ -162,9 +161,8 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaBuburimu_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_BUBURIMU_SLIVER,
         enterPos = {155, -1, -169, 170, 40},
-        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
-
-
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND},
+        maxchars = 36,
     },
     [tpz.zone.QUFIM_ISLAND] =
     {
@@ -179,9 +177,8 @@ dynamis.entryInfo =
         hasSeenWinCSVar = "DynaQufim_HasSeenWinCS",
         winKI = tpz.ki.DYNAMIS_QUFIM_SLIVER,
         enterPos = {-19, -17, 104, 253, 41},
-        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND}
-
-
+        reqs = {tpz.ki.VIAL_OF_SHROUDED_SAND},
+        maxchars = 36,
     },
     [tpz.zone.TAVNAZIAN_SAFEHOLD] =
     {
@@ -200,9 +197,8 @@ dynamis.entryInfo =
                 {tpz.ki.VIAL_OF_SHROUDED_SAND,
                 tpz.ki.DYNAMIS_BUBURIMU_SLIVER,
                 tpz.ki.DYNAMIS_QUFIM_SLIVER,
-                tpz.ki.DYNAMIS_VALKURM_SLIVER}
-
-
+                tpz.ki.DYNAMIS_VALKURM_SLIVER},
+        maxchars = 18,
     },
 }
 
@@ -431,6 +427,7 @@ dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level
     local remaining = GetDynaTimeRemaining(dynamis.entryInfo[playerZoneID].enterPos[5])
     local hasEntered = player:getCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar)
     local timeSinceLastDynaReservation = player:timeSinceLastDynaReservation()
+    local maxchars = dynamis.entryInfo[playerZoneID].maxchars > 0 and dynamis.entryInfo[playerZoneID].maxchars or dynamis.maxchars
 
     if npcUtil.tradeHas(trade, dynamis.timeless, true, false) then -- timeless hourglass, attempting to trade for a perpetual hourglass
         if remaining > 0 then
@@ -438,13 +435,22 @@ dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level
         elseif timeSinceLastDynaReservation < 71 then
             player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
         else
-            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            player:startEvent(dynamis.entryInfo[playerZoneID].csRegisterGlass,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), 0)
         end
     elseif npcUtil.tradeHas(trade, dynamis.perpetual, true, false) then -- perpetual hourglass, attempting to enter a registered instance or start a new one
         local hgValid = player:checkHourglassValid(trade:getItem(0), dynamis.entryInfo[playerZoneID].enterPos[5])
         if hgValid > 0 then -- 0 = can't enter (wrong glass or didn't wait 71 hours since last dynamis), 1 = entering, 2 = re-entering (weakness)
-            player:prepareDynamisEntry(trade:getItem(0), hgValid) -- save the hourglass's params to the character while they are viewing the cs
-            player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,dynamis.maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+            local playersEntered = GetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID))
+            if hgValid == 2 or (hgValid == 1 and playersEntered < maxchars) then
+                player:prepareDynamisEntry(trade:getItem(0), hgValid) -- save the hourglass's params to the character while they are viewing the cs
+                player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
+                if hgValid == 1 then
+                    SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), playersEntered + 1)
+                end
+            else
+                player:PrintToPlayer(string.format("Dynamis is at maximum capacity. %u players have entered already.", playersEntered), 29)
+            end
         elseif timeSinceLastDynaReservation < 71 then
             player:messageSpecial(message_cannot_enter, 71-timeSinceLastDynaReservation, dynamis.entryInfo[playerZoneID].csBit)
         elseif remaining > 0 then

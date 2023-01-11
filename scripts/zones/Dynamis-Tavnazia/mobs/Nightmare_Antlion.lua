@@ -48,7 +48,7 @@ function onMobDeath(mob, player, isKiller)
 
     local winQM = GetNPCByID(ID.mobs.winQM)
     if GetMobByID(ID.mobs.Nightmare_Worm):isDead() then
-        SetServerVariable(string.format("DynamisSJRestriction_%s", zoneID), 1)
+        SetServerVariable(string.format("DynamisSJRestriction_%s", zone), 1)
         dynamis.sjQMOnTrigger(winQM, winQM)
     end
 end
