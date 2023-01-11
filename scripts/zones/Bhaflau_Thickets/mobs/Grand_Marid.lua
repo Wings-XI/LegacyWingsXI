@@ -12,7 +12,4 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.MAHISHASURA_PH, 5, 1800)
-    tpz.mob.phOnDespawn(mob, ID.mob.GRAND_MARID1_PH, 5, 1800)
-    tpz.mob.phOnDespawn(mob, ID.mob.GRAND_MARID2_PH, 5, 1800)
 end
