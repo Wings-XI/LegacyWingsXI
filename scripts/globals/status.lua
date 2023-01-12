@@ -826,7 +826,8 @@ tpz.effect =
     SOLDIERS_DRINK           = 807,
     BRAINJACK                = 808,
     BOILING_BLOOD            = 809,
-    -- 809-1022
+    FISHING_RING             = 810,
+    -- 811-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
