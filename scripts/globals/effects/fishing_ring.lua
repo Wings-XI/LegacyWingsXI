@@ -9,6 +9,8 @@ require("scripts/globals/status")
 
 function onEffectGain(target, effect)
     target:addMod(effect:getSubPower(), effect:getPower())
+    -- WINGSCUSTOM do not drop fishing ring buffs on zoning
+    effect:unsetFlag(tpz.effectFlag.ON_ZONE)
 end
 
 function onEffectLose(target, effect)
