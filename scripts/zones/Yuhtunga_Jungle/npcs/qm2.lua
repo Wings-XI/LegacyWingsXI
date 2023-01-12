@@ -12,7 +12,7 @@ function onTrigger(player, npc)
 
     if tuningOutProgress == 4
         and npc:getLocalVar("QuestPlayer") == player:getID()
-        and npc:getLocalVar("NasusKilled") == 5
+        and npc:getLocalVar("NasusKilled") >= 5
     then -- player killed 5 Nasus and was the one to pop
         player:startEvent(29)
 
