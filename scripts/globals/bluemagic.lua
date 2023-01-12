@@ -369,7 +369,11 @@ function BlueMagicalSpell(caster, target, spell, params, statMod)
 
     if params.attackType == tpz.attackType.BREATH then
         local head = caster:getEquipID(tpz.slot.HEAD)
-        if head == 16150 or head == 11465 then D = math.floor(D*1.1) end -- saurian helm and Mirage Keffiyeh
+        if head == 16150 or -- saurian helm
+            head == 11465 or -- Mirage Keffiyeh
+            head == 11466 then -- Mirage Keffiyeh+1
+                D = math.floor(D*1.1)
+        end
     end
 
     if D > 0 then target:addTPFromSpell(caster) end
