@@ -134,7 +134,7 @@ local optionToAugment =
         [27] = {{augment =   96, power =  6}}, -- Pet: Accuracy +7 Ranged Accuracy +7
         [28] = {{augment =   97, power =  6}}, -- Pet: Attack +7 Ranged Attack +7
         [29] = {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
-        [30] = {{augment =  128, power =  6}}, -- Pet: Magic Accuracy +7
+        [30] = {{augment =  100, power =  6}}, -- Pet: Magic Accuracy +7
         [31] = {{augment =  913, power =  2}}, -- Movement Speed +8%
         [32] = {{augment =  195, power =  4}}, -- "Subtle Blow"+5
     },
