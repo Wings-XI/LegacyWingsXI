@@ -7,15 +7,19 @@ require("scripts/globals/settings")
 require("scripts/globals/msg")
 require("scripts/globals/status")
 require("scripts/globals/player")
+require("scripts/globals/zone")
 
 function onItemCheck(target, param, player)
     local result = 0
-	local id = target:getID()
+    local zone = target:getZoneID()
 
-	if id ~= 16904202 and id ~= 16900314 then -- ouryu
-        result = tpz.msg.basic.ITEM_UNABLE_TO_USE
-    elseif target:checkDistance(player) > 10 then
+    if target:checkDistance(player) > 10 then
         result = tpz.msg.basic.TOO_FAR_AWAY
+    elseif
+        (zone ~= tpz.zone.RIVERNE_SITE_A01 and zone ~= tpz.zone.MONARCH_LINN) or
+        target:getName() ~= "Ouryu"
+    then
+        result = tpz.msg.basic.ITEM_UNABLE_TO_USE
     end
 
     return result
