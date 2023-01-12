@@ -84,9 +84,9 @@ local outposts =
 local function hasOutpost(player, region)
     local hasOP = false
     for nation = tpz.nation.SANDORIA, tpz.nation.WINDURST do
-        if player:getNation() == nation or
-            player:getRank(nation) == 10 -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
-            then
+        if (player:getNation() == nation or
+            player:getRank(nation) == 10) and -- WINGSCUSTOM - restrict supply runs until next conq reset, but allow all outposts from previous rank 10 nations
+            hasOP == false then
                 hasOP = player:hasTeleport(nation, region + 5)
         end
     end
