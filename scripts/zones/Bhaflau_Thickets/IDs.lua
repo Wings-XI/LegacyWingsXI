@@ -43,6 +43,7 @@ zones[tpz.zone.BHAFLAU_THICKETS] =
         MAHISHASURA_PH     =
         {
             [16990296] = 16990306, -- 215.000 -18.000 372.000
+            [16990297] = 16990306, -- 208.000 -20.000 342.000
         },
         EMERGENT_ELM_PH    =
         {
