@@ -730,11 +730,12 @@ enum EFFECT
     EFFECT_SOLDIERS_DRINK           = 807,
     EFFECT_BRAINJACK                = 808,
     EFFECT_BOILING_BLOOD            = 809,
-    // 810-1022
+    EFFECT_FISHING_RING             = 810, // Do not apply without using addStatusEffectEx and defining an icon
+    // 811-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID    900  // 768 real + 32 custom
+#define MAX_EFFECTID    900  // 768 real + extra custom
 
 /************************************************************************
 *                                                                       *

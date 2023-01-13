@@ -1,24 +1,20 @@
 -----------------------------------------
--- ID: 15553 and 15556
--- Item: penguin ring
--- Increases skill at tiring fish
+-- ID: 15554
+-- Item: pelican ring
+-- Increases chance of fishing skillup
 -----------------------------------------
--- Bonus: The effect of the ring dramatically increases the rate of stamina drain of a fish while you try to reel it in.
 -- Duration: 20:00 min
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
 
-local ringItemID = 15553
-local ringMod = tpz.mod.PENGUIN_RING_EFFECT
+local ringItemID = 15554
+local ringMod = tpz.mod.PELICAN_RING_EFFECT
 local ringEffect = tpz.effect.FISHING_RING
 
 function onItemCheck(target)
     local result = 0
-    -- if already have the ring's buff, cannot use
-    if (target:getMod(ringMod) ~= 0) then
-        result = tpz.msg.basic.ITEM_UNABLE_TO_USE_2
-    end
+    -- buff can stack
     return result
 end
 
