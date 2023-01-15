@@ -5,13 +5,12 @@
 -----------------------------------
 local ID = require("scripts/zones/Halvung/IDs")
 -----------------------------------
-local entity = {}
 
-entity.onTrade = function(player, npc, trade)
+function onTrade(player, npc, trade)
 end
 
-entity.onTrigger = function(player, npc)
-    if player:hasKeyItem(xi.ki.BRACELET_OF_VERVE) == false then
+function onTrigger(player, npc)
+    if player:hasKeyItem(tpz.ki.BRACELET_OF_VERVE) == false then
         player:startEvent(100)
         return 1
     else
@@ -21,10 +20,8 @@ entity.onTrigger = function(player, npc)
     end
 end
 
-entity.onEventUpdate = function(player, csid, option)
+function onEventUpdate(player, csid, option)
 end
 
-entity.onEventFinish = function(player, csid, option)
+function onEventFinish(player, csid, option)
 end
-
-return entity

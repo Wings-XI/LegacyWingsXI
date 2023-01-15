@@ -9,25 +9,22 @@ require("scripts/globals/keyitems")
 require("scripts/globals/items")
 
 -----------------------------------
-local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.items.MOBLIN_OIL) and not player:hasKeyItem(xi.ki.BRACELET_OF_VERVE) then
+function onTrade(player, npc, trade)
+    if npcUtil.tradeHas(trade, 8801) and not player:hasKeyItem(tpz.ki.BRACELET_OF_VERVE) then
         player:confirmTrade()
-        npcUtil.giveKeyItem(player, xi.ki.BRACELET_OF_VERVE)
+        npcUtil.giveKeyItem(player, tpz.ki.BRACELET_OF_VERVE)
     else
         player:messageSpecial(ID.text.DULL_PIECE)
     end
 end
 
-entity.onTrigger = function(player, npc)
+function onTrigger(player, npc)
     player:messageSpecial(ID.text.DULL_PIECE)
 end
 
-entity.onEventUpdate = function(player, csid, option)
+function onEventUpdate(player, csid, option)
 end
 
-entity.onEventFinish = function(player, csid, option)
+function onEventFinish(player, csid, option)
 end
-
-return entity

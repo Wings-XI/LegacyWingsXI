@@ -11,12 +11,12 @@ require("scripts/globals/status")
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.items.HALVUNG_SHAKUDO_KEY) and
-        npcUtil.tradeHas(trade, xi.items.HALVUNG_BRONZE_KEY) and
-        npcUtil.tradeHas(trade, xi.items.HALVUNG_BRASS_KEY) then
+    if npcUtil.tradeHas(trade, 2221) and -- HALVUNG_SHAKUDO_KEY
+        npcUtil.tradeHas(trade, 2222) and -- HALVUNG_BRONZE_KEY
+        npcUtil.tradeHas(trade, 2223) then -- HALVUNG_BRASS_KEY
         player:confirmTrade()
         npc:openDoor()
-        player:messageSpecial(ID.text.KEY_BREAKS, 2221,2222,2223)
+        player:messageSpecial(ID.text.KEY_BREAKS, 2221, 2222, 2223)
     end
 end
 
