@@ -44,6 +44,7 @@ mobList[zone] =
     [16949322] = { id = 16949322}, -- wave 2 floor 1 vanguard eye
     [16949323] = { id = 16949323}, -- wave 2 floor 1 vanguard eye
     [16949324] = { id = 16949324}, -- wave 2 floor 1 vanguard eye
+    [16949446] = { id = 16949446}, -- wave 2 floor 1 vanguard eye
 
     [16949273] = { id = 16949273}, -- wave 1 floor 1 nightmare hornet
     [16949274] = { id = 16949274}, -- wave 1 floor 1 nightmare hornet
@@ -112,6 +113,7 @@ mobList[zone] =
     [16949384] = { id = 16949384}, -- wave 2 floor 2 vanguard eye
     [16949385] = { id = 16949385}, -- wave 2 floor 2 vanguard eye
     [16949386] = { id = 16949386}, -- wave 2 floor 2 vanguard eye
+    [16949447] = { id = 16949447}, -- wave 2 floor 2 vanguard eye
 
 
     [16949277] = { id = 16949277}, -- wave 1 floor 2 nightmare hornet
@@ -232,6 +234,7 @@ mobList[zone][16949306].pos = { -0096.0, -0027.0,0041.3,176   } -- floor 1 vangu
 mobList[zone][16949322].pos = { -0110.0, -0027.0,0042.0,074   } -- floor 1 vanguard eye
 mobList[zone][16949323].pos = { -0079.0, -0022.0,-0050.5,061   } -- floor 1 vanguard eye
 mobList[zone][16949324].pos = { -0097.8, -0027.0,-0049.0,068   } -- floor 1 vanguard eye
+mobList[zone][16949446].pos = { -0112.0, -0027.0,-0047.5,031   } -- floor 1 vanguard eye
 
 mobList[zone][16949273].pos = { -0030.5, -0022.0,0030.0,031   } -- floor 1 nightmare hornet
 mobList[zone][16949274].pos = { -0054.8, -0022.0,0044.0,003   } -- floor 1 nightmare hornet
@@ -303,6 +306,7 @@ mobList[zone][16949383].pos = { 0081.0, -0038.0,-0030.5,225   } -- floor 2 vangu
 mobList[zone][16949384].pos = { 0080.0, -0036.0,-0045.0,253   } -- floor 2 vanguard eye
 mobList[zone][16949385].pos = { 0078.5, -0034.0,-0067.0,061   } -- floor 2 vanguard eye
 mobList[zone][16949386].pos = { 0096.0, -0041.0,-0045.7,057   } -- floor 2 vanguard eye
+mobList[zone][16949447].pos = { 0113.0, -0041.0,-0047.0,058   } -- floor 2 vanguard eye
 
 mobList[zone][16949277].pos = { 0031.5, -0036.0,0031.5,098   } -- floor 2 nightmare hornet
 mobList[zone][16949278].pos = { 0061.0, -0036.0,0043.8,124   } -- floor 2 nightmare hornet
@@ -368,6 +372,7 @@ mobList[zone][16949306].waves = { nil, 2, nil, nil, nil }
 mobList[zone][16949322].waves = { nil, 2, nil, nil, nil }
 mobList[zone][16949323].waves = { nil, 2, nil, nil, nil }
 mobList[zone][16949324].waves = { nil, 2, nil, nil, nil }
+mobList[zone][16949446].waves = { nil, 2, nil, nil, nil }
 mobList[zone][16949325].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949356].waves = { 1, nil, nil, nil, nil }
 mobList[zone][16949357].waves = { 1, nil, nil, nil, nil }
@@ -389,6 +394,7 @@ mobList[zone][16949383].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949384].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949385].waves = { nil, nil, 3, nil, nil }
 mobList[zone][16949386].waves = { nil, nil, 3, nil, nil }
+mobList[zone][16949447].waves = { nil, nil, 3, nil, nil }
 
 -- hornets
 mobList[zone][16949273].waves = { 1, nil, nil, nil, nil }
@@ -477,6 +483,7 @@ mobList[zone][16949306].randomChildrenCount1 = 3 ; mobList[zone][16949306].rando
 mobList[zone][16949322].randomChildrenCount1 = 2 ; mobList[zone][16949322].randomChildrenList1 = 5  -- floor 1 vanguard eye
 mobList[zone][16949323].randomChildrenCount1 = 4 ; mobList[zone][16949323].randomChildrenList1 = 5  -- floor 1 vanguard eye
 mobList[zone][16949324].randomChildrenCount1 = 4 ; mobList[zone][16949324].randomChildrenList1 = 5  -- floor 1 vanguard eye
+mobList[zone][16949446].randomChildrenCount1 = 2 ; mobList[zone][16949446].randomChildrenList1 = 5  -- floor 1 vanguard eye
 mobList[zone][16949325].randomChildrenCount1 = 3 ; mobList[zone][16949325].randomChildrenList1 = 8  -- floor 2 vanguard eye qm3
 mobList[zone][16949356].randomChildrenCount1 = 2 ; mobList[zone][16949356].randomChildrenList1 = 8  -- floor 2 vanguard eye qm3
 mobList[zone][16949357].randomChildrenCount1 = 2 ; mobList[zone][16949357].randomChildrenList1 = 8  -- floor 2 vanguard eye
@@ -498,6 +505,7 @@ mobList[zone][16949383].randomChildrenCount1 = 3 ; mobList[zone][16949383].rando
 mobList[zone][16949384].randomChildrenCount1 = 3 ; mobList[zone][16949384].randomChildrenList1 = 7  -- floor 2 vanguard eye
 mobList[zone][16949385].randomChildrenCount1 = 4 ; mobList[zone][16949385].randomChildrenList1 = 8  -- floor 2 vanguard eye
 mobList[zone][16949386].randomChildrenCount1 = 2 ; mobList[zone][16949386].randomChildrenList1 = 8  -- floor 2 vanguard eye
+mobList[zone][16949447].randomChildrenCount1 = 5 ; mobList[zone][16949447].randomChildrenList1 = 8  -- floor 2 vanguard eye
 
 -- Statues secondary childgroups
 mobList[zone][16949272].randomChildrenCount2 = 2 ; mobList[zone][16949272].randomChildrenList2 = 6  -- floor 1 vanguard eye
@@ -505,6 +513,7 @@ mobList[zone][16949289].randomChildrenCount2 = 1 ; mobList[zone][16949289].rando
 mobList[zone][16949304].randomChildrenCount2 = 1 ; mobList[zone][16949304].randomChildrenList2 = 6  -- floor 1 vanguard eye
 mobList[zone][16949305].randomChildrenCount2 = 1 ; mobList[zone][16949305].randomChildrenList2 = 6  -- floor 1 vanguard eye
 mobList[zone][16949322].randomChildrenCount2 = 2 ; mobList[zone][16949322].randomChildrenList2 = 6  -- floor 1 vanguard eye
+mobList[zone][16949446].randomChildrenCount2 = 1 ; mobList[zone][16949446].randomChildrenList2 = 6  -- floor 1 vanguard eye
 mobList[zone][16949356].randomChildrenCount2 = 1 ; mobList[zone][16949356].randomChildrenList2 = 7  -- floor 2 vanguard eye qm3
 mobList[zone][16949357].randomChildrenCount2 = 1 ; mobList[zone][16949357].randomChildrenList2 = 7  -- floor 2 vanguard eye
 mobList[zone][16949358].randomChildrenCount2 = 1 ; mobList[zone][16949358].randomChildrenList2 = 7  -- floor 2 vanguard eye
@@ -521,6 +530,7 @@ mobList[zone][16949380].randomChildrenCount2 = 2 ; mobList[zone][16949380].rando
 mobList[zone][16949381].randomChildrenCount2 = 1 ; mobList[zone][16949381].randomChildrenList2 = 9  -- floor 2 vanguard eye
 mobList[zone][16949382].randomChildrenCount2 = 1 ; mobList[zone][16949382].randomChildrenList2 = 9  -- floor 2 vanguard eye
 mobList[zone][16949386].randomChildrenCount2 = 1 ; mobList[zone][16949386].randomChildrenList2 = 7  -- floor 2 vanguard eye
+mobList[zone][16949447].randomChildrenCount2 = 1 ; mobList[zone][16949447].randomChildrenList2 = 7  -- floor 2 vanguard eye
 
 -- Statues tertiary childgroups
 mobList[zone][16949357].randomChildrenCount3 = 1 ; mobList[zone][16949357].randomChildrenList3 = 9  -- floor 2 vanguard eye
@@ -742,6 +752,10 @@ randomChildrenList[zone] =
 -- example: [5151] = { id = 5151, spawnAtStart = true },
 npcList[zone] = 
 {
-    [16949399] = { id = 16949399, spawnAtStart = false }
-    [16949400] = { id = 16949400, spawnAtStart = false }
+    -- TE ??? floor 1 and floor 2
+    [16949399] = { id = 16949399, spawnAtStart = false },
+    [16949400] = { id = 16949400, spawnAtStart = false },
+
+    -- Win ???
+    [16949396] = { id = 16949396, spawnAtStart = false },
 }
