@@ -24,11 +24,17 @@ function onMobDeath(mob, player, isKiller)
     if mobID == ID.mobs.Eye_Floor1[1] or mobID == ID.mobs.Eye_Floor1[2] then
         -- floor 1 qm3 spawn
         local npc = GetNPCByID(ID.mobs.QM3_Floor1)
-        npc:setStatus(tpz.status.NORMAL)
+        if npc:getStatus() ~= tpz.status.NORMAL then
+            npc:setStatus(tpz.status.NORMAL)
+            npc:setLocalVar("activated", 0)
+        end
     elseif mobID == ID.mobs.Eye_Floor2[1] or mobID == ID.mobs.Eye_Floor2[2] then
         -- floor 2 qm3 spawn
         local npc = GetNPCByID(ID.mobs.QM3_Floor2)
-        npc:setStatus(tpz.status.NORMAL)
+        if npc:getStatus() ~= tpz.status.NORMAL then
+            npc:setStatus(tpz.status.NORMAL)
+            npc:setLocalVar("activated", 0)
+        end
     end
 end
 

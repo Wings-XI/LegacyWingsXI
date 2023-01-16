@@ -742,5 +742,6 @@ randomChildrenList[zone] =
 -- example: [5151] = { id = 5151, spawnAtStart = true },
 npcList[zone] = 
 {
-
+    [16949399] = { id = 16949399, spawnAtStart = false }
+    [16949400] = { id = 16949400, spawnAtStart = false }
 }
