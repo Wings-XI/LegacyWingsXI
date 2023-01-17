@@ -539,6 +539,13 @@ namespace charutils
             PChar->profile.rank[0] = (uint8)Sql_GetIntData(SqlHandle, 1);
             PChar->profile.rank[1] = (uint8)Sql_GetIntData(SqlHandle, 2);
             PChar->profile.rank[2] = (uint8)Sql_GetIntData(SqlHandle, 3);
+            for (uint8 i = 0; i <= 2; ++i)
+            {
+                if (PChar->profile.rank[i] > 10)
+                {
+                    PChar->profile.rank[i] = 1;
+                }
+            }
 
             PChar->profile.fame[0] = (uint16)Sql_GetIntData(SqlHandle, 4);    //Sandoria
             PChar->profile.fame[1] = (uint16)Sql_GetIntData(SqlHandle, 5);    //Bastok
