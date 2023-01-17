@@ -555,6 +555,8 @@ local function calculateZeniBonus(plateData)
     local faunaKey = GetServerVariable("[ZNM]SubjectsOfInterest")
     local subjectsOfInterestKey = GetServerVariable("[ZNM]Fauna")
 
+    local percBonus = 0
+
     if (faunaKey == 0) then
         faunaKey = 1 -- if there is no subject of interest var, take the first index for now
     end
@@ -565,25 +567,30 @@ local function calculateZeniBonus(plateData)
 
     if (GetServerVariable("[ZNM]SubjectsOfInterest") == subOfInterestMatch) then
         isCurrentSubjectsOfInterest = true
-        zeni = zeni + 25
+        zeni = zeni + 50
+        percBonus = percBonus + 35
     end
 
     if (GetServerVariable("[ZNM]Ecosystem") == ecosystem) then
         isCurrentEcoSytem = true
         zeni = zeni + 25
+        percBonus = percBonus + 25
     end
 
     if (GetServerVariable("[ZNM]Fauna") == faunaMatch) then
         isCurrentFauna = true
         zeni = zeni + 50
+        percBonus = percBonus + 50
     end
 
-    -- Sanitize Zeni
-    zeni = math.floor(zeni) -- Remove any floating point information
     -- Add a little randomness
     zeni = zeni + math.random(-5, 5)
     -- clamp - highest reports in era are ~100ish
-    zeni = utils.clamp(zeni, 1, 105)
+    -- WINGSCUSTOM include a percentage bonus for matching fauna/SoI/Ecosystem
+    zeni = utils.clamp(zeni, 1, 105) * (1 + (percBonus / 100))
+
+    -- Sanitize Zeni
+    zeni = math.floor(zeni) -- Remove any floating point information
 
     return zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem
 end
