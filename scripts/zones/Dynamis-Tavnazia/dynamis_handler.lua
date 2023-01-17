@@ -54,8 +54,12 @@ function onDynamisNewInstance()
                 if mobList[zone][i].waves ~= nil and mobList[zone][i].waves[1] ~= nil then SpawnMob(i) end
             else mob:setSpawn(1,1,1,0) end
             mob:addRoamFlag(256) -- scripted pathing only
-        elseif npcList[zone][i] ~= nil and npcList[zone][i].spawnAtStart ~= nil then
-            GetNPCByID(i):setStatus(tpz.status.NORMAL)
+        elseif npcList[zone][i] ~= nil then
+            if npcList[zone][i].spawnAtStart ~= nil and npcList[zone][i].spawnAtStart == true then
+                GetNPCByID(i):setStatus(tpz.status.NORMAL)
+            else
+                GetNPCByID(i):setStatus(tpz.status.DISAPPEAR)
+            end
         end
         i = i + 1
     end
