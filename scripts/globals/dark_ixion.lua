@@ -407,9 +407,11 @@ darkixion.onMobDeath = function(mob, player, isKiller)
     end
     if isKiller == true then
         mob:setLocalVar("wasKilled", 1)
-        -- reduce pixie amity by 1/4th when he's killed
+        -- move pixie amity towards zero
         local amity = GetServerVariable("PixieAmity")
-        SetServerVariable("PixieAmity", utils.clamp(math.floor((amity + 255) * .75) - 255, -255, 255))
+        if amity > 150 then
+            SetServerVariable("PixieAmity", utils.clamp(math.floor((amity) * .85), -255, 255))
+        end
     end
 end
 
@@ -419,7 +421,11 @@ darkixion.onMobDespawn = function(mob)
     if mob:getZoneID() == GetServerVariable("DarkIxion_ZoneID") then
         darkixion.repop(mob)
         if mob:getLocalVar("wasKilled") == 1 then
-            SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death
+            if GetServerVariable("PixieAmity") > 200 then
+                SetServerVariable("DarkIxion_PopTime", os.time() + math.random(60, 120) * 60) -- repop 1-2 hours after death
+            else
+                SetServerVariable("DarkIxion_PopTime", os.time() + math.random(20,24) * 60 * 60) -- repop 20-24 hours after death
+            end
         end
     end
 end
