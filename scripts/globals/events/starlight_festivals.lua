@@ -14,7 +14,7 @@ function isStarlightEnabled()
     local option = 0
     local month = tonumber(os.date("%m"))
     local day = tonumber(os.date("%d"))
-    if ((month == 12 and day >= 12) or STARLIGHT_YEAR_ROUND) then -- According to wiki Startlight Festival is December 12 - December 31.
+    if ((month == 12 and day >= 12) or STARLIGHT_YEAR_ROUND ~= 0) then -- According to wiki Startlight Festival is December 12 - December 31.
         if (STARLIGHT_2007 == 1) then
             -- starlight 2005 mechanics with additional cards to match one-to-one all race/gender combinations
             -- mechanics are such that you trade cassiopeia cards to the moogle:
