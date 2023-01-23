@@ -1366,7 +1366,6 @@ INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1831); -- polar bulwark
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1832); -- barofield
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1834); -- trembling
 INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1835); -- ser tail
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1836); -- nerve gas
 INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1785); -- lava spit
 INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1786); -- sulf breath
 INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1787); -- scortch lash

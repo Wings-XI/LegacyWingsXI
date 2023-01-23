@@ -3,6 +3,7 @@
 --  ZNM: Tyger
 -- !pos -766 -12 632 79
 -- Spawn with Singed Buffalo: !additembyid 2593
+-- Wiki: https://ffxiclopedia.fandom.com/wiki/Tyger
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------

@@ -2,8 +2,8 @@
 -- Area: Wajaom Woodlands
 --  ZNM: Tinnin
 -- !pos 276 0 -694 51
--- Spawned with Monkey Wine: !additem 2573
--- Wiki: http://ffxiclopedia.wikia.com/wiki/Tinnin
+-- Spawned with Monkey Wine: !additembyid 2573
+-- Wiki: https://ffxiclopedia.fandom.com/wiki/Tinnin
 -----------------------------------
 mixins =
 {
@@ -31,14 +31,17 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
     mob:setMobMod(tpz.mobMod.MUG_GIL, 8000)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
+    mob:setMobMod(tpz.mobMod.NO_REST, 1)
     mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
+    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)  -- IDLE_DESPAWN only goes into effect after disengage and we are not spawning the mob engaged, but why would anyone spawn it and just leave?
 end
 
 function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setHP(mob:getMaxHP()/2)
     mob:setUnkillable(true)
+    mob:setMod(tpz.mod.REGEN_DOWN, 1) -- so it doesn't regen during roaming
     mob:setMod(tpz.mod.REGEN, 50)
 
     -- Regen Head every 1.5-4 minutes 90-240
