@@ -2,7 +2,7 @@
 -- Area: Caedarva Mire
 --  ZNM: Tyger
 -- !pos -766 -12 632 79
--- Spawn with Singed Buffalo: !additem 2593
+-- Spawn with Singed Buffalo: !additembyid 2593
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
