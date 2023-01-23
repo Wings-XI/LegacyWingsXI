@@ -1276,7 +1276,7 @@ INSERT INTO `mob_skills` VALUES(1783, 1210, 'fortifying_wail', 1, 15.0, 2000, 15
 INSERT INTO `mob_skills` VALUES(1784, 1211, 'unblest_jambiya', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1785, 1223, 'lava_spit', 1, 10.0, 2000, 1800, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1786, 1224, 'sulfurous_breath', 6, 7.0, 2000, 1800, 4, 8, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1787, 1225, 'scorching_lash', 1, 20.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1787, 1225, 'scorching_lash', 5, 20.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1788, 1226, 'ululation', 1, 20.0, 2000, 1500, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1789, 1227, 'magma_hoplon', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1790, 1228, 'gates_of_hades', 1, 20.0, 2000, 3000, 4, 8, 0, 0, 0, 0, 0);

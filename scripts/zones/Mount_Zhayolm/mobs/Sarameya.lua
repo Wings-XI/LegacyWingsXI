@@ -2,7 +2,7 @@
 -- Area: Mount Zhayolm
 --   NM: Sarameya
 -- !pos 322 -14 -581 61
--- Spawned with Buffalo Corpse: !additem 2583
+-- Spawned with Buffalo Corpse: !additembyid 2583
 -- Wiki: http://ffxiclopedia.wikia.com/wiki/Sarameya
 -- TODO: PostAIRewrite: Code the Howl effect and gradual resists.
 -----------------------------------
@@ -47,8 +47,9 @@ function howlSequence(mob)
         elseif howlNum == 3 then
             if mob:getHPP() > 25 then
                 -- can also not do this and just idle during this 5s period
-                if mob:getMP() < 300 then
-                    mob:addMP(300)
+                local mp = mob:getMP()
+                if mp < 300 then
+                    mob:addMP(300 - mp)
                 end
                 mob:castSpell(176) -- Firaga III
             else
@@ -106,7 +107,7 @@ function onMobFight(mob, target)
     local howlNum = mob:getLocalVar("Howl")
 
     if howlNum > 0 then
-        if os.time() >= mob:getLocalVar("HowlTime") then
+        if os.time() >= mob:getLocalVar("HowlTime") and mob:actionQueueEmpty() then
             howlSequence(mob)
         end
     else
