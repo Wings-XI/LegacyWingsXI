@@ -99,6 +99,12 @@ end
 
 function onMobDisengage(mob)
     mob:setAggressive(0)
+    -- reset howl sequence
+    mob:setLocalVar("Howl", 0)
+    mob:setMod(tpz.mod.STUNRES, 0)
+    mob:SetAutoAttackEnabled(true)
+    mob:SetMobAbilityEnabled(true)
+    mob:SetMagicCastingEnabled(true)
 end
 
 function onMobFight(mob, target)
