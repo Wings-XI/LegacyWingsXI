@@ -11,20 +11,23 @@ zones[tpz.zone.HALVUNG] =
     text =
     {
         NOTHING_HAPPENS         = 119,  -- Nothing happens...
-        ITEM_CANNOT_BE_OBTAINED = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        ITEM_OBTAINED           = 6389, -- Obtained: <item>.
-        GIL_OBTAINED            = 6390, -- Obtained <number> gil.
-        KEYITEM_OBTAINED        = 6392, -- Obtained key item: <keyitem>.
-        CARRIED_OVER_POINTS     = 7000, -- You have carried over <number> login point[/s].
-        LOGIN_CAMPAIGN_UNDERWAY = 7001, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
-        LOGIN_NUMBER            = 7002, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.        
-        WIDE_TRENCH             = 7902, -- There is a wide trench around the gate here. There are three keyholes of differing sizes inside the trench.        
-        KEY_BREAKS              = 7903, -- The <item> breaks!        
-        MINING_IS_POSSIBLE_HERE = 7925, -- Mining is possible here if you have <item>.
-        BLUE_FLAMES             = 7964, -- You can see blue flames flickering from a hole in the ground here...
-        DULL_PIECE              = 8039, -- A dull piece of metal lies on the ground. It appears to be a bracelet of sorts, but the layers of grime covering its surface render it wholly unwearable.
-        LIFT_LEVER              = 8042, -- You lift the lever with all your might!
-        COMMON_SENSE_SURVIVAL   = 8103, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        ITEM_CANNOT_BE_OBTAINED = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_OBTAINED           = 6388, -- Obtained: <item>.
+        GIL_OBTAINED            = 6389, -- Obtained <number> gil.
+        KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
+        CARRIED_OVER_POINTS     = 6999, -- You have carried over <number> login point[/s].
+        LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
+        LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        CONQUEST_BASE           = 7049, -- Tallying conquest results...
+        WIDE_TRENCH             = 7900, -- There is a wide trench around the gate here. There are three keyholes of differing sizes inside the trench.
+        KEY_BREAKS              = 7901, -- The <item> breaks!
+        MINING_IS_POSSIBLE_HERE = 7924, -- Mining is possible here if you have <item>.
+        BLUE_FLAMES             = 7963, -- You can see blue flames flickering from a hole in the ground here...
+        COMMON_SENSE_SURVIVAL   = 8102, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        REACTON                 = 8027, -- Shredded scraps of paper are scattered all over...
+        DEXTROSE                = 8028, -- The ground is strewn with shed leaves...
+        DULL_PIECE              = 8037, -- A dull piece of metal lies on the ground. It appears to be a bracelet of sorts, but the layers of grime covering its surface render it wholly unwearable.
+        LIFT_LEVER              = 8040, -- You lift the lever with all your might!
     },
     mob =
     {
