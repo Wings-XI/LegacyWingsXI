@@ -9,7 +9,8 @@ require("scripts/globals/status")
 -----------------------------------
 --[[
     very simple, what are we missing?
-    ]]
+    alliance hate?
+]]
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLEEPRES, 30)
     mob:setMod(tpz.mod.BINDRES, 30)

@@ -39,7 +39,7 @@ function onMobWeaponSkill(target, mob, skill)
         skill:setMsg(tpz.msg.basic.EVADES)
         return
     end
-	if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
+    if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
         target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
         skill:setMsg(tpz.msg.basic.HIT_DMG)
         target:tryInterruptSpell(mob, info.hitslanded)

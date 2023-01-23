@@ -30,7 +30,7 @@ function onMobWeaponSkill(target, mob, skill)
         skill:setMsg(tpz.msg.basic.EVADES)
         return
     end
-	if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
+    if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
         if math.random(100) <= 75 then
             MobStatusEffectMove(mob, target, typeEffect, 1, 0, duration)
         end

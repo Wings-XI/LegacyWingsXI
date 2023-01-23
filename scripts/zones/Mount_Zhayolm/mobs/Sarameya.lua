@@ -12,10 +12,6 @@ require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
 --[[
-    Howl looks good, but one thing might need tweaking at the end?
-     -- It will then Howl again and ignore the target with enmity until they act on it again.
-    note that howl was being wonky queuing up skills and spells, so i extended the logic to add a 5s delay between each
-
     alliance hate? should Tyger have it as well since other 2 do?
 ]]
 function onMobInitialize(mob)

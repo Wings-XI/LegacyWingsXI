@@ -15,14 +15,6 @@ require("scripts/globals/status")
 -----------------------------------
 
 --[[
-    Serpentine Tail: Heavy damage single target or cone attack triggered when someone gets hate from behind.
-    If drawn in, you are not automatically the target of the TP move, so it is still important not to get hate from behind as this can result in a Serpentine Tail
-      -- seems pretty likely there needs to be explicit code to serp tail if target is behind
-      -- could do this in the onmobskillprepare, if target behind then use tail move. Hydra does not have this functionality currently
-
-    Because Tinnin is generally more aggressive while at lower HP, it is advisable to not engage upon spawning in order to allow it to regenerate both of its heads before starting to attack it.
-      -- i set him to not claim on trade, but this may be exploitable?
-
     Has Alliance Hate.
 ]]
 

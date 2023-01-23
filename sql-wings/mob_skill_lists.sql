@@ -3513,12 +3513,6 @@ INSERT INTO `mob_skill_lists` VALUES('Nuhn', 5305, 1695); -- hypnic lamp
 INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1697); -- SeaSpray
 INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1694); -- Vile Belch
 INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1696); -- Seismic Tail
-INSERT INTO `mob_skill_lists` VALUES('Tinnintwo', 5307, 1829); -- pyric bulwark
-INSERT INTO `mob_skill_lists` VALUES('Tinnintwo', 5307, 1831); -- polar bulwark
-INSERT INTO `mob_skill_lists` VALUES('Tinnintwo', 5307, 1832); -- barofield
-INSERT INTO `mob_skill_lists` VALUES('Tinnintwo', 5307, 1834); -- trembling
-INSERT INTO `mob_skill_lists` VALUES('Tinnintwo', 5307, 1835); -- ser tail
-INSERT INTO `mob_skill_lists` VALUES('Tinnintwo', 5307, 1836); -- nerve gas
 
 --
 -- Indexes for dumped tables

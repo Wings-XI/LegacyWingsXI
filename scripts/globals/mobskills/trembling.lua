@@ -29,7 +29,7 @@ function onMobWeaponSkill(target, mob, skill)
         skill:setMsg(tpz.msg.basic.EVADES)
         return
     end
-	if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
+    if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
         local dispelled = math.random(2, 3)
         for i=1, dispelled do
             target:dispelStatusEffect()
