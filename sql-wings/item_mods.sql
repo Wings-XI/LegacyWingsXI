@@ -12533,6 +12533,7 @@ INSERT INTO `item_mods` VALUES (14074,23,12);
 INSERT INTO `item_mods` VALUES (14074,54,6);
 INSERT INTO `item_mods` VALUES (14075,1,12);
 INSERT INTO `item_mods` VALUES (14075,12,-7);
+INSERT INTO `item_mods` VALUES (14075,897,50);
 INSERT INTO `item_mods` VALUES (14076,1,25);
 INSERT INTO `item_mods` VALUES (14076,2,8);
 INSERT INTO `item_mods` VALUES (14076,8,7);
@@ -16244,6 +16245,7 @@ INSERT INTO `item_mods` VALUES (15122,1,34);
 INSERT INTO `item_mods` VALUES (15122,2,19);
 INSERT INTO `item_mods` VALUES (15122,27,4);
 INSERT INTO `item_mods` VALUES (15122,298,5);
+INSERT INTO `item_mods` VALUES (15122,897,8);
 INSERT INTO `item_mods` VALUES (15123,1,43);      -- Valor Breeches: DEF 43
 INSERT INTO `item_mods` VALUES (15123,2,20);      -- HP +20
 INSERT INTO `item_mods` VALUES (15123,8,5);       -- STR +5
@@ -17731,6 +17733,7 @@ INSERT INTO `item_mods` VALUES (15585,1,35);
 INSERT INTO `item_mods` VALUES (15585,2,25);
 INSERT INTO `item_mods` VALUES (15585,27,5);
 INSERT INTO `item_mods` VALUES (15585,298,5);
+INSERT INTO `item_mods` VALUES (15585,897,8);
 INSERT INTO `item_mods` VALUES (15586,1,44);      -- Valor Breeches +1: DEF 44
 INSERT INTO `item_mods` VALUES (15586,2,20);      -- HP +20
 INSERT INTO `item_mods` VALUES (15586,8,6);       -- STR +6
