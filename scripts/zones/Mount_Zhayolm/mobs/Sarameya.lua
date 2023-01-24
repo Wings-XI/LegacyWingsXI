@@ -15,12 +15,6 @@ require("scripts/globals/msg")
     alliance hate? should Tyger have it as well since other 2 do?
 ]]
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.GA_CHANCE, 50)
-    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
-    mob:setMod(tpz.mod.UDMGBREATH, -20)
-    mob:setMod(tpz.mod.UDMGMAGIC, -20)
-    mob:setMod(tpz.mod.SILENCERES, 100)
 end
 
 function howlSequence(mob)
@@ -74,8 +68,17 @@ function onMobSkillFinished(mob, target, skill)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.GA_CHANCE, 50)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
+    mob:setMod(tpz.mod.UDMGBREATH, -20)
+    mob:setMod(tpz.mod.UDMGMAGIC, -20)
+    mob:setMod(tpz.mod.SILENCERES, 100)
     mob:setMod(tpz.mod.MEVA, 95)
     mob:setMod(tpz.mod.MDEF, 30)
+    mob:setMod(tpz.mod.STR, 40)
+    mob:setMod(tpz.mod.ATTP, 30)
+    mob:setMod(tpz.mod.MAIN_DMG_RATING, 50)
     mob:setMod(tpz.mod.SILENCERES, 20)
     mob:setMod(tpz.mod.GRAVITYRES, 20)
     mob:setMod(tpz.mod.LULLABYRES, 30)
@@ -136,8 +139,11 @@ function onMobFight(mob, target)
         end
 
         -- Spams TP moves and -ga spells
-        if mob:hasStatusEffect(tpz.effect.CHAINSPELL) then
-            mob:setTP(2000)
+        if mob:hasStatusEffect(tpz.effect.CHAINSPELL) and
+            mob:getLocalVar("timeSinceWS") < os.time() - 5 then
+                mob:setTP(2000)
+                mob:setLocalVar("timeSinceWS", os.time())
+                mob:useMobAbility()
         else -- No Chainspell
             if mob:getMobMod(tpz.mobMod.GA_CHANCE) == 100 then
                 mob:setMobMod(tpz.mobMod.GA_CHANCE, 50)
@@ -160,6 +166,10 @@ function onMobFight(mob, target)
             mob:setMod(tpz.mod.REGEN, 0)
         end
     end
+end
+
+function onMobWeaponSkill(target, mob, skill)
+    mob:setLocalVar("timeSinceWS", os.time())
 end
 
 function onAdditionalEffect(mob, target, damage)

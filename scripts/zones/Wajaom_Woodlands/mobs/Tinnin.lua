@@ -24,9 +24,6 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.MUG_GIL, 8000)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.NO_REST, 1)
-    mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
-    mob:setMod(tpz.mod.STUNRES, 100)
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)  -- IDLE_DESPAWN only goes into effect after disengage and we are not spawning the mob engaged, but why would anyone spawn it and just leave?
 end
 
 function onMobSpawn(mob)
@@ -35,6 +32,12 @@ function onMobSpawn(mob)
     mob:setUnkillable(true)
     mob:setMod(tpz.mod.REGEN_DOWN, 1) -- so it doesn't regen during roaming
     mob:setMod(tpz.mod.REGEN, 50)
+    mob:setMod(tpz.mod.STR, 40)
+    mob:setMod(tpz.mod.ATTP, 30)
+    mob:setMod(tpz.mod.MAIN_DMG_RATING, 50)
+    mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
+    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)  -- IDLE_DESPAWN only goes into effect after disengage and we are not spawning the mob engaged, but why would anyone spawn it and just leave?
 
     -- Regen Head every 1.5-4 minutes 90-240
     mob:setLocalVar("headTimer", os.time() + math.random(60, 190))

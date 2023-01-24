@@ -8,7 +8,7 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 2573) and npcUtil.popFromQM(player, npc, ID.mob.TINNIN, {claim = false}) then -- Jug of Monkey Wine
+    if npcUtil.tradeHas(trade, 2573) and npcUtil.popFromQM(player, npc, ID.mob.TINNIN) then -- Jug of Monkey Wine
         player:confirmTrade()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end

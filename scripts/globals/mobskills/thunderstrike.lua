@@ -25,7 +25,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local duration = 10
+    local duration = 4
     local dmgmod = 6
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg(), tpz.magic.ele.LIGHTNING, dmgmod, TP_MAB_BONUS, 1)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.LIGHTNING, MOBPARAM_IGNORE_SHADOWS)

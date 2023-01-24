@@ -15,7 +15,11 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLEEPRES, 30)
     mob:setMod(tpz.mod.BINDRES, 30)
     mob:setMod(tpz.mod.GRAVITYRES, 30)
+    mob:setMod(tpz.mod.STR, 40)
+    mob:setMod(tpz.mod.ATTP, 30)
+    mob:setMod(tpz.mod.MAIN_DMG_RATING, 50)
     -- ? mob:setMod(tpz.mod.ATT, 200)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
 end
 
