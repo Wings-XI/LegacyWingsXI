@@ -109,7 +109,6 @@ function onMobEngaged(mob, target)
     local ID = zones[zone]
     mob:setTP(0)
     mob:setLocalVar("next2hrtime", os.time() + 5) -- 5s after aggro
-
 end
 
 function onMobFight(mob)
@@ -133,6 +132,21 @@ function onMobFight(mob)
         {tpz.jsa.MIJIN_GAKURE, ID.mob.Doo_Peku_The_Fleetfoot},
         {tpz.jsa.CALL_WYVERN, ID.mob.Elvaansticker_Bxafraff},
         {tpz.jsa.ASTRAL_FLOW, ID.mob.Baa_Dava_The_Bibliopage},
+    }
+
+    local usablemobabilities =
+    {
+        {650, ID.mob.Koschei}, -- Thornsong
+        {647, ID.mob.Alklha}, -- Chaos Blade
+        {645, ID.mob.Barong}, -- Body Slam
+        {648, ID.mob.Basilic}, -- Petro Eyes
+        {644, ID.mob.Jurik}, -- Wind Breath
+        {649, ID.mob.Aitvaras}, -- Voidsong
+        {642, ID.mob.Stihi}, -- Flame Breath
+        {651, ID.mob.Stollenwurm}, -- Lodesong
+        {646, ID.mob.Tarasca}, -- Heavy Stomp
+        {643, ID.mob.Vishap}, -- Poison Breath
+        {1337, ID.mob.Woodnix_Shrillwhistle}, -- Charm
     }
 
     local manafontspells =
@@ -215,53 +229,46 @@ function onMobFight(mob)
         end
     end
 
-end
-
-function onMobWeaponSkillPrepare(mob, target)
-    -- https://ffxiclopedia.fandom.com/wiki/Apocalyptic_Beast?oldid=1064856
-    -- Set Locals
-    local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
-    local usablemobabilities =
-    {
-        {650, ID.mob.Koschei}, -- Thornsong
-        {647, ID.mob.Alklha}, -- Chaos Blade
-        {645, ID.mob.Barong}, -- Body Slam
-        {648, ID.mob.Basilic}, -- Petro Eyes
-        {644, ID.mob.Jurik}, -- Wind Breath
-        {649, ID.mob.Aitvaras}, -- Voidsong
-        {642, ID.mob.Stihi}, -- Flame Breath
-        {651, ID.mob.Stollenwurm}, -- Lodesong
-        {646, ID.mob.Tarasca}, -- Heavy Stomp
-        {643, ID.mob.Vishap}, -- Poison Breath
-        {1337, ID.mob.Woodnix_Shrillwhistle}, -- Charm
-    }
-
-
-    local totalchance = 0
-    local skippedabilities = 0
-    local i = 1
-    local randomchance = math.random(10 * (#usablemobabilities))
-    while totalchance <= randomchance and skippedabilities < #usablemobabilities do
-        -- skip abilities from dead NMs (var is set in dynamis.mobOnDeath)
-        if GetMobByID(usablemobabilities[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
-            totalchance = totalchance + 10
-            if totalchance >= randomchance then
-                return usablemobabilities[i][1]
-            end
-            skippedabilities = 0
-        else
-            -- if all abilities are skipped, don't keep looping
-            skippedabilities = skippedabilities + 1
-        end
-        -- loop back to start of list until randomchance is surpassed
-        i = (i % #usablemobabilities) + 1
+    -- use mobskills explicitly in onMobFight as returning a mobskill in onMobWeaponSkillPrepare doesn't guarantee its use
+    -- (if the target isn't valid it moves on to the rest of the skill list)
+    if ((mob:getTP() >= 2900 and mob:getHPP() > 66) or
+       (mob:getTP() >= 1900 and mob:getHPP() > 33) or
+       (mob:getTP() >= 900 and mob:getHPP() > 0)) and
+       mob:getLocalVar("timeSinceWS") < os.time() - 5 and
+       mob:actionQueueEmpty() then
+        mob:setLocalVar("timeToWS", 1)
     end
-    -- no abilities enabled, defaulting to the most benign
-    return 650
-end
 
+    if mob:getLocalVar("timeToWS") == 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 then -- then if we has enough "tp", we can WS
+        mob:setLocalVar("timeToWS", 0)
+        mob:setLocalVar("timeSinceWS", os.time())
+        mob:setTP(0)
+        local totalchance = 0
+        local skippedabilities = 0
+        local i = 1
+        local randomchance = math.random(10 * (#usablemobabilities))
+        while totalchance <= randomchance and skippedabilities < #usablemobabilities do
+            -- skip abilities from dead NMs (var is set in dynamis.mobOnDeath)
+            if GetMobByID(usablemobabilities[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
+                totalchance = totalchance + 10
+                if totalchance >= randomchance then
+                    mob:useMobAbility(usablemobabilities[i][1])
+                    skippedabilities = #usablemobabilities
+                else
+                    skippedabilities = 0
+                end
+            else
+                -- if all abilities are skipped, don't keep looping
+                skippedabilities = skippedabilities + 1
+            end
+            -- loop back to start of list until randomchance is surpassed
+            i = (i % #usablemobabilities) + 1
+        end
+    end
+end
 
 function onMobWeaponSkill(target, mob, skill)
+    mob:setLocalVar("timeSinceWS", os.time())
     if skill:getID() == tpz.jsa.CALL_WYVERN then
         local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
         local mobX = mob:getXPos()

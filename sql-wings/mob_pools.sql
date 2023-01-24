@@ -258,7 +258,7 @@ INSERT INTO `mob_pools` VALUES(194, 'Anvilix_Sootwrists', 'Anvilix_Sootwrists', 
 INSERT INTO `mob_pools` VALUES(195, 'Apademak', 'Apademak', 168, _binary 0x00000f0700000000000000000000000000000000, 1, 4, 6, 240, 100, 1024, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 273, 0, 0, 954);
 INSERT INTO `mob_pools` VALUES(196, 'Apis', 'Apis', 57, _binary 0x00004d0500000000000000000000000000000000, 1, 8, 6, 360, 100, 0, 1, 1, 0, 16, 0, 32, 3903, 1183, 0, 0, 0, 0, 0, 1185);
 INSERT INTO `mob_pools` VALUES(197, 'Apkallu', 'Apkallu', 27, _binary 0x0000bb0600000000000000000000000000000000, 2, 2, 1, 480, 100, 0, 0, 0, 1, 0, 0, 0, 184, 1153, 0, 0, 0, 0, 0, 27);
-INSERT INTO `mob_pools` VALUES(198, 'Apocalyptic_Beast', 'Apocalyptic_Beast', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 6, 240, 100, 1024, 1, 1, 1, 2, 2, 0, 5567, 1671, 16, 0, 0, 0, 0, 87);
+INSERT INTO `mob_pools` VALUES(198, 'Apocalyptic_Beast', 'Apocalyptic_Beast', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 6, 240, 100, 1024, 1, 1, 1, 2, 2, 0, 5567, 1671, 16, 0, 0, 0, 0, 0);
 INSERT INTO `mob_pools` VALUES(199, 'Apocalyptic_Weapon', 'Apocalyptic_Weapon', 110, _binary 0x0000c30100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 0, 0, 0, 375, 1669, 0, 0, 0, 0, 0, 110);
 INSERT INTO `mob_pools` VALUES(200, 'Apollyon_Cleaner', 'Apollyon_Cleaner', 175, _binary 0x00009c0100000000000000000000000000000000, 5, 1, 7, 240, 100, 0, 1, 1, 1, 16, 0, 0, 131, 1155, 0, 0, 36, 0, 0, 175);
 INSERT INTO `mob_pools` VALUES(201, 'Apollyon_Sapling', 'Apollyon_Sapling', 216, _binary 0x0000880100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 1, 1, 16, 0, 0, 3208, 1155, 0, 0, 0, 0, 256, 216);
