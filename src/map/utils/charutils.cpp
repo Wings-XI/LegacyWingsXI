@@ -3862,15 +3862,10 @@ namespace charutils
             // all members might not be in range
             if (members.size() > 0)
             {
-<<<<<<< HEAD
-                // distribute gil
-                int32 gilPerPerson = static_cast<int32>(gil / members.size());
-=======
                 // Distribute Gil
                 int32 gilPerPerson    = static_cast<int32>(gil / members.size());
                 int16 gilFinderActive = 0;
 
->>>>>>> de0cb63cad (Gilfinder applying to all party member equally)
                 for (auto PMember : members)
                 {
                     // Check for highest gilfinder tier
@@ -3879,20 +3874,12 @@ namespace charutils
                         gilFinderActive = PMember->getMod(Mod::GILFINDER);
                     }
                 }
+                // if gilFinderActive == 0, no change
+                gilPerPerson = gilPerPerson * (100 + gilFinderActive) / 100;
                 for (auto PMember : members)
                 {
-                    // Distributte gilfinder gil
-                    if (gilFinderActive > 0)
-                    {
-                        int32 memberGil = gilPerPerson * (100 + gilFinderActive) / 100;
-                        UpdateItem(PMember, LOC_INVENTORY, 0, memberGil);
-                        PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, memberGil, 0, 565));
-                    }
-                    else
-                    {
-                        UpdateItem(PMember, LOC_INVENTORY, 0, gilPerPerson);
-                        PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, gilPerPerson, 0, 565));
-                    }
+                    UpdateItem(PMember, LOC_INVENTORY, 0, gilPerPerson);
+                    PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, gilPerPerson, 0, 565));
                 }
             }
         }
