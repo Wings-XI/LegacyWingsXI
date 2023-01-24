@@ -1360,27 +1360,26 @@ INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1753);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1758);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1929);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1754);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1829);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1830);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1831);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1832);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1834);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1835);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1836);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1785);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1786);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1787);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1788);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1789);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1790);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2022);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2023);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2024);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2025);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2026);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2028);
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828); -- pyric blast
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1829); -- pyric bulwark
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1830); -- polar blast
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1831); -- polar bulwark
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1832); -- barofield
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1834); -- trembling
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1835); -- ser tail
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1785); -- lava spit
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1786); -- sulf breath
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1787); -- scortch lash
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1788); -- ullu
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1789); -- mag hop
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1790); -- goh
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2022); -- ten mist
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2023); -- thunderstrike
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 3267); -- howl
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2025); -- dreadstorm
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2026); -- foss breath
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027); -- plague swipe
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2028); -- fulm
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2113);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2114);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2116);
