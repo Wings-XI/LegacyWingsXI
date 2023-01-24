@@ -32,7 +32,7 @@ function onMobWeaponSkill(target, mob, skill)
     end
     if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
         target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.FIRE)
-        skill:setMsg(tpz.msg.basic.HIT_DMG)
+        skill:setMsg(tpz.msg.basic.DAMAGE)
         if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
     end
     return dmg
