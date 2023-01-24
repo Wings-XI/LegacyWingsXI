@@ -68,6 +68,9 @@ function onMobSkillFinished(mob, target, skill)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
+    mob:setMobMod(tpz.mobMod.MUG_GIL, 4000)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 50)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)

@@ -19,18 +19,18 @@ require("scripts/globals/status")
 ]]
 
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
-    mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
-    mob:setMobMod(tpz.mobMod.MUG_GIL, 8000)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMobMod(tpz.mobMod.NO_REST, 1)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setHP(mob:getMaxHP()/2)
     mob:setUnkillable(true)
     mob:setMod(tpz.mod.REGEN_DOWN, 1) -- so it doesn't regen during roaming
+    mob:setMobMod(tpz.mobMod.NO_REST, 1) -- so it doesn't regen during roaming
+    mob:setMobMod(tpz.mobMod.MUG_GIL, 4000)
     mob:setMod(tpz.mod.REGEN, 50)
     mob:setMod(tpz.mod.STR, 40)
     mob:setMod(tpz.mod.ATTP, 30)
