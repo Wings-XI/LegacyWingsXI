@@ -10,6 +10,7 @@ require("scripts/globals/npc_util")
 function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, 2572) and npcUtil.popFromQM(player, npc, ID.mob.PANDEMONIUM_WARDEN) then -- Pandemonium Key
         player:confirmTrade()
+        player:messageSpecial(ID.text.PW_WHO_DARES)
     end
 end
 
