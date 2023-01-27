@@ -10423,18 +10423,18 @@ INSERT INTO `mob_droplist` VALUES(1976, 0, 0, 1000, 3121, 220);
 INSERT INTO `mob_droplist` VALUES(1976, 0, 0, 1000, 3121, 140);
 INSERT INTO `mob_droplist` VALUES(1976, 0, 0, 1000, 3121, 110);
 INSERT INTO `mob_droplist` VALUES(1976, 0, 0, 1000, 19257, 230);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2158, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2168, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2169, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2172, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2371, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2372, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 3503, 1000);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 3503, 500);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 11281, 680);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 18594, 660);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 18759, 670);
-INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 18447, 670);
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2158, 1000);    -- hydra_fang
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2168, 1000);    -- cerberus_claw
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2169, 1000);    -- cerberus_hide
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2172, 1000);    -- hydra_scale
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2371, 1000);    -- khimaira_horn
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 2372, 1000);    -- khimaira_mane
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 3503, 1000);    -- chunk_of_mulcibars_scoria
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 3503, 500);     -- chunk_of_mulcibars_scoria
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 11281, 680);    -- hachiryu_haramaki
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 18594, 660);    -- dorje
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 18759, 670);    -- shenlongs_baghnakhs
+INSERT INTO `mob_droplist` VALUES(1977, 0, 0, 1000, 18447, 670);    -- nanatsusayanotachi
 INSERT INTO `mob_droplist` VALUES(1978, 0, 0, 1000, 722, 60);
 INSERT INTO `mob_droplist` VALUES(1978, 0, 0, 1000, 830, 20);
 INSERT INTO `mob_droplist` VALUES(1978, 0, 0, 1000, 887, 60);
