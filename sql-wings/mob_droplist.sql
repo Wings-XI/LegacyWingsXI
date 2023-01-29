@@ -9069,7 +9069,7 @@ INSERT INTO `mob_droplist` VALUES(1788, 0, 0, 1000, 16244, 20);
 INSERT INTO `mob_droplist` VALUES(1789, 0, 0, 1000, 1449, 20); -- Whiteshell
 INSERT INTO `mob_droplist` VALUES(1789, 0, 0, 1000, 1452, 20); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(1789, 0, 0, 1000, 1455, 20); -- One Byne
-INSERT INTO `mob_droplist` VALUES(1789, 1, 1, 8, 15874, 333); -- melee_cape
+INSERT INTO `mob_droplist` VALUES(1789, 1, 1, 8, 15478, 333); -- melee_cape
 INSERT INTO `mob_droplist` VALUES(1789, 1, 1, 8, 15481, 333); -- valor_cape
 INSERT INTO `mob_droplist` VALUES(1789, 1, 1, 8, 16245, 334); -- pantin_cape
 INSERT INTO `mob_droplist` VALUES(1789, 1, 2, 16, 2035, 20); -- warriors_mufflers_-1
@@ -9125,7 +9125,6 @@ INSERT INTO `mob_droplist` VALUES(1791, 0, 0, 1000, 1452, 20); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(1791, 0, 0, 1000, 1455, 20); -- One Byne
 INSERT INTO `mob_droplist` VALUES(1791, 1, 1, 8, 15874, 250); -- sorcerers_belt
 INSERT INTO `mob_droplist` VALUES(1791, 1, 1, 8, 15878, 250); -- wyrm_belt
-INSERT INTO `mob_droplist` VALUES(1791, 1, 1, 8, 15481, 250); -- valor_cape
 INSERT INTO `mob_droplist` VALUES(1791, 1, 1, 8, 16245, 250); -- pantin_cape
 INSERT INTO `mob_droplist` VALUES(1791, 1, 2, 16, 2035, 20); -- warriors_mufflers_-1
 INSERT INTO `mob_droplist` VALUES(1791, 1, 2, 16, 2040, 20); -- melee_gloves_-1
@@ -17007,7 +17006,6 @@ INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1452, 133); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(3237, 0, 0, 1000, 1455, 133); -- One Byne
 INSERT INTO `mob_droplist` VALUES(3237, 1, 1, 8, 15873, 333); -- duelists_belt
 INSERT INTO `mob_droplist` VALUES(3237, 1, 1, 8, 15876, 333); -- scouts_belt
-INSERT INTO `mob_droplist` VALUES(3237, 1, 1, 8, 16244, 334); -- mirage_mantle
 INSERT INTO `mob_droplist` VALUES(3237, 1, 2, 16, 2035, 20); -- warriors_mufflers_-1
 INSERT INTO `mob_droplist` VALUES(3237, 1, 2, 16, 2040, 20); -- melee_gloves_-1
 INSERT INTO `mob_droplist` VALUES(3237, 1, 2, 16, 2045, 20); -- clerics_mitts_-1
