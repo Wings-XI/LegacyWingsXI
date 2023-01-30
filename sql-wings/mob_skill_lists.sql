@@ -1383,6 +1383,7 @@ INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027);
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2028);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2113);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2114);
+INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2115);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2116);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2117);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2118);
@@ -3520,6 +3521,8 @@ INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1696); -- Seismic Tail
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 334);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 1847);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 336);
+-- Pandemonium Warden Dvergar phases before final
+INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5308, 2115);
 
 --
 -- Indexes for dumped tables

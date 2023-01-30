@@ -5,7 +5,9 @@
 -- !pos 200 33 -140 68
 -- Spawn with Pandemonium key: !additembyid 2572
 -- Wiki: https://ffxiclopedia.fandom.com/wiki/Pandemonium_Warden
--- Video: https://youtu.be/oOCCjH8isiA
+-- Videos: https://youtu.be/oOCCjH8isiA
+--      https://www.youtube.com/watch?v=T_Us2Tmlm-E
+-- Notes: Lamia uses eagle eye shot, safe to say each phase has the respective 2hr?
 -----------------------------------
 require("scripts/globals/titles")
 require("scripts/globals/status")
@@ -17,13 +19,16 @@ local petIDs = {}
 petIDs[0] = {ID.mob.PANDEMONIUM_WARDEN +1, ID.mob.PANDEMONIUM_WARDEN +2, ID.mob.PANDEMONIUM_WARDEN +3, ID.mob.PANDEMONIUM_WARDEN +4, ID.mob.PANDEMONIUM_WARDEN +5, ID.mob.PANDEMONIUM_WARDEN +6, ID.mob.PANDEMONIUM_WARDEN +7, ID.mob.PANDEMONIUM_WARDEN +8}
 petIDs[1] = {ID.mob.PANDEMONIUM_WARDEN +9, ID.mob.PANDEMONIUM_WARDEN +10, ID.mob.PANDEMONIUM_WARDEN +11, ID.mob.PANDEMONIUM_WARDEN +12, ID.mob.PANDEMONIUM_WARDEN +13, ID.mob.PANDEMONIUM_WARDEN +14, ID.mob.PANDEMONIUM_WARDEN +15, ID.mob.PANDEMONIUM_WARDEN +16}
 
--- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,   Mamo,  Dverg,  Lamia,  Dverg,  Troll,  Dverg,   Cerb,  Dverg,  Hydra,  Dverg,   Khim,  Dverg
+-- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,   Mamo,  Dverg,  Lamia,  Dverg,  Troll,  Dverg,   Khim,  Dverg,  Hydra,  Dverg,   Cerb,  Dverg
 --                        1      2       3      4       5      6       7       8       9      10      11      12      13      14      15      16      17      18      19      20      21
 local triggerHPP = {     95,     2,     95,     2,     95,     2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2}
 local mobHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
-local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1793,   1840,   1796,   1840,   1805,   1840}
-local mobSkillID = {    316,  1000,    316,  1001,    316,  1002,    316,   1003,    316,    285,    316,    725,    316,    326,    316,     62,    316,    164,    316,    168,    316}
+local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1805,   1840,   1796,   1840,   1793,   1840}
+local mobSkillID = {   5308,  1000,   5308,  1001,   5308,  1002,   5308,   1003,   5308,    285,   5308,    725,   5308,    326,   5308,    168,   5308,    164,   5308,     62,    316}
 -- local mobSpellID = {    316,  1000,    316,  1001,    316,  1002,    316,   1003,    316,    285,    316,    725,    316,    326,    316,     62,    316,    164,    316,    168,    316}
+local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,   1746,   1841,    421,   1841,    281,   1839}
+-- local petSkillID = {   1841,  1823,   1841,  1821,   1841,  1825,   1841,   1824,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
+-- local petSpellID = {   1841,  1823,   1841,  1821,   1841,  1825,   1841,   1824,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:
         Chariots - Archaic Gears
@@ -35,10 +40,6 @@ local mobSkillID = {    316,  1000,    316,  1001,    316,  1002,    316,   1003
         Cerberus - Bombs
         Dvergr - Miniature Dvergr
 ]]
-local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
--- local petSkillID = {   1841,  1823,   1841,  1821,   1841,  1825,   1841,   1824,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
--- local petSpellID = {   1841,  1823,   1841,  1821,   1841,  1825,   1841,   1824,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
-
 local avatarSkins = {
     791,
     792,
@@ -69,6 +70,8 @@ function onMobSpawn(mob)
 
     mob:setLocalVar("phase", 1)
     mob:setLocalVar("astralFlow", 1)
+
+    phaseChange(mob)
 end
 
 function onMobDisengage(mob)
@@ -93,6 +96,34 @@ end
 
 function onMobEngaged(mob, target)
     popPets(mob, target)
+
+    local phase = mob:getLocalVar("phase")
+
+    if phase % 2 == 1 then
+        mob:useMobAbility()
+    end
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+
+end
+
+function onMobWeaponSkill(target, mob, skill)
+
+end
+
+function onMobSkillFinished(mob, target, skill)
+    local phase = mob:getLocalVar("phase")
+    if phase ~= 21 and (phase % 2) == 1 and mob:getLocalVar("phaseChange") ~= 1 then
+        -- transitional Dvergar stage, uses cackle, then hellsnap, then changes again
+        if skill:getName() == "Cackle" then
+            mob:timer(2000, function(mobArg)
+                mobArg:useMobAbility(2113) -- hellsnap
+            end)
+        else
+            mob:setLocalVar("phaseChange", 1)
+        end
+    end
 end
 
 function onMobFight(mob, target)
@@ -104,7 +135,7 @@ function onMobFight(mob, target)
     local astral = mob:getLocalVar("astralFlow")
 
     -- Check for phase change
-    if (phase < 21 and mobHPP <= triggerHPP[phase]) then
+    if (phase < 21 and mobHPP <= triggerHPP[phase]) and mob:getLocalVar("phaseChange") ~= 1 then
         mob:setLocalVar("phaseChange", 1)
     end
 
@@ -112,15 +143,18 @@ function onMobFight(mob, target)
         mob:setLocalVar("phaseChange", 0)
 
         -- Increment phase
-        phase = mob:getLocalVar("phase") + 1
-        mob:setLocalVar("phase", phase)
+        -- phase = mob:getLocalVar("phase") + 1
+        mob:setLocalVar("phase", mob:getLocalVar("phase") + 1)
 
         phaseChange(mob)
 
     -- Or, check for Astral Flow
     elseif (phase == 21 and astral < 4 and mobHPP <= (99 - 25 * astral)) then
+
         mob:setLocalVar("astralFlow", astral + 1)
 
+        -- ensure pets are there
+        popPets(mob)
         -- "All avatars are summoned at once, and with them plus the lamps up, its hard to move your character."
         -- "You will probably get locked in place and die from game mechanics alone."
         for i = 1, 8 do
@@ -133,10 +167,6 @@ function onMobFight(mob, target)
             newPet:SetMagicCastingEnabled(false)
             newPet:SetMobAbilityEnabled(false)
         end
-
-        mob:timer(15000, function(mob)
-            popPets(mob)
-        end)
 
     -- Or, at least make sure pets weren't dragged off...
     else
@@ -183,7 +213,7 @@ function phaseChange(mob)
 
     if phase > 1 then
         mob:setStatus(tpz.status.DISAPPEAR)
-        mob:setStatus(tpz.status.INVISIBLE)
+        -- mob:setStatus(tpz.status.INVISIBLE)
         mob:SetAutoAttackEnabled(false)
         mob:SetMagicCastingEnabled(false)
         mob:SetMobAbilityEnabled(false)
@@ -194,6 +224,12 @@ function phaseChange(mob)
             mob:SetMagicCastingEnabled(true)
             mob:SetMobAbilityEnabled(true)
         end)
+
+        if phase % 2 == 1 then
+            mob:timer(5000, function(mob)
+                mob:useMobAbility()  -- Cackle unless final phase
+            end)
+        end
 
         despawnPets()
         mob:timer(6000, function(mob)
