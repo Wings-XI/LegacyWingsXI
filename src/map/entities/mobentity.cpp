@@ -776,7 +776,14 @@ void CMobEntity::Spawn()
     // claim shield, happens after onmobspawn so that this can be added on the fly to individual mobs without any cluster restarts
     if (getMobMod(MOBMOD_CLAIM_SHIELD))
     {
-        PAI->Internal_ClaimShieldState();
+        if (PAI->Internal_ClaimShieldState())
+        {
+            ShowInfo("MobID (%u) spawned with claimshield\n", this->id);
+        }
+        else
+        {
+            ShowError("MobID (%u) failed to spawn with claimshield\n", this->id);
+        }
     }
 }
 

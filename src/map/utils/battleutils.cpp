@@ -724,7 +724,7 @@ namespace battleutils
             {
                 case SPIKE_BLAZE:
                 case SPIKE_ICE:
-                case SPIKE_SHOCK: //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it. 
+                case SPIKE_SHOCK: //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
                     PAttacker->takeDamage(Action->spikesParam / getElementalSDTDivisor(PAttacker, element), PDefender, ATTACK_MAGICAL, GetSpikesDamageType(Action->spikesEffect), false);
                     break;
 
@@ -1935,7 +1935,7 @@ namespace battleutils
     {
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
         // An Entity using not using HtH and not a mob (weapon ID 0 signifies a mob/pet)
-        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) || 
+        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) ||
              (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)) // Valoredge Puppet
             && PDefender->PAI->IsEngaged()) // Everyone has to be engaged to parry
         {
@@ -4720,14 +4720,17 @@ namespace battleutils
         }
 
         // clear enmity for everyone except the winner and their pet
+        std::vector<uint16> vec;
         for (auto member : *enmityList)
         {
             if (member.first != winner->id &&
                 !(member.second.PEnmityOwner->PMaster && member.second.PEnmityOwner->PMaster->objtype == TYPE_PC && member.second.PEnmityOwner->PMaster->id == winner->id)) // winner's pet, don't clear enmity
             {
-                enmityList->erase(member.first);
+                vec.emplace_back(member.first);
             }
         }
+        for (auto&& key : vec)
+            enmityList->erase(key);
 
         // purge all pets attacking me due to the topaz bug of pets stealing claims
         CZone* PZone = zoneutils::GetZone(PMob->getZone());
@@ -4742,6 +4745,7 @@ namespace battleutils
         });
 
         ClaimMob((CBattleEntity*)PMob, winner);
+        ShowInfo("MobID (%u) claimshield lottery chose: %s\n", PMob->id, winner->name);
 
         PMob->health.hp = PMob->health.maxhp;
         PMob->StatusEffectContainer->KillAllStatusEffect();
@@ -4768,6 +4772,18 @@ namespace battleutils
             CMobEntity* mob = static_cast<CMobEntity*>(PDefender);
             if (!passing)
             {
+                // Within 7s of mob spawn, claimshield-enabled mobs trigger claimshield (ignoring claim until the claimshield state expires and a random winner is determined).
+                // This resets that 7s timer when the first action is performed
+                // In other words, this makes claimshield function as a 7s window after the first _action_ on the mob instead of 7s window after the spawn of the mob
+                CState* state = mob->PAI->GetCurrentState();
+                if (state && state->m_id == CLAIMSHIELD_STATE && !state->IsCompleted())
+                {
+                    ShowDebug(CL_CYAN"MobID (%u) enmity size: %u\n" CL_RESET, mob->id, mob->PEnmityContainer->GetEnmityList()->size());
+                    if  (mob->PEnmityContainer != nullptr && mob->PEnmityContainer->GetEnmityList()->size() == 1)
+                    {
+                        state->ResetEntryTime();
+                    }
+                }
                 mob->PEnmityContainer->UpdateEnmity(original, 0, 0, true, true);
             }
             if (PAttacker)
