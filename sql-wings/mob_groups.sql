@@ -1674,11 +1674,11 @@ INSERT INTO `mob_groups` VALUES(186, 2847, 40, 'Nightmare_Crab', 600, 128, 1791,
 INSERT INTO `mob_groups` VALUES(187, 2849, 40, 'Nightmare_Dhalmel', 600, 128, 3238, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(188, 2872, 40, 'Nightmare_Uragnite', 600, 128, 1789, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(189, 2866, 40, 'Nightmare_Scorpion', 600, 128, 3237, 5000, 0, 94, 96, 0);
-INSERT INTO `mob_groups` VALUES(190, 2844, 40, 'Nightmare_Bunny', 600, 128, 1789, 5000, 0, 94, 96, 0);
+INSERT INTO `mob_groups` VALUES(190, 2844, 40, 'Nightmare_Bunny', 600, 128, 1798, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(191, 2859, 40, 'Nightmare_Mandragora', 600, 128, 1798, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(192, 2848, 40, 'Nightmare_Crawler', 600, 128, 3238, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(193, 2863, 40, 'Nightmare_Raven', 600, 128, 3237, 5000, 0, 94, 96, 0);
-INSERT INTO `mob_groups` VALUES(194, 2851, 40, 'Nightmare_Eft', 600, 128, 1798, 5000, 0, 94, 96, 0);
+INSERT INTO `mob_groups` VALUES(194, 2851, 40, 'Nightmare_Eft', 600, 128, 1789, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(197, 6923, 40, 'Basilic', 600, 128, 0, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(198, 6924, 40, 'Jurik', 600, 128, 0, 5000, 0, 94, 96, 0);
 INSERT INTO `mob_groups` VALUES(200, 6926, 40, 'Tarasca', 600, 128, 0, 5000, 0, 94, 96, 0);
