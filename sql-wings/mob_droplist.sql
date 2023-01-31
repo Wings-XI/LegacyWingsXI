@@ -9279,9 +9279,9 @@ INSERT INTO `mob_droplist` VALUES(1797, 1, 2, 16, 2726, 10); -- argute_pants_-1
 INSERT INTO `mob_droplist` VALUES(1798, 0, 0, 1000, 1449, 20); -- Whiteshell
 INSERT INTO `mob_droplist` VALUES(1798, 0, 0, 1000, 1452, 20); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(1798, 0, 0, 1000, 1455, 20); -- One Byne
-INSERT INTO `mob_droplist` VALUES(1798, 1, 1, 8, 15877, 333); -- koga_sarashi
-INSERT INTO `mob_droplist` VALUES(1798, 1, 1, 8, 15482, 333); -- bards_cape
-INSERT INTO `mob_droplist` VALUES(1798, 1, 1, 8, 16244, 334); -- mirage_mantle
+INSERT INTO `mob_droplist` VALUES(1798, 1, 1, 8, 15877, 10); -- koga_sarashi
+INSERT INTO `mob_droplist` VALUES(1798, 1, 1, 8, 15482, 10); -- bards_cape
+INSERT INTO `mob_droplist` VALUES(1798, 1, 1, 8, 16244, 10); -- mirage_mantle
 INSERT INTO `mob_droplist` VALUES(1798, 1, 2, 16, 2035, 20); -- warriors_mufflers_-1
 INSERT INTO `mob_droplist` VALUES(1798, 1, 2, 16, 2040, 20); -- melee_gloves_-1
 INSERT INTO `mob_droplist` VALUES(1798, 1, 2, 16, 2045, 20); -- clerics_mitts_-1
@@ -16945,6 +16945,7 @@ INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15482, 170); -- bards_cape
 INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15877, 160); -- koga_sarashi
 INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15484, 170); -- summoners_cape
 INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 15920, 170); -- commodore_belt
+INSERT INTO `mob_droplist` VALUES(3234, 1, 1, 8, 16248, 170); -- etoile cape
 INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 16, 2033, 20); -- warriors_mask_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 16, 2038, 20); -- melee_crown_-1
 INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 16, 2043, 20); -- clerics_cap_-1
@@ -16970,12 +16971,13 @@ INSERT INTO `mob_droplist` VALUES(3234, 1, 2, 16, 2723, 20); -- argute_mortarboa
 INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1449, 133); -- Whiteshell
 INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1452, 133); -- Bronzepiece
 INSERT INTO `mob_droplist` VALUES(3235, 0, 0, 1000, 1455, 133); -- One Byne
-INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15872, 170); -- cerics_belt
-INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15874, 160); -- sorcerers_belt
-INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15480, 170); -- assassins_cape
-INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15875, 160); -- monster_belt
-INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15879, 170); -- saotome_koshi_ate
-INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 16244, 170); -- mirage_mantle
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15872, 10); -- clerics_belt
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15874, 10); -- sorcerers_belt
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15480, 10); -- assassins_cape
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15875, 10); -- monster_belt
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 15879, 10); -- saotome_koshi_ate
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 16244, 10); -- mirage_mantle
+INSERT INTO `mob_droplist` VALUES(3235, 1, 1, 8, 16248, 10); -- etoile_cape
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 16, 2033, 20); -- warriors_mask_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 16, 2038, 20); -- melee_crown_-1
 INSERT INTO `mob_droplist` VALUES(3235, 1, 2, 16, 2043, 20); -- clerics_cap_-1
