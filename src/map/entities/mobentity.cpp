@@ -779,6 +779,12 @@ void CMobEntity::Spawn()
         if (PAI->Internal_ClaimShieldState())
         {
             ShowInfo("MobID (%u) spawned with claimshield\n", this->id);
+            // ensure full time is allowed for claimshield
+            CState* state = this->PAI->GetCurrentState();
+            if (state && state->m_id == CLAIMSHIELD_STATE)
+            {
+                state->ResetEntryTime();
+            }
         }
         else
         {
