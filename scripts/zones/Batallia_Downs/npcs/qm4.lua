@@ -18,6 +18,8 @@ function onTrigger(player, npc)
         if missionProgress == 5 then
             player:setCharVar("COP_Tenzen_s_Path",6)
         end
+    else
+        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     end
 
 end

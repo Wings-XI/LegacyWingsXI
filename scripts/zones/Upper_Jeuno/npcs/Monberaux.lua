@@ -96,9 +96,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if (csid == 6) then
-        player:setCharVar("COP_Tenzen_s_Path", 5)
-    elseif (csid == 74) then
+    if (csid == 74) then
         player:setCharVar("COP_Tenzen_s_Path", 3)
         player:addKeyItem(tpz.ki.ENVELOPE_FROM_MONBERAUX)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ENVELOPE_FROM_MONBERAUX)
