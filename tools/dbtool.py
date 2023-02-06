@@ -6,11 +6,10 @@ import yaml
 import fileinput
 import distutils.spawn
 from git import Repo
-import mysql.connector
+import mariadb
 import colorama
 import subprocess
 from colorama import Fore, Style
-from mysql.connector import Error, errorcode
 from migrations import spell_blobs_to_spell_table
 from migrations import unnamed_flags
 from migrations import char_unlock_table_columns
@@ -284,20 +283,19 @@ def import_file(file):
 def connect():
     global db, cur
     try:
-        db = mysql.connector.connect(host=host,
+        db = mariadb.connect(host=host,
                 user=login,
                 passwd=password,
                 db=database,
-                port=port,
-                use_pure=True)
+                port=port)
         cur = db.cursor()
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print(Fore.RED + 'Incorrect mysql_login or mysql_password, update ../conf/map.conf.')
+    except mariadb.Error as err:
+        if err.errno == mariadb.errorcode.ER_ACCESS_DENIED_ERROR:
+            print(colorama.Fore.RED + 'Incorrect mysql_login or mysql_password, update ../settings/network.lua.')
             close()
             return False
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print(Fore.RED + 'Database ' + database + ' does not exist.')
+        elif err.errno == mariadb.errorcode.ER_BAD_DB_ERROR:
+            print(colorama.Fore.RED + 'Database ' + database + ' does not exist.')
             if input('Would you like to create new database: ' + database + '? [y/N] ').lower() == 'y':
                 with open(error_log_file, "w") as errorlog:
                     subprocess.run([mysql_bin + 'mysqladmin' + exe, "-h", host, "-P", str(port), "-u", login, "-p"+password, "CREATE", database], stderr=errorlog)

@@ -1,4 +1,4 @@
-import mysql.connector
+import mariadb
 from migrations import utils
 
 def migration_name():
@@ -20,5 +20,5 @@ def migrate(cur, db):
 		cur.execute("ALTER TABLE {}.accounts ADD COLUMN `otp_secret` varchar(64) DEFAULT NULL".format(dbname))
 		cur.execute("ALTER TABLE {}.accounts ADD COLUMN `otp_change` datetime DEFAULT NULL".format(dbname))
 		db.commit()
-	except mysql.connector.Error as err:
+	except mariadb.Error as err:
 		print("Something went wrong: {}".format(err))
