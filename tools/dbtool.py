@@ -31,6 +31,7 @@ from migrations import blocked_ranges
 from migrations import ip_exempt
 from migrations import two_factor_authentication
 from migrations import login_log_exempt
+from migrations import battlefield_records_preserve
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -54,6 +55,7 @@ migrations = [
 	ip_exempt,
 	two_factor_authentication,
 	login_log_exempt,
+    battlefield_records_preserve,
 ]
 # These are the default 'protected' files
 player_data = [
@@ -94,6 +96,7 @@ player_data = [
     'linkshells.sql',
     'server_gmcalls.sql',
     'server_variables.sql',
+    'bcnm_info',
 ]
 import_files = []
 backups = []

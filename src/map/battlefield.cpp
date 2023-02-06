@@ -754,7 +754,10 @@ void CBattlefield::Cleanup()
         });
         if (updateRecord && !gmInZone)
         {
-            query = "UPDATE bcnm_info SET fastestName = '%s', fastestTime = %u, fastestPartySize = %u WHERE bcnmId = %u AND zoneid = %u";
+            query = "UPDATE bcnm_info SET previousName = if(previousTime > fastestTime, fastestName, previousName), \
+                    previousPartySize = if(previousTime > fastestTime, fastestPartySize, previousPartySize), \
+                    previousTime = if(previousTime > fastestTime, fastestTime, previousTime), \
+                    fastestName = '%s', fastestTime = %u, fastestPartySize = %u WHERE bcnmId = %u AND zoneid = %u";
             auto timeThing = std::chrono::duration_cast<std::chrono::seconds>(m_Record.time).count();
 
             Sql_Query(SqlHandle, query, m_Record.name.c_str(), timeThing, m_Record.partySize, this->GetID(), GetZoneID());
