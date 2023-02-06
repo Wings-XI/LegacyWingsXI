@@ -1,5 +1,4 @@
-import mysql.connector
-from mysql.connector import errorcode
+import mariadb
 from migrations import utils
 
 def migration_name():
@@ -14,7 +13,7 @@ def needs_to_run(cur):
 		cur.execute("show columns from {}.blocked_ranges like 'network_address'".format(logindb))
 		cur.fetchone()
 		return False
-	except mysql.connector.Error as err:
+	except mariadb.Error as err:
 		if err.errno == errorcode.ER_NO_SUCH_TABLE:
 			return True
 		else:

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import mysql.connector as mariadb
+import mariadb
 
 # Change with correct info ##
 sqlusername = "topaz"       #

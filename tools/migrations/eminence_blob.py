@@ -1,5 +1,5 @@
 import array
-import mysql.connector
+import mariadb
 
 def migration_name():
     return "Adding eminence column for chars"

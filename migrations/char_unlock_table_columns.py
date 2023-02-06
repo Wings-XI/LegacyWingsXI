@@ -1,5 +1,5 @@
 import array
-import mysql.connector
+import mariadb
 
 def migration_name():
     return "Changing Char Unlock Table Columns"
@@ -27,5 +27,5 @@ def migrate(cur, db):
         cur.execute("ALTER TABLE char_unlocks CHANGE past_windurst_tp campaign_windy  int(10) unsigned NOT NULL DEFAULT 0;")
         cur.execute("ALTER TABLE char_unlocks ADD COLUMN survivals BLOB DEFAULT NULL;")
         db.commit()
-    except mysql.connector.Error as err:
+    except mariadb.Error as err:
         print("Something went wrong: {}".format(err))

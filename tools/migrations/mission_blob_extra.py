@@ -1,5 +1,5 @@
 import array
-import mysql.connector
+import mariadb
 
 def migration_name():
     return "Adding extra data to mission blob"
@@ -34,7 +34,7 @@ def migrate(cur, db):
                 try:
                     cur.execute("UPDATE chars SET missions = %s WHERE charid = %s", (row, charid))
                     db.commit()
-                except mysql.connector.Error as err:
+                except mariadb.Error as err:
                     print("Something went wrong: {}".format(err))
             except:
                 efile.write('[mission_blob_extra] Error reading missions in chars table for charid: ' + str(charid) + '\n')

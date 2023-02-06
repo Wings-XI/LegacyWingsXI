@@ -1,5 +1,5 @@
 import array
-import mysql.connector
+import mariadb
 
 def migration_name():
     return "Adding timestamp column for chars"

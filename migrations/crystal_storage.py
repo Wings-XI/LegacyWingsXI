@@ -1,5 +1,5 @@
 import array
-import mysql.connector
+import mariadb
 
 def migration_name():
 	return "Adding crystal storage columns to char_points table"
@@ -26,5 +26,5 @@ def migrate(cur, db):
 		ADD COLUMN `light_crystals` smallint(5) unsigned NOT NULL DEFAULT 0, \
 		ADD COLUMN `dark_crystals` smallint(5) unsigned NOT NULL DEFAULT 0;")
 		db.commit()
-	except mysql.connector.Error as err:
+	except mariadb.Error as err:
 		print("Something went wrong: {}".format(err))
