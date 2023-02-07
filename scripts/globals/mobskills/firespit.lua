@@ -49,6 +49,8 @@ function onMobWeaponSkill(target, mob, skill)
 
         local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*4, tpz.magic.ele.FIRE, dmgmod, TP_NO_EFFECT)
         local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.FIRE, MOBPARAM_IGNORE_SHADOWS)
+        -- scale dmg based on distance from mob when past 10 yalms: normal dmg < 10 yalms, linear reduction up to 80% reduction at 30yalms
+        dmg = dmg * (1 - utils.clamp(math.max(mob:checkDistance(target) - 10, 0) / 25, 0, .8))
         target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.FIRE)
 
         return dmg

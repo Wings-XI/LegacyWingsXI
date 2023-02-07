@@ -4703,10 +4703,14 @@ namespace battleutils
         }
         else
         {
+            ShowInfo("MobID (%u) claimshield lottery canceled due to no actions\n", PMob->id);
             return;
         }
         if (!i)
+        {
+            ShowInfo("MobID (%u) claimshield lottery canceled due to no actions\n", PMob->id);
             return;
+        }
 
         CBattleEntity* winner;
 
@@ -4745,7 +4749,7 @@ namespace battleutils
         });
 
         ClaimMob((CBattleEntity*)PMob, winner);
-        ShowInfo("MobID (%u) claimshield lottery chose: %s\n", PMob->id, winner->name);
+        ShowInfo("MobID (%u) claimshield lottery out of %u players, chose: %s\n", PMob->id, lotteryList.size(), winner->name);
 
         PMob->health.hp = PMob->health.maxhp;
         PMob->StatusEffectContainer->KillAllStatusEffect();
