@@ -35,6 +35,10 @@ function onUseAbility(player, target, ability)
     end
 
     target:updateClaim(player)
-    player:removeAmmo()
+    -- if dragoon's earring equipped, chance to not consume angon
+    local preserveAmmoChance = (player:getEquipID(tpz.slot.EAR1) == 16000 or player:getEquipID(tpz.slot.EAR2) == 16000) and 25 or 0
+    if math.random(100) >= preserveAmmoChance then
+        player:removeAmmo()
+    end
     return typeEffect
 end
