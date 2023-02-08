@@ -248,21 +248,23 @@ function onEventFinish(player, csid, option)
                 player:setCharVar("LastBirdKey", os.date("%j"))
                 player:messageSpecial(ID.text.DRYEYES_2)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BIRD_KEY)
+
+                player:delKeyItem(tpz.ki.DOMINAS_SCARLET_SEAL)
+                player:delKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)
+                player:delKeyItem(tpz.ki.DOMINAS_EMERALD_SEAL)
+                player:delKeyItem(tpz.ki.DOMINAS_AMBER_SEAL)
+                player:delKeyItem(tpz.ki.DOMINAS_VIOLET_SEAL)
+                player:delKeyItem(tpz.ki.DOMINAS_AZURE_SEAL)
+
+                player:delKeyItem(tpz.ki.SCARLET_COUNTERSEAL)
+                player:delKeyItem(tpz.ki.CERULEAN_COUNTERSEAL)
+                player:delKeyItem(tpz.ki.EMERALD_COUNTERSEAL)
+                player:delKeyItem(tpz.ki.AMBER_COUNTERSEAL)
+                player:delKeyItem(tpz.ki.VIOLET_COUNTERSEAL)
+                player:delKeyItem(tpz.ki.AZURE_COUNTERSEAL)
+            else
+                player:messageSpecial(ID.text.DRYEYES_1)
             end
-
-            player:delKeyItem(tpz.ki.DOMINAS_SCARLET_SEAL)
-            player:delKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)
-            player:delKeyItem(tpz.ki.DOMINAS_EMERALD_SEAL)
-            player:delKeyItem(tpz.ki.DOMINAS_AMBER_SEAL)
-            player:delKeyItem(tpz.ki.DOMINAS_VIOLET_SEAL)
-            player:delKeyItem(tpz.ki.DOMINAS_AZURE_SEAL)
-
-            player:delKeyItem(tpz.ki.SCARLET_COUNTERSEAL)
-            player:delKeyItem(tpz.ki.CERULEAN_COUNTERSEAL)
-            player:delKeyItem(tpz.ki.EMERALD_COUNTERSEAL)
-            player:delKeyItem(tpz.ki.AMBER_COUNTERSEAL)
-            player:delKeyItem(tpz.ki.VIOLET_COUNTERSEAL)
-            player:delKeyItem(tpz.ki.AZURE_COUNTERSEAL)
         elseif option == 300 then -- 3 Seedspalls
             player:delSeals(5, 0)
             player:delGil(500)
