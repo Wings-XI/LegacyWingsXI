@@ -19,8 +19,8 @@ require("scripts/globals/pankration")
 require("scripts/globals/utils")
 require("scripts/globals/events/zeni_fest")
 ---------------------------------------------------------------------------------
-local FAUNA_LIMIT = 7500 -- Zeni handed out per Fauna (NM)
-local SUBJECT_OF_INTEREST_LIMIT = 10000 -- Zeni handed out per SubjectsOfInterest
+local FAUNA_LIMIT = 10000 -- Zeni handed out per Fauna (NM)
+local SUBJECT_OF_INTEREST_LIMIT = 20000 -- Zeni handed out per SubjectsOfInterest
 ---------------------------------------------------------------------------------
 
 local trophies =
@@ -161,6 +161,7 @@ tpz.znm.changeSubjectsOfInterest = function()
     local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
     SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubOfInterestLimit", SUBJECT_OF_INTEREST_LIMIT)
+    SetServerVariable("[ZNM]SubOfInterestTimeLimit", os.time() + 24 * 60 * 60) -- 24 hours from first turnin of new SoI
 
     local ecosystem = tpz.ecosystem.ERROR
     if (subjectsOfInterestKey >= 0 and subjectsOfInterestKey <= 3) then
@@ -196,8 +197,9 @@ end
 
 local function updateSubOfInterestLimit(zeni)
     local remainingLimit = GetServerVariable("[ZNM]SubOfInterestLimit")
+    local timeLimit = GetServerVariable("[ZNM]SubOfInterestTimeLimit")
     remainingLimit = remainingLimit - zeni
-    if (remainingLimit > 0) then
+    if (remainingLimit > 0 or timeLimit < os.time()) then
         SetServerVariable("[ZNM]SubOfInterestLimit", remainingLimit)
     else
         tpz.znm.changeSubjectsOfInterest()
@@ -509,8 +511,17 @@ tpz.znm.ryo.onEventUpdate = function(player, csid, option)
         if option == 300 then
             player:updateEvent(player:getCurrency("zeni_point"))
         elseif option == 200 then
+            -- confirm sanity of expiration of current subject of interest
+            if GetServerVariable("[ZNM]SubOfInterestTimeLimit") == 0 then
+                SetServerVariable("[ZNM]SubOfInterestTimeLimit", os.time() + 24 * 60 * 60)
+            elseif GetServerVariable("[ZNM]SubOfInterestTimeLimit") < os.time()  then
+                tpz.znm.changeSubjectsOfInterest()
+            end
             -- SubjectsOfInterest
             player:updateEvent(GetServerVariable("[ZNM]SubjectsOfInterest"))
+            -- convert real time to game days: 2.4 real minutes / vana hour
+            local daysRemaining = math.floor((GetServerVariable("[ZNM]SubOfInterestTimeLimit") - os.time()) / (60 * 24 * 2.4))
+            player:PrintToPlayer(string.format("Ryo : Sanraku's interest will change in about %u days.", daysRemaining), 0xD)
         elseif option == 201 then
             -- Fauna
             player:updateEvent(GetServerVariable("[ZNM]Fauna"))
@@ -605,9 +616,10 @@ tpz.znm.sanraku.onTrade = function(player, npc, trade)
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
         local zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem = calculateZeniBonus(plateData)
+        local timeLimit = GetServerVariable("[ZNM]SubOfInterestTimeLimit")
         player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", zeni)
 
-        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem) then
+        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem or timeLimt < os.time()) then
             updateSubOfInterestLimit(zeni)
         end
 
