@@ -179,7 +179,25 @@ function tpz.battlefield.HandleWipe(battlefield, players)
 end
 
 
-function tpz.battlefield.onBattlefieldStatusChange(battlefield, players, status)
+function onBattlefieldStatusChange(battlefield, status)
+
+    if status == tpz.battlefield.status.LOCKED and battlefield:getLocalVar("lockOutUnenteredAllianceMembers") == 0 then
+        battlefield:setLocalVar("lockOutUnenteredAllianceMembers", 1)
+        local registeredPlayers = battlefield:getPlayers()
+        
+        for _, player in pairs(registeredPlayers) do
+            -- need to do alliance, not party, to account for 18 man fights
+            local alliance = player:getAlliance()
+            for _, allianceMember in pairs(alliance) do
+                -- Clear alliance member's BATTLEFIELD buff to "unregister" the player and prevent entry if they aren't part of the battlefield and it switches to locked
+                if allianceMember:hasStatusEffect(tpz.effect.BATTLEFIELD) and not allianceMember:getBattlefield() then
+                    allianceMember:delStatusEffect(tpz.effect.BATTLEFIELD)
+                    allianceMember:release()
+                    allianceMember:PrintToPlayer("No longer able to enter battlefield - one or more party members have engaged the enemy.",29)
+                end
+            end
+        end
+    end
 
 end
 
