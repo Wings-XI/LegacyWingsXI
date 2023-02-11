@@ -619,7 +619,7 @@ tpz.znm.sanraku.onTrade = function(player, npc, trade)
         local timeLimit = GetServerVariable("[ZNM]SubOfInterestTimeLimit")
         player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", zeni)
 
-        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem or timeLimt < os.time()) then
+        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem or timeLimit < os.time()) then
             updateSubOfInterestLimit(zeni)
         end
 
