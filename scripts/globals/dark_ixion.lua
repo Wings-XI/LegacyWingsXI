@@ -310,6 +310,7 @@ darkixion.itsStompinTime = function(mob)
         end
 
         mob:lookAt(target:getPos())
+        mob:setLocalVar("runPathTime", os.time() + 10) -- max time to let a single trample path
         mob:pathTo(pos.x, pos.y, pos.z, tpz.path.flag.WALLHACK + tpz.path.flag.RUN + tpz.path.flag.SCRIPT + tpz.path.flag.SLIDE)
     else
         darkixion.endStomp(mob)
@@ -731,7 +732,7 @@ darkixion.onMobFight = function(mob, target)
         if not target:isInfront(mob, 100) then
             table.insert(hitList, target)
         end
-        if mob:checkDistance(pos) >= 2 then
+        if mob:checkDistance(pos) >= 2 and os.time() < mob:getLocalVar("runPathTime") then
             local nearbyPlayers = mob:getPlayersInRange(8)
             if nearbyPlayers ~= nil then
                 for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he tramples, hit the ones in front
