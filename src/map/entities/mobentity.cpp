@@ -1535,6 +1535,7 @@ void CMobEntity::OnDespawn()
     PAI->ClearActionQueue();
     //#event despawn
     PAI->EventHandler.triggerListener("DESPAWN", this);
+    this->loc.p = m_SpawnPoint; // push back to spawn point so camps don't get overrun with disappeared/dead mobs
 }
 
 void CMobEntity::Die()
