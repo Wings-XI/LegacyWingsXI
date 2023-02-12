@@ -779,12 +779,8 @@ void CMobEntity::Spawn()
         if (PAI->Internal_ClaimShieldState())
         {
             ShowInfo("MobID (%u) spawned with claimshield\n", this->id);
-            // ensure full time is allowed for claimshield
-            CState* state = this->PAI->GetCurrentState();
-            if (state && state->m_id == CLAIMSHIELD_STATE)
-            {
-                state->ResetEntryTime();
-            }
+            // ensure mob doesn't perform any actions
+            this->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_TERROR, EFFECT_TERROR, 1, 0, 20));
         }
         else
         {
