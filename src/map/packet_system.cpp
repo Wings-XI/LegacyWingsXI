@@ -5295,6 +5295,14 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         }
                         else // You must wait longer to perform that action.
                         {
+                            if (charutils::GetCharVar(PChar, "NextYell") + (map_config.yell_cooldown * 1000) < gettick() ||
+                                    gettick() + (map_config.yell_cooldown * 1000) < charutils::GetCharVar(PChar, "NextYell") )
+                            {
+                                // delete erroneous nextyell values:
+                                // - nextyell + 15m still below current time: way too low but still failed the above check
+                                // - current time + 15m < nextyell: way too high
+                                charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                            }
                             PChar->pushPacket(new CMessageStandardPacket(PChar, 0, MsgStd::WaitLonger));
                         }
                     }
