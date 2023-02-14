@@ -1152,6 +1152,10 @@ function EventUpdateBCNM(player, csid, option, extras)
                     result = tpz.battlefield.returnCode.WAIT
                     player:updateEvent(result)
                 end
+            elseif result == tpz.battlefield.returnCode.LOCKED then
+                player:release()
+                player:PrintToPlayer("Failed to enter locked battlefield - one or more party members have already engaged the enemy.",29)
+                player:startEvent(32003)
             end
             return false
         else
