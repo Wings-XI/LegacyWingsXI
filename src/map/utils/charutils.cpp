@@ -2275,7 +2275,7 @@ namespace charutils
         if (!PChar->getStyleLocked())
             return;
 
-        auto appearance = (CItemEquipment*)itemutils::GetItem(PChar->styleItems[equipSlotID]);
+        CItemEquipment* appearance      = dynamic_cast<CItemEquipment*>(itemutils::GetItemPointer(PChar->styleItems[equipSlotID]));
         auto appearanceModel = (appearance == nullptr) ? 0 : appearance->getModelId();
 
         switch (equipSlotID)
