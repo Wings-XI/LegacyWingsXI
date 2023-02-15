@@ -40,7 +40,7 @@ void CSpiritController::setMagicCooldowns(bool initial)
     CBattleEntity* PSummoner = PSpirit->PMaster;
     int16 mod = 0;
     bool buffMode = true;
-    if (PSpirit->GetBattleTargetID() > 0 || initial)  // don't need to identify if it's a light spirit since only light spirits cast outside of combat
+    if (PSpirit->m_PetID != PETID_LIGHTSPIRIT || PSpirit->GetBattleTargetID() > 0 || initial)
         buffMode = false;
     if (PSummoner && PSummoner->objtype == TYPE_PC)
         mod = PSummoner->getMod(Mod::SPIRIT_RECAST_REDUCTION);
@@ -50,7 +50,7 @@ void CSpiritController::setMagicCooldowns(bool initial)
     bool AF = PSummoner && PSummoner->StatusEffectContainer->GetStatusEffect(EFFECT_ASTRAL_FLOW);
 
     m_magicCooldown = 45000ms - 333ms * skill - 1000ms * mod - 3000ms * day - 2000ms * weather - 5000ms * AF;
-    if (buffMode)
+    if (buffMode) // light spirit "buff mode"
         m_magicCooldown = m_magicCooldown / 2;
     m_actionCooldown = 3000ms - 25ms * skill;
     if (initial)
