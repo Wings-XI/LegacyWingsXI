@@ -247,7 +247,7 @@ INSERT INTO `synth_recipes` VALUES(142, 1, 0, 0, 19, 0, 0, 0, 0, 0, 0, 4100, 424
 INSERT INTO `synth_recipes` VALUES(143, 1, 0, 0, 19, 0, 0, 0, 0, 0, 0, 4100, 4242, 508, 0, 0, 0, 0, 0, 0, 0, 649, 651, 652, 652, 1, 1, 1, 1, 'Bronze Ingot');
 INSERT INTO `synth_recipes` VALUES(144, 1, 0, 0, 65, 0, 0, 0, 0, 0, 0, 4100, 4242, 566, 0, 0, 0, 0, 0, 0, 0, 649, 649, 649, 649, 1, 1, 1, 1, 'Bronze Ingot');
 INSERT INTO `synth_recipes` VALUES(145, 1, 0, 0, 51, 0, 0, 0, 0, 0, 0, 4100, 4242, 596, 0, 0, 0, 0, 0, 0, 0, 649, 651, 651, 654, 1, 1, 1, 1, 'Bronze Ingot');
-INSERT INTO `synth_recipes` VALUES(146, 1, 0, 0, 76, 0, 0, 0, 0, 0, 0, 4100, 4242, 1118, 0, 0, 0, 0, 0, 0, 0, 649, 654, 654, 654, 2, 1, 1, 1, 'Bronze Ingot');
+INSERT INTO `synth_recipes` VALUES(146, 1, 0, 0, 78, 0, 0, 0, 0, 0, 0, 4100, 4242, 1118, 0, 0, 0, 0, 0, 0, 0, 649, 654, 654, 654, 2, 1, 1, 1, 'Bronze Ingot');
 INSERT INTO `synth_recipes` VALUES(147, 1, 0, 0, 79, 0, 0, 0, 0, 0, 0, 4100, 4242, 2160, 0, 0, 0, 0, 0, 0, 0, 649, 2302, 2302, 2302, 1, 1, 1, 1, 'Bronze Ingot');
 INSERT INTO `synth_recipes` VALUES(148, 1, 0, 0, 79, 0, 0, 0, 0, 0, 0, 4100, 4242, 2161, 0, 0, 0, 0, 0, 0, 0, 649, 2302, 2302, 2302, 2, 1, 2, 2, 'Bronze Ingot');
 INSERT INTO `synth_recipes` VALUES(149, 1, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4100, 4242, 12448, 0, 0, 0, 0, 0, 0, 0, 649, 850, 649, 850, 1, 1, 1, 2, 'Bronze Ingot');
