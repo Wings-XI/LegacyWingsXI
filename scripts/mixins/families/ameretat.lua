@@ -51,13 +51,19 @@ g_mixins.families.ameretat = function(mob)
     end)
 
     mob:addListener("ATTACK", "AMERETAT_ATTACK", function(attacker, target, action)
+        -- TODO this listener is called on an attack round, need to loop through action list somehow. This code only considers the first attack in the round
         if attacker:getLocalVar("HPDrainEnabled") > 0 then
             local playerID = target:getID()
             local potency = attacker:getLocalVar("HPDrainPotency")
 
-            action:messageID(playerID, tpz.msg.basic.ADD_EFFECT_HP_DRAIN)
-            action:additionalEffect(playerID, tpz.subEffect.HP_DRAIN)
-            action:addEffectParam(playerID, potency)
+            -- only drain if hit landed and did damage
+            if action:param(playerID) > 0 and action:messageID(playerID) > 0 and potency > 0 then
+                -- action:messageID(playerID, tpz.msg.basic.ADD_EFFECT_HP_DRAIN)
+                action:addEffectMessage(playerID, tpz.msg.basic.ADD_EFFECT_HP_DRAIN)
+                action:additionalEffect(playerID, tpz.subEffect.HP_DRAIN)
+                action:addEffectParam(playerID, potency)
+                attacker:addHP(potency)
+            end
         end
     end)
 end
