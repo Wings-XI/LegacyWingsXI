@@ -9,7 +9,8 @@ tpz = tpz or {}
 tpz.ephemeral = {}
 
 -- Cap per crystal type that can be stored. Retail/Default is 5000
-local CrystalCap = 5000
+-- WINGSCUSTOM cap at 12 clusters' worth of crystals per element
+local CrystalCap = 144
 
 -- Information for currency storage and event params
 local crystalData =
