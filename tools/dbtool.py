@@ -31,6 +31,7 @@ from migrations import blocked_ranges
 from migrations import ip_exempt
 from migrations import two_factor_authentication
 from migrations import login_log_exempt
+from migrations import temp_exemptions
 from migrations import battlefield_records_preserve
 # Append new migrations to this list and import above
 migrations = [
@@ -55,6 +56,7 @@ migrations = [
 	ip_exempt,
 	two_factor_authentication,
 	login_log_exempt,
+    temp_exemptions,
     battlefield_records_preserve,
 ]
 # These are the default 'protected' files
