@@ -5891,6 +5891,21 @@ namespace charutils
         BuildingCharWeaponSkills(PChar);
     }
 
+    bool isSendBoxOpen(CCharEntity* PChar)
+    {
+        return PChar->UContainer->GetType() == UCONTAINER_SEND_DELIVERYBOX;
+    }
+
+    bool isRecvBoxOpen(CCharEntity* PChar)
+    {
+        return PChar->UContainer->GetType() == UCONTAINER_RECV_DELIVERYBOX;
+    }
+
+    bool isAnyDeliveryBoxOpen(CCharEntity* PChar)
+    {
+        return isSendBoxOpen(PChar) || isRecvBoxOpen(PChar);
+    }
+
     /************************************************************************
     *                                                                       *
     *  Opens the characters send box                                        *
@@ -5900,7 +5915,7 @@ namespace charutils
     void OpenSendBox(CCharEntity* PChar)
     {
         PChar->UContainer->Clean();
-        PChar->UContainer->SetType(UCONTAINER_DELIVERYBOX);
+        PChar->UContainer->SetType(UCONTAINER_SEND_DELIVERYBOX);
 
         PChar->pushPacket(new CDeliveryBoxPacket(0x0D, 2, 0, 0x01));
         return;
