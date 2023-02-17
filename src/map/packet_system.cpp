@@ -2185,9 +2185,20 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         case 0x01:
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if ((boxtype != 1) && (boxtype != 2)) {
+                ShowExploit("Delivery Box packet handler received bad box type %u for action %u (%s)", boxtype, action, PChar->GetName());
+                return;
+            }
+
+            if (((PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX) && (boxtype != 1)) ||
+                ((PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX) && (boxtype != 2))) {
+                ShowExploit("Delivery Box type %u does not match UContainer box state for action %u (%s)", boxtype, action, PChar->GetName());
                 return;
             }
 
@@ -2246,9 +2257,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x02: // add items to send box
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2306,9 +2317,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x03: // send items
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2373,9 +2384,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x04: // cancel send
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2449,9 +2460,20 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x05:
         {
             // Send the player the new items count not seen..
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if ((boxtype != 1) && (boxtype != 2)) {
+                ShowExploit("Delivery Box packet handler received bad box type %u for action %u (%s)", boxtype, action, PChar->GetName());
+                return;
+            }
+
+            if (((PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX) && (boxtype != 1)) ||
+                ((PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX) && (boxtype != 2))) {
+                ShowExploit("Delivery Box type %u does not match UContainer box state for action %u (%s)", boxtype, action, PChar->GetName());
                 return;
             }
 
@@ -2488,9 +2510,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x06: // Move item to received
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_RECV_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2574,9 +2596,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x07: // remove received items from send box
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2623,9 +2645,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x08:
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2638,9 +2660,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x09: // Option: Return
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_RECV_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
             if (!PChar->UContainer->IsSlotEmpty(slotID))
@@ -2709,9 +2731,20 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0A: // Option: Take
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if ((boxtype != 1) && (boxtype != 2)) {
+                ShowExploit("Delivery Box packet handler received bad box type %u for action %u (%s)", boxtype, action, PChar->GetName());
+                return;
+            }
+
+            if (((PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX) && (boxtype != 1)) ||
+                ((PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX) && (boxtype != 2))) {
+                ShowExploit("Delivery Box type %u does not match UContainer box state for action %u (%s)", boxtype, action, PChar->GetName());
                 return;
             }
 
@@ -2793,9 +2826,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0B: // Option: Drop
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_RECV_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2834,9 +2867,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0C: // Confirm name (send box)
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2865,16 +2898,22 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
             return;
         }
         case 0x0D: // open send box
-        case 0x0E: // open delivery box
         {
             PChar->UContainer->Clean();
-            PChar->UContainer->SetType(UCONTAINER_DELIVERYBOX);
+            PChar->UContainer->SetType(UCONTAINER_SEND_DELIVERYBOX);
+            PChar->pushPacket(new CDeliveryBoxPacket(action, boxtype, 0, 1));
+            return;
+        }
+        case 0x0E: // open receive box
+        {
+            PChar->UContainer->Clean();
+            PChar->UContainer->SetType(UCONTAINER_RECV_DELIVERYBOX);
             PChar->pushPacket(new CDeliveryBoxPacket(action, boxtype, 0, 1));
             return;
         }
         case 0x0F:
         {
-            if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX)
+            if (charutils::isAnyDeliveryBoxOpen(PChar))
             {
                 PChar->UContainer->Clean();
             }
