@@ -1108,10 +1108,11 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
 void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
 {
     TracyZoneScoped;
-    CBattleEntity::OnCastFinished(state, action);
-
     auto PSpell = state.GetSpell();
     auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    CBattleEntity* taChar = battleutils::getAvailableTrickAttackChar(
+        this, PTarget); // not ideal, since Trick Attack character (taChar) is also calculated on the lua side for the base spell
+    CBattleEntity::OnCastFinished(state, action);
 
     if (PTarget->id != this->id && !PSpell->isHeal() && !PSpell->isBuff())
     {
@@ -1132,7 +1133,7 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                     SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PBlueSpell->getPrimarySkillchain(), PBlueSpell->getSecondarySkillchain(), 0 );
                     if (effect != SUBEFFECT_NONE)
                     {
-                        uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, nullptr);
+                        uint16 skillChainDamage = battleutils::TakeSkillchainDamage(static_cast<CBattleEntity*>(this), PTarget, actionTarget.param, taChar);
 
                         actionTarget.addEffectParam = skillChainDamage;
                         actionTarget.addEffectMessage = 287 + effect;
