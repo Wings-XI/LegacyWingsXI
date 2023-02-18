@@ -5774,7 +5774,7 @@ namespace charutils
         if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             auto tstamp = (uint32)Sql_GetIntData(SqlHandle, 0);
-            if (CVanaTime::getInstance()->getVanaTime() < tstamp) {
+            if (CVanaTime::getInstance()->getVanaTime() < tstamp +1) { // adding 1 to overflow and keep compatibility with our lua scripts assigning -1 as the expired timestamp
                 return true;
             }
         }
