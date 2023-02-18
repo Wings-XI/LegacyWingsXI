@@ -39,7 +39,7 @@ function onTrade(player, npc, trade)
         if npcUtil.tradeHasExactly(trade, wepId) then
             local unlockingAMyth = player:getQuestStatus(JEUNO, getQuestId(i))
             if unlockingAMyth == QUEST_ACCEPTED then
-                local nyzulFloorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
+                local nyzulFloorProgress = player:getCharVar("NyzulClimbNumber") > 0 and 100 or player:getCharVar("Nyzul_RunicDiscProgress")
                 local wsPoints = trade:getItem(0):getWeaponskillPoints()
                 local requiredWsPoints = getRequiredWsPoints(nyzulFloorProgress)
                 -- table located at https://ffxiclopedia.fandom.com/wiki/Unlocking_a_Myth_(Warrior)
