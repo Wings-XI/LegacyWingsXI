@@ -57,7 +57,7 @@ def all_mobs(cur):
                 (SELECT group_concat(DISTINCT sortname) FROM mob_droplist as d LEFT JOIN item_basic i ON d.itemid = i.itemid WHERE d.dropId = mob_groups.dropid AND d.dropType IN (0,1) order by grouprate,itemrate),\
                 (SELECT group_concat(DISTINCT sortname) FROM mob_droplist as d LEFT JOIN item_basic i ON d.itemid = i.itemid WHERE d.dropId = mob_groups.dropid AND d.dropType IN (2)),\
                 slash,pierce,h2h,impact,fire,ice,wind,earth,lightning,water,light,dark\
-                 FROM mob_spawn_points LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid AND mob_groups.zoneid = {0} left join mob_pools USING (poolid) left join mob_family_system USING (familyid) WHERE ((mobid >> 12) & 0xFFF) = {0}'.format(id))
+                 FROM mob_spawn_points LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid AND mob_groups.zoneid = {0} left join mob_pools USING (poolid) left join mob_family_system USING (familyid) WHERE ((mobid >> 12) & 0xFFF) = {0} order by mobname'.format(id))
         rows = cur.fetchall()
 
         file = open("./ibar/data/{}.lua".format(id), "w")
