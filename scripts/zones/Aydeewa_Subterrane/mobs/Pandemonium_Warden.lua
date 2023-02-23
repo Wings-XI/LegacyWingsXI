@@ -40,16 +40,6 @@ local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820
         Cerberus - Bombs
         Dvergr - Miniature Dvergr
 ]]
-local avatarSkins = {
-    791,
-    792,
-    793,
-    794,
-    795,
-    796,
-    797,
-    798,
-}
 
 function onMobSpawn(mob)
 
@@ -161,7 +151,7 @@ function onMobFight(mob, target)
             -- during last phase, pets are always index 1 and astral flows are always index 0
             newPet = GetMobByID(petIDs[0][i])
             oldPet = GetMobByID(petIDs[1][i])
-            handlePet(mob, newPet, oldPet, target, avatarSkins[i])
+            handlePet(mob, newPet, oldPet, target, 790 +i)
             newPet:setUnkillable(true)
             newPet:SetAutoAttackEnabled(false)
             newPet:SetMagicCastingEnabled(false)
@@ -227,7 +217,7 @@ function phaseChange(mob)
 
         if phase % 2 == 1 then
             mob:timer(5000, function(mob)
-                mob:useMobAbility()  -- Cackle unless final phase
+                mob:useMobAbility()  -- Cackle unless final phase (some other skill will be chosen)
             end)
         end
 
