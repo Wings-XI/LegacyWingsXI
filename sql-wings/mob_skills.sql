@@ -1555,8 +1555,8 @@ INSERT INTO `mob_skills` VALUES(2336, 1642, 'acheron_kick', 5, 10.0, 2000, 1500,
 INSERT INTO `mob_skills` VALUES(2337, 1653, 'damsel_memento', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2338, 1641, 'rampant_stance', 1, 8, 4000, 1800, 1, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2339, 1643, 'di_trample', 0, 30, 0, 0, 4, 8, 0, 2, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2340, 1647, 'di_kick_attack', 0, 7, 1, 0, 4, 8, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2341, 1645, 'di_horn_attack', 0, 7, 1, 0, 4, 8, 0, 0, 0, 0, 0); 
+INSERT INTO `mob_skills` VALUES(2340, 1647, 'di_kick_attack', 0, 15, 1, 0, 4, 8, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2341, 1645, 'di_horn_attack', 0, 15, 1, 0, 4, 8, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2344, 1638, 'di_glow', 0, 30.0, 4000, 0, 4, 8, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2345, 1638, 'di_glow', 0, 30.0, 4000, 0, 4, 8, 0, 7, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2359, 1201, 'strap_cutter', 0, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
