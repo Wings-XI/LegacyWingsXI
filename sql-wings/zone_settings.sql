@@ -99,7 +99,7 @@ INSERT INTO `zone_settings` VALUES(46, 2, '127.0.0.1', 54230, 'Open_sea_route_to
 INSERT INTO `zone_settings` VALUES(47, 2, '127.0.0.1', 54230, 'Open_sea_route_to_Mhaura', 147, 147, 101, 138, 0, 0.00, 1176, 6);
 INSERT INTO `zone_settings` VALUES(48, 1, '127.0.0.1', 54230, 'Al_Zahbi', 178, 178, 178, 178, 0, 0.00, 1688, 3);
 INSERT INTO `zone_settings` VALUES(49, 0, '0.0.0.0', 0, '49', 0, 0, 0, 0, 0, 0.00, 1024, 6);
-INSERT INTO `zone_settings` VALUES(50, 1, '127.0.0.1', 54230, 'Aht_Urhgan_Whitegate', 178, 178, 178, 178, 0, 0.00, 1544, 3);
+INSERT INTO `zone_settings` VALUES(50, 1, '127.0.0.1', 54230, 'Aht_Urhgan_Whitegate', 178, 178, 178, 178, 0, 10.00, 1544, 3);
 INSERT INTO `zone_settings` VALUES(51, 2, '127.0.0.1', 54230, 'Wajaom_Woodlands', 149, 149, 101, 138, 0, 0.00, 1182, 6);
 INSERT INTO `zone_settings` VALUES(52, 2, '127.0.0.1', 54230, 'Bhaflau_Thickets', 149, 149, 101, 138, 0, 0.00, 1182, 6);
 INSERT INTO `zone_settings` VALUES(53, 2, '127.0.0.1', 54230, 'Nashmau', 175, 175, 175, 175, 0, 0.00, 1576, 3);
@@ -279,9 +279,9 @@ INSERT INTO `zone_settings` VALUES(226, 2, '127.0.0.1', 54230, 'Kazham-Jeuno_Air
 INSERT INTO `zone_settings` VALUES(227, 2, '127.0.0.1', 54230, 'Ship_bound_for_Selbina_Pirates', 106, 106, 101, 103, 0, 0.00, 1176, 6);
 INSERT INTO `zone_settings` VALUES(228, 2, '127.0.0.1', 54230, 'Ship_bound_for_Mhaura_Pirates', 106, 106, 101, 103, 0, 0.00, 1176, 6);
 INSERT INTO `zone_settings` VALUES(229, 0, '0.0.0.0', 0, '229', 0, 0, 0, 0, 0, 0.00, 1024, 6);
-INSERT INTO `zone_settings` VALUES(230, 1, '127.0.0.1', 54230, 'Southern_San_dOria', 107, 227, 107, 107, 0, 0.00, 1608, 0);
-INSERT INTO `zone_settings` VALUES(231, 1, '127.0.0.1', 54230, 'Northern_San_dOria', 107, 227, 107, 107, 0, 0.00, 1096, 0);
-INSERT INTO `zone_settings` VALUES(232, 1, '127.0.0.1', 54230, 'Port_San_dOria', 107, 227, 107, 107, 0, 0.00, 1608, 0);
+INSERT INTO `zone_settings` VALUES(230, 1, '127.0.0.1', 54230, 'Southern_San_dOria', 107, 107, 107, 107, 0, 0.00, 1608, 0);
+INSERT INTO `zone_settings` VALUES(231, 1, '127.0.0.1', 54230, 'Northern_San_dOria', 107, 107, 107, 107, 0, 0.00, 1096, 0);
+INSERT INTO `zone_settings` VALUES(232, 1, '127.0.0.1', 54230, 'Port_San_dOria', 107, 107, 107, 107, 0, 0.00, 1608, 0);
 INSERT INTO `zone_settings` VALUES(233, 1, '127.0.0.1', 54230, 'Chateau_dOraguille', 156, 156, 156, 156, 0, 0.00, 1032, 0);
 INSERT INTO `zone_settings` VALUES(234, 1, '127.0.0.1', 54230, 'Bastok_Mines', 152, 152, 152, 152, 0, 0.00, 1608, 1);
 INSERT INTO `zone_settings` VALUES(235, 1, '127.0.0.1', 54230, 'Bastok_Markets', 152, 152, 152, 152, 0, 0.00, 1608, 1);
