@@ -2,6 +2,9 @@
 -- Area: Aht Urhgan Whitegate
 --  NPC: Zaranf
 -- Standard Info NPC
+-- WINGSCUSTOM: This unused NPC is repurposed to provide a guaranteed nyzul gear drop
+--              The item is obtained via trading a crystal and material, and your runic key is lost in the process
+--              This results in requiring a climb through all 100 floors again
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/npc_util")
@@ -254,7 +257,7 @@ function onTrigger(player, npc)
             -- Player interacted after trading initial crystal and material. Give material back in case they changed their mind.
             player:PrintToPlayer("Zaranf : Hmm? Having regrets? Or need more time to gather my rather exorbitant fee?~", 0xD)
             player:PrintToPlayer("Zaranf : Very well. Take your trash back then. I'm keeping the crystal, though, in exchange for you wasting my time.", 0xD)
-            player:PrintToPlayer("Zaranf : Just know the offer's still on the table if you change your mind. For now...", 0xD)
+                player:PrintToPlayer("Zaranf : Just know the offer's still on the table if you change your mind. For now...", 0xD)
             if giveBackMaterial(player) then
                 player:setCharVar("NyzulResetSelectedSet",0)
                 player:setCharVar("NyzulResetSelectedSlot",0)
