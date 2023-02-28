@@ -7,6 +7,8 @@ mixins = {require("scripts/mixins/families/imp")}
 -----------------------------------
 
 function onMobInitialize(mob)
+    -- do not add immunity, as the onMobFight workaround will stop working
+    mob:addMod(tpz.mod.SILENCERES, 101)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 4500)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 7500)
@@ -24,7 +26,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("horn", 0)
 end
 
-function onMobFight(mob)
+function onMobFight(mob, target)
     local horn = mob:AnimationSub()
 
     if horn == 1 then
@@ -34,6 +36,15 @@ function onMobFight(mob)
         mob:setSpellList(549)
     else
         mob:setSpellList(539)
+    end
+
+    -- TODO: fix core mob_controller.cpp to close the gap if only offensive spells in spell list and mob's spell cooldown is ready
+    -- action 30 is spell casting
+    local targDistance = mob:checkDistance(target)
+    if mob:getCurrentAction() ~= 30 and (targDistance > 23 or mob:getMP() < 200) then
+        mob:addStatusEffect(tpz.effect.SILENCE, 1, 0, 30)
+    elseif mob:hasStatusEffect(tpz.effect.SILENCE) and targDistance < 10 then
+        mob:delStatusEffectSilent(tpz.effect.SILENCE)
     end
 end
 
