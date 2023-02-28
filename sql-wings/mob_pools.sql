@@ -4281,7 +4281,7 @@ INSERT INTO `mob_pools` VALUES(4217, 'Velionis', 'Velionis', 292, _binary 0x0000
 INSERT INTO `mob_pools` VALUES(4218, 'Velociraptor', 'Velociraptor', 210, _binary 0x00003c0100000000000000000000000000000000, 6, 6, 7, 220, 100, 0, 1, 0, 0, 0, 0, 0, 165, 131, 0, 0, 0, 0, 0, 210);
 INSERT INTO `mob_pools` VALUES(4219, 'Velosareon', 'Velosareon', 359, _binary 0x0500d70100000000000000000000000000000000, 1, 1, 7, 280, 100, 0, 1, 1, 1, 2, 6181, 32, 983, 157, 0, 0, 0, 0, 0, 359);
 INSERT INTO `mob_pools` VALUES(4220, 'Vepar', 'Vepar', 197, _binary 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 1, 0, 0, 4, 0, 0, 6434, 131, 0, 0, 0, 0, 0, 197);
-INSERT INTO `mob_pools` VALUES(4221, 'Verdelet', 'Verdelet', 301, _binary 0x0000bf0600000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 2, 1, 2, 147, 32, 306, 157, 0, 0, 539, 0, 0, 301);
+INSERT INTO `mob_pools` VALUES(4221, 'Verdelet', 'Verdelet', 301, _binary 0x0000bf0600000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 2, 1, 2, 147, 32, 306, 131, 0, 0, 539, 0, 0, 301);
 INSERT INTO `mob_pools` VALUES(4222, 'Verglas_Golem', 'Verglas_Golem', 135, _binary 0x0000b00100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 135);
 INSERT INTO `mob_pools` VALUES(4223, 'Veri_Selen', 'Veri_Selen', 278, _binary 0x00008f0100000000000000000000000000000000, 4, 4, 12, 240, 100, 0, 0, 0, 0, 2, 0, 0, 7, 141, 0, 0, 279, 0, 0, 973);
 INSERT INTO `mob_pools` VALUES(4224, 'Vermilion-eared_Noberry', 'Vermilion-eared_Noberry', 243, _binary 0x0000c90400000000000000000000000000000000, 15, 15, 6, 240, 100, 0, 1, 0, 1, 18, 0, 0, 127, 157, 0, 0, 141, 0, 0, 243);

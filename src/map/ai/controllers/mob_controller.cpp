@@ -1364,6 +1364,7 @@ bool CMobController::IsSpellReady(float currentDistance)
     {
         return true;
     }
-
+// TODO: return false if the mob can't cast for some reason. Maybe it should be done in a different function, but
+// if the below is true but the target is out of range, the mob will just stand still
     return (m_Tick >= m_LastMagicTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) - bonusTime));
 }
