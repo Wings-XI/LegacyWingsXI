@@ -69,9 +69,10 @@ void CGuild::updateGuildPointsPattern(uint8 pattern)
         {
             while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
             {
+                // 3x GP max
                 m_GPItems[i].push_back(GPItem_t(
                     itemutils::GetItemPointer(Sql_GetUIntData(SqlHandle, 0)),
-                    Sql_GetUIntData(SqlHandle, 2),
+                    Sql_GetUIntData(SqlHandle, 2) * 3,
                     Sql_GetUIntData(SqlHandle, 1)));
             }
         }
