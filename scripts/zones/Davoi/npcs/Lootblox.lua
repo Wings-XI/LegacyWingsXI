@@ -45,9 +45,9 @@ function onTrade(player, npc, trade)
             player:startEvent(138, currency[2], currency[1], CURRENCY_EXCHANGE_RATE)
 
          -- Currency Shop
-         elseif (count == 25 and trade:hasItemQty(1453, 25)) then -- Behemoth Horn (833)
+         elseif (count == 25 and trade:hasItemQty(1453, 25)) then -- Behemoth Horn (883)
             buying = true
-            exchange = {25, 833}
+            exchange = {25, 883}
          elseif (count == 7 and trade:hasItemQty(1453, 7)) then -- Goblin Grease (1520)
             buying = true
             exchange = {7,1520}
