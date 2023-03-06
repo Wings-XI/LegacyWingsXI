@@ -169,6 +169,7 @@ void UpdateGuildPointsPattern()
         Sql_Query(SqlHandle, "REPLACE INTO server_variables (name,value) VALUES('[GUILD]pattern_update', %u), ('[GUILD]pattern', %u);",
             CVanaTime::getInstance()->getJstYearDay(), pattern);
         Sql_Query(SqlHandle, "DELETE FROM char_vars WHERE varname = '[GUILD]daily_points';");
+        Sql_Query(SqlHandle, "DELETE FROM char_vars WHERE varname = '[GUILD]daily_personal_resets';"); // Reset tracker for custom gp daily reset mechanic
     }
 
     // load the pattern in case it was set by another server (and this server did not set it)
