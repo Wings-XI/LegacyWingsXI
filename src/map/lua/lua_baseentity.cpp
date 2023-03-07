@@ -4701,6 +4701,33 @@ inline int32 CLuaBaseEntity::getCurrentGPItem(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: getCurrentGPItemWithCap()
+ *  Purpose : Returns the current Guild Point Item needed with it's cap
+ *  Example : player:getCurrentGPItemWithCap(guildID)
+ *  Notes   :
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::getCurrentGPItemWithCap(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    auto GuildID = (uint8)lua_tonumber(L, 1);
+
+    CGuild* PGuild = guildutils::GetGuild(GuildID);
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    auto GPItem = PGuild->getDailyGPItemWithCap(PChar);
+
+    lua_pushinteger(L, GPItem.first);
+    lua_pushinteger(L, GPItem.second);
+
+    return 2;
+}
+
+/************************************************************************
 *  Function: breakLinkshell()
 *  Purpose : Breaks linkshell and all pearls/sacks
 *  Example : player:breakLinkshell(LSname)
@@ -19144,6 +19171,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createShop),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentGPItem),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, getCurrentGPItemWithCap),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,breakLinkshell),
 
     // Soul Plates
