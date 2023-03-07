@@ -52,8 +52,6 @@ def all_mobs(cur):
 
     for zone in zones:
         id = zone[0]
-        if id != 124:
-            continue
 
         cur.execute('SELECT mobid,mobname,mJob,sJob,minlevel,maxlevel,behavior,aggro,detects,true_detection,links,mobtype & 2 = 2,spawntype,respawntime,\
                 (SELECT group_concat(DISTINCT sortname) FROM mob_droplist as d LEFT JOIN item_basic i ON d.itemid = i.itemid WHERE d.dropId = mob_groups.dropid AND d.dropType IN (0,1) order by grouprate,itemrate),\
@@ -95,32 +93,30 @@ def all_mobs(cur):
             
             phys = {16:'Slash',17:'Pierce',18:'H2H',19:'Blunt'}
             
-            weakPhys = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] > 1) }
-            weakPhys = sorted(weakPhys.items(), key=lambda x:x[1], reverse=True)
+            weakPhys: dict = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] > 1) }
+            weakPhys: list[tuple] = sorted(weakPhys.items(), key=lambda x:x[1], reverse=True)
             
-            strongPhys = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] < 1) }
+            strongPhys: dict = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] < 1) }
             
             if len(strongPhys) == len(phys):
-                strongPhys = [('Physical', 1)]
+                strongPhys: list[tuple] = [('Physical', 1)]
             else:
-                strongPhys = sorted(strongPhys.items(), key=lambda x:x[1], reverse=True)
+                strongPhys: list[tuple] = sorted(strongPhys.items(), key=lambda x:x[1], reverse=True)
 
             mag = {20:'Fire',21:'Ice',22:'Wind',23:'Earth',24:'Lightning',25:'Water',26:'Light',27:'Dark'}
             
-            weakMag = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] > 1 }
-            weakMag = sorted(weakMag.items(), key=lambda x:x[1], reverse=True)
+            weakMag: dict = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] > 1 }
+            weakMag: list[tuple] = sorted(weakMag.items(), key=lambda x:x[1], reverse=True)
             
-            strongMag = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] < 1 }
+            strongMag: dict = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] < 1 }
 
             if len(strongMag) == len(mag):
-                strongMag = [('Magic', 1)]
+                strongMag: list[tuple] = [('Magic', 1)]
             else:
-                strongMag = sorted(strongMag.items(), key=lambda x:x[1], reverse=True)
+                strongMag: list[tuple] = sorted(strongMag.items(), key=lambda x:x[1], reverse=True)
             
-            weak = [x[0] for x in weakPhys + weakMag]
-            strong = [x[0] for x in strongPhys + strongMag]
-            
-            print(weak, strong)
+            weak: list[str]     = [f'{x[0]}: {x[1]}' for x in weakPhys + weakMag]
+            strong: list[str]   = [f'{x[0]}: {x[1]}' for x in strongPhys + strongMag]
             
             file.write('\tmb_data[{}] = {{ nm="{}", id="{}", name="{}", mj="{}", sj="{}", mlvl="{}-{}", behavior="{}", aggro="{}", links="{}", spawntype="{}", respawntime="{}", items="{}", steal="{}", weak="{}", strong="{}", note="" }}\n'.format(
                     count,                          # row
