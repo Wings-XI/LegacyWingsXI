@@ -90,28 +90,36 @@ def all_mobs(cur):
             if aggro & 0x100 == 0x100:
                 aggroList = aggroList + ',SC'
 
-
             phys = {16:'Slash',17:'Pierce',18:'H2H',19:'Blunt'}
+            mag = {20:'Fire',21:'Ice',22:'Wind',23:'Earth',24:'Lightning',25:'Water',26:'Light',27:'Dark'}
+            weakResult = {}
+            strongResult = {}
 
-            weakPhys: dict = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] > 1) }
+            weakPhys = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] > 1) }
             weakPhys: list[tuple] = sorted(weakPhys.items(), key=lambda x:x[1], reverse=True)
+            
+            weakMag = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] > 1 }
+            weakMag: list[tuple] = sorted(weakMag.items(), key=lambda x:x[1], reverse=True)
+            
+            weakDict = dict(weakPhys + weakMag)
 
-            strongPhys: dict = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] < 1) }
+            for val in weakDict.values():
+                weakResult[val] = [x for x in weakDict.keys() if weakDict[x] == val]
 
+            strongPhys = { phys[i]: abs(row[i]-1) for i in range(16, 20) if (type(row[i]) == float and row[i] < 1) }
             strongPhys: list[tuple] = sorted(strongPhys.items(), key=lambda x:x[1], reverse=True)
 
-            mag = {20:'Fire',21:'Ice',22:'Wind',23:'Earth',24:'Lightning',25:'Water',26:'Light',27:'Dark'}
-
-            weakMag: dict = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] > 1 }
-            weakMag: list[tuple] = sorted(weakMag.items(), key=lambda x:x[1], reverse=True)
-
-            strongMag: dict = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] < 1 }
-
+            strongMag = { mag[i]: abs(row[i]-1) for i in range(20, 28) if type(row[i]) == float and row[i] < 1 }
             strongMag: list[tuple] = sorted(strongMag.items(), key=lambda x:x[1], reverse=True)
+            
+            strongDict = dict(strongPhys + strongMag)
+
+            for val in strongDict.values():
+                strongResult[val] = [x for x in strongDict.keys() if strongDict[x] == val]
 
             ## add one back for final output
-            weak: list[str]     = [f'{x[0]}: {float(round(x[1] + 1,3))}' for x in weakPhys + weakMag]
-            strong: list[str]   = [f'{x[0]}: {float(round(x[1] + 1,3))}' for x in strongPhys + strongMag]
+            weak: list[str] = [f'{"/".join(value)}: {float(round(keylist + 1, 3))}' for keylist, value in weakResult.items()]
+            strong: list[str] = [f'{"/".join(value)}: {float(round(keylist + 1, 3))}' for keylist, value in strongResult.items()]
 
             drops = '' if row[14] is None else row[14].replace('_',' ')
             steal = '' if row[15] is None else row[15].replace('_',' ')
