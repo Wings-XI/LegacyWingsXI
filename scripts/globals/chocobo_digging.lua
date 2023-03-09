@@ -844,6 +844,14 @@ local function calculateSkillUp(player)
 
     if math.random(1, digsNeeded/100) == 1 then
 		player:setSkillLevel(tpz.skill.DIG, realSkill + 1)
+        -- WINGSCUSTOM show when digging skillup happens. The skillID is not recognized by the client, so we just have to create a custom message
+        -- player:messageBasic(38, tpz.skill.DIG, 1)
+        player:PrintToPlayer(string.format("%s's digging skill rises 0.1 points.", player:getName()), 0x1F)
+        if math.floor((realSkill + 1) / 10) ~= math.floor(realSkill / 10) then
+            -- full skillup
+            -- player:messageBasic(53, tpz.skill.DIG, math.floor((realSkill + 1) / 10))
+            player:PrintToPlayer(string.format("%s's digging skill reaches level %u.", player:getName(), math.floor((realSkill + 1) / 10)), 0x1F)
+        end
 
 		-- Digging does not have test items, so increment rank once player hits 10.0, 20.0, .. 100.0
 		if (realSkill + 1) >= (skillRank * 100) + 100 then
