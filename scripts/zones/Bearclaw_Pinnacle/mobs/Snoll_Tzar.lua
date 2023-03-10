@@ -63,13 +63,20 @@ function onMobFight(mob, player, target)
     end
 end
 
+function onMobWeaponSkill(target, mob, skill)
+    if skill:getID() == 1644 then
+        -- finished the mobskill, force the changeTime to fail event
+        mob:setLocalVar("changeTime", mob:getBattleTime() - 6)
+    end
+end
+
 function onMobDeath(mob, player, isKiller)
     local bf = mob:getBattlefield() 
     local changeTime = mob:getLocalVar("changeTime")
     local gameOver = mob:getLocalVar("gameover")
 
-    -- end BCNM  
-    if (gameOver == 1 and mob:getBattleTime() - changeTime > 3) then 
+    -- end BCNM if combusion was interrupted and animation + prep time has passed
+    if (gameOver == 1 and mob:getBattleTime() - changeTime > 5) then
         mob:AnimationSub(4)   
         bf:lose()
         return
