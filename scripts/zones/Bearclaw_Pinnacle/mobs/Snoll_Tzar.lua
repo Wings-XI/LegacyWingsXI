@@ -36,7 +36,9 @@ function onMobFight(mob, player, target)
     end
 
     -- big
-    if (delay < os.time() and mob:AnimationSub() == 4 and mob:getBattleTime() - changeTime > 11) then
+    if not mob:actionQueueEmpty() then
+        -- do nothing if currently performing an action. This allows for the timers to behave more reliably
+    elseif (delay < os.time() and mob:AnimationSub() == 4 and mob:getBattleTime() - changeTime > 11) then
         mob:setLocalVar("delayed", 0)
         mob:AnimationSub(5) 
         mob:setLocalVar("changeTime", mob:getBattleTime())
