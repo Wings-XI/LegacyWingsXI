@@ -252,7 +252,8 @@ function unionRepresentativeTrigger(player, guildID, csid, currency, keyitems)
         end
     end
     if remainingPoints == 0 then
-        local resetPrice = ((player:getCharVar('[GUILD]daily_personal_resets') or 0) + 1) * 100000 -- custom reset message, maybe make this an option in settings.lua
+        local _, maxPoints = player:getCurrentGPItemWithCap(guildID)
+        local resetPrice = ((player:getCharVar('[GUILD]daily_personal_resets') or 0) + 1) *  maxPoints * 10 -- custom reset message, maybe make this an option in settings.lua
         player:PrintToPlayer(string.format("You may reset today's available guild point threshold by trading %d gil.", resetPrice), 0x1D)
     end
     player:startEvent(csid, player:getCurrency(currency), player:getCharVar('[GUILD]currentGuild') - 1, gpItem, remainingPoints, cap, 0, kibits)
@@ -349,9 +350,10 @@ end
 
 function unionRepresentativeTrade(player, npc, trade, csid, guildID)
     local gpItem, remainingPoints = player:getCurrentGPItem(guildID)
+    local _, maxPoints = player:getCurrentGPItemWithCap(guildID)
     local text = zones[player:getZoneID()].text
     local timesReset = player:getCharVar('[GUILD]daily_personal_resets') or 0
-    local resetPrice = (timesReset + 1) * 100000 -- custom reset: linear growth starting at 100k and in increments of 100k, no hard cap
+    local resetPrice = (timesReset + 1) * maxPoints * 10 -- custom reset: linear growth in increments of the max points of the daily item * 10, no hard cap
     
     if (player:getCharVar('[GUILD]currentGuild') - 1 == guildID) then
         if trade:getGil() == resetPrice and trade:getItemCount() == 1 then
