@@ -1406,14 +1406,26 @@ namespace petutils
             PPet->charmTime += 30min - std::chrono::milliseconds(tpzrand::GetRandomNumber(300000u));
         }
 
-        float rate = 0.10f;
+        // Only increase stats one time
+        if (PPet->GetLocalVar("ReceivedFamiliar") != 1)
+        {
+            float rate = 0.10f;
 
-        // boost hp by 10%
-        uint16 boost = (uint16)(PPet->health.maxhp * rate);
+            // boost hp by 10%
+            uint16 boost = (uint16)(PPet->health.maxhp * rate);
 
-        PPet->health.maxhp += boost;
-        PPet->health.hp += boost;
-        PPet->UpdateHealth();
+            // HP,haste, attp,acc,eva,def: https://ffxiclopedia.fandom.com/wiki/Familiar?oldid=1088029
+            PPet->health.maxhp += boost;
+            PPet->health.hp += boost;
+            PPet->UpdateHealth();
+
+            // boost stats by 10%
+            PPet->addModifier(Mod::ATTP, (int16)(rate * 100.0f));
+            PPet->addModifier(Mod::ACC, (int16)(rate * 100.0f));
+            PPet->addModifier(Mod::EVA, (int16)(rate * 100.0f));
+            PPet->addModifier(Mod::DEFP, (int16)(rate * 100.0f));
+            PPet->addModifier(Mod::HASTE_MAGIC, (int16)(2500.0f));
+        }
     }
 
     void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone, CBattleEntity* PCastTarget)
