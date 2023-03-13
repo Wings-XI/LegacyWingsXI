@@ -17,8 +17,6 @@ function onAbilityCheck(player, target, ability)
         return tpz.msg.basic.REQUIRES_A_PET, 0
     elseif not player:isJugPet() and pet:getObjType() ~= tpz.objType.MOB then
         return tpz.msg.basic.NO_EFFECT_ON_PET, 0
-    elseif pet:getLocalVar("ReceivedFamiliar") == 1 then
-        return tpz.msg.basic.NO_EFFECT_ON_PET, 0
     else
         return 0, 0
     end
@@ -27,8 +25,8 @@ end
 function onUseAbility(player, target, ability)
     local pet = player:getPet()
     
-    pet:setLocalVar("ReceivedFamiliar", 1)
     player:familiar()
+    pet:setLocalVar("ReceivedFamiliar", 1)
     ability:setMsg(tpz.msg.basic.FAMILIAR_PC)
     
     return 0
