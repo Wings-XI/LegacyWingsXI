@@ -1,7 +1,7 @@
 -----------------------------------
 -- Flames for the Dead
 -- Bearclaw Pinnacle mission battlefield
--- !pos -717.68 8.59 -442 8
+-- !pos -717.68 8.59 -442 6
 -- Pillar ID: 16801888
 -----------------------------------
 require("scripts/globals/battlefield")
