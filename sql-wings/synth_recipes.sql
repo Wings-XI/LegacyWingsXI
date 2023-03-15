@@ -4033,6 +4033,7 @@ INSERT INTO `synth_recipes` VALUES(4598, 1, 0, 0, 0, 85, 0, 0, 0, 0, 0, 4100, 42
 INSERT INTO `synth_recipes` VALUES(4599, 0, 0, 0, 0, 0, 0, 0, 0, 0, 98, 4098, 4240, 612, 633, 936, 1555, 4273, 4387, 4390, 5650, 5701, 5702, 5702, 5702, 1, 1, 1, 1, 'Nopales Salad');
 INSERT INTO `synth_recipes` VALUES(4600, 1, 0, 0, 0, 0, 8, 34, 0, 0, 0, 4100, 4242, 12994, 0, 0, 0, 0, 0, 0, 0, 818, 818, 848, 848, 2, 3, 1, 2, 'Shoes_Desynth');
 INSERT INTO `synth_recipes` VALUES(4601, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 4100, 4242, 11310, 0, 0, 0, 0, 0, 0, 0, 828, 828, 828, 828, 1, 1, 1, 1, 'Velvet Cloth');
+INSERT INTO `synth_recipes` VALUES(4602, 1, 0, 0, 43, 0, 0, 11, 0, 0, 0, 4100, 4242, 12962, 0, 0, 0, 0, 0, 0, 0, 852, 852, 852, 852, 1, 2, 2, 2, 'Leggings_Desynth');
 
 -- -----------
 -- RECIPES END
