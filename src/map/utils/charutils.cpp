@@ -934,7 +934,8 @@ namespace charutils
         PChar->StatusEffectContainer->LoadStatusEffects();
         PChar->m_fomorHate = GetCharVar(PChar, "FOMOR_HATE");
         PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
-        PChar->m_nyzulProgress = GetCharVar(PChar, "Nyzul_RunicDiscProgress");
+        // WINGSCUSTOM nyzul climb reset custom quest
+        PChar->m_nyzulProgress = (GetCharVar(PChar, "NyzulClimbNumber") > 0 ? 100 : GetCharVar(PChar, "Nyzul_RunicDiscProgress"));
 
         charutils::LoadEquip(PChar);
         luautils::CheckForGearSet(PChar);
