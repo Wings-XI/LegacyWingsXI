@@ -548,7 +548,7 @@ dynamis.entryNpcOnDynamisServerReply = function(player, result, message_informat
         local entryPos = dynamis.entryInfo[playerZoneID].enterPos
         if entryPos == nil then return end
         -- update headcount after the rpc callback to avoid crashes incrementing multiple times for the same player
-        if player:getCharVar("FirstDynaEntry", 1) then
+        if player:getCharVar("FirstDynaEntry") == 1 then
             SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), GetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID)) + 1)
             player:setCharVar("FirstDynaEntry", 0)
         end
