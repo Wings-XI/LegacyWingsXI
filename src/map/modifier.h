@@ -873,6 +873,7 @@ enum class Mod
 
     SUBTLE_BLOW_II            = 993, // Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
     GARDENING_WILT_BONUS      = 995, // Increases the number of Vanadays a plant can survive before it wilts
+    CRYSTAL_DROPRATE          = 996, // Increases droprate from crystals (nation aketons)
 
     SUPER_JUMP = 988,
 
@@ -930,7 +931,7 @@ enum class Mod
     * The following appear to be open mod IDs - please verify via a code search prior to using (min item_latents and item_mods)
       Please remove from this list if you find any used mods/take a mod:
         74-79, 140-143, 152-159, 192-223, 261-287
-        950-953, 961-962, 968, 973, 975, 977, 986-987, 989-992, 994, 996-999
+        950-953, 961-962, 968, 973, 975, 977, 986-987, 989-992, 994, 997-999
         832 - Enhances Aquaveil Effect?
     */
 };
