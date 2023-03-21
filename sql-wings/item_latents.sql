@@ -553,9 +553,13 @@ INSERT INTO `item_latents` VALUES(14410, 346, 1, 9, 6);
 INSERT INTO `item_latents` VALUES(14413, 369, 1, 5, 49);
 INSERT INTO `item_latents` VALUES(14423, 68, 2, 29, 0);
 INSERT INTO `item_latents` VALUES(14425, 68, 2, 29, 0);
+-- National aketons, set to increase droprate of crystals while solo by double. Source: https://wiki-ffo-jp.translate.goog/html/3192.html?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp
 INSERT INTO `item_latents` VALUES(14428, 169, 12, 54, 19);
+INSERT INTO `item_latents` VALUES(14428, 996, 37, 44, 19);
 INSERT INTO `item_latents` VALUES(14429, 169, 12, 54, 20);
+INSERT INTO `item_latents` VALUES(14429, 996, 37, 44, 20);
 INSERT INTO `item_latents` VALUES(14430, 169, 12, 54, 21);
+INSERT INTO `item_latents` VALUES(14430, 996, 37, 44, 21);
 INSERT INTO `item_latents` VALUES(14432, 68, 2, 29, 0);
 INSERT INTO `item_latents` VALUES(14432, 68, 2, 31, 0);
 INSERT INTO `item_latents` VALUES(14443, 369, 1, 26, 1);

@@ -1289,15 +1289,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         >= 90 = High Kindred Crests ID=2956
         */
         
-        uint8 aketonBonus = 0;
+        uint16 aketonBonus = 0;
         
         if (PChar->getMod(Mod::CRYSTAL_DROPRATE))
         {
-            aketonBonus += PChar->getMod(Mod::CRYSTAL_DROPRATE);
+            aketonBonus += std::clamp<uint16>(PChar->getMod(Mod::CRYSTAL_DROPRATE), 0, 100);
         }
         
-        uint8 crystalDroprate = 37 + aketonBonus;
-        uint8 crystalDroprate_party = 30 + aketonBonus;
+        uint16 crystalDroprate = 37 + aketonBonus;
         
         if (tpzrand::GetRandomNumber(100) < 20 && PChar->PTreasurePool->CanAddSeal() && !getMobMod(MOBMOD_NO_DROPS))
         {
@@ -1341,14 +1340,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         {
             uint8 count = 0;
             CMobEntity* mob = this;
-            PChar->ForParty([&count, &mob, &crystalDroprate_party](CBattleEntity* member)
+            PChar->ForParty([&count, &mob](CBattleEntity* member)
             {
                 if ((member->objtype == TYPE_PC && member->getZone() == mob->getZone() && distanceSquared(member->loc.p, mob->loc.p) < 10000.0f) &&
                     (
                     ((member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && (conquest::GetRegionOwner(member->loc.zone->GetRegionID()) <= 2)) ||
                         (member->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && member->loc.zone->GetRegionID() >= 28 && member->loc.zone->GetRegionID() <= 32) ||
                         (member->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && member->loc.zone->GetRegionID() >= 33 && member->loc.zone->GetRegionID() <= 40)) &&
-                    tpzrand::GetRandomNumber(100) < crystalDroprate_party) // Base 30
+                    tpzrand::GetRandomNumber(100) < 30)
                     )
                 {
                     count++;

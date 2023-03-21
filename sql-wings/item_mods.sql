@@ -13880,11 +13880,8 @@ INSERT INTO `item_mods` VALUES (14427,1,19);
 INSERT INTO `item_mods` VALUES (14427,5,9);
 INSERT INTO `item_mods` VALUES (14427,71,1);
 INSERT INTO `item_mods` VALUES (14428,1,1);
-INSERT INTO `item_mods` VALUES (14428,996,10);    -- Kingdom aketon crystal droprate +10%
 INSERT INTO `item_mods` VALUES (14429,1,1);
-INSERT INTO `item_mods` VALUES (14429,996,10);    -- Republic aketon crystal droprate +10%
 INSERT INTO `item_mods` VALUES (14430,1,1);
-INSERT INTO `item_mods` VALUES (14430,996,10);    -- Federation aketon crystal droprate +10%
 INSERT INTO `item_mods` VALUES (14431,1,24);
 INSERT INTO `item_mods` VALUES (14431,11,2);
 INSERT INTO `item_mods` VALUES (14432,1,20);
