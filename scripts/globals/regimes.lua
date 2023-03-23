@@ -1290,7 +1290,7 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
             player:setCharVar("[regime]id", page[8])
             player:setCharVar("[regime]repeat", regimeRepeat)
             
-            if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+            if REGIME_WAIT == 1 and player:getCharVar("[regime]day") == VanadielDayAbsolute() then
                 -- WINGSCUSTOM
                 player:PrintToPlayer("You have chosen a page before a new one is available. Since you chose to have the page repeat your progress is stalled until the new day.")
                 for i = 1, 4 do
@@ -1388,6 +1388,18 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         player:messageBasic(tpz.msg.basic.FOV_COMPLETED_REGIME)
         local reward = page[7]
 
+        -- WINGSCUSTOM diminishing returns on page rewards for repeated completions on same day
+        if REGIME_WAIT == 0 and player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+            local completions = player:getCharVar("[regime]repeatedCompletions")
+            if completions > 0 then
+                reward = math.ceil(reward * (.85 ^ completions))
+                player:PrintToPlayer(string.format("Field Manual : You are getting a reduced reward from completing %u pages on the same day!", completions), 0xD)
+            end
+            player:setCharVar("[regime]repeatedCompletions", completions + 1)
+        else
+            player:setCharVar("[regime]repeatedCompletions", 0)
+        end
+
         -- adjust reward down if regime is higher than server mob level cap
         -- example: if you have mobs capped at level 80, and the regime is level 100, you will only get 80% of the reward
         if NORMAL_MOB_MAX_LEVEL_RANGE_MAX > 0 and page[6] > NORMAL_MOB_MAX_LEVEL_RANGE_MAX then
@@ -1441,7 +1453,7 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
     -- repeating regimes
     if player:getCharVar("[regime]repeat") == 1 then
         -- new day hasn't passed since collecting a page
-        if player:getCharVar("[regime]day") == VanadielDayAbsolute() then
+        if REGIME_WAIT == 1 and player:getCharVar("[regime]day") == VanadielDayAbsolute() then
             if player:getCharVar("[regime]waitNewDay") ~= 1 then
                 -- WINGSCUSTOM
                 player:setCharVar("[regime]waitNewDay", 1)
@@ -1456,7 +1468,9 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
             player:setCharVar("[regime]waitNewDay", 0)
             player:setCharVar("[regime]day", VanadielDayAbsolute())
             -- since we only let pages renew once per day, we need to reset this to allow gil/tabs every page completion
-            player:setCharVar("[regime]lastReward", 0)
+            if REGIME_WAIT == 1 then
+                player:setCharVar("[regime]lastReward", 0)
+            end
 
             local pageNum = getPageByRegimeId(player:getCharVar("[regime]type"), player:getCharVar("[regime]zone"), player:getCharVar("[regime]id"))[9]
             local regimeZoneID = player:getCharVar("[regime]zone")
