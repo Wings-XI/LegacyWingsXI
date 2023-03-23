@@ -2904,7 +2904,7 @@ INSERT INTO `mob_pools` VALUES(2840, 'Nidhogg', 'Nidhogg', 263, _binary 0x00000f
 INSERT INTO `mob_pools` VALUES(2841, 'Feraloxs_Slime', 'Feraloxs_Slime', 229, _binary 0x0000240100000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 0, 1, 8, 0, 32, 0, 155, 0, 0, 54, 0, 0, 229);
 INSERT INTO `mob_pools` VALUES(2842, 'Nightmare_Bats', 'Nightmare_Bats', 47, _binary 0x0000040100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 0, 0, 64, 238, 643, 0, 0, 0, 0, 0, 47);
 INSERT INTO `mob_pools` VALUES(2843, 'Nightmare_Bugard', 'Nightmare_Bugard', 58, _binary 0x0000470500000000000000000000000000000000, 1, 1, 5, 300, 100, 0, 1, 0, 1, 0, 0, 0, 0, 131, 0, 0, 0, 0, 0, 58);
-INSERT INTO `mob_pools` VALUES(2844, 'Nightmare_Bunny', 'Nightmare_Bunny', 206, _binary 0x00000d0100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 183, 131, 0, 0, 0, 0, 0, 206);
+INSERT INTO `mob_pools` VALUES(2844, 'Nightmare_Bunny', 'Nightmare_Bunny', 206, _binary 0x00000d0100000000000000000000000000000000, 6, 6, 2, 240, 100, 0, 1, 0, 1, 0, 0, 0, 183, 131, 0, 0, 0, 0, 0, 5308);
 INSERT INTO `mob_pools` VALUES(2845, 'Nightmare_Cluster', 'Nightmare_Cluster', 68, _binary 0x0000220100000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 1, 131, 0, 0, 0, 0, 0, 68);
 INSERT INTO `mob_pools` VALUES(2846, 'Scourquix_Scaleskin', 'Scourquix_Scaleskin', 327, _binary 0x00003e0400000000000000000000000000000000, 11, 14, 3, 240, 100, 0, 1, 1, 1, 2, 0, 32, 0, 159, 0, 0, 0, 0, 0, 373);
 INSERT INTO `mob_pools` VALUES(2847, 'Nightmare_Crab', 'Nightmare_Crab', 77, _binary 0x0000640100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 0, 1, 0, 0, 0, 501, 131, 8, 0, 0, 0, 0, 77);
@@ -6323,7 +6323,7 @@ INSERT INTO `mob_pools` VALUES(6926, 'Tarasca', 'Tarasca', 87, _binary 0x0000a40
 INSERT INTO `mob_pools` VALUES(6927, 'Stollenwurm', 'Stollenwurm', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 5031);
 INSERT INTO `mob_pools` VALUES(6928, 'Koschei', 'Koschei', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 5032);
 INSERT INTO `mob_pools` VALUES(6930, 'Vishap', 'Vishap', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 2, 0, 32, 126, 157, 0, 0, 0, 0, 0, 5034);
-INSERT INTO `mob_pools` VALUES(6931, 'Nightmare_Cockatrice', 'Nightmare_Cockatrice', 70, _binary 0x0000200100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 1, 1, 0, 0, 0, 164, 643, 0, 0, 0, 0, 0, 70);
+INSERT INTO `mob_pools` VALUES(6931, 'Nightmare_Cockatrice', 'Nightmare_Cockatrice', 70, _binary 0x0000200100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 1, 1, 0, 0, 0, 164, 643, 0, 0, 0, 0, 0, 5309);
 INSERT INTO `mob_pools` VALUES(6932, 'Wight', 'Wight', 227, _binary 0x00003c0200000000000000000000000000000000, 1, 1, 5, 240, 100, 0, 1, 0, 0, 0, 0, 0, 344, 131, 0, 0, 0, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(6933, 'Zhuu_Buxu_the_Silent_S', 'Zhuu_Buxu_the_Silent_S', 360, _binary 0x0000210800000000000000000000000000000000, 13, 13, 2, 240, 100, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 7, 0, 0, 360);
 INSERT INTO `mob_pools` VALUES(6934, 'Nightmare_Antlion', 'Nightmare_Antlion', 357, _binary 0x0000440500000000000000000000000000000000, 1, 1, 6, 200, 100, 512, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 128, 357);

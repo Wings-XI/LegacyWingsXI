@@ -3526,6 +3526,18 @@ INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1696); -- Seismic Tail
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 334);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 1847);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 336);
+-- Nightmare Bunny
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 257);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 258);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 259);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 323);
+-- Nightmare Cockatrice
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 406);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 407);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 408);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 410);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 3516);
+
 
 --
 -- Indexes for dumped tables
