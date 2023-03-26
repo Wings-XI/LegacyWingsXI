@@ -100,9 +100,13 @@ uint32_t Authentication::AuthenticateUser(const char* pszUsername, const char* p
                 LOG_DEBUG1("No OTP supplied for user %s", pszUsername);
                 mLastError = AUTH_NEED_OTP;
             }
-            else if (totp_verify(strOTPSecret.c_str(), pszOTP, 6, 30, SHA1) != VALID) {
-                LOG_DEBUG1("OTP mismatch for user %s", pszUsername);
-                mLastError = AUTH_BAD_OTP;
+            else
+            {
+                uint8_t totpReturn = totp_verify(strOTPSecret.c_str(), pszOTP, 6, 30, SHA1);
+                if (totpReturn != VALID) {
+                    LOG_DEBUG1("OTP invalid for user %s, otpSecret: %s results: %u", pszUsername, strOTPSecret.c_str(), totpReturn);
+                    mLastError = AUTH_BAD_OTP;
+                }
             }
         }
         if (mLastError != AUTH_SUCCESS) {
