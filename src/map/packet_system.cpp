@@ -3872,6 +3872,7 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
 
     uint64 ipp = zoneutils::GetZoneIPP(PChar->loc.destination == 0 ? PChar->getZone() : PChar->loc.destination);
 
+    charutils::SaveCharEquip(PChar);
     charutils::SendToZone(PChar, 2, ipp);
     return;
 }
@@ -6291,6 +6292,7 @@ void SmallPacket0x0E7(map_session_data_t* const PSession, CCharEntity* const PCh
     if (PChar->StatusEffectContainer->HasPreventActionEffect())
         return;
 
+    charutils::SaveCharEquip(PChar);
     if (PChar->m_moghouseID || PChar->nameflags.flags & FLAG_GM || PChar->m_GMlevel > 1)
     {
         charutils::RemoveGuestsFromMogHouse(PChar);
