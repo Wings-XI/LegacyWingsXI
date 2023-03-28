@@ -1119,7 +1119,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                     PChar->pushPacket(new CInventoryFinishPacket());
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
                     luautils::OnChocoboDig(PChar);
-                    PChar->m_lastDig = now;
+                    PChar->m_lastDig = std::chrono::system_clock::now();
                     PChar->m_lastDigPosition = PChar->loc.p;
 
                     if (PDigAreaContainer)
