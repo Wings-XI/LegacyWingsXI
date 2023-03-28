@@ -1166,12 +1166,14 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
 
         if act == "CANCEL_REGIME" then
             local totalPageProgress = 0
-            for i = 1, 4 do
-                totalPageProgress = totalPageProgress + player:getCharVar("[regime]killed" .. i)
-            end
-            if totalPageProgress == 0 then
-                player:setCharVar("[regime]day",0)
-                player:PrintToPlayer("Field Manual: Page had no progress, you may get another page today!", 0xD)
+            if REGIME_WAIT == 1 then
+                for i = 1, 4 do
+                    totalPageProgress = totalPageProgress + player:getCharVar("[regime]killed" .. i)
+                end
+                if totalPageProgress == 0 then
+                    player:setCharVar("[regime]day",0)
+                    player:PrintToPlayer("Field Manual: Page had no progress, you may get another page today!", 0xD)
+                end
             end
             tpz.regime.clearRegimeVars(player)
             player:showText(player, msgOffset + 2) -- Training regime canceled.
@@ -1272,6 +1274,10 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
         local page = getPageByNum(regimeType, zoneId, opt.page)
 
         if page then
+            -- WINGSCUSTOM reset pages-per-day counter if you grab a new page on a different day
+            if player:getCharVar("[regime]day") ~= VanadielDayAbsolute() then
+                player:setCharVar("[regime]repeatedCompletions", 0)
+            end
             if regimeRepeat ~= 0 then
                 regimeRepeat = 1
                 -- only displayed if repeating is enabled
