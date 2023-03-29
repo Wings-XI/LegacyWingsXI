@@ -1115,11 +1115,12 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 else
                 {
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
-
                     PChar->pushPacket(new CInventoryFinishPacket());
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
                     luautils::OnChocoboDig(PChar);
-                    PChar->m_lastDig = now;
+                    // account for possible delay in the UpdateItem function
+                    PChar->m_lastDig = std::chrono::system_clock::now();
+                    PChar->SetLocalVar("LastTeleportDig", static_cast<uint32>(time(NULL)));
                     PChar->m_lastDigPosition = PChar->loc.p;
 
                     if (PDigAreaContainer)
