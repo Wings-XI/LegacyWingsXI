@@ -16,7 +16,6 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local potency = skill:getParam()
-    local zone = mob:getZone()
 
     if (potency == 0) then
         potency = 13
@@ -26,7 +25,7 @@ function onMobWeaponSkill(target, mob, skill)
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
 
-    if zone:getType() == tpz.zoneType.DYNAMIS then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         mob:eraseStatusEffect()
     end
 

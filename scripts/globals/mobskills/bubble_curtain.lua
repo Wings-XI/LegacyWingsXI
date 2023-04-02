@@ -20,7 +20,16 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.SHELL
     local power = 50
 
-    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, 180))
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+        typeEffect = tpz.effect.MAGIC_DEF_BOOST
+        skill:setMsg(MobBuffMove(mob, typeEffect, power * 2, 0, 180))
+        local effect = mob:getStatusEffect(tpz.effect.MAGIC_DEF_BOOST)
+        effect:unsetFlag(tpz.effectFlag.DISPELABLE)
+        mob:addMod(tpz.mod.DMGMAGIC, -power)
+        effect:addMod(tpz.mod.DMGMAGIC, -power)
+    else
+        skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, 180))
+    end
 
     return typeEffect
 end

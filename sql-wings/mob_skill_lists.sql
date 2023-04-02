@@ -3531,13 +3531,19 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 257);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 258);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 259);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 323);
--- Nightmare Cockatrice
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 406);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 407);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 408);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 410);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Cockatrice', 5309, 3516);
-
+-- Nightmare Scorpion
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 348); -- Numbing breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 349); -- Cold breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 353); -- Death scissors
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 354); -- Wild rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 356); -- Sharp strike
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 717); -- Venom breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 719); -- Critical bite
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 720); -- Venom sting
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 721); -- Stasis
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 722); -- Venom storm
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 723); -- Earth breaker
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 724); -- Evasion
 
 --
 -- Indexes for dumped tables
