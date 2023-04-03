@@ -36,7 +36,8 @@ CREATE TABLE `login_log` (
   `operation` smallint(6) UNSIGNED NOT NULL DEFAULT 1,
   `source` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `result` tinyint(3) UNSIGNED NOT NULL,
-  `exempt` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
+  `exempt` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  KEY `Index 1` (`login_time`,`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
