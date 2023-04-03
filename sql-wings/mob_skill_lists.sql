@@ -970,10 +970,10 @@ INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 224, 671);
 INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 224, 672);
 INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 224, 673);
 INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 225, 669);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 260);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 261);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 262);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 264);
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 260); -- Lamb chop
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 261); -- Rage
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 262); -- Sheep Charge
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 264); -- Sheep song
 INSERT INTO `mob_skill_lists` VALUES('Skeleton', 227, 478);
 INSERT INTO `mob_skill_lists` VALUES('Skeleton', 227, 479);
 INSERT INTO `mob_skill_lists` VALUES('Skeleton', 227, 484);
@@ -3544,6 +3544,12 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 721); -- Stasis
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 722); -- Venom storm
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 723); -- Earth breaker
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 724); -- Evasion
+-- Nightmare Sheep
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 260); -- Lamb chop
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 261); -- Rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 262); -- Sheep Charge
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 263); -- Sheep Bleat
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 264); -- Sheep song
 
 --
 -- Indexes for dumped tables

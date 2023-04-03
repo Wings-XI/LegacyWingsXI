@@ -228,6 +228,7 @@ INSERT INTO `mob_skills` VALUES(259, 3, 'whirl_claws', 1, 5.0, 2000, 2000, 4, 0,
 INSERT INTO `mob_skills` VALUES(260, 4, 'lamb_chop', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(261, 5, 'rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(262, 6, 'sheep_charge', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(263, 7, 'sheep_bleat', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(264, 8, 'sheep_song', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(265, 9, 'rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(266, 10, 'ram_charge', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);

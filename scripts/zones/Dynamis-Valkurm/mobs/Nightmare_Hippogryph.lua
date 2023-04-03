@@ -13,6 +13,7 @@ function onMobSpawn(mob)
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
     dynamis.setMobStats(mob)
+    mob:setMod(tpz.mod.MOVE, 50)
 end
 
 function onMobDeath(mob, player, isKiller)

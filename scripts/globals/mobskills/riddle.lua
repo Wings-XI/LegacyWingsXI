@@ -17,8 +17,12 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.MAX_MP_DOWN
-
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 42, 0, 120))
+    local power = 42 -- Default
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+        power = 84
+    end
+    
+    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, 0, 120))
 
     return typeEffect
 end
