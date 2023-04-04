@@ -931,6 +931,8 @@ INSERT INTO `mob_skills` VALUES(1155, 339, 'subsonics', 1, 16.0, 2000, 1500, 4, 
 INSERT INTO `mob_skills` VALUES(1156, 338, 'marrow_drain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1157, 339, 'slipstream', 1, 12.5, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1158, 340, 'turbulence', 1, 12.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1159, 341, 'broadside_barrage', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1160, 342, 'blind_side_barrage', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1171, 389, 'pl_body_slam', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1172, 390, 'pl_heavy_stomp', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1173, 391, 'pl_chaos_blade', 4, 9.5, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);

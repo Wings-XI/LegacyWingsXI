@@ -3487,6 +3487,11 @@ INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2073);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1771);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1772);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1775);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 622);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 623);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1045);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1159);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1160);
 -- Scylla exclusive lists/skills
 INSERT INTO `mob_skill_lists` VALUES('Scylla_IG', 2440, 2440);
 INSERT INTO `mob_skill_lists` VALUES('Scylla_AC', 2441, 2441);
