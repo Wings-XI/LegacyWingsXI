@@ -1183,6 +1183,7 @@ INSERT INTO `mob_skills` VALUES(1551, 1136, 'megaflare', 4, 15.0, 6000, 1800, 4,
 INSERT INTO `mob_skills` VALUES(1552, 1137, 'gigaflare', 1, 20.0, 6000, 1900, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1553, 1138, 'teraflare', 1, 25.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1557, 1146, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1560, 1304, 'whispers_of_ire', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1571, 861, 'gas_shell', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1572, 862, 'venom_shell', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1573, 863, 'palsynyxis', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);

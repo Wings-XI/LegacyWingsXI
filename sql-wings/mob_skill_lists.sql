@@ -444,6 +444,7 @@ INSERT INTO `mob_skill_lists` VALUES('Euvhi', 109, 1452);
 INSERT INTO `mob_skill_lists` VALUES('Euvhi', 109, 1453);
 INSERT INTO `mob_skill_lists` VALUES('EvilWeapon', 110, 513);
 INSERT INTO `mob_skill_lists` VALUES('EvilWeapon', 110, 514);
+INSERT INTO `mob_skill_lists` VALUES('EvilWeapon', 110, 1560);
 INSERT INTO `mob_skill_lists` VALUES('Konjac', 111, 433);
 INSERT INTO `mob_skill_lists` VALUES('Flan', 112, 1821);
 INSERT INTO `mob_skill_lists` VALUES('Flan', 112, 1822);
@@ -910,10 +911,10 @@ INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 266);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 267);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 268);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 269);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 374);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 376);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 379);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 380);
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 374); -- Ripper fang
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 376); -- Foul breath
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 379); -- Chomp rush
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 380); -- Scythe tail
 INSERT INTO `mob_skill_lists` VALUES('Ruszor', 211, 2435);
 INSERT INTO `mob_skill_lists` VALUES('Ruszor', 211, 2436);
 INSERT INTO `mob_skill_lists` VALUES('Ruszor', 211, 2437);
@@ -3550,6 +3551,19 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 261); -- Rage
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 262); -- Sheep Charge
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 263); -- Sheep Bleat
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 264); -- Sheep song
+-- Nightmare Raptor
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 374); -- Ripper fang
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 376); -- Foul breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 377); -- Frost breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 378); -- Thunderbolt breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 379); -- Chomp rush
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 380); -- Scythe tail
+-- Nightmare Weapon
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 397); -- Flurry of rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 513); -- Smite of rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 514); -- Whirl of rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 1560); -- Whispers of ire
+
 
 --
 -- Indexes for dumped tables

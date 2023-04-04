@@ -25,6 +25,7 @@ function onMobWeaponSkill(target, mob, skill)
         skill:setMsg(MobBuffMove(mob, typeEffect, power * 2, 0, 180))
         local effect = mob:getStatusEffect(tpz.effect.MAGIC_DEF_BOOST)
         effect:unsetFlag(tpz.effectFlag.DISPELABLE)
+        -- addMod added twice due to limitation with core behavior with effect:addMod not adding a mod with the currect effect
         mob:addMod(tpz.mod.DMGMAGIC, -power)
         effect:addMod(tpz.mod.DMGMAGIC, -power)
     else

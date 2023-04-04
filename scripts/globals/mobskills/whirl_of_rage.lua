@@ -24,6 +24,10 @@ function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STUN
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, 1, 0, 4)
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS or true) then
+        MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.SILENCE, 1, 0, math.random(60, 120))
+        MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.WEIGHT, 25, 0, math.random(30, 45))
+    end
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end

@@ -40,8 +40,8 @@ function onMobEngaged(mob, target)
 end
 
 function onMobWeaponSkillPrepare(mob, target)
-    local sheepsong = math.random(4)
-    if sheepsong ~= 1 then -- Uses sheepsong 80% of the time
+    local sheepsong = math.random(3)
+    if sheepsong ~= 1 then -- Uses sheepsong 73% of the time
         return 264
     end
 end

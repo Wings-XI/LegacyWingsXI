@@ -123,6 +123,20 @@ inline int32 CLuaMobSkill::isConal(lua_State *L)
     return 1;
 }
 
+/*************************************************************************
+
+    Set AoE values:
+    0:  None
+    1:  AoE, centered on caster
+    2:  AoE, centered on target (default 8.0 yalm radius)
+    3:  ???
+    4:  Conal, 20-30' front wide range
+    5:  Conal, backward arc
+    6:  Conal, 10' front narrow range
+    7:  Conal, 20-30' front and back wide range
+
+**************************************************************************/
+
 inline int32 CLuaMobSkill::setAoE(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
