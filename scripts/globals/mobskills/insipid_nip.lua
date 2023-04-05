@@ -19,6 +19,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
+    local typeEffect = math.random(tpz.effect.STR_DOWN, tpz.effect.CHR_DOWN)
     local numhits = 1
     local accmod = 2
     local dmgmod = 3
@@ -26,7 +27,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING, info.hitslanded)
 
     if MobPhysicalHit(skill) then
-        target:dispelStatusEffect()
+        MobDrainAttribute(mob, target, typeEffect, 27, 3, 120)
     end
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.PIERCING)
