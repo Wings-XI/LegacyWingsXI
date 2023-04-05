@@ -3300,12 +3300,11 @@ void SmallPacket0x050(map_session_data_t* const PSession, CCharEntity* const PCh
         }
 
     charutils::EquipItem(PChar, slotID, equipSlotID, containerID); // current
-    // WINGSCUSTOM only save char look/equipment to db every X seconds (or more) to avoid db spam when changing individual pieces
+    // WINGSCUSTOM only save char look to db every X seconds (or more) to avoid db spam when changing individual pieces
     auto lastSwapTime  = PChar->GetLocalVar("core-LastGearSwap");
     auto timeNowSeconds = std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now());
     if (lastSwapTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastSwapTime) > 10)
     {
-        charutils::SaveCharEquip(PChar);
         charutils::SaveCharLook(PChar);
     }
     PChar->SetLocalVar("core-LastGearSwap", (uint32)timeNowSeconds.time_since_epoch().count());
@@ -3336,8 +3335,14 @@ void SmallPacket0x051(map_session_data_t* const PSession, CCharEntity* const PCh
             charutils::EquipItem(PChar, slotID, equipSlotID, containerID);
         }
     }
-    charutils::SaveCharEquip(PChar);
-    charutils::SaveCharLook(PChar);
+    // WINGSCUSTOM only save char look to db every X seconds (or more) to avoid db spam when changing individual pieces
+    auto lastSwapTime  = PChar->GetLocalVar("core-LastGearSwap");
+    auto timeNowSeconds = std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now());
+    if (lastSwapTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastSwapTime) > 10)
+    {
+        charutils::SaveCharLook(PChar);
+    }
+    PChar->SetLocalVar("core-LastGearSwap", (uint32)timeNowSeconds.time_since_epoch().count());
     luautils::CheckForGearSet(PChar); // check for gear set on gear change
     PChar->UpdateHealth();
     return;
@@ -7034,6 +7039,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->health.mp = PChar->GetMaxMP();
         PChar->updatemask |= UPDATE_HP;
 
+        // saves equipment when check completes
         charutils::CheckValidEquipment(PChar);
         charutils::SaveCharStats(PChar);
 
