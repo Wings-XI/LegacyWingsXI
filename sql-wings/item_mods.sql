@@ -52168,6 +52168,8 @@ INSERT INTO `item_mods` VALUES (17551,431,1);     -- earth staff additional effe
 INSERT INTO `item_mods` VALUES (17545,431,1);     -- fire staff additional effect
 INSERT INTO `item_mods` VALUES (17291,431,1);     -- flame boomerang additional effect
 INSERT INTO `item_mods` VALUES (16522,431,1);     -- flame degen additional effect
+INSERT INTO `item_mods` VALUES (16523,431,1);     -- holy degen AE
+INSERT INTO `item_mods` VALUES (16817,431,1);     -- holy degen +1 AE
 INSERT INTO `item_mods` VALUES (16823,431,1);     -- flame degen +1 additional effect
 INSERT INTO `item_mods` VALUES (16726,431,1);     -- forsetis axe additional effect
 INSERT INTO `item_mods` VALUES (17576,431,1);     -- grim staff additional effect
