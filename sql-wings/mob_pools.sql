@@ -6080,7 +6080,7 @@ INSERT INTO `mob_pools` VALUES(6024, 'Qoofim', 'Qoofim', 197, _binary 0x00005c01
 INSERT INTO `mob_pools` VALUES(6025, 'Ravenous_Crawler', 'Ravenous_Crawler', 79, _binary 0x00008c0100000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 0, 0, 1, 2, 7, 0, 0, 129, 0, 0, 0, 0, 0, 79);
 INSERT INTO `mob_pools` VALUES(6026, 'Big_Jaw_noaggro', 'Big_Jaw', 197, _binary 0x00005c0100000000000000000000000000000000, 1, 1, 7, 240, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 197);
 INSERT INTO `mob_pools` VALUES(6027, 'Barbaric_Weapon', 'Barbaric_Weapon', 110, _binary 0x0000c30100000000000000000000000000000000, 1, 1, 3, 240, 100, 0, 1, 0, 0, 2, 7, 0, 231, 643, 0, 0, 0, 0, 0, 110);
-INSERT INTO `mob_pools` VALUES(6028, 'Seaboard_Vulture', 'Seaboard_Vulture', 55, _binary 0x0000bd0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 0, 0, 0, 0, 232, 133, 0, 0, 0, 0, 0, 55);
+INSERT INTO `mob_pools` VALUES(6028, 'Seaboard_Vulture', 'Seaboard_Vulture', 55, _binary 0x0000bd0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 0, 0, 0, 0, 232, 133, 0, 0, 0, 0, 0, 2034);
 INSERT INTO `mob_pools` VALUES(6029, 'Kraken_fished', 'Kraken', 218, _binary 0x0000600100000000000000000000000000000000, 2, 2, 7, 480, 100, 0, 1, 0, 0, 4, 0, 0, 0, 3, 0, 0, 0, 0, 0, 218);
 INSERT INTO `mob_pools` VALUES(6030, 'Kraken_fished_NM', 'Kraken', 218, _binary 0x0000600100000000000000000000000000000000, 2, 2, 7, 480, 100, 0, 1, 0, 0, 6, 0, 0, 0, 3, 0, 0, 0, 0, 0, 218);
 INSERT INTO `mob_pools` VALUES(6050, 'Diabolos_Letum', 'Diabolos_Letum', 35, _binary 0x0000790400000000000000000000000000000000, 4, 4, 7, 240, 100, 0, 1, 1, 1, 2, 0, 32, 0, 157, 0, 0, 2, 0, 0, 0);

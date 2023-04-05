@@ -41,7 +41,7 @@ end
 
 function onMobWeaponSkillPrepare(mob, target)
     local sheepsong = math.random(3)
-    if sheepsong ~= 1 then -- Uses sheepsong 73% of the time
+    if sheepsong ~= 1 then -- Uses sheepsong 73% of the time (66% + (33% * 1/5 native chance))
         return 264
     end
 end

@@ -18,10 +18,11 @@ function onMobWeaponSkill(target, mob, skill)
     local tick = 3
     local duration = 60     -- Unresisted, 20 ticks at 21 hp/tick = 420hp per target
     local subEffect = tpz.effect.BIO
-    local subPower = 21 -- 21 HP/tick bio
-    
+    local subPower = 10 -- Must be greater than 9 in order for target to stay asleep through damage.  See nightmare.lua for full description
+
     if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
         skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, tick, duration, subEffect, subPower))
+        target:delStatusEffectSilent(subEffect)
     else
         skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, math.random(20, 30)))
     end
