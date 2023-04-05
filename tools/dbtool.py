@@ -33,6 +33,7 @@ from migrations import two_factor_authentication
 from migrations import login_log_exempt
 from migrations import temp_exemptions
 from migrations import battlefield_records_preserve
+from migrations import audit_gm_zoneid
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -58,6 +59,7 @@ migrations = [
 	login_log_exempt,
     temp_exemptions,
     battlefield_records_preserve,
+    audit_gm_zoneid,
 ]
 # These are the default 'protected' files
 player_data = [
