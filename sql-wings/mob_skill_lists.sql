@@ -3489,7 +3489,7 @@ INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1772);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1775);
 INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 622);
 INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 623);
-INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1045);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1445);
 INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1159);
 INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1160);
 -- Scylla exclusive lists/skills
@@ -3507,12 +3507,10 @@ INSERT INTO `mob_skill_lists` VALUES('Koschei', 5032, 650); -- Thornsong
 INSERT INTO `mob_skill_lists` VALUES('Aitvaras', 5033, 649); -- Voidsong
 INSERT INTO `mob_skill_lists` VALUES('Vishap', 5034, 643); -- Poison Breath
 -- Dynamis - Valkurm
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 321);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 322);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1626);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1120);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 321); -- Needleshot
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 322); -- 1000 Needles
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324); -- Photosynthesis
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625); -- 2000 Needles
 -- Anantaboga
 INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 644); -- Wind Breath
 INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 645); -- Bodyslam
