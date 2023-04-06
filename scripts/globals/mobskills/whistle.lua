@@ -19,8 +19,11 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local power = target:getMainLvl()/10 * 3.75 + 5
     local duration = 60
-
     local typeEffect = tpz.effect.AGI_BOOST
+
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+        typeEffect = tpz.effect.EVASION_BOOST
+    end
 
     skill:setMsg(MobBuffMove(target, typeEffect, power, 3, duration))
 

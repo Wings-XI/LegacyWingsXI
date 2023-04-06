@@ -228,6 +228,7 @@ INSERT INTO `mob_skills` VALUES(259, 3, 'whirl_claws', 1, 5.0, 2000, 2000, 4, 0,
 INSERT INTO `mob_skills` VALUES(260, 4, 'lamb_chop', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(261, 5, 'rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(262, 6, 'sheep_charge', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(263, 7, 'sheep_bleat', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(264, 8, 'sheep_song', 1, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(265, 9, 'rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(266, 10, 'ram_charge', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
@@ -906,7 +907,7 @@ INSERT INTO `mob_skills` VALUES(1115, 766, 'torpid_glare', 6, 15.0, 2000, 3000, 
 INSERT INTO `mob_skills` VALUES(1116, 767, 'seismostomp', 1, 15.0, 3000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1117, 768, 'lead_breath', 6, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1118, 769, 'lead_breath', 6, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1120, 69, '10000_needles', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1120, 69, '10000_needles', 1, 10.0, 2000, 5000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1121, 770, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1122, 771, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1123, 355, 'ore_toss', 0, 25.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
@@ -930,6 +931,8 @@ INSERT INTO `mob_skills` VALUES(1155, 339, 'subsonics', 1, 16.0, 2000, 1500, 4, 
 INSERT INTO `mob_skills` VALUES(1156, 338, 'marrow_drain', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1157, 339, 'slipstream', 1, 12.5, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1158, 340, 'turbulence', 1, 12.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1159, 341, 'broadside_barrage', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1160, 342, 'blind_side_barrage', 0, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1171, 389, 'pl_body_slam', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1172, 390, 'pl_heavy_stomp', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1173, 391, 'pl_chaos_blade', 4, 9.5, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1182,6 +1185,7 @@ INSERT INTO `mob_skills` VALUES(1551, 1136, 'megaflare', 4, 15.0, 6000, 1800, 4,
 INSERT INTO `mob_skills` VALUES(1552, 1137, 'gigaflare', 1, 20.0, 6000, 1900, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1553, 1138, 'teraflare', 1, 25.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1557, 1146, 'eagle_eye_shot', 0, 25.0, 2000, 0, 4, 2, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1560, 1304, 'whispers_of_ire', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1571, 861, 'gas_shell', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1572, 862, 'venom_shell', 1, 15.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1573, 863, 'palsynyxis', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1195,8 +1199,8 @@ INSERT INTO `mob_skills` VALUES(1611, 61, 'vampiric_lash', 0, 15.0, 2000, 1500, 
 INSERT INTO `mob_skills` VALUES(1617, 325, 'blow', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1618, 328, 'uppercut', 0, 7.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1619, 331, 'attractant', 1, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1625, 1369, '2000_needles', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1626, 1370, '4000_needles', 1, 10.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1625, 67, '2000_needles', 1, 10.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1626, 67, '4000_needles', 1, 10.0, 2000, 4000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1644, 878, 'hypothermal_combustion', 1, 20.0, 2000, 2000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1645, 876, 'freeze_rush', 0, 7.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1646, 877, 'cold_wave', 4, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
@@ -1958,12 +1962,11 @@ INSERT INTO `mob_skills` VALUES(3868, 419, 'heavy_strike', 0, 7.0, 2000, 1500, 4
 INSERT INTO `mob_skills` VALUES(3917, 913, 'choke_breath', 4, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3918, 914, 'fantod', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1339, 221, 'bane', 2, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(709,439,'souleater',0,7.0,2000,1500,1,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES(1761,1192,'arrow_deluge',0,20.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES(1929,1278,'pole_swing',0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES(709, 439, 'souleater',0,7.0,2000,1500,1,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES(1761, 1192, 'arrow_deluge',0,20.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES(1929, 1278,'pole_swing',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES(1594, 814, 'toxic_spit', 0, 22, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);  -- alternate toxic spit for Race Runner
 INSERT INTO `mob_skills` VALUES(3267, 1370, 'khimaira_howl', 0, 7.0, 4000, 0, 1, 0, 0, 0, 0, 0, 0);
-
 
 
 --

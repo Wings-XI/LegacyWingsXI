@@ -13,8 +13,14 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DEFENSE_BOOST
+    local zone = mob:getZone()
+    local power = 50
+    
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+        power = 300
+    end
 
-    skill:setMsg(MobBuffMove(mob, typeEffect, 50, 0, 60))
+    skill:setMsg(MobBuffMove(mob, typeEffect, power, 0, 60))
 
     return typeEffect
 end

@@ -34,3 +34,12 @@ function onMobEngaged(mob, target)
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
 end
+
+function onMobWeaponSkillPrepare(mob, target)
+    local needles = math.random(20)
+    if (needles == 1) then
+        return 1120 -- 10,000 Needles
+    elseif (needles < 5) then
+        return 1626 -- 4,000 Needles
+    end
+end

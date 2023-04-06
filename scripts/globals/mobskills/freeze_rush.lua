@@ -19,7 +19,11 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 2
     local info = MobMagicalMove(mob, target, skill, mob:getWeaponDmg()*3, tpz.magic.ele.ICE, dmgmod, TP_NO_EFFECT)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, MOBPARAM_1_SHADOW)
+    local shadows = MOBPARAM_1_SHADOW
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
+        shadows = MOBPARAM_IGNORE_SHADOWS
+    end
+    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.ICE, shadows)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ICE)
     return dmg
 end

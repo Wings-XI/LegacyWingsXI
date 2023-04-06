@@ -47,6 +47,7 @@ public:
     int32 getID(lua_State*);
     int32 getParam(lua_State*);
     int32 isAoE(lua_State*);
+    int32 setAoE(lua_State*);
     int32 isConal(lua_State*);
     int32 isSingle(lua_State*);
     int32 hasMissMsg(lua_State*);

@@ -26,6 +26,8 @@ function onMobRoamAction(mob)
 end
 
 function onMobRoam(mob)
+    mob:setMod(tpz.mod.REGAIN, 0)
+    mob:setTP(0)
 end
 
 function onMobEngaged(mob, target)
@@ -33,4 +35,13 @@ function onMobEngaged(mob, target)
     randomChildrenListArg = nil
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
+    
+    mob:setMod(tpz.mod.REGAIN, 500)
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+    local sheepsong = math.random(3)
+    if sheepsong ~= 1 then -- Uses sheepsong 73% of the time (66% + (33% * 1/5 native chance))
+        return 264
+    end
 end

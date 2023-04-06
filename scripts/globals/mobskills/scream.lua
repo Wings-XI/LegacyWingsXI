@@ -13,7 +13,11 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.MND_DOWN
+
     skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 10, 3, 120))
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+        MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.TERROR, 1, 0, math.random(10, 20))
+    end
 
     return typeEffect
 end
