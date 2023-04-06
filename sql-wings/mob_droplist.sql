@@ -17098,18 +17098,18 @@ INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 16, 2674, 20); -- pantin_dastanas_
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 16, 2720, 20); -- etoile_bangles_-1
 INSERT INTO `mob_droplist` VALUES(3238, 1, 2, 16, 2725, 20); -- argute_bracers_-1
 -- Apocalypse Beast / Cirrate / Antaeus -- high chance for 1 drop, decent chance for 2-3, and very low chance for 4
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 500, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 500, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 500, 1456, 300); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 200, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 200, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 200, 1456, 300); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 20, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 20, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 20, 1456, 300); -- Hundred Byne
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1453, 300); -- Silverpiece
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1450, 300); -- Lungo
-INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 20, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 1000, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 1000, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 1, 1000, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 500, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 500, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 2, 500, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 200, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 200, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 3, 200, 1456, 300); -- Hundred Byne
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 70, 1453, 300); -- Silverpiece
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 70, 1450, 300); -- Lungo
+INSERT INTO `mob_droplist` VALUES(3239, 1, 4, 70, 1456, 300); -- Hundred Byne
 INSERT INTO `mob_droplist` VALUES(3240, 0, 0, 1000, 15219, 475);
 INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 19107, 636); -- Dark Ixion: Azoth
 INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 11289, 657); -- Dark Ixion: Ixion Cloak
