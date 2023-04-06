@@ -2149,10 +2149,10 @@ INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 816);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 817);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 818);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 822);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 270);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 271);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 273);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1322);
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 270); -- Roar
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 271); -- Razor Fang
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1322); -- Gerjis Grip
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1340); -- Crossthrash
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 347);
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 419);
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 422);
