@@ -3,7 +3,6 @@
 -- Item: Dream Mittens +1
 -- Enchantment: Invisible
 -- Duration: 3 Mins 20 Secs
--- TODO: Enhances duration of Invisible Effect
 -----------------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/status")
@@ -14,6 +13,7 @@ end
 
 function onItemUse(target)
     if (not target:hasStatusEffect(tpz.effect.INVISIBLE)) then
-        target:addStatusEffect(tpz.effect.INVISIBLE, 0, 10, math.floor(200 * SNEAK_INVIS_DURATION_MULTIPLIER))
+        local duration = 200 + target:getMod(tpz.mod.INVISIBLE_DURATION)
+        target:addStatusEffect(tpz.effect.INVISIBLE, 0, 10, math.floor(duration * SNEAK_INVIS_DURATION_MULTIPLIER))
     end
 end
