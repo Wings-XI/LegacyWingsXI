@@ -1053,6 +1053,7 @@ INSERT INTO `mob_skills` VALUES(1332, 63, 'extremely_bad_breath', 4, 15.0, 2000,
 INSERT INTO `mob_skills` VALUES(1336, 289, 'frenzied_rage', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1337, 438, 'charm', 0, 50.0, 2000, 0, 4, 32, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1338, 234, 'infernal_pestilence', 4, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1340, 17, 'crossthrash' , 1, 5.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1347, 998, 'dual_strike', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1348, 999, 'siphon_discharge', 1, 15.0, 2000, 1000, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1349, 1000, 'mantle_pierce', 0, 7.0, 2000, 1000, 4, 0, 0, 3, 0, 0, 0);
@@ -1065,7 +1066,7 @@ INSERT INTO `mob_skills` VALUES(1355, 1006, 'spine_lash', 7, 12.0, 2000, 1000, 4
 INSERT INTO `mob_skills` VALUES(1356, 1007, 'voiceless_storm', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1357, 1008, 'tidal_dive', 1, 15.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1358, 1009, 'plasma_charge', 0, 7.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0);/*add new skill to Eldertaur and Mindertaur*/
+INSERT INTO `mob_skills` VALUES(1359, 855, 'chthonian_ray', 4, 20.0, 2000, 2500, 4, 0, 0, 0, 0, 0, 0); /*add new skill to Eldertaur and Mindertaur*/
 INSERT INTO `mob_skills` VALUES(1360, 855, 'apocalyptic_ray', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1362, 37, 'wild_ginseng', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1363, 822, 'hungry_crunch', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
