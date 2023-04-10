@@ -518,10 +518,6 @@ local loot =
             {itemid =   884, droprate = 1000}, -- black_tiger_fang
         },
         {
-            {itemid =     0, droprate =  700}, -- nothing
-            {itemid =  1012, droprate =  300}, -- nue_fang
-        },
-        {
             {itemid =     0, droprate =  125}, -- nothing
             {itemid = 14842, droprate =  125}, -- ivory_mitts
             {itemid = 15151, droprate =  125}, -- super_ribbon
