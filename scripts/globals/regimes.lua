@@ -1395,15 +1395,16 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         local reward = page[7]
 
         -- WINGSCUSTOM diminishing returns on page rewards for repeated completions on same day
+        local completions = player:getCharVar("[regime]repeatedCompletions")
         if REGIME_WAIT == 0 and player:getCharVar("[regime]day") == VanadielDayAbsolute() then
-            local completions = player:getCharVar("[regime]repeatedCompletions")
             if completions > 0 then
                 reward = math.ceil(reward * (.85 ^ completions))
                 player:PrintToPlayer(string.format("Field Manual : You are getting a reduced reward from completing %u pages on the same day!", completions), 0xD)
             end
             player:setCharVar("[regime]repeatedCompletions", completions + 1)
         else
-            player:setCharVar("[regime]repeatedCompletions", 0)
+            -- if completed a page on the previous day, give full reward this time but diminished for next. Else, give full for both
+            player:setCharVar("[regime]repeatedCompletions", completions == 0 and 0 or 1)
         end
 
         -- adjust reward down if regime is higher than server mob level cap
