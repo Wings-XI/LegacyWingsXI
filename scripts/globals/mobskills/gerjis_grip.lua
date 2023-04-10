@@ -13,6 +13,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.STUN
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1, 0, 10))
+    local duration = 10
+
+    skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, duration))
+
     return typeEffect
 end
