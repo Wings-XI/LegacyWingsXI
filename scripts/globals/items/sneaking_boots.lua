@@ -10,6 +10,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
+    local duration = 180 + target:getMod(tpz.mod.SNEAK_DURATION)
     target:delStatusEffect(tpz.effect.SNEAK)
-    target:addStatusEffect(tpz.effect.SNEAK, 1, 0, math.floor(180 * SNEAK_INVIS_DURATION_MULTIPLIER))
+    target:addStatusEffect(tpz.effect.SNEAK, 1, 0, math.floor(duration * SNEAK_INVIS_DURATION_MULTIPLIER))
 end
