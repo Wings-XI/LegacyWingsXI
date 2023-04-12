@@ -6335,7 +6335,8 @@ namespace charutils
         {
             SaveCharPosition(PChar);
         }
-
+        
+        charutils::SaveCharEquip(PChar);
         PChar->pushPacket(new CServerIPPacket(PChar, type, ipp));
     }
 
