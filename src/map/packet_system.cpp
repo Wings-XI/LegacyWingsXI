@@ -3878,7 +3878,6 @@ void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PCh
 
     uint64 ipp = zoneutils::GetZoneIPP(PChar->loc.destination == 0 ? PChar->getZone() : PChar->loc.destination);
 
-    charutils::SaveCharEquip(PChar);
     charutils::SendToZone(PChar, 2, ipp);
     return;
 }
