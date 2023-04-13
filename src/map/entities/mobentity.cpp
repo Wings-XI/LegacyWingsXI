@@ -774,19 +774,12 @@ void CMobEntity::Spawn()
     m_DespawnTimer = time_point::min();
     luautils::OnMobSpawn(this);
 
-    // claim shield, happens after onmobspawn so that this can be added on the fly to individual mobs without any cluster restarts
+    // claimshield, happens after onmobspawn so that this can be added on the fly to individual mobs without any cluster restarts
+    // Record spawn time plus 30s to act as the time Claimshield can trigger on an attempted claim
     if (getMobMod(MOBMOD_CLAIM_SHIELD))
     {
-        if (PAI->Internal_ClaimShieldState())
-        {
-            ShowInfo("MobID (%u) spawned with claimshield\n", this->id);
-            // ensure mob doesn't perform any actions
-            this->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_TERROR, EFFECT_TERROR, 1, 0, 20));
-        }
-        else
-        {
-            ShowError("MobID (%u) failed to spawn with claimshield\n", this->id);
-        }
+        ShowInfo("MobID (%u) spawned with claimshield mod\n", this->id);
+        this->SetLocalVar("ClaimshieldWindow", std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now() + 30s).time_since_epoch().count());
     }
 }
 
@@ -1495,6 +1488,29 @@ void CMobEntity::OnEngage(CAttackState& state)
 {
     CBattleEntity::OnEngage(state);
     luautils::OnMobEngaged(this, state.GetTarget());
+    // If mob has claimshield, enter CS state (7 seconds) within X seconds of spawn
+    // Do this within OnEngage for 2 reasons:
+    //  - Bypasses some race condition that sometimes resets the claimshield state
+    //  - Allows 2 different timers for CS: CS active time from spawntime and CS state duration from first attempted claim
+    if (getMobMod(MOBMOD_CLAIM_SHIELD))
+    {
+        if(this->GetLocalVar("ClaimshieldWindow") > std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count())
+        {
+            this->SetLocalVar("ClaimshieldWindow", 0);
+            if (PAI->Internal_ClaimShieldState())
+            {
+                ShowInfo("MobID (%u) entered true claimshield state\n", this->id);
+            }
+            else
+            {
+                ShowError("MobID (%u) failed to enter claimshield state\n", this->id);
+            }
+        }
+        else
+        {
+            ShowInfo("MobID (%u) left claimshield state with no attempted claims\n", this->id);
+        }
+    }
     unsigned int range = this->getMobMod(MOBMOD_ALLI_HATE);
     if (range != 0)
     {
