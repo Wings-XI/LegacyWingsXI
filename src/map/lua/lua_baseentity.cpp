@@ -366,7 +366,7 @@ inline int32 CLuaBaseEntity::PrintToArea(lua_State* L)
     }
     else if (messageRange == 1) // Say range
     {
-        PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, new CChatMessagePacket(PChar, messageLook, (char*)lua_tostring(L, 1), name));
+        PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChatMessagePacket(PChar, messageLook, (char*)lua_tostring(L, 1), name));
     }
     else if (messageRange == 2) // Shout
     {
