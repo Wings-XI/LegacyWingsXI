@@ -2076,6 +2076,11 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         if (Sql_GetUIntData(SqlHandle, 0) == 0) // we haven't sent notifs yet, this is the first server message request since their account session started
         {
+            // update lastonline field for flist
+            if (FLgetSetting(PChar, 2) == 1) {
+                Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), PChar->id);
+            }
+
             ret = Sql_Query(SqlHandle, "UPDATE accounts_sessions SET FLsentnotif = 1 WHERE charid = %u LIMIT 1", PChar->id);
 
             if (ret == SQL_ERROR || Sql_AffectedRows(SqlHandle) == 0)
