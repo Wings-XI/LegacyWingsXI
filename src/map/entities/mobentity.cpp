@@ -780,6 +780,8 @@ void CMobEntity::Spawn()
     {
         ShowInfo("MobID (%u) spawned with claimshield mod\n", this->id);
         this->SetLocalVar("ClaimshieldWindow", std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now() + 30s).time_since_epoch().count());
+        // prevent aggro from mob. This is exploitable since afk players could actually claim the mob if claimshield selects them
+        this->aggroTimer = (uint32)CVanaTime::getInstance()->getVanaTime() + 30;
     }
 }
 
