@@ -22,6 +22,7 @@ function onMobInitialize(mob)
         if killer then
             if(math.random (1, 10) < 10) then
                 -- reraise
+                mob:setLocalVar("AERN_RERAISES", mob:getLocalVar("AERN_RERAISES") + 1)
                 mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
                 local target = mob:getTarget()
                 mob:timer(9000, function(mob)
@@ -68,6 +69,18 @@ function onMobInitialize(mob)
 end
 
 function onMobEngaged(mob, target)
+    -- WINGSCUSTOM: reduce max hp based on # of reraises
+    local rrcount = math.abs(mob:getLocalVar("AERN_RERAISES"))
+    HPPreduction = math.ceil(110 - 15 * math.log(1 + rrcount))
+    HPPreduction = utils.clamp(HPPreduction, 10, 100)
+    if HPPreduction < 95 then
+        mob:setMod(tpz.mod.HPP, -100 + HPPreduction)
+        mob:updateHealth()
+        if target:isPC() then
+            target:PrintToArea(string.format("Ix'DRK's HP has been reduced by %u percent of maximum due to %u raises!", 100 - HPPreduction, rrcount), tpz.msg.channel.SYSTEM_3, tpz.msg.area.SAY)
+        end
+    end
+
     local mobID = mob:getID()
     for i = mobID+1, mobID+2 do
         local m = GetMobByID(i)
