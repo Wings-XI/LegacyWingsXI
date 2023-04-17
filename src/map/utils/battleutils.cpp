@@ -34,6 +34,7 @@
 #include "../packets/entity_update.h"
 #include "../packets/message_basic.h"
 #include "../packets/inventory_finish.h"
+#include "../packets/chat_message.h"
 
 #include "../lua/luautils.h"
 
@@ -4749,7 +4750,10 @@ namespace battleutils
         });
 
         ClaimMob((CBattleEntity*)PMob, winner);
-        ShowInfo("MobID (%u) claimshield lottery out of %u players, chose: %s\n", PMob->id, lotteryList.size(), winner->name);
+        auto PChar = (CCharEntity*)winner;
+        auto message = fmt::sprintf("MobID (%u) claimshield lottery, out of %zu players, chose: %s", PMob->id, lotteryList.size(), winner->name);
+        ShowInfo("%s\n", message);
+        PMob->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, const_cast<char*>(message.c_str())));
 
         PMob->health.hp = PMob->health.maxhp;
         PMob->StatusEffectContainer->KillAllStatusEffect();
@@ -4776,18 +4780,6 @@ namespace battleutils
             CMobEntity* mob = static_cast<CMobEntity*>(PDefender);
             if (!passing)
             {
-                // Within 7s of mob spawn, claimshield-enabled mobs trigger claimshield (ignoring claim until the claimshield state expires and a random winner is determined).
-                // This resets that 7s timer when the first action is performed
-                // In other words, this makes claimshield function as a 7s window after the first _action_ on the mob instead of 7s window after the spawn of the mob
-                CState* state = mob->PAI->GetCurrentState();
-                if (state && state->m_id == CLAIMSHIELD_STATE && !state->IsCompleted())
-                {
-                    ShowDebug(CL_CYAN"MobID (%u) enmity size: %u\n" CL_RESET, mob->id, mob->PEnmityContainer->GetEnmityList()->size());
-                    if  (mob->PEnmityContainer != nullptr && mob->PEnmityContainer->GetEnmityList()->size() == 1)
-                    {
-                        state->ResetEntryTime();
-                    }
-                }
                 mob->PEnmityContainer->UpdateEnmity(original, 0, 0, true, true);
             }
             if (PAttacker)
@@ -4814,6 +4806,7 @@ namespace battleutils
                         return;
                     }
                 }
+                // Claimshield currently active
                 if (mob->PAI)
                 {
                     CState* state = mob->PAI->GetCurrentState();
@@ -4821,6 +4814,11 @@ namespace battleutils
                     {
                         return;
                     }
+                }
+                // Claimshield activating directly after OnEngage executes
+                if(mob->GetLocalVar("ClaimshieldWindow") > 0 && mob->GetLocalVar("ClaimshieldWindow") > std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count())
+                {
+                    return;
                 }
                 if (!passing)
                 {
