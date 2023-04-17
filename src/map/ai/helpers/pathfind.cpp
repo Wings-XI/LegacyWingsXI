@@ -22,10 +22,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 // REVERTED NAVMESH CHANGES FROM TOPAZ AFTER ISSUES
 
 #include "pathfind.h"
-#include "../../zone.h"
 #include "../../entities/baseentity.h"
 #include "../../entities/mobentity.h"
 #include "../../../common/utils.h"
+#include "../../zone.h"
 
 CPathFind::CPathFind(CBaseEntity* PTarget)
 {
