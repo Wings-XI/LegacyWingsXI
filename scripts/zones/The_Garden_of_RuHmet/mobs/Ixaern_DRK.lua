@@ -15,6 +15,11 @@ require("scripts/globals/status")
 
 local aernA = 16921019
 local aernB = 16921020
+local msgTiers = {
+    [3] = "The Ix'Aern looks weakened.",
+    [10] = "The Ix'Aern looks like it's in rough shape.",
+    [54] = "The Ix'Aern looks like it can barely hold it together."
+}
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
@@ -77,7 +82,18 @@ function onMobEngaged(mob, target)
         mob:setMod(tpz.mod.HPP, -100 + HPPreduction)
         mob:updateHealth()
         if target:isPC() then
-            target:PrintToArea(string.format("Ix'DRK's HP has been reduced by %u percent of maximum due to %u raises!", 100 - HPPreduction, rrcount), tpz.msg.channel.SYSTEM_3, tpz.msg.area.SAY)
+            local msgIndex = 0
+            if rrcount >= 54 then
+                msgIndex = 54
+            elseif rrcount >= 10 then
+                msgIndex = 10
+            elseif rrcount >= 3 then
+                msgIndex = 3
+            end
+
+            if msgIndex > 0 then
+                target:PrintToArea(msgTiers[msgIndex] .. string.format(" (%s)", rrcount), tpz.msg.channel.SYSTEM_3, tpz.msg.area.SAY)
+            end
         end
     end
 
