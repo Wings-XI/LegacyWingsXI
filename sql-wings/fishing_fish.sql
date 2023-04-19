@@ -156,7 +156,7 @@ INSERT INTO `fishing_fish` VALUES(5470, 'Pirarucu', 0, 89, 21, 6, 11, 161, 210, 
 INSERT INTO `fishing_fish` VALUES(5133, 'Pterygotus', 0, 99, 33, 8, 7, 24, 264, 1, 0, 255, 255, 0, 0, 0, 0, 1, 550, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4514, 'Quus', 0, 19, 12, 7, 11, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 3, 1000, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(4402, 'Red Terrapin', 0, 53, 28, 8, 5, 1, 1, 0, 0, 255, 255, 0, 0, 0, 0, 1, 750, 0, '', 0);
-INSERT INTO `fishing_fish` VALUES(5135, 'Rhinochimera', 0, 65, 25, 11, 10, 19, 40, 1, 0, 255, 255, 0, 0, 0, 0, 1, 550, 0, '', 0);
+INSERT INTO `fishing_fish` VALUES(5135, 'Rhinochimera', 0, 72, 25, 11, 10, 19, 40, 1, 0, 255, 255, 0, 0, 0, 0, 1, 550, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(90, 'Rusty Bucket', 0, 1, 19, 13, 2, 1, 1, 0, 0, 255, 255, 9, 0, 0, 1, 1, 900, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(12522, 'Rusty Cap', 0, 30, 38, 13, 2, 1, 1, 0, 0, 255, 255, 9, 0, 0, 1, 1, 800, 0, '', 0);
 INSERT INTO `fishing_fish` VALUES(16606, 'Rusty Greatsword', 0, 7, 15, 13, 2, 1, 1, 0, 0, 255, 255, 8, 0, 0, 1, 1, 550, 0, '', 0);
