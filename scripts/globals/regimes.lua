@@ -465,22 +465,22 @@ local regimeInfo = {
         {
             [  1] = {review = true},
             [  5] = {details = true},
-            [  7] = {prowess = true},
+            -- [  7] = {prowess = true},
         },
         finishOptions =
         {
             [  3] = {act = "CANCEL_REGIME",   cost =  0, discounted =  0},
             [ 20] = {act = "REPATRIATION",    cost = 50, discounted = 10},
-            [ 36] = {act = "CIRCUMSPECTION",  cost =  5, discounted =  5},
+            -- [ 36] = {act = "CIRCUMSPECTION",  cost =  5, discounted =  5},
             [ 52] = {act = "HOMING_INSTINCT", cost = 50, discounted = 25},
             [ 68] = {act = "RERAISE",         cost = 10, discounted =  5},
-            [ 84] = {act = "RERAISE_II",      cost = 20, discounted = 10},
-            [100] = {act = "RERAISE_III",     cost = 30, discounted = 15},
+            -- [ 84] = {act = "RERAISE_II",      cost = 20, discounted = 10},
+            -- [100] = {act = "RERAISE_III",     cost = 30, discounted = 15},
             [116] = {act = "REGEN",           cost = 20, discounted = 10},
             [132] = {act = "REFRESH",         cost = 20, discounted = 10},
             [148] = {act = "PROTECT",         cost = 15, discounted =  5},
             [164] = {act = "SHELL",           cost = 15, discounted =  5},
-            [180] = {act = "HASTE",           cost = 20, discounted = 10},
+            -- [180] = {act = "HASTE",           cost = 20, discounted = 10},
             [196] = {act = "DRIED_MEAT",      cost = 50, discounted = 25, food = true},
             [212] = {act = "SALTED_FISH",     cost = 50, discounted = 25, food = true},
             [228] = {act = "HARD_COOKIE",     cost = 50, discounted = 25, food = true},
@@ -1416,7 +1416,7 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         end
 
         -- prowess buffs from completing Grounds regimes
-        if regimeType == tpz.regime.type.GROUNDS then
+        if regimeType == tpz.regime.type.GROUNDS and ENABLE_PROWESS == 1 then
             addGovProwessBonusEffect(player)
 
             -- repeat clears bonus
