@@ -513,8 +513,8 @@ local regimeInfo = {
                 event = 18,
                 page =
                 {
-                    { 3, 4, 0, 0, 25, 34, 775, 782}, -- bats/goblins
-                    { 3, 4, 0, 0, 25, 34, 775, 783}, -- bats/gigas
+                    { 3, 4, 0, 0, 25, 34, 775, 782}, -- goblins/bats
+                    { 3, 4, 0, 0, 25, 34, 775, 783}, -- gigas/bats
                     { 4, 4, 0, 0, 30, 34, 775, 784}, -- goblins/gigas
                 },
             },
@@ -524,7 +524,7 @@ local regimeInfo = {
                 page =
                 {
                     { 6, 0, 0, 0, 34, 35, 798, 785}, -- gigas
-                    { 2, 2, 2, 0, 62, 69, 1339, 786}, -- jotunn wallkeeper/gatekeeper
+                    { 2, 2, 2, 0, 62, 69, 1339, 786}, -- jotunn wallkeeper/gatekeeper/bats
                     { 2, 2, 2, 0, 62, 69, 1339, 787}, -- jotunn hallkeeper/wildkeeper/bats
                     { 2, 2, 2, 0, 65, 69, 1339, 788}, -- jotunn gatekeeper/hallkeeper/arcana-type
                     { 2, 2, 2, 0, 65, 69, 1339, 789}, -- jotunn wildkeeper/wallkeeper/arcana-type
@@ -597,7 +597,7 @@ local regimeInfo = {
                     { 2, 2, 2, 0, 52, 57, 1123, 619}, -- fallen knight/liches/dark aspics
                     { 3, 3, 0, 0, 53, 57, 1123, 620}, -- dark aspics/bloodsuckers
                     { 3, 4, 0, 0, 60, 65, 1280, 621}, -- scavenger crabs/stygian pugils
-                    { 4, 3, 0, 0, 62, 65, 1280, 622}, -- starmite/dire bats (names different from what client will show)
+                    { 4, 3, 0, 0, 62, 65, 1280, 622}, -- starmite/dire bats (names different from era names)
                     -- { 5, 2, 0, 0, 95, 98, 2170, 623}, -- plunderer crabs/sodden bones
                     -- { 5, 2, 0, 0, 96, 98, 2250, 624}, -- blackwater pugils/drowned bones
                     -- { 8, 2, 0, 0, 94, 99, 2050, 625}, -- flume toads/poroggo excavators
