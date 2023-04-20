@@ -465,22 +465,22 @@ local regimeInfo = {
         {
             [  1] = {review = true},
             [  5] = {details = true},
-            [  7] = {prowess = ENABLE_PROWESS == 1 and true or false},
+            [  7] = {prowess = true, enabled = ENABLE_PROWESS == 1 and true or false},
         },
         finishOptions =
         {
             [  3] = {act = "CANCEL_REGIME",   cost =  0, discounted =  0},
             [ 20] = {act = "REPATRIATION",    cost = 50, discounted = 10},
-            -- [ 36] = {act = "CIRCUMSPECTION",  cost =  5, discounted =  5},
+            [ 36] = {act = "CIRCUMSPECTION",  cost =  5, discounted =  5, enabled = ENABLE_PROWESS == 1 and true or false},
             [ 52] = {act = "HOMING_INSTINCT", cost = 50, discounted = 25},
             [ 68] = {act = "RERAISE",         cost = 10, discounted =  5},
-            -- [ 84] = {act = "RERAISE_II",      cost = 20, discounted = 10},
-            -- [100] = {act = "RERAISE_III",     cost = 30, discounted = 15},
+            [ 84] = {act = "RERAISE_II",      cost = 20, discounted = 10, enabled = ENABLE_PROWESS == 1 and true or false},
+            [100] = {act = "RERAISE_III",     cost = 30, discounted = 15, enabled = ENABLE_PROWESS == 1 and true or false},
             [116] = {act = "REGEN",           cost = 20, discounted = 10},
             [132] = {act = "REFRESH",         cost = 20, discounted = 10},
             [148] = {act = "PROTECT",         cost = 15, discounted =  5},
             [164] = {act = "SHELL",           cost = 15, discounted =  5},
-            -- [180] = {act = "HASTE",           cost = 20, discounted = 10},
+            [180] = {act = "HASTE",           cost = 20, discounted = 10, enabled = ENABLE_PROWESS == 1 and true or false},
             [196] = {act = "DRIED_MEAT",      cost = 50, discounted = 25, food = true},
             [212] = {act = "SALTED_FISH",     cost = 50, discounted = 25, food = true},
             [228] = {act = "HARD_COOKIE",     cost = 50, discounted = 25, food = true},
@@ -1092,6 +1092,17 @@ tpz.regime.bookOnEventUpdate = function(player, option, regimeType)
         return
     end
 
+    -- generic message for options that have "enabled" param set to false
+    if opt.enabled ~= nil and opt.enabled == false then
+        local disabledMessage = "Option is disabled."
+        if opt.act ~= nil then
+            disabledMessage = string.format("Option %s is disabled.", string.gsub(string.lower(opt.act),"_"," "))
+        end
+        player:PrintToPlayer(disabledMessage, 29)
+        player:release()
+        return
+    end
+
     -- review current training regime: progress on mobs
     if opt.review and page then
         local n1 = (page[1] ~= 0) and player:getCharVar("[regime]killed1") or 0
@@ -1105,7 +1116,7 @@ tpz.regime.bookOnEventUpdate = function(player, option, regimeType)
         player:updateEvent(0, 0, 0, 0, 0, page[5], page[6], 0)
 
     -- TO DO: read about prowesses
-    elseif opt.prowess and ENABLE_PROWESS == 1 then
+    elseif opt.prowess then
         player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
 
     -- select a regime
@@ -1137,6 +1148,16 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     local opt = opts[option]
 
     if not opt then
+        return
+    end
+
+    -- generic message for options that have "enabled" param set to false
+    if opt.enabled ~= nil and opt.enabled == false then
+        local disabledMessage = "Option is disabled."
+        if opt.act ~= nil then
+            disabledMessage = string.format("Option %s is disabled.", string.gsub(string.lower(opt.act),"_"," "))
+        end
+        player:PrintToPlayer(disabledMessage, 29)
         return
     end
 
