@@ -498,7 +498,7 @@ local regimeInfo = {
                 event = 17,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 63, 1332, 719}, -- death caps/barkspiders
+                    { 3, 3, 0, 0, 60, 63, 1240, 719}, -- death caps/barkspiders
                     { 4, 3, 0, 0, 62, 66, 1300, 720}, -- mourioches/robber crab
                     { 4, 3, 0, 0, 62, 67, 1319, 721}, -- mourioches/moss eaters
                     { 4, 2, 0, 0, 72, 75, 1408, 722}, -- korrigans/elder goobbues
@@ -535,10 +535,10 @@ local regimeInfo = {
                 event = 83,
                 page =
                 {
-                    { 3, 3, 0, 0, 51, 57, 1205, 790}, -- tonberries family/bees family
-                    { 4, 2, 0, 0, 51, 57, 1205, 791}, -- tonberries/rumble crawlers
-                    { 4, 2, 0, 0, 51, 57, 1205, 792}, -- tonberries/temple opo-opo
-                    { 3, 3, 0, 0, 61, 63, 1332, 793}, -- tonberries/temple bees
+                    { 3, 3, 0, 0, 51, 57, 1122, 790}, -- tonberries family/bees family
+                    { 4, 2, 0, 0, 51, 57, 1122, 791}, -- tonberries/rumble crawlers
+                    { 4, 2, 0, 0, 51, 57, 1122, 792}, -- tonberries/temple opo-opo
+                    { 3, 3, 0, 0, 61, 63, 1240, 793}, -- tonberries/temple bees
                     { 3, 3, 0, 0, 61, 67, 1319, 794}, -- tonberries/hover tanks
                     { 3, 3, 0, 0, 61, 68, 1320, 795}, -- tonberries/iron maidens
                 },
@@ -548,7 +548,7 @@ local regimeInfo = {
                 event = 13,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 64, 1353, 796}, -- dire bat/cave worm
+                    { 3, 3, 0, 0, 60, 64, 1260, 796}, -- dire bat/cave worm
                     { 6, 0, 0, 0, 60, 67, 1319, 797}, -- dire bat/mousses (mousses missing from mob spawns, adjusted to be 6 bats)
                     { 6, 0, 0, 0, 62, 69, 1339, 798}, -- tonberries
                     { 4, 2, 0, 0, 62, 69, 1339, 799}, -- succubus bats/tonberries
@@ -578,10 +578,10 @@ local regimeInfo = {
                 event = 114,
                 page =
                 {
-                    { 5, 0, 0, 0, 52, 54, 1142, 610}, -- dark aspic
-                    { 4, 2, 0, 0, 52, 59, 1248, 611}, -- funnel bats/werebats
-                    { 5, 1, 0, 0, 56, 63, 1332, 612}, -- hound family/haunt
-                    { 9, 0, 0, 0, 65, 68, 1320, 613}, -- bloodsuckers
+                    { 5, 0, 0, 0, 52, 54, 1024, 610}, -- dark aspic
+                    { 4, 2, 0, 0, 52, 59, 1044, 611}, -- funnel bats/werebats
+                    { 5, 1, 0, 0, 56, 63, 1280, 612}, -- hound family/haunt
+                    { 9, 0, 0, 0, 65, 68, 1300, 613}, -- bloodsuckers
                     -- { 6, 1, 0, 0, 94, 97, 2300, 614}, -- dabillas/panna cotta
                     -- { 6, 1, 0, 0, 95, 97, 2300, 615}, -- blind bats/panna cotta
                      -- { 6, 0, 0, 0, 96, 97, 1960, 616}, -- nachtmahrs
@@ -593,11 +593,11 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 3, 3, 0, 0, 47, 52, 1100, 618}, -- hell bats/makaras
-                    { 2, 2, 2, 0, 52, 57, 1205, 619}, -- fallen knight/liches/dark aspics
-                    { 3, 3, 0, 0, 53, 57, 1205, 620}, -- dark aspics/bloodsuckers
-                    { 3, 4, 0, 0, 60, 65, 1375, 621}, -- scavenger crabs/stygian pugils
-                    { 4, 3, 0, 0, 62, 65, 1375, 622}, -- starmite/dire bats (names different from what client will show)
+                    { 3, 3, 0, 0, 47, 52, 1024, 618}, -- hell bats/makaras
+                    { 2, 2, 2, 0, 52, 57, 1123, 619}, -- fallen knight/liches/dark aspics
+                    { 3, 3, 0, 0, 53, 57, 1123, 620}, -- dark aspics/bloodsuckers
+                    { 3, 4, 0, 0, 60, 65, 1280, 621}, -- scavenger crabs/stygian pugils
+                    { 4, 3, 0, 0, 62, 65, 1280, 622}, -- starmite/dire bats (names different from what client will show)
                     -- { 5, 2, 0, 0, 95, 98, 2170, 623}, -- plunderer crabs/sodden bones
                     -- { 5, 2, 0, 0, 96, 98, 2250, 624}, -- blackwater pugils/drowned bones
                     -- { 8, 2, 0, 0, 94, 99, 2050, 625}, -- flume toads/poroggo excavators
@@ -635,7 +635,7 @@ local regimeInfo = {
                 event = 29,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 64, 1353, 735}, -- robber crabs/sand lizards
+                    { 3, 3, 0, 0, 60, 64, 1261, 735}, -- robber crabs/sand lizards
                     { 5, 1, 0, 0, 60, 66, 1300, 736}, -- robber crabs/haunt
                     { 3, 3, 0, 0, 60, 66, 1300, 737}, -- cave worms/recluse spiders
                     { 4, 2, 0, 0, 60, 67, 1319, 738}, -- robber crabs/sabotender sed
@@ -780,10 +780,10 @@ local regimeInfo = {
                 {
                     { 6, 0, 0, 0, 42, 46, 1059, 671}, -- skeleton family
                     { 6, 0, 0, 0, 46, 49, 1034, 672}, -- shadow family
-                    { 4, 2, 0, 0, 51, 54, 1142, 673}, -- shadow family/azers
-                    { 5, 1, 0, 0, 50, 55, 1163, 674}, -- liches/blood soul
-                    { 3, 3, 0, 0, 53, 56, 1184, 675}, -- tomb wolves/skeleton family
-                    { 3, 3, 0, 0, 60, 63, 1332, 676}, -- tomb warriors/tomb mages
+                    { 4, 2, 0, 0, 51, 54, 1064, 673}, -- shadow family/azers
+                    { 5, 1, 0, 0, 50, 55, 1083, 674}, -- liches/blood soul
+                    { 3, 3, 0, 0, 53, 56, 1103, 675}, -- tomb wolves/skeleton family
+                    { 3, 3, 0, 0, 60, 63, 1241, 676}, -- tomb warriors/tomb mages
                      -- { 3, 3, 0, 0, 91, 95, 1890, 677}, -- hellbound warrios/nekros hounds
                      -- { 3, 3, 0, 0, 91, 95, 1890, 678}, -- hellbound warlocks/nekros hounds
                 },
@@ -810,10 +810,10 @@ local regimeInfo = {
                 {
                     { 3, 3, 0, 0, 40, 44, 1013, 687}, -- worker crawler/death jacket
                     { 3, 3, 0, 0, 45, 49, 1034, 688}, -- soldier crawler/nest beetle
-                    { 3, 3, 0, 0, 49, 52, 1100, 689}, -- labyrinth lizards/witch hazels
-                    { 4, 2, 0, 0, 50, 54, 1142, 690}, -- exorays/hornflys
-                    { 2, 2, 2, 0, 53, 58, 1226, 691}, -- rumble crawlers/wespes/dragonflys
-                    { 3, 3, 0, 0, 59, 63, 1332, 692}, -- helm beetles/knight crawlers
+                    { 3, 3, 0, 0, 49, 52, 1050, 689}, -- labyrinth lizards/witch hazels
+                    { 4, 2, 0, 0, 50, 54, 1064, 690}, -- exorays/hornflys
+                    { 2, 2, 2, 0, 53, 58, 1142, 691}, -- rumble crawlers/wespes/dragonflys
+                    { 3, 3, 0, 0, 59, 63, 1241, 692}, -- helm beetles/knight crawlers
                      -- { 4, 3, 0, 0, 91, 93, 2190, 693}, -- king crawlers/vespos
                      -- { 4, 3, 0, 0, 92, 96, 2220, 694}, -- dancing jewels/olid funguars
                 },
@@ -841,9 +841,9 @@ local regimeInfo = {
                     { 4, 2, 0, 0, 40, 43, 990, 703}, -- wingrats/skeleton family
                     { 4, 2, 0, 0, 40, 44, 1013, 704}, -- siege bats/borer beetles
                     { 2, 4, 0, 0, 46, 49, 1034, 705}, -- evil weapon family/citadel bats
-                    { 4, 2, 0, 0, 51, 55, 1163, 706}, -- funnel bats/explosures
-                    { 3, 3, 0, 0, 52, 58, 1226, 707}, -- dromas/chamber beetles
-                    { 2, 2, 1, 0, 59, 62, 1311, 708}, -- over weapons/vault weapons/wraith
+                    { 4, 2, 0, 0, 51, 55, 1083, 706}, -- funnel bats/explosures
+                    { 3, 3, 0, 0, 52, 58, 1142, 707}, -- dromas/chamber beetles
+                    { 2, 2, 1, 0, 59, 62, 1221, 708}, -- over weapons/vault weapons/wraith
                      -- { 5, 2, 0, 0, 91, 96, 1840, 709}, -- donjon bats/kabooms
                      -- { 4, 3, 0, 0, 92, 96, 2220, 710}, -- fortalice bats/warden beetles
                 },
@@ -855,10 +855,10 @@ local regimeInfo = {
                 {
                     { 4, 2, 0, 0, 40, 43, 990, 711}, -- vampire bats/drones
                     { 4, 2, 0, 0, 43, 46, 1059, 712}, -- shadow family/ore golems
-                    { 5, 1, 0, 0, 50, 55, 1163, 713}, -- underworld bats/talos
-                    { 4, 2, 0, 0, 50, 56, 1184, 714}, -- underworld bats/dromas
-                    { 5, 1, 0, 0, 50, 58, 1226, 715}, -- underworld bats/colossus
-                    { 3, 3, 0, 0, 59, 63, 1332, 716}, -- killing weapons/hellish weapons
+                    { 5, 1, 0, 0, 50, 55, 1083, 713}, -- underworld bats/talos
+                    { 4, 2, 0, 0, 50, 56, 1103, 714}, -- underworld bats/dromas
+                    { 5, 1, 0, 0, 50, 58, 1142, 715}, -- underworld bats/colossus
+                    { 3, 3, 0, 0, 59, 63, 1241, 716}, -- killing weapons/hellish weapons
                      -- { 4, 2, 0, 0, 95, 99, 2060, 717}, -- balayang/wekufes
                      -- { 4, 3, 0, 0, 95, 99, 2250, 718}, -- balayang/sentient carafes
                 },
@@ -883,13 +883,13 @@ local regimeInfo = {
                 event = 15,
                 page =
                 {
-                    { 3, 3, 0, 0, 51, 55, 1163, 812}, -- sand spiders/antica family
-                    { 3, 3, 0, 0, 51, 58, 1226, 813}, -- helm beetles/antica family
-                    { 3, 3, 0, 0, 51, 59, 1248, 814}, -- worm family/antica family
-                    { 7, 0, 0, 0, 52, 59, 1248, 815}, -- antica family
-                    { 3, 3, 0, 0, 52, 59, 1248, 816}, -- sabotender family/antica family
-                    { 3, 3, 0, 0, 56, 59, 1248, 817}, -- sand lizards/antica family
-                    { 3, 3, 0, 0, 62, 65, 1375, 818}, -- girtabs/antica family
+                    { 3, 3, 0, 0, 51, 55, 1083, 812}, -- sand spiders/antica family
+                    { 3, 3, 0, 0, 51, 58, 1142, 813}, -- helm beetles/antica family
+                    { 3, 3, 0, 0, 51, 59, 1162, 814}, -- worm family/antica family
+                    { 7, 0, 0, 0, 52, 59, 1162, 815}, -- antica family
+                    { 3, 3, 0, 0, 52, 59, 1162, 816}, -- sabotender family/antica family
+                    { 3, 3, 0, 0, 56, 59, 1162, 817}, -- sand lizards/antica family
+                    { 3, 3, 0, 0, 62, 65, 1280, 818}, -- girtabs/antica family
                     { 3, 3, 0, 0, 65, 69, 1339, 819}, -- sand tarantulas/antica family
                 },
             },
@@ -913,10 +913,10 @@ local regimeInfo = {
                 event = 3,
                 page =
                 {
-                    { 2, 3, 0, 0, 45, 49, 1034, 771}, -- labyrinth leech/goblin family
-                    { 3, 2, 0, 0, 50, 53, 1121, 772}, -- cockatrice/goblin family
-                    { 3, 2, 0, 0, 50, 54, 1142, 773}, -- mushussu/cockatrice
-                    { 3, 2, 0, 0, 55, 59, 1248, 774}, -- flying manta/goblin family
+                    { 2, 3, 0, 0, 45, 49, 965, 771}, -- labyrinth leech/goblin family
+                    { 3, 2, 0, 0, 50, 53, 1044, 772}, -- cockatrice/goblin family
+                    { 3, 2, 0, 0, 50, 54, 1064, 773}, -- mushussu/cockatrice
+                    { 3, 2, 0, 0, 55, 59, 1162, 774}, -- flying manta/goblin family
                     { 4, 1, 0, 0, 70, 74, 1390, 775}, -- torama/labyrinth manticore
                      -- { 4, 2, 0, 0, 95, 98, 1920, 776}, -- babaulas/boribaba
                 },
