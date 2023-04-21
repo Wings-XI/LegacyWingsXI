@@ -32,7 +32,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.STUN, 1, 0, 4)
+    local duration = 15
+    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.STUN, 1, 0, duration)
 
     return tpz.effect.STUN
 end

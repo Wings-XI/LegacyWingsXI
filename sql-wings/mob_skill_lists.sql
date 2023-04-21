@@ -1383,6 +1383,7 @@ INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027); -- plague swipe
 INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2028); -- fulm
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2113);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2114);
+INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2115);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2116);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2117);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2118);
@@ -3567,6 +3568,8 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 513); -- Smite of
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 514); -- Whirl of rage
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 1560); -- Whispers of ire
 
+-- Pandemonium Warden Dvergar phases before final
+INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5313, 2115);
 
 --
 -- Indexes for dumped tables
