@@ -8,6 +8,11 @@ require("scripts/globals/status")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    -- smaller range to use, but 30 yalm AoE. Effectively cannot out-range the skill
+    if mob:checkDistance(target) > 10 then
+        return 1
+    end
+
     return 0
 end
 

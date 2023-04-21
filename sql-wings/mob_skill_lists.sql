@@ -3522,7 +3522,7 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 334);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 1847);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 336);
 -- Pandemonium Warden Dvergar phases before final
-INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5308, 2115);
+INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5313, 2115);
 
 --
 -- Indexes for dumped tables

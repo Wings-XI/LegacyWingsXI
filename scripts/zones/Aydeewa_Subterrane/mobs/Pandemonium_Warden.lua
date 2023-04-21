@@ -19,16 +19,19 @@ local petIDs = {}
 petIDs[0] = {ID.mob.PANDEMONIUM_WARDEN +1, ID.mob.PANDEMONIUM_WARDEN +2, ID.mob.PANDEMONIUM_WARDEN +3, ID.mob.PANDEMONIUM_WARDEN +4, ID.mob.PANDEMONIUM_WARDEN +5, ID.mob.PANDEMONIUM_WARDEN +6, ID.mob.PANDEMONIUM_WARDEN +7, ID.mob.PANDEMONIUM_WARDEN +8}
 petIDs[1] = {ID.mob.PANDEMONIUM_WARDEN +9, ID.mob.PANDEMONIUM_WARDEN +10, ID.mob.PANDEMONIUM_WARDEN +11, ID.mob.PANDEMONIUM_WARDEN +12, ID.mob.PANDEMONIUM_WARDEN +13, ID.mob.PANDEMONIUM_WARDEN +14, ID.mob.PANDEMONIUM_WARDEN +15, ID.mob.PANDEMONIUM_WARDEN +16}
 
--- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,   Mamo,  Dverg,  Lamia,  Dverg,  Troll,  Dverg,   Khim,  Dverg,  Hydra,  Dverg,   Cerb,  Dverg
+-- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,GuloolJ,  Dverg, Medusa,  Dverg,Gurfurl,  Dverg,   Khim,  Dverg,  Hydra,  Dverg,   Cerb,  Dverg
+--                             WAR            WAR            WAR             WAR             NIN,            RNG,            MNK,            WAR,            WAR,            WAR,
 --                        1      2       3      4       5      6       7       8       9      10      11      12      13      14      15      16      17      18      19      20      21
 local triggerHPP = {     95,     2,     95,     2,     95,     2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2}
 local mobHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
 local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1805,   1840,   1796,   1840,   1793,   1840}
-local mobSkillID = {   5308,  1000,   5308,  1001,   5308,  1002,   5308,   1003,   5308,    285,   5308,    725,   5308,    326,   5308,    168,   5308,    164,   5308,     62,    316}
--- local mobSpellID = {    316,  1000,    316,  1001,    316,  1002,    316,   1003,    316,    285,    316,    725,    316,    326,    316,     62,    316,    164,    316,    168,    316}
+local mobSkillID = {   5313,  1000,   5313,  1001,   5313,  1002,   5313,   1003,   5313,    285,   5313,    725,   5313,    326,   5313,    168,   5313,    164,   5313,     62,    316}
+local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,      0,      0,      0,      0,      0,      0}
+local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
+-- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
 local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,   1746,   1841,    421,   1841,    281,   1839}
--- local petSkillID = {   1841,  1823,   1841,  1821,   1841,  1825,   1841,   1824,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
--- local petSpellID = {   1841,  1823,   1841,  1821,   1841,  1825,   1841,   1824,   1841,   1639,   1841,   1643,   1841,   1680,   1841,    281,   1841,    421,   1841,   1746,   1839}
+local petSkillID = {      0,   150,      0,   150,      0,   150,      0,    150,      0,    176,      0,    171,      0,    246,      0,    198,      0,   5009,      0,     56,    316}
+local petSpellID = {      2,     0,      2,     0,      2,     0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:
         Chariots - Archaic Gears
@@ -48,7 +51,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.MDEF, 50)
     mob:setMobMod(tpz.mobMod.NO_REST, 1) -- will still regen HP when roaming unless it has a DoT
     -- Make sure model is reset back to start
-    mob:setModelId(1840)
+    mob:setModelId(mobModelID[1])
     -- Prevent death and hide HP until final phase
     mob:setUnkillable(true)
     mob:hideHP(true)
@@ -62,10 +65,12 @@ function onMobSpawn(mob)
     mob:setLocalVar("astralFlow", 1)
 
     phaseChange(mob)
+    mob:SetMagicCastingEnabled(false)
 end
 
 function onMobDisengage(mob)
     despawnPets()
+    mob:SetMagicCastingEnabled(false)
 end
 
 function onMobRoam(mob)
@@ -90,8 +95,12 @@ function onMobEngaged(mob, target)
     local phase = mob:getLocalVar("phase")
 
     if phase % 2 == 1 then
-        mob:useMobAbility()
+        mob:setTP(3000)
     end
+    mob:timer(500, function(mobArg)
+        mobArg:SetMagicCastingEnabled(true) -- ensure engages with a TP move always
+    end)
+    mob:SetMobAbilityEnabled(true)
 end
 
 function onMobWeaponSkillPrepare(mob, target)
@@ -106,14 +115,17 @@ function onMobSkillFinished(mob, target, skill)
     local phase = mob:getLocalVar("phase")
     if phase ~= 21 and (phase % 2) == 1 and mob:getLocalVar("phaseChange") ~= 1 then
         -- transitional Dvergar stage, uses cackle, then hellsnap, then changes again
-        if skill:getName() == "Cackle" then
+        local hellsnapID = 2113
+        if skill:getID() ~= hellsnapID then
             mob:timer(2000, function(mobArg)
-                mobArg:useMobAbility(2113) -- hellsnap
+                mobArg:useMobAbility(hellsnapID) -- hellsnap
             end)
-        else
-            mob:setLocalVar("phaseChange", 1)
+            mob:timer(10000, function(mobArg) -- enough delay to let the pets get off a long spell (coupled with the timeSinceWS timer)
+                mobArg:setLocalVar("phaseChange", 1)
+            end)
         end
     end
+    mob:setLocalVar("timeSinceWS", os.time())
 end
 
 function onMobFight(mob, target)
@@ -123,48 +135,59 @@ function onMobFight(mob, target)
     local depopTime = mob:getLocalVar("PWDespawnTime")
     local phase = mob:getLocalVar("phase")
     local astral = mob:getLocalVar("astralFlow")
+    local phaseSpecialID = mob:getLocalVar("usedSpecial") ~= 1 and mobSpecID[phase] or 0 -- "special" refers to 2-hour ability
 
     -- Check for phase change
     if (phase < 21 and mobHPP <= triggerHPP[phase]) and mob:getLocalVar("phaseChange") ~= 1 then
         mob:setLocalVar("phaseChange", 1)
     end
 
-    if mob:getLocalVar("phaseChange") == 1 then
-        mob:setLocalVar("phaseChange", 0)
+    if mob:actionQueueEmpty() and mob:getLocalVar("timeSinceWS") < os.time() - 5 then
+        if mob:getLocalVar("phaseChange") == 1 then
+            mob:setLocalVar("phaseChange", 0)
 
-        -- Increment phase
-        -- phase = mob:getLocalVar("phase") + 1
-        mob:setLocalVar("phase", mob:getLocalVar("phase") + 1)
+            -- Increment phase
+            -- phase = mob:getLocalVar("phase") + 1
+            mob:setLocalVar("phase", mob:getLocalVar("phase") + 1)
 
-        phaseChange(mob)
+            phaseChange(mob)
 
-    -- Or, check for Astral Flow
-    elseif (phase == 21 and astral < 4 and mobHPP <= (99 - 25 * astral)) then
+        -- Or, check for Astral Flow
+        elseif (phase == 21 and astral < 4 and mobHPP <= (99 - 25 * astral)) then
 
-        mob:setLocalVar("astralFlow", astral + 1)
+            mob:setLocalVar("astralFlow", astral + 1)
 
-        -- ensure pets are there
-        popPets(mob)
-        -- "All avatars are summoned at once, and with them plus the lamps up, its hard to move your character."
-        -- "You will probably get locked in place and die from game mechanics alone."
-        for i = 1, 8 do
-            -- during last phase, pets are always index 1 and astral flows are always index 0
-            newPet = GetMobByID(petIDs[0][i])
-            oldPet = GetMobByID(petIDs[1][i])
-            handlePet(mob, newPet, oldPet, target, 790 +i)
-            newPet:setUnkillable(true)
-            newPet:SetAutoAttackEnabled(false)
-            newPet:SetMagicCastingEnabled(false)
-            newPet:SetMobAbilityEnabled(false)
-        end
+            -- ensure pets are there
+            popPets(mob)
+            -- "All avatars are summoned at once, and with them plus the lamps up, its hard to move your character."
+            -- "You will probably get locked in place and die from game mechanics alone."
+            for i = 1, 8 do
+                -- during last phase, pets are always index 1 and astral flows are always index 0
+                newPet = GetMobByID(petIDs[0][i])
+                oldPet = GetMobByID(petIDs[1][i])
+                handlePet(mob, newPet, oldPet, target, 790 +i)
+                newPet:setUnkillable(true)
+                newPet:SetAutoAttackEnabled(false)
+                newPet:SetMagicCastingEnabled(false)
+                newPet:SetMobAbilityEnabled(false)
+            end
 
-    -- Or, at least make sure pets weren't dragged off...
-    else
-        for i = 0, 1 do
-            for j = 1, 8 do
-                local pet = GetMobByID(petIDs[i][j])
-                if pet:isAlive() and not pet:isEngaged() then
-                    pet:updateEnmity(target)
+        else
+            -- use non-dverger 2-hour at 50% hp of current phase
+            if phaseSpecialID > 0 then
+                local halfHPP = (triggerHPP[phase] + (100 * mobHP[phase]/mob:getMaxHP())) / 2
+                if mobHPP < halfHPP then
+                    mob:useMobAbility(phaseSpecialID)
+                    mob:setLocalVar("usedSpecial", 1)
+                end
+            end
+            -- make sure pets weren't dragged off...
+            for i = 0, 1 do
+                for j = 1, 8 do
+                    local pet = GetMobByID(petIDs[i][j])
+                    if pet:isAlive() and not pet:isEngaged() then
+                        pet:updateEnmity(target)
+                    end
                 end
             end
         end
@@ -193,6 +216,8 @@ end
 
 function phaseChange(mob)
     local phase = mob:getLocalVar("phase")
+    mob:setLocalVar("usedSpecial", 0)
+    -- TODO remove all beneficial status effects on phase change (this needs to get rid of 2hour buffs as well)
 
     if (phase == 21) then -- Prepare for death
         mob:hideHP(false)
@@ -217,7 +242,7 @@ function phaseChange(mob)
 
         if phase % 2 == 1 then
             mob:timer(5000, function(mob)
-                mob:useMobAbility()  -- Cackle unless final phase (some other skill will be chosen)
+                mob:setTP(3000)  -- Cackle unless final phase (some other skill will be chosen)
             end)
         end
 
@@ -231,12 +256,15 @@ function phaseChange(mob)
     mob:setModelId(mobModelID[phase])
     mob:setHP(mobHP[phase])
     mob:setSkillList(mobSkillID[phase])
+    mob:setMobMod(tpz.mobMod.SKILL_LIST, mobSkillID[phase])
+    mob:setSpellList(mobSpellID[phase])
 end
 
 function popPets(mob)
     local phase = mob:getLocalVar("phase")
-
-    despawnPets(phase % 2)
+    if phase ~= 21 then
+        despawnPets(phase % 2) -- messes with astral flow doubled-up pets
+    end
     local target = mob:getTarget()
 
     if target ~= nil then
@@ -244,29 +272,57 @@ function popPets(mob)
         for i = 1, 8 do
             local newPet = GetMobByID(petIDs[phase % 2][i])
             local oldPet = GetMobByID(petIDs[(phase - 1) % 2][i])
-            newPet:setMobMod(tpz.mobMod.MAGIC_DELAY, 4)
-            handlePet(mob, newPet, oldPet, target, petModelID[phase])
+            handlePet(mob, newPet, oldPet, target, petModelID[phase], phase)
         end
     end
 end
 
-function handlePet(mob, newPet, oldPet, target, modelId)
+function handlePet(mob, newPet, oldPet, target, modelId, phase)
     newPet:disengage()
+    newPet:setTP(0)
     newPet:setModelId(modelId)
-    if modelId == 1820 then
-        newPet:AnimationSub(2)
+    if phase ~= nil then
+        local petSkills = 0
+        local petSpells = 0
+        if phase > 0 then
+            petSkills = petSkillID[phase]
+            petSpells = petSpellID[phase]
+        end
+        if modelId == 1820 then
+            newPet:AnimationSub(2)
+        else
+            newPet:AnimationSub(0)
+        end
+        -- spells before spawn
+        newPet:setSpellList(petSpells)
+        newPet:setMobMod(tpz.mobMod.SPELL_LIST, petSpells)
+        newPet:spawn()
+        -- skills after spawn
+        newPet:setMobMod(tpz.mobMod.SKILL_LIST, petSkills)
+        newPet:setSkillList(petSkills)
+
+        newPet:SetAutoAttackEnabled(true)
+        if petSkills > 0 then
+            newPet:SetMobAbilityEnabled(true)
+        else
+            newPet:SetMobAbilityEnabled(false)
+        end
+        if petSpells > 0 then
+            newPet:SetMagicCastingEnabled(true)
+            newPet:setMobMod(tpz.mobMod.MAGIC_DELAY, 4)
+            newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 70)
+        else
+            newPet:SetMagicCastingEnabled(false)
+            newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
+        end
+        newPet:setUnkillable(false)
     else
-        newPet:AnimationSub(0)
+        -- astral flow avatars
+        newPet:spawn()
+        newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     end
-    newPet:spawn()
     newPet:setPos(mob:getXPos() + math.random(-2, 2), mob:getYPos(), mob:getZPos() + math.random(-2, 2))
     newPet:updateEnmity(target)
-
-    newPet:SetAutoAttackEnabled(true)
-    newPet:SetMagicCastingEnabled(true)
-    newPet:SetMobAbilityEnabled(true)
-
-    newPet:setUnkillable(false)
 end
 
 function despawnPets(modulo)
