@@ -465,22 +465,22 @@ local regimeInfo = {
         {
             [  1] = {review = true},
             [  5] = {details = true},
-            [  7] = {prowess = true},
+            [  7] = {prowess = true, enabled = ENABLE_PROWESS == 1 and true or false},
         },
         finishOptions =
         {
             [  3] = {act = "CANCEL_REGIME",   cost =  0, discounted =  0},
             [ 20] = {act = "REPATRIATION",    cost = 50, discounted = 10},
-            [ 36] = {act = "CIRCUMSPECTION",  cost =  5, discounted =  5},
+            [ 36] = {act = "CIRCUMSPECTION",  cost =  5, discounted =  5, enabled = ENABLE_PROWESS == 1 and true or false},
             [ 52] = {act = "HOMING_INSTINCT", cost = 50, discounted = 25},
             [ 68] = {act = "RERAISE",         cost = 10, discounted =  5},
-            [ 84] = {act = "RERAISE_II",      cost = 20, discounted = 10},
-            [100] = {act = "RERAISE_III",     cost = 30, discounted = 15},
+            [ 84] = {act = "RERAISE_II",      cost = 20, discounted = 10, enabled = ENABLE_PROWESS == 1 and true or false},
+            [100] = {act = "RERAISE_III",     cost = 30, discounted = 15, enabled = ENABLE_PROWESS == 1 and true or false},
             [116] = {act = "REGEN",           cost = 20, discounted = 10},
             [132] = {act = "REFRESH",         cost = 20, discounted = 10},
             [148] = {act = "PROTECT",         cost = 15, discounted =  5},
             [164] = {act = "SHELL",           cost = 15, discounted =  5},
-            [180] = {act = "HASTE",           cost = 20, discounted = 10},
+            [180] = {act = "HASTE",           cost = 20, discounted = 10, enabled = ENABLE_PROWESS == 1 and true or false},
             [196] = {act = "DRIED_MEAT",      cost = 50, discounted = 25, food = true},
             [212] = {act = "SALTED_FISH",     cost = 50, discounted = 25, food = true},
             [228] = {act = "HARD_COOKIE",     cost = 50, discounted = 25, food = true},
@@ -498,14 +498,14 @@ local regimeInfo = {
                 event = 17,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 63, 1470, 719},
-                    { 4, 3, 0, 0, 62, 66, 1720, 720},
-                    { 4, 3, 0, 0, 62, 67, 1760, 721},
-                    { 4, 2, 0, 0, 72, 75, 1770, 722},
-                    { 3, 4, 0, 0, 72, 76, 1830, 723},
-                    { 4, 3, 0, 0, 72, 78, 1900, 724},
-                    { 3, 3, 0, 0, 74, 78, 1640, 725},
-                    { 2, 2, 2, 0, 102, 105, 2040, 726},
+                    { 3, 3, 0, 0, 60, 63, 1240, 719}, -- death caps/barkspiders
+                    { 4, 3, 0, 0, 62, 66, 1300, 720}, -- mourioches/robber crab
+                    { 4, 3, 0, 0, 62, 67, 1319, 721}, -- mourioches/moss eaters
+                    { 4, 2, 0, 0, 72, 75, 1408, 722}, -- korrigans/elder goobbues
+                    { 3, 4, 0, 0, 72, 76, 1427, 723}, -- skimmers/steelshells
+                    { 4, 3, 0, 0, 72, 78, 1465, 724}, -- processionaires/darters
+                    { 3, 3, 0, 0, 74, 78, 1465, 725}, -- boyahda saplins/bark tarantulas
+                    -- { 2, 2, 2, 0, 102, 105, 2040, 726}, -- viseclaws/snaggletooth peapuks/mouring crawlers
                 },
             },
             [tpz.zone.MIDDLE_DELKFUTTS_TOWER] =
@@ -513,9 +513,9 @@ local regimeInfo = {
                 event = 18,
                 page =
                 {
-                    { 4, 3, 0, 0, 25, 34, 1090, 782},
-                    { 4, 3, 0, 0, 25, 34, 1090, 783},
-                    { 4, 4, 0, 0, 30, 34, 1290, 784},
+                    { 3, 4, 0, 0, 25, 34, 775, 782}, -- goblins/bats
+                    { 3, 4, 0, 0, 25, 34, 775, 783}, -- gigas/bats
+                    { 4, 4, 0, 0, 30, 34, 775, 784}, -- goblins/gigas
                 },
             },
             [tpz.zone.UPPER_DELKFUTTS_TOWER] =
@@ -523,11 +523,11 @@ local regimeInfo = {
                 event = 20,
                 page =
                 {
-                    { 6, 0, 0, 0, 34, 35, 1010, 785},
-                    { 2, 2, 2, 0, 62, 69, 1520, 786},
-                    { 2, 2, 2, 0, 62, 69, 1520, 787},
-                    { 2, 2, 2, 0, 65, 69, 1540, 788},
-                    { 2, 2, 2, 0, 65, 69, 1540, 789},
+                    { 6, 0, 0, 0, 34, 35, 798, 785}, -- gigas
+                    { 2, 2, 2, 0, 62, 69, 1339, 786}, -- jotunn wallkeeper/gatekeeper/bats
+                    { 2, 2, 2, 0, 62, 69, 1339, 787}, -- jotunn hallkeeper/wildkeeper/bats
+                    { 2, 2, 2, 0, 65, 69, 1339, 788}, -- jotunn gatekeeper/hallkeeper/arcana-type
+                    { 2, 2, 2, 0, 65, 69, 1339, 789}, -- jotunn wildkeeper/wallkeeper/arcana-type
                 },
             },
             [tpz.zone.TEMPLE_OF_UGGALEPIH] =
@@ -535,12 +535,12 @@ local regimeInfo = {
                 event = 83,
                 page =
                 {
-                    { 3, 3, 0, 0, 51, 57, 1450, 790},
-                    { 4, 2, 0, 0, 51, 57, 1450, 791},
-                    { 4, 2, 0, 0, 51, 57, 1450, 792},
-                    { 3, 3, 0, 0, 61, 63, 1630, 793},
-                    { 3, 3, 0, 0, 61, 67, 1650, 794},
-                    { 3, 3, 0, 0, 61, 68, 1660, 795},
+                    { 3, 3, 0, 0, 51, 57, 1122, 790}, -- tonberries family/bees family
+                    { 4, 2, 0, 0, 51, 57, 1122, 791}, -- tonberries/rumble crawlers
+                    { 4, 2, 0, 0, 51, 57, 1122, 792}, -- tonberries/temple opo-opo
+                    { 3, 3, 0, 0, 61, 63, 1240, 793}, -- tonberries/temple bees
+                    { 3, 3, 0, 0, 61, 67, 1319, 794}, -- tonberries/hover tanks
+                    { 3, 3, 0, 0, 61, 68, 1320, 795}, -- tonberries/iron maidens
                 },
             },
             [tpz.zone.DEN_OF_RANCOR] =
@@ -548,14 +548,14 @@ local regimeInfo = {
                 event = 13,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 64, 1370, 796},
-                    { 4, 2, 0, 0, 60, 67, 1500, 797},
-                    { 6, 0, 0, 0, 62, 69, 1820, 798},
-                    { 4, 2, 0, 0, 62, 69, 1640, 799},
-                    { 4, 2, 0, 0, 62, 76, 1650, 800},
-                    { 5, 1, 0, 0, 73, 81, 1690, 801},
-                    { 3, 3, 0, 0, 74, 79, 1640, 802},
-                    { 4, 2, 0, 0, 75, 80, 1790, 803},
+                    { 3, 3, 0, 0, 60, 64, 1260, 796}, -- dire bat/cave worm
+                    { 6, 0, 0, 0, 60, 67, 1319, 797}, -- dire bat/mousses (mousses missing from mob spawns, adjusted to be 6 bats)
+                    { 6, 0, 0, 0, 62, 69, 1339, 798}, -- tonberries
+                    { 4, 2, 0, 0, 62, 69, 1339, 799}, -- succubus bats/tonberries
+                    { 4, 2, 0, 0, 62, 76, 1427, 800}, -- million eyes/tonberries
+                    { 5, 1, 0, 0, 73, 81, 1486, 801}, -- demonic pugils/doom toad
+                    { 3, 3, 0, 0, 74, 79, 1450, 802}, -- tormentors/pucks
+                    { 4, 2, 0, 0, 75, 80, 1468, 803}, -- torementors/bullbeggars
                 },
             },
             [tpz.zone.RANGUEMONT_PASS] =
@@ -563,14 +563,14 @@ local regimeInfo = {
                 event = 24,
                 page =
                 {
-                    { 4, 1, 0, 0,  3,  5, 270, 602},
-                    { 5, 1, 0, 0, 25, 30, 930, 603},
-                    { 4, 2, 0, 0, 26, 30, 860, 604},
-                    { 4, 2, 0, 0, 26, 30, 860, 605},
-                    { 4, 2, 0, 0, 30, 34, 970, 606},
-                    { 5, 2, 0, 0, 87, 92, 2260, 607},
-                    { 3, 3, 0, 0, 88, 90, 2260, 608},
-                    { 3, 3, 0, 0, 88, 90, 1850, 609},
+                    { 4, 1, 0, 0,  3,  5, 270, 602}, -- wind bats/blade bats
+                    { 5, 1, 0, 0, 25, 30, 717, 603}, -- seeker bats/ooze
+                    { 4, 2, 0, 0, 26, 30, 717, 604}, -- goblin muggers/gamblers
+                    { 4, 2, 0, 0, 26, 30, 717, 605}, -- goblin leechers/gamblers
+                    { 4, 2, 0, 0, 30, 34, 775, 606}, -- stirges/hecteyes
+                     -- { 5, 2, 0, 0, 87, 92, 2260, 607}, -- bilesuckers/hovering oculus
+                     -- { 3, 3, 0, 0, 88, 90, 2260, 608}, -- goblin hoodoos/chasers
+                     -- { 3, 3, 0, 0, 88, 90, 1850, 609}, -- goblin tanners/artificers
                 },
             },
             [tpz.zone.BOSTAUNIEUX_OUBLIETTE] =
@@ -578,14 +578,14 @@ local regimeInfo = {
                 event = 114,
                 page =
                 {
-                    { 5, 0, 0, 0, 52, 54, 1110, 610},
-                    { 4, 2, 0, 0, 52, 59, 1320, 611},
-                    { 5, 1, 0, 0, 56, 63, 1430, 612},
-                    { 9, 0, 0, 0, 65, 68, 2050, 613},
-                    { 6, 1, 0, 0, 94, 97, 2300, 614},
-                    { 6, 1, 0, 0, 95, 97, 2300, 615},
-                    { 6, 0, 0, 0, 96, 97, 1960, 616},
-                    { 2, 5, 0, 0, 95, 99, 2480, 617},
+                    { 5, 0, 0, 0, 52, 54, 1024, 610}, -- dark aspic
+                    { 4, 2, 0, 0, 52, 59, 1044, 611}, -- funnel bats/werebats
+                    { 5, 1, 0, 0, 56, 63, 1280, 612}, -- hound family/haunt
+                    { 9, 0, 0, 0, 65, 68, 1300, 613}, -- bloodsuckers
+                    -- { 6, 1, 0, 0, 94, 97, 2300, 614}, -- dabillas/panna cotta
+                    -- { 6, 1, 0, 0, 95, 97, 2300, 615}, -- blind bats/panna cotta
+                     -- { 6, 0, 0, 0, 96, 97, 1960, 616}, -- nachtmahrs
+                     -- { 2, 5, 0, 0, 95, 99, 2480, 617}, -- wurdalaks/blind bats
                 },
             },
             [tpz.zone.TORAIMARAI_CANAL] =
@@ -593,14 +593,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 3, 3, 0, 0, 47, 52, 1260, 618},
-                    { 2, 2, 2, 0, 52, 57, 1410, 619},
-                    { 3, 3, 0, 0, 53, 57, 1500, 620},
-                    { 3, 4, 0, 0, 60, 65, 1690, 621},
-                    { 4, 3, 0, 0, 95, 97, 2240, 622},
-                    { 5, 2, 0, 0, 95, 98, 2170, 623},
-                    { 5, 2, 0, 0, 96, 98, 2250, 624},
-                    { 8, 2, 0, 0, 94, 99, 2050, 625},
+                    { 3, 3, 0, 0, 47, 52, 1024, 618}, -- hell bats/makaras
+                    { 2, 2, 2, 0, 52, 57, 1123, 619}, -- fallen knight/liches/dark aspics
+                    { 3, 3, 0, 0, 53, 57, 1123, 620}, -- dark aspics/bloodsuckers
+                    { 3, 4, 0, 0, 60, 65, 1280, 621}, -- scavenger crabs/stygian pugils
+                    { 4, 3, 0, 0, 62, 65, 1280, 622}, -- starmite/dire bats (names different from era names)
+                    -- { 5, 2, 0, 0, 95, 98, 2170, 623}, -- plunderer crabs/sodden bones
+                    -- { 5, 2, 0, 0, 96, 98, 2250, 624}, -- blackwater pugils/drowned bones
+                    -- { 8, 2, 0, 0, 94, 99, 2050, 625}, -- flume toads/poroggo excavators
                 },
             },
             [tpz.zone.ZERUHN_MINES] =
@@ -608,11 +608,11 @@ local regimeInfo = {
                 event = 210,
                 page =
                 {
-                    { 3, 0, 0, 0,  1,  3,  90, 626},
-                    { 3, 0, 0, 0,  2,  4, 110, 627},
-                    { 5, 2, 0, 0, 75, 78, 1640, 628},
-                    { 5, 2, 0, 0, 75, 79, 1600, 629},
-                    { 5, 2, 0, 0, 75, 80, 1700, 630},
+                    { 3, 0, 0, 0,  1,  3,  90, 626}, -- Ding bats
+                    { 3, 0, 0, 0,  2,  4, 110, 627}, -- river crabs
+                    -- { 5, 2, 0, 0, 75, 78, 1640, 628}, -- coiliery bats/soot crabs
+                    -- { 5, 2, 0, 0, 75, 79, 1600, 629}, -- coiliery bats/burrower worms
+                    -- { 5, 2, 0, 0, 75, 80, 1700, 630}, -- coiliery bats/veindigger leeches
                 },
             },
             [tpz.zone.KORROLOKA_TUNNEL] =
@@ -620,14 +620,14 @@ local regimeInfo = {
                 event = 4,
                 page =
                 {
-                    { 2, 4, 0, 0, 20, 26, 780, 727},
-                    { 3, 3, 0, 0, 22, 30, 870, 728},
-                    { 4, 2, 0, 0, 23, 31, 950, 729},
-                    { 6, 0, 0, 0, 28, 31, 980, 730},
-                    { 3, 3, 0, 0, 29, 33, 930, 731},
-                    { 4, 0, 0, 0, 30, 33, 770, 732},
-                    { 6, 0, 0, 0, 35, 37, 1030, 733},
-                    { 4, 3, 0, 0, 87, 91, 2140, 734},
+                    { 2, 4, 0, 0, 20, 26, 598, 727}, -- land worms/seeker bats
+                    { 3, 3, 0, 0, 22, 30, 717, 728}, -- seeker bats/combats
+                    { 4, 2, 0, 0, 23, 31, 741, 729}, -- huge spiders/jellies
+                    { 6, 0, 0, 0, 28, 31, 741, 730}, -- thread leeches
+                    { 6, 0, 0, 0, 29, 33, 752, 731}, -- clippers/greater pugils (no pugils, changed to 6 clippers)
+                    { 4, 0, 0, 0, 30, 33, 752, 732}, -- bogies
+                    { 6, 0, 0, 0, 35, 37, 844, 733}, -- gigas family
+                    -- { 4, 3, 0, 0, 87, 91, 2140, 734}, -- lacerators/spool leeches
                 },
             },
             [tpz.zone.KUFTAL_TUNNEL] =
@@ -635,14 +635,14 @@ local regimeInfo = {
                 event = 29,
                 page =
                 {
-                    { 3, 3, 0, 0, 60, 64, 1440, 735},
-                    { 5, 1, 0, 0, 60, 66, 1480, 736},
-                    { 3, 3, 0, 0, 60, 66, 1380, 737},
-                    { 4, 2, 0, 0, 60, 67, 1550, 738},
-                    { 3, 3, 0, 0, 63, 69, 1410, 739},
-                    { 3, 3, 0, 0, 65, 69, 1540, 740},
-                    { 3, 3, 0, 0, 77, 80, 1660, 741},
-                    { 3, 3, 0, 0, 99, 103, 1900, 742},
+                    { 3, 3, 0, 0, 60, 64, 1261, 735}, -- robber crabs/sand lizards
+                    { 5, 1, 0, 0, 60, 66, 1300, 736}, -- robber crabs/haunt
+                    { 3, 3, 0, 0, 60, 66, 1300, 737}, -- cave worms/recluse spiders
+                    { 4, 2, 0, 0, 60, 67, 1319, 738}, -- robber crabs/sabotender sed
+                    { 3, 3, 0, 0, 63, 69, 1339, 739}, -- kuftal diggers/recluse spiders
+                    { 3, 3, 0, 0, 65, 69, 1339, 740}, -- deinonychus/goblins
+                    { 3, 3, 0, 0, 77, 80, 1468, 741}, -- ovinniks/greater cock
+                    -- { 3, 3, 0, 0, 99, 103, 1900, 742}, -- kuftal delvers/machairoduss
                 },
             },
             [tpz.zone.SEA_SERPENT_GROTTO] =
@@ -650,14 +650,14 @@ local regimeInfo = {
                 event = 24,
                 page =
                 {
-                    { 3, 3, 0, 0, 35, 39, 1040, 804},
-                    { 2, 4, 0, 0, 37, 41, 1050, 805},
-                    { 5, 1, 0, 0, 41, 45, 1180, 806},
-                    { 4, 2, 0, 0, 43, 48, 1190, 807},
-                    { 4, 2, 0, 0, 44, 48, 1220, 808},
-                    { 3, 3, 0, 0, 62, 67, 1470, 809},
-                    { 3, 3, 0, 0, 62, 69, 1480, 810},
-                    { 3, 3, 0, 0, 66, 69, 1500, 811},
+                    { 3, 3, 0, 0, 35, 39, 831, 804}, -- royal leeches/undead bats
+                    { 2, 4, 0, 0, 37, 41, 873, 805}, -- ironshells/skeletons
+                    { 5, 1, 0, 0, 41, 45, 1036, 806}, -- sahagin/vampire bat
+                    { 4, 2, 0, 0, 43, 48, 1013, 807}, -- sahagin/bigclaws
+                    { 4, 2, 0, 0, 44, 48, 1013, 808}, -- sahagin/grotto pugils
+                    { 3, 3, 0, 0, 62, 67, 1319, 809}, -- robber crabs/dire bats
+                    { 3, 3, 0, 0, 62, 69, 1339, 810}, -- robber craws/devil manta
+                    { 3, 3, 0, 0, 66, 69, 1339, 811}, -- mindgazers/greatclaws
                 },
             },
             [tpz.zone.VELUGANNON_PALACE] =
@@ -665,12 +665,12 @@ local regimeInfo = {
                 event = 4,
                 page =
                 {
-                    {10, 0, 0, 0, 72, 72, 2390, 743},
-                    { 7, 0, 0, 0, 74, 77, 1900, 744},
-                    { 7, 0, 0, 0, 75, 78, 1920, 745},
-                    { 7, 0, 0, 0, 76, 79, 2120, 746},
-                    { 7, 0, 0, 0, 77, 80, 2230, 747},
-                    { 6, 0, 0, 0, 79, 80, 2180, 748},
+                    {10, 0, 0, 0, 72, 72, 1397, 743}, -- arcana-type
+                    { 7, 0, 0, 0, 74, 77, 1446, 744}, -- evil weapons
+                    { 7, 0, 0, 0, 75, 78, 1465, 745}, -- dustbusters
+                    { 7, 0, 0, 0, 76, 79, 1450, 746}, -- caretakers
+                    { 7, 0, 0, 0, 77, 80, 1468, 747}, -- enkidus
+                    { 6, 0, 0, 0, 79, 80, 1468, 748}, -- elementals
                 },
             },
             [tpz.zone.THE_SHRINE_OF_RUAVITAU] =
@@ -678,12 +678,12 @@ local regimeInfo = {
                 event = 61,
                 page =
                 {
-                    {10, 0, 0, 0, 71, 71, 2370, 749},
-                    { 6, 0, 0, 0, 71, 74, 2080, 750},
-                    { 7, 0, 0, 0, 75, 80, 1930, 751},
-                    { 7, 0, 0, 0, 77, 82, 2150, 752},
-                    { 7, 0, 0, 0, 79, 82, 2050, 753},
-                    { 7, 0, 0, 0, 81, 84, 2390, 754},
+                    {10, 0, 0, 0, 71, 71, 1378, 749}, -- arcana-type (defender)
+                    { 6, 0, 0, 0, 71, 74, 1390, 750}, -- elementals
+                    { 7, 0, 0, 0, 75, 80, 1468, 751}, -- aura pots
+                    { 7, 0, 0, 0, 77, 82, 1505, 752}, -- doll family
+                    { 7, 0, 0, 0, 79, 82, 1505, 753}, -- evil weapon family
+                    { 7, 0, 0, 0, 81, 84, 1541, 754}, -- golem family
                 },
             },
             [tpz.zone.LOWER_DELKFUTTS_TOWER] =
@@ -691,11 +691,11 @@ local regimeInfo = {
                 event = 40,
                 page =
                 {
-                    { 3, 3, 0, 0, 25, 30, 900, 777},
-                    { 3, 3, 0, 0, 25, 30, 900, 778},
-                    { 3, 3, 0, 0, 25, 30, 930, 779},
-                    { 4, 2, 0, 0, 25, 32, 980, 780},
-                    { 4, 2, 0, 0, 25, 35, 940, 781},
+                    { 3, 3, 0, 0, 25, 30, 717, 777}, -- bats/goblins
+                    { 3, 3, 0, 0, 25, 30, 717, 778}, -- bats/gigas
+                    { 4, 2, 0, 0, 25, 30, 717, 779}, -- bats/chaos idol
+                    { 4, 2, 0, 0, 25, 32, 730, 780}, -- bats/bogy
+                    { 4, 2, 0, 0, 25, 35, 798, 781}, -- bats/magic pots
                 },
             },
             [tpz.zone.KING_RANPERRES_TOMB] =
@@ -703,14 +703,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 3, 3, 0, 0,  3,  8, 380, 631},
-                    { 4, 2, 0, 0,  5, 11, 420, 632},
-                    { 2, 2, 2, 0, 12, 16, 610, 633},
-                    { 3, 3, 0, 0, 14, 17, 590, 634},
-                    { 2, 2, 2, 0, 21, 23, 864, 635},
-                    { 6, 1, 0, 0, 78, 80, 1520, 636},
-                    { 5, 2, 0, 0, 77, 80, 1690, 637},
-                    { 5, 2, 0, 0, 80, 83, 1720, 638},
+                    { 3, 3, 0, 0,  3,  8, 342, 631}, -- mouse bat/goblin
+                    { 4, 2, 0, 0,  5, 11, 471, 632}, -- stone eater/wind bat
+                    { 2, 2, 2, 0, 12, 16, 480, 633}, -- goblin ambush/tink/butch
+                    { 3, 3, 0, 0, 14, 17, 510, 634}, -- plague bats/rock eater
+                    { 2, 2, 2, 0, 21, 23, 550, 635}, -- goblin mugger/leecher/gambler
+                     -- { 6, 1, 0, 0, 78, 80, 1520, 636},
+                     -- { 5, 2, 0, 0, 77, 80, 1690, 637},
+                     -- { 5, 2, 0, 0, 80, 83, 1720, 638},
                 },
             },
             [tpz.zone.DANGRUF_WADI] =
@@ -718,14 +718,14 @@ local regimeInfo = {
                 event = 160,
                 page =
                 {
-                    { 4, 1, 0, 0,  3,  8, 280, 639},
-                    { 3, 2, 0, 0,  5,  9, 350, 640},
-                    { 3, 2, 0, 0, 11, 14, 490, 641},
-                    { 4, 2, 0, 0, 86, 89, 1830, 642},
-                    { 5, 2, 0, 0, 86, 90, 1650, 643},
-                    { 5, 2, 0, 0, 86, 90, 1840, 644},
-                    { 2, 2, 2, 0, 90, 91, 1860, 645},
-                    { 5, 2, 0, 0, 90, 93, 2260, 646},
+                    { 4, 1, 0, 0,  3,  8, 342, 639}, -- stone eater/rock lizard
+                    { 3, 2, 0, 0,  5,  9, 385, 640}, -- goblins/wadi crab
+                    { 3, 2, 0, 0, 11, 14, 420, 641}, -- wadi hare/leech
+                     -- { 4, 2, 0, 0, 86, 89, 1830, 642}, -- fume lizard/goblin brigand
+                     -- { 5, 2, 0, 0, 86, 90, 1650, 643}, -- witchetty grubs/goblin headsman
+                     -- { 5, 2, 0, 0, 86, 90, 1840, 644}, -- prim pikas/goblin healer
+                     -- { 2, 2, 2, 0, 90, 91, 1860, 645}, -- goblin conj/bladesmith/bushwhacker
+                     -- { 5, 2, 0, 0, 90, 93, 2260, 646}, -- trimmers/natty gibbons
                 },
             },
             [tpz.zone.INNER_HORUTOTO_RUINS] =
@@ -733,14 +733,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 2, 3, 0, 0,  1,  6, 250, 647},
-                    { 2, 3, 0, 0,  1,  7, 270, 648},
-                    { 3, 2, 0, 0, 15, 20, 610, 649},
-                    { 4, 2, 0, 0, 22, 26, 840, 650},
-                    { 3, 3, 0, 0, 78, 82, 1750, 651},
-                    { 3, 3, 0, 0, 79, 82, 1760, 652},
-                    { 2, 4, 0, 0, 81, 83, 1770, 653},
-                    { 2, 4, 0, 0, 81, 84, 1780, 654},
+                    { 2, 3, 0, 0,  1,  6, 315, 647}, -- battue bats/goblin thugs
+                    { 2, 3, 0, 0,  1,  7, 367, 648}, -- blade bats/goblin weaver
+                    { 3, 2, 0, 0, 15, 20, 500, 649}, -- battle bats/blobs
+                    { 4, 2, 0, 0, 22, 26, 598, 650}, -- evil weapon/will-o-wisp
+                     -- { 3, 3, 0, 0, 78, 82, 1750, 651}, -- troika bats/goblin trailblazers
+                     -- { 3, 3, 0, 0, 79, 82, 1760, 652}, -- deathwatch beetles/goblin fleshers
+                     -- { 2, 4, 0, 0, 81, 83, 1770, 653}, -- covin bats/skinymalinks
+                     -- { 2, 4, 0, 0, 81, 84, 1780, 654}, -- goblin lurchers/skinnymajinxes
                 },
             },
             [tpz.zone.ORDELLES_CAVES] =
@@ -748,14 +748,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 3, 3, 0, 0, 18, 21, 730, 655},
-                    { 4, 2, 0, 0, 21, 27, 840, 656},
-                    { 5, 1, 0, 0, 17, 26, 800, 657},
-                    { 3, 3, 0, 0, 23, 26, 850, 658},
-                    { 4, 2, 0, 0, 26, 28, 950, 659},
-                    { 4, 1, 0, 0, 29, 34, 830, 660},
-                    { 3, 3, 0, 0, 84, 86, 1810, 661},
-                    { 3, 3, 0, 0, 86, 88, 1890, 662},
+                    { 3, 3, 0, 0, 18, 21, 630, 655}, -- stalking sapling/thread leech
+                    { 4, 2, 0, 0, 21, 27, 654, 656}, -- fly agaric/shrieker
+                    { 5, 1, 0, 0, 17, 26, 630, 657}, -- goblin family/will-o-wisp
+                    { 3, 3, 0, 0, 23, 26, 598, 658}, -- seeker bats/vorpal bunny
+                    { 4, 2, 0, 0, 26, 28, 670, 659}, -- ancient bat/jelly
+                    { 4, 1, 0, 0, 29, 34, 775, 660}, -- goliath beetle/stroper
+                    -- { 3, 3, 0, 0, 84, 86, 1810, 661}, -- buds bunny/targe beetle
+                    -- { 3, 3, 0, 0, 86, 88, 1890, 662}, -- bilis leech/swagger spruce
                 },
             },
             [tpz.zone.OUTER_HORUTOTO_RUINS] =
@@ -763,14 +763,14 @@ local regimeInfo = {
                 event = 110,
                 page =
                 {
-                    { 1, 1, 1, 1, 10, 14, 340, 663},
-                    { 1, 1, 1, 1, 15, 19, 450, 664},
-                    { 1, 1, 1, 1, 20, 24, 540, 665},
-                    { 1, 1, 1, 1, 25, 29, 590, 666},
-                    { 1, 1, 1, 1, 30, 34, 650, 667},
-                    { 1, 1, 1, 1, 35, 39, 700, 668},
-                    { 5, 1, 0, 0, 81, 85, 1840, 669},
-                    { 5, 1, 0, 0, 82, 85, 1850, 670},
+                    { 1, 1, 1, 1, 10, 14, 420, 663}, -- four cpus/batons/swords/coins
+                    { 1, 1, 1, 1, 15, 19, 475, 664}, -- five cups/batons/swords/coins
+                    { 1, 1, 1, 1, 20, 24, 573, 665}, -- six cups/batons/swords/coins
+                    { 1, 1, 1, 1, 25, 29, 693, 666}, -- seven cups/batons/swords/coins
+                    { 1, 1, 1, 1, 30, 34, 775, 667}, -- eight cups/batons/swords/coins
+                    { 1, 1, 1, 1, 35, 39, 831, 668}, -- nine cups/batons/swords/coins
+                     -- { 5, 1, 0, 0, 81, 85, 1840, 669}, -- fetor bats/fuligo
+                     -- { 5, 1, 0, 0, 82, 85, 1850, 670}, -- thorn bats/fuligo
                 },
             },
             [tpz.zone.THE_ELDIEME_NECROPOLIS] =
@@ -778,14 +778,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 6, 0, 0, 0, 42, 46, 950, 671},
-                    { 6, 0, 0, 0, 46, 49, 1030, 672},
-                    { 4, 2, 0, 0, 51, 54, 1300, 673},
-                    { 5, 1, 0, 0, 50, 55, 1340, 674},
-                    { 3, 3, 0, 0, 53, 56, 1330, 675},
-                    { 3, 3, 0, 0, 60, 63, 1470, 676},
-                    { 3, 3, 0, 0, 91, 95, 1890, 677},
-                    { 3, 3, 0, 0, 91, 95, 1890, 678},
+                    { 6, 0, 0, 0, 42, 46, 1059, 671}, -- skeleton family
+                    { 6, 0, 0, 0, 46, 49, 1034, 672}, -- shadow family
+                    { 4, 2, 0, 0, 51, 54, 1064, 673}, -- shadow family/azers
+                    { 5, 1, 0, 0, 50, 55, 1083, 674}, -- liches/blood soul
+                    { 3, 3, 0, 0, 53, 56, 1103, 675}, -- tomb wolves/skeleton family
+                    { 3, 3, 0, 0, 60, 63, 1241, 676}, -- tomb warriors/tomb mages
+                     -- { 3, 3, 0, 0, 91, 95, 1890, 677}, -- hellbound warrios/nekros hounds
+                     -- { 3, 3, 0, 0, 91, 95, 1890, 678}, -- hellbound warlocks/nekros hounds
                 },
             },
             [tpz.zone.GUSGEN_MINES] =
@@ -793,14 +793,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 6, 0, 0, 0, 20, 27, 660, 679},
-                    { 2, 4, 0, 0, 20, 24, 800, 680},
-                    { 2, 4, 0, 0, 21, 26, 790, 681},
-                    { 2, 2, 2, 0, 28, 31, 1050, 682},
-                    { 3, 3, 0, 0, 30, 34, 970, 683},
-                    { 3, 3, 0, 0, 32, 36, 1000, 684},
-                    { 2, 5, 0, 0, 85, 87, 1890, 685},
-                    { 2, 5, 0, 0, 85, 89, 2180, 686},
+                    { 6, 0, 0, 0, 20, 27, 621, 679}, -- skeleton family
+                    { 2, 4, 0, 0, 20, 24, 573, 680}, -- fly agarics/skeleton family
+                    { 2, 4, 0, 0, 21, 26, 630, 681}, -- ore eater/bandersnatches
+                    { 2, 2, 2, 0, 28, 31, 741, 682}, -- greater pugils/amphibaenas/mauthe doog
+                    { 3, 3, 0, 0, 30, 34, 775, 683}, -- wights/myconids
+                    { 3, 3, 0, 0, 32, 36, 821, 684}, -- ghasts/gallinippers
+                     -- { 2, 5, 0, 0, 85, 87, 1890, 685}, -- accursed soldiers/rockmills
+                     -- { 2, 5, 0, 0, 85, 89, 2180, 686}, -- accursed sorcerers/madfly
                 },
             },
             [tpz.zone.CRAWLERS_NEST] =
@@ -808,14 +808,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 3, 3, 0, 0, 40, 44, 1160, 687},
-                    { 3, 3, 0, 0, 45, 49, 1230, 688},
-                    { 3, 3, 0, 0, 49, 52, 1280, 689},
-                    { 4, 2, 0, 0, 50, 54, 1300, 690},
-                    { 2, 2, 2, 0, 53, 58, 1340, 691},
-                    { 3, 3, 0, 0, 59, 63, 1470, 692},
-                    { 4, 3, 0, 0, 91, 93, 2190, 693},
-                    { 4, 3, 0, 0, 92, 96, 2220, 694},
+                    { 3, 3, 0, 0, 40, 44, 1013, 687}, -- worker crawler/death jacket
+                    { 3, 3, 0, 0, 45, 49, 1034, 688}, -- soldier crawler/nest beetle
+                    { 3, 3, 0, 0, 49, 52, 1050, 689}, -- labyrinth lizards/witch hazels
+                    { 4, 2, 0, 0, 50, 54, 1064, 690}, -- exorays/hornflys
+                    { 2, 2, 2, 0, 53, 58, 1142, 691}, -- rumble crawlers/wespes/dragonflys
+                    { 3, 3, 0, 0, 59, 63, 1241, 692}, -- helm beetles/knight crawlers
+                     -- { 4, 3, 0, 0, 91, 93, 2190, 693}, -- king crawlers/vespos
+                     -- { 4, 3, 0, 0, 92, 96, 2220, 694}, -- dancing jewels/olid funguars
                 },
             },
             [tpz.zone.MAZE_OF_SHAKHRAMI] =
@@ -823,14 +823,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 3, 2, 0, 0, 15, 18, 550, 695},
-                    { 4, 2, 0, 0, 18, 23, 700, 696},
-                    { 2, 4, 0, 0, 22, 26, 840, 697},
-                    { 2, 4, 0, 0, 26, 31, 920, 698},
-                    { 4, 2, 0, 0, 26, 31, 820, 699},
-                    { 5, 1, 0, 0, 27, 33, 840, 700},
-                    { 3, 3, 0, 0, 83, 85, 1840, 701},
-                    { 3, 3, 0, 0, 86, 88, 1830, 702},
+                    { 3, 2, 0, 0, 15, 18, 540, 695}, -- goblin family/stink bats
+                    { 4, 2, 0, 0, 18, 23, 550, 696}, -- maze maker/combat
+                    { 2, 4, 0, 0, 22, 26, 630, 697}, -- ghoul/carnivorous crawler
+                    { 2, 4, 0, 0, 26, 31, 741, 698}, -- caterchipillar/anicient bat
+                    { 4, 2, 0, 0, 26, 31, 741, 699}, -- abyss worm/ancient bat
+                    { 5, 1, 0, 0, 27, 33, 752, 700}, -- abyss worm/labyrinth scrop
+                     -- { 3, 3, 0, 0, 83, 85, 1840, 701}, -- chaser bats/bleeder leech
+                     -- { 3, 3, 0, 0, 86, 88, 1830, 702}, -- warren bat/crypterpillar
                 },
             },
             [tpz.zone.GARLAIGE_CITADEL] =
@@ -838,14 +838,14 @@ local regimeInfo = {
                 event = 110,
                 page =
                 {
-                    { 4, 2, 0, 0, 40, 43, 1160, 703},
-                    { 4, 2, 0, 0, 40, 44, 1160, 704},
-                    { 2, 4, 0, 0, 46, 49, 1240, 705},
-                    { 4, 2, 0, 0, 51, 55, 1310, 706},
-                    { 3, 3, 0, 0, 52, 58, 1330, 707},
-                    { 2, 2, 1, 0, 59, 62, 1270, 708},
-                    { 5, 2, 0, 0, 91, 96, 1840, 709},
-                    { 4, 3, 0, 0, 92, 96, 2220, 710},
+                    { 4, 2, 0, 0, 40, 43, 990, 703}, -- wingrats/skeleton family
+                    { 4, 2, 0, 0, 40, 44, 1013, 704}, -- siege bats/borer beetles
+                    { 2, 4, 0, 0, 46, 49, 1034, 705}, -- evil weapon family/citadel bats
+                    { 4, 2, 0, 0, 51, 55, 1083, 706}, -- funnel bats/explosures
+                    { 3, 3, 0, 0, 52, 58, 1142, 707}, -- dromas/chamber beetles
+                    { 2, 2, 1, 0, 59, 62, 1221, 708}, -- over weapons/vault weapons/wraith
+                     -- { 5, 2, 0, 0, 91, 96, 1840, 709}, -- donjon bats/kabooms
+                     -- { 4, 3, 0, 0, 92, 96, 2220, 710}, -- fortalice bats/warden beetles
                 },
             },
             [tpz.zone.FEIYIN] =
@@ -853,14 +853,14 @@ local regimeInfo = {
                 event = 100,
                 page =
                 {
-                    { 4, 2, 0, 0, 40, 43, 1180, 711},
-                    { 4, 2, 0, 0, 43, 46, 1240, 712},
-                    { 5, 1, 0, 0, 50, 55, 1310, 713},
-                    { 4, 2, 0, 0, 50, 56, 1310, 714},
-                    { 5, 1, 0, 0, 50, 58, 1340, 715},
-                    { 3, 3, 0, 0, 59, 63, 1470, 716},
-                    { 4, 2, 0, 0, 95, 99, 2060, 717},
-                    { 4, 3, 0, 0, 95, 99, 2250, 718},
+                    { 4, 2, 0, 0, 40, 43, 990, 711}, -- vampire bats/drones
+                    { 4, 2, 0, 0, 43, 46, 1059, 712}, -- shadow family/ore golems
+                    { 5, 1, 0, 0, 50, 55, 1083, 713}, -- underworld bats/talos
+                    { 4, 2, 0, 0, 50, 56, 1103, 714}, -- underworld bats/dromas
+                    { 5, 1, 0, 0, 50, 58, 1142, 715}, -- underworld bats/colossus
+                    { 3, 3, 0, 0, 59, 63, 1241, 716}, -- killing weapons/hellish weapons
+                     -- { 4, 2, 0, 0, 95, 99, 2060, 717}, -- balayang/wekufes
+                     -- { 4, 3, 0, 0, 95, 99, 2250, 718}, -- balayang/sentient carafes
                 },
             },
             [tpz.zone.IFRITS_CAULDRON] =
@@ -868,14 +868,14 @@ local regimeInfo = {
                 event = 51,
                 page =
                 {
-                    { 4, 1, 0, 0, 61, 68, 1270, 755},
-                    { 4, 1, 0, 0, 61, 68, 1570, 756},
-                    { 4, 1, 0, 0, 62, 69, 1280, 757},
-                    { 3, 2, 0, 0, 62, 73, 1310, 758},
-                    { 3, 2, 0, 0, 62, 73, 1380, 759},
-                    { 4, 2, 0, 0, 69, 74, 1610, 760},
-                    { 4, 2, 0, 0, 71, 78, 1650, 761},
-                    { 4, 2, 0, 0, 71, 78, 1760, 762},
+                    { 4, 1, 0, 0, 61, 68, 1320, 755}, -- volcano wasp/gas
+                    { 4, 1, 0, 0, 61, 68, 1320, 756}, -- old opo/volcanic gas
+                    { 4, 1, 0, 0, 62, 69, 1339, 757}, -- goblin family/volcanic gas
+                    { 3, 2, 0, 0, 62, 73, 1417, 758}, -- eotyrannus/volcanic gas
+                    { 3, 2, 0, 0, 62, 73, 1417, 759}, -- volcanic gas/sulfur scorp
+                    { 4, 2, 0, 0, 69, 74, 1390, 760}, -- nightmare bats/volcanic bomb
+                    { 4, 2, 0, 0, 71, 78, 1465, 761}, -- ash lizard/volcanic bomb
+                    { 4, 2, 0, 0, 71, 78, 1465, 762}, -- hurrican wyvern/volcanic bomb
                 },
             },
             [tpz.zone.QUICKSAND_CAVES] =
@@ -883,14 +883,14 @@ local regimeInfo = {
                 event = 15,
                 page =
                 {
-                    { 3, 3, 0, 0, 51, 55, 1310, 812},
-                    { 3, 3, 0, 0, 51, 58, 1360, 813},
-                    { 3, 3, 0, 0, 51, 59, 1230, 814},
-                    { 7, 0, 0, 0, 52, 59, 1480, 815},
-                    { 3, 3, 0, 0, 52, 59, 1470, 816},
-                    { 3, 3, 0, 0, 56, 59, 1360, 817},
-                    { 3, 3, 0, 0, 62, 65, 1570, 818},
-                    { 3, 3, 0, 0, 65, 69, 1540, 819},
+                    { 3, 3, 0, 0, 51, 55, 1083, 812}, -- sand spiders/antica family
+                    { 3, 3, 0, 0, 51, 58, 1142, 813}, -- helm beetles/antica family
+                    { 3, 3, 0, 0, 51, 59, 1162, 814}, -- worm family/antica family
+                    { 7, 0, 0, 0, 52, 59, 1162, 815}, -- antica family
+                    { 3, 3, 0, 0, 52, 59, 1162, 816}, -- sabotender family/antica family
+                    { 3, 3, 0, 0, 56, 59, 1162, 817}, -- sand lizards/antica family
+                    { 3, 3, 0, 0, 62, 65, 1280, 818}, -- girtabs/antica family
+                    { 3, 3, 0, 0, 65, 69, 1339, 819}, -- sand tarantulas/antica family
                 },
             },
             [tpz.zone.GUSTAV_TUNNEL] =
@@ -898,14 +898,14 @@ local regimeInfo = {
                 event = 17,
                 page =
                 {
-                    { 2, 2, 1, 0, 44, 49, 1040, 763},
-                    { 2, 2, 2, 0, 45, 49, 1230, 764},
-                    { 3, 2, 1, 0, 65, 68, 1490, 765},
-                    { 3, 3, 0, 0, 73, 76, 1620, 766},
-                    { 5, 1, 0, 0, 75, 78, 1700, 767},
-                    { 5, 1, 0, 0, 75, 79, 1680, 768},
-                    { 4, 2, 0, 0, 76, 80, 1710, 769},
-                    { 5, 2, 0, 0, 100, 103, 2310, 770},
+                    { 2, 2, 1, 0, 44, 49, 1034, 763}, -- labyrinth lizards/leeches/bat family
+                    { 2, 2, 2, 0, 45, 49, 1034, 764}, -- hawkers/makaras/goblin family
+                    { 3, 2, 1, 0, 65, 68, 1320, 765}, -- robber crabs/skeleton family/goblin family
+                    { 3, 3, 0, 0, 73, 76, 1427, 766}, -- doom warlocks/demonic pugils
+                    { 5, 1, 0, 0, 75, 78, 1465, 767}, -- doom guards/erlik
+                    { 5, 1, 0, 0, 75, 79, 1450, 768}, -- doom guards/antares
+                    { 4, 2, 0, 0, 76, 80, 1468, 769}, -- doom warlocks/typhoon wyverns
+                     -- { 5, 2, 0, 0, 100, 103, 2310, 770}, -- boulder eaters/pygmytoises
                 },
             },
             [tpz.zone.LABYRINTH_OF_ONZOZO] =
@@ -913,12 +913,12 @@ local regimeInfo = {
                 event = 3,
                 page =
                 {
-                    { 2, 3, 0, 0, 45, 49, 1050, 771},
-                    { 3, 2, 0, 0, 50, 53, 1070, 772},
-                    { 3, 2, 0, 0, 50, 54, 1140, 773},
-                    { 3, 2, 0, 0, 55, 59, 1130, 774},
-                    { 4, 1, 0, 0, 70, 74, 1350, 775},
-                    { 4, 2, 0, 0, 95, 98, 1920, 776},
+                    { 2, 3, 0, 0, 45, 49, 965, 771}, -- labyrinth leech/goblin family
+                    { 3, 2, 0, 0, 50, 53, 1044, 772}, -- cockatrice/goblin family
+                    { 3, 2, 0, 0, 50, 54, 1064, 773}, -- mushussu/cockatrice
+                    { 3, 2, 0, 0, 55, 59, 1162, 774}, -- flying manta/goblin family
+                    { 4, 1, 0, 0, 70, 74, 1390, 775}, -- torama/labyrinth manticore
+                     -- { 4, 2, 0, 0, 95, 98, 1920, 776}, -- babaulas/boribaba
                 },
             },
         },
@@ -1092,6 +1092,17 @@ tpz.regime.bookOnEventUpdate = function(player, option, regimeType)
         return
     end
 
+    -- generic message for options that have "enabled" param set to false
+    if opt.enabled ~= nil and opt.enabled == false then
+        local disabledMessage = "Option is disabled."
+        if opt.act ~= nil then
+            disabledMessage = string.format("Option %s is disabled.", string.gsub(string.lower(opt.act),"_"," "))
+        end
+        player:PrintToPlayer(disabledMessage, 29)
+        player:release()
+        return
+    end
+
     -- review current training regime: progress on mobs
     if opt.review and page then
         local n1 = (page[1] ~= 0) and player:getCharVar("[regime]killed1") or 0
@@ -1137,6 +1148,16 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
     local opt = opts[option]
 
     if not opt then
+        return
+    end
+
+    -- generic message for options that have "enabled" param set to false
+    if opt.enabled ~= nil and opt.enabled == false then
+        local disabledMessage = "Option is disabled."
+        if opt.act ~= nil then
+            disabledMessage = string.format("Option %s is disabled.", string.gsub(string.lower(opt.act),"_"," "))
+        end
+        player:PrintToPlayer(disabledMessage, 29)
         return
     end
 
@@ -1416,7 +1437,7 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         end
 
         -- prowess buffs from completing Grounds regimes
-        if regimeType == tpz.regime.type.GROUNDS then
+        if regimeType == tpz.regime.type.GROUNDS and ENABLE_PROWESS == 1 then
             addGovProwessBonusEffect(player)
 
             -- repeat clears bonus

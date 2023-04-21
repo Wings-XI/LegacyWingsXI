@@ -33,6 +33,7 @@ ENABLE_VOIDWATCH = 0 -- Not an expansion, but has its own storyline.
 -- FIELDS OF VALOR/Grounds of Valor settings
 ENABLE_FIELD_MANUALS  = 1 -- Enables Fields of Valor
 ENABLE_GROUNDS_TOMES  = 0 -- Enables Grounds of Valor
+ENABLE_PROWESS = 0        -- Enabes Prowess buffs from GoV completions
 ENABLE_SURVIVAL_GUIDE = 0 -- Enables Survival Guides
 REGIME_WAIT = 1 -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
 FOV_REWARD_ALLIANCE = 0 -- Allow Fields of Valor rewards while being a member of an alliance. (default retail behavior: 0)
