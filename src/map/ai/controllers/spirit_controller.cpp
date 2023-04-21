@@ -158,7 +158,7 @@ bool CSpiritController::TrySpellcast()
         break;
     case PETID_LIGHTSPIRIT:
     // TODO determine if it should be able to cure in combat and curaga on other alliance parties
-        if (true                                                                                                         ) { spell = GetHighestCure(); }
+        if (TryIdleSpellcast()                                                                                           ) {  } // spell set in TryIdleSpellCast function. Light spirit can buff and heal in combat
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.50f                       - AF * 1.0f) { spell = GetDOT(petid); } // dia,dia2
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.17f - 0.002f * skillbonus - AF * 1.0f) { spell = GetEnfeeble(petid); } // flash
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.30f - 0.002f * skillbonus + AF * 1.0f) { spell = GetAM(petid); } // holy
@@ -194,8 +194,25 @@ bool CSpiritController::TryIdleSpellcast()
     if (spell != SpellID::NULLSPELL && PCastTarget && Cast(PCastTarget->targid, spell))
     {
         m_LastMagicTime = m_Tick + 1ms * spell::GetSpell(spell)->getCastTime();
+
+        bool aoeSpell = false;
         if (spell > SpellID::Curaga_V)
-            m_LastMagicTime = m_LastMagicTime - m_magicCooldown / 2; // for buffs put it into the past, halfway into the cooldown already
+        {
+            // AoE all buff spells except this list
+            if ((std::set<SpellID> {SpellID::Regen, SpellID::Haste}).count(spell) == 0)
+            {
+                aoeSpell = true; // Make all other buffs AoE
+            }
+            m_LastMagicTime = m_LastMagicTime - m_magicCooldown / 2; // for buffs put the timer into the past, to reduce magic cooldown in "buff mode"
+        }
+        else if (PSpirit->GetMLevel() > 15 && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.6f) // make heals AoE 60% of the time
+        {
+            aoeSpell = true;
+        }
+
+        if (aoeSpell)
+            PSpirit->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_ACCESSION, EFFECT_ACCESSION, 1, 0, 15));
+
         return true;
     }
     return false;
@@ -465,17 +482,6 @@ SpellID CSpiritController::GetHighestCure()
         cure = SpellID::Cure_II;
     else
         cure = SpellID::Cure;
-    if (tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.6f) // prefer curagas, even on a party of one
-    {
-        if (level > 70)
-            cure = SpellID::Curaga_IV;
-        else if (level > 50)
-            cure = SpellID::Curaga_III;
-        else if (level > 30)
-            cure = SpellID::Curaga_II;
-        else if (level > 15)
-            cure = SpellID::Curaga;
-    }
 
     if (cure != SpellID::NULLSPELL)
     {
