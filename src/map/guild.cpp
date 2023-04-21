@@ -128,3 +128,14 @@ std::pair<uint16, uint16> CGuild::getDailyGPItem(CCharEntity* PChar)
     // we don't later calculate a negative quantity in CGuild::addGuildPoints
     return std::make_pair(GPItem[0].item->getID(), (uint16)(std::max<int16>(0, (((int16)(GPItem[0].maxpoints)) - ((int16)curPoints)))));
 }
+
+std::pair<uint16, uint16> CGuild::getDailyGPItemWithCap(CCharEntity* PChar)
+{
+    uint8 rank = PChar->RealSkills.rank[m_id + 48];
+
+    rank = std::clamp<uint8>(rank, 3, 9);
+
+    auto GPItem = m_GPItems[rank - 3];
+
+    return std::make_pair(GPItem[0].item->getID(), GPItem[0].maxpoints);
+}

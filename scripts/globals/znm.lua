@@ -19,8 +19,8 @@ require("scripts/globals/pankration")
 require("scripts/globals/utils")
 require("scripts/globals/events/zeni_fest")
 ---------------------------------------------------------------------------------
-local FAUNA_LIMIT = 7500 -- Zeni handed out per Fauna (NM)
-local SUBJECT_OF_INTEREST_LIMIT = 10000 -- Zeni handed out per SubjectsOfInterest
+local FAUNA_LIMIT = 10000 -- Zeni handed out per Fauna (NM)
+local SUBJECT_OF_INTEREST_LIMIT = 20000 -- Zeni handed out per SubjectsOfInterest
 ---------------------------------------------------------------------------------
 
 local trophies =
@@ -89,11 +89,11 @@ tpz.znm.subjectsOfInterest[5] = {172, 369} -- leech
 tpz.znm.subjectsOfInterest[6] = {290, 66, 67, 228, 229, 230} -- slime
 tpz.znm.subjectsOfInterest[7] = {299, 112} -- flan
 -- arcana
-tpz.znm.subjectsOfInterest[8] = {56, 82, 232} -- bomb
+tpz.znm.subjectsOfInterest[8] = {56, 82, 232, 300} -- bomb
 tpz.znm.subjectsOfInterest[9] = {68, 69} -- cluster bomb
 -- undead
 tpz.znm.subjectsOfInterest[10] = {52, 121} -- ghost
-tpz.znm.subjectsOfInterest[11] = {88, 89, 227} -- skeleton
+tpz.znm.subjectsOfInterest[11] = {88, 89, 227, 292} -- skeleton
 tpz.znm.subjectsOfInterest[12] = {86} -- doomed
 -- vermin
 tpz.znm.subjectsOfInterest[13] = {64, 293} -- chigoe
@@ -103,13 +103,13 @@ tpz.znm.subjectsOfInterest[16] = {79, 107, 108} -- crawler
 tpz.znm.subjectsOfInterest[17] = {254, 289} -- wamoura larvae
 tpz.znm.subjectsOfInterest[18] = {113, 374, 375} -- fly
 tpz.znm.subjectsOfInterest[19] = {81} -- diremite
-tpz.znm.subjectsOfInterest[20] = {217, 273, 274} -- scorpion
-tpz.znm.subjectsOfInterest[21] = {253} -- wamoura
+tpz.znm.subjectsOfInterest[20] = {217, 273, 274, 402} -- scorpion
+tpz.znm.subjectsOfInterest[21] = {253, 307} -- wamoura
 -- demon
 tpz.znm.subjectsOfInterest[22] = {165, 166, 301} -- imp
 -- dragon
 tpz.znm.subjectsOfInterest[23] = {198, 286} -- puk
-tpz.znm.subjectsOfInterest[24] = {266, 331, 278} -- wyvren
+tpz.znm.subjectsOfInterest[24] = {265, 266, 331, 278} -- wyvren
 tpz.znm.subjectsOfInterest[25] = {298, 87} -- dragon
 -- birds
 tpz.znm.subjectsOfInterest[26] = {46} -- bat
@@ -119,15 +119,15 @@ tpz.znm.subjectsOfInterest[29] = {55} -- bird
 tpz.znm.subjectsOfInterest[30] = {27, 294} -- apkallu
 tpz.znm.subjectsOfInterest[31] = {70} -- cockatrice
 -- beast
-tpz.znm.subjectsOfInterest[32] = {167, 226} -- sheep
+tpz.znm.subjectsOfInterest[32] = {167, 226, 398} -- sheep
 tpz.znm.subjectsOfInterest[33] = {242} -- tiger
-tpz.znm.subjectsOfInterest[34] = {180, 371} -- marid
+tpz.znm.subjectsOfInterest[34] = {180, 371, 295} -- marid
 tpz.znm.subjectsOfInterest[35] = {208} -- ram
 -- plantoid
 tpz.znm.subjectsOfInterest[36] = {437, 216} -- sapling
 tpz.znm.subjectsOfInterest[37] = {114} -- flytrap
 tpz.znm.subjectsOfInterest[38] = {116} -- funguar
-tpz.znm.subjectsOfInterest[39] = {464} -- treant
+tpz.znm.subjectsOfInterest[39] = {245} -- treant
 tpz.znm.subjectsOfInterest[40] = {296, 186} -- morbol
 -- lizard
 tpz.znm.subjectsOfInterest[41] = {438, 97, 174} -- lizard
@@ -146,21 +146,22 @@ tpz.znm.subjectsOfInterest[51] = {100} -- dark -- notably no light ele
 tpz.znm.subjectsOfInterest[52] = {184} -- moblin
 tpz.znm.subjectsOfInterest[53] = {196, 297} -- poroggo 
 tpz.znm.subjectsOfInterest[54] = {213} -- sahagin 
-tpz.znm.subjectsOfInterest[55] = {305, 176, 285, 177} -- mamool ja
+tpz.znm.subjectsOfInterest[55] = {305, 176, 285, 177, 176, 257} -- mamool ja
 tpz.znm.subjectsOfInterest[56] = {310, 171, 469} -- lamia
 tpz.znm.subjectsOfInterest[57] = {182} -- merrow
 tpz.znm.subjectsOfInterest[58] = {288, 199} -- qiqirn
 tpz.znm.subjectsOfInterest[59] = {308, 246, 326} -- troll
 -- undead part 2
-tpz.znm.subjectsOfInterest[60] = {203, 204, 205} -- qutrub
+tpz.znm.subjectsOfInterest[60] = {203, 204, 205, 303} -- qutrub
 -- demon part 2
-tpz.znm.subjectsOfInterest[61] = {233} -- soulflayer
+tpz.znm.subjectsOfInterest[61] = {233, 311} -- soulflayer
 
 
 tpz.znm.changeSubjectsOfInterest = function()
     local subjectsOfInterestKey = math.random(#tpz.znm.subjectsOfInterest)
     SetServerVariable("[ZNM]SubjectsOfInterest", subjectsOfInterestKey)
     SetServerVariable("[ZNM]SubOfInterestLimit", SUBJECT_OF_INTEREST_LIMIT)
+    SetServerVariable("[ZNM]SubOfInterestTimeLimit", os.time() + 24 * 60 * 60) -- 24 hours from first turnin of new SoI
 
     local ecosystem = tpz.ecosystem.ERROR
     if (subjectsOfInterestKey >= 0 and subjectsOfInterestKey <= 3) then
@@ -196,8 +197,9 @@ end
 
 local function updateSubOfInterestLimit(zeni)
     local remainingLimit = GetServerVariable("[ZNM]SubOfInterestLimit")
+    local timeLimit = GetServerVariable("[ZNM]SubOfInterestTimeLimit")
     remainingLimit = remainingLimit - zeni
-    if (remainingLimit > 0) then
+    if (remainingLimit > 0 or timeLimit < os.time()) then
         SetServerVariable("[ZNM]SubOfInterestLimit", remainingLimit)
     else
         tpz.znm.changeSubjectsOfInterest()
@@ -509,8 +511,17 @@ tpz.znm.ryo.onEventUpdate = function(player, csid, option)
         if option == 300 then
             player:updateEvent(player:getCurrency("zeni_point"))
         elseif option == 200 then
+            -- confirm sanity of expiration of current subject of interest
+            if GetServerVariable("[ZNM]SubOfInterestTimeLimit") == 0 then
+                SetServerVariable("[ZNM]SubOfInterestTimeLimit", os.time() + 24 * 60 * 60)
+            elseif GetServerVariable("[ZNM]SubOfInterestTimeLimit") < os.time()  then
+                tpz.znm.changeSubjectsOfInterest()
+            end
             -- SubjectsOfInterest
             player:updateEvent(GetServerVariable("[ZNM]SubjectsOfInterest"))
+            -- convert real time to game days: 2.4 real minutes / vana hour
+            local daysRemaining = math.floor((GetServerVariable("[ZNM]SubOfInterestTimeLimit") - os.time()) / (60 * 24 * 2.4))
+            player:PrintToPlayer(string.format("Ryo : Sanraku's interest will change in about %u days.", daysRemaining), 0xD)
         elseif option == 201 then
             -- Fauna
             player:updateEvent(GetServerVariable("[ZNM]Fauna"))
@@ -555,6 +566,8 @@ local function calculateZeniBonus(plateData)
     local faunaKey = GetServerVariable("[ZNM]SubjectsOfInterest")
     local subjectsOfInterestKey = GetServerVariable("[ZNM]Fauna")
 
+    local percBonus = 0
+
     if (faunaKey == 0) then
         faunaKey = 1 -- if there is no subject of interest var, take the first index for now
     end
@@ -565,25 +578,30 @@ local function calculateZeniBonus(plateData)
 
     if (GetServerVariable("[ZNM]SubjectsOfInterest") == subOfInterestMatch) then
         isCurrentSubjectsOfInterest = true
-        zeni = zeni + 25
+        zeni = zeni + 50
+        percBonus = percBonus + 35
     end
 
     if (GetServerVariable("[ZNM]Ecosystem") == ecosystem) then
         isCurrentEcoSytem = true
         zeni = zeni + 25
+        percBonus = percBonus + 25
     end
 
     if (GetServerVariable("[ZNM]Fauna") == faunaMatch) then
         isCurrentFauna = true
         zeni = zeni + 50
+        percBonus = percBonus + 50
     end
 
-    -- Sanitize Zeni
-    zeni = math.floor(zeni) -- Remove any floating point information
     -- Add a little randomness
     zeni = zeni + math.random(-5, 5)
     -- clamp - highest reports in era are ~100ish
-    zeni = utils.clamp(zeni, 1, 105)
+    -- WINGSCUSTOM include a percentage bonus for matching fauna/SoI/Ecosystem
+    zeni = utils.clamp(zeni, 1, 105) * (1 + (percBonus / 100))
+
+    -- Sanitize Zeni
+    zeni = math.floor(zeni) -- Remove any floating point information
 
     return zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem
 end
@@ -598,9 +616,10 @@ tpz.znm.sanraku.onTrade = function(player, npc, trade)
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
         local zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem = calculateZeniBonus(plateData)
+        local timeLimit = GetServerVariable("[ZNM]SubOfInterestTimeLimit")
         player:setLocalVar("[ZNM][Sanraku]SoulPlateValue", zeni)
 
-        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem) then
+        if (isCurrentSubjectsOfInterest or isCurrentEcoSytem or timeLimit < os.time()) then
             updateSubOfInterestLimit(zeni)
         end
 

@@ -20,19 +20,6 @@ function onMobFight(mob, target)
             DespawnMob(v, instance)
         end
     end
-
-    mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
-        -- Vulcan Shot
-        if skillID == 254 then
-            mob:showText(mob, ID.text.FOR_EPHRAMAD)
-            mob:timer(3000, function(mob)
-                mob:showText(mob, ID.text.TROUBLESOME_SQUABS)
-            end)
-        -- Circle Blade
-        elseif skillID == 938 then
-            mob:showText(mob, ID.text.FOR_THE_BLACK_COFFIN)
-        end
-    end)
 end
 
 function onMobRoam(mob)
@@ -67,4 +54,21 @@ function onMobDisengage(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+end
+
+
+function onMobWeaponSkill(target, mob, skill)
+
+    if skill:getID() == 254 then
+        mob:showText(mob, ID.text.FOR_EPHRAMAD)
+    end
+
+end
+
+function onMobSkillFinished(mob, target, skill)
+
+    if skill:getID() == 254 then
+        mob:showText(mob, ID.text.TROUBLESOME_SQUABS)
+    end
+
 end

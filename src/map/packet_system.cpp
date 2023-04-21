@@ -1115,11 +1115,12 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 else
                 {
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
-
                     PChar->pushPacket(new CInventoryFinishPacket());
                     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
                     luautils::OnChocoboDig(PChar);
-                    PChar->m_lastDig = now;
+                    // account for possible delay in the UpdateItem function
+                    PChar->m_lastDig = std::chrono::system_clock::now();
+                    PChar->SetLocalVar("LastTeleportDig", static_cast<uint32>(time(NULL)));
                     PChar->m_lastDigPosition = PChar->loc.p;
 
                     if (PDigAreaContainer)
@@ -2075,6 +2076,11 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         if (Sql_GetUIntData(SqlHandle, 0) == 0) // we haven't sent notifs yet, this is the first server message request since their account session started
         {
+            // update lastonline field for flist
+            if (FLgetSetting(PChar, 2) == 1) {
+                Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), PChar->id);
+            }
+
             ret = Sql_Query(SqlHandle, "UPDATE accounts_sessions SET FLsentnotif = 1 WHERE charid = %u LIMIT 1", PChar->id);
 
             if (ret == SQL_ERROR || Sql_AffectedRows(SqlHandle) == 0)
@@ -2185,9 +2191,20 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         case 0x01:
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if ((boxtype != 1) && (boxtype != 2)) {
+                ShowExploit("Delivery Box packet handler received bad box type %u for action %u (%s)", boxtype, action, PChar->GetName());
+                return;
+            }
+
+            if (((PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX) && (boxtype != 1)) ||
+                ((PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX) && (boxtype != 2))) {
+                ShowExploit("Delivery Box type %u does not match UContainer box state for action %u (%s)", boxtype, action, PChar->GetName());
                 return;
             }
 
@@ -2246,9 +2263,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x02: // add items to send box
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2306,9 +2323,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x03: // send items
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2373,9 +2390,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x04: // cancel send
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2449,9 +2466,20 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         case 0x05:
         {
             // Send the player the new items count not seen..
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if ((boxtype != 1) && (boxtype != 2)) {
+                ShowExploit("Delivery Box packet handler received bad box type %u for action %u (%s)", boxtype, action, PChar->GetName());
+                return;
+            }
+
+            if (((PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX) && (boxtype != 1)) ||
+                ((PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX) && (boxtype != 2))) {
+                ShowExploit("Delivery Box type %u does not match UContainer box state for action %u (%s)", boxtype, action, PChar->GetName());
                 return;
             }
 
@@ -2488,9 +2516,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x06: // Move item to received
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_RECV_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2574,9 +2602,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x07: // remove received items from send box
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2623,9 +2651,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x08:
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2638,9 +2666,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x09: // Option: Return
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_RECV_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
             if (!PChar->UContainer->IsSlotEmpty(slotID))
@@ -2709,9 +2737,20 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0A: // Option: Take
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (!charutils::isAnyDeliveryBoxOpen(PChar))
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is not in a valid delivery box state (%s)", action, PChar->GetName());
+                return;
+            }
+
+            if ((boxtype != 1) && (boxtype != 2)) {
+                ShowExploit("Delivery Box packet handler received bad box type %u for action %u (%s)", boxtype, action, PChar->GetName());
+                return;
+            }
+
+            if (((PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX) && (boxtype != 1)) ||
+                ((PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX) && (boxtype != 2))) {
+                ShowExploit("Delivery Box type %u does not match UContainer box state for action %u (%s)", boxtype, action, PChar->GetName());
                 return;
             }
 
@@ -2793,9 +2832,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0B: // Option: Drop
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_RECV_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_RECV_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2834,9 +2873,9 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
         }
         case 0x0C: // Confirm name (send box)
         {
-            if (PChar->UContainer->GetType() != UCONTAINER_DELIVERYBOX)
+            if (PChar->UContainer->GetType() != UCONTAINER_SEND_DELIVERYBOX)
             {
-                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_DELIVERYBOX (%s)", action, PChar->GetName());
+                ShowExploit("Delivery Box packet handler received action %u while UContainer is in a state other than UCONTAINER_SEND_DELIVERYBOX (%s)", action, PChar->GetName());
                 return;
             }
 
@@ -2865,16 +2904,22 @@ void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PCh
             return;
         }
         case 0x0D: // open send box
-        case 0x0E: // open delivery box
         {
             PChar->UContainer->Clean();
-            PChar->UContainer->SetType(UCONTAINER_DELIVERYBOX);
+            PChar->UContainer->SetType(UCONTAINER_SEND_DELIVERYBOX);
+            PChar->pushPacket(new CDeliveryBoxPacket(action, boxtype, 0, 1));
+            return;
+        }
+        case 0x0E: // open receive box
+        {
+            PChar->UContainer->Clean();
+            PChar->UContainer->SetType(UCONTAINER_RECV_DELIVERYBOX);
             PChar->pushPacket(new CDeliveryBoxPacket(action, boxtype, 0, 1));
             return;
         }
         case 0x0F:
         {
-            if (PChar->UContainer->GetType() == UCONTAINER_DELIVERYBOX)
+            if (charutils::isAnyDeliveryBoxOpen(PChar))
             {
                 PChar->UContainer->Clean();
             }
@@ -3260,8 +3305,14 @@ void SmallPacket0x050(map_session_data_t* const PSession, CCharEntity* const PCh
         }
 
     charutils::EquipItem(PChar, slotID, equipSlotID, containerID); // current
-    charutils::SaveCharEquip(PChar);
-    charutils::SaveCharLook(PChar);
+    // WINGSCUSTOM only save char look to db every X seconds (or more) to avoid db spam when changing individual pieces
+    auto lastSwapTime  = PChar->GetLocalVar("core-LastGearSwap");
+    auto timeNowSeconds = std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now());
+    if (lastSwapTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastSwapTime) > 10)
+    {
+        charutils::SaveCharLook(PChar);
+    }
+    PChar->SetLocalVar("core-LastGearSwap", (uint32)timeNowSeconds.time_since_epoch().count());
     luautils::CheckForGearSet(PChar); // check for gear set on gear change
     PChar->UpdateHealth();
     return;
@@ -3289,8 +3340,14 @@ void SmallPacket0x051(map_session_data_t* const PSession, CCharEntity* const PCh
             charutils::EquipItem(PChar, slotID, equipSlotID, containerID);
         }
     }
-    charutils::SaveCharEquip(PChar);
-    charutils::SaveCharLook(PChar);
+    // WINGSCUSTOM only save char look to db every X seconds (or more) to avoid db spam when changing individual pieces
+    auto lastSwapTime  = PChar->GetLocalVar("core-LastGearSwap");
+    auto timeNowSeconds = std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now());
+    if (lastSwapTime == 0 || (timeNowSeconds.time_since_epoch().count() - lastSwapTime) > 10)
+    {
+        charutils::SaveCharLook(PChar);
+    }
+    PChar->SetLocalVar("core-LastGearSwap", (uint32)timeNowSeconds.time_since_epoch().count());
     luautils::CheckForGearSet(PChar); // check for gear set on gear change
     PChar->UpdateHealth();
     return;
@@ -5295,6 +5352,14 @@ void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PCh
                         }
                         else // You must wait longer to perform that action.
                         {
+                            if (charutils::GetCharVar(PChar, "NextYell") + (map_config.yell_cooldown * 1000) < gettick() ||
+                                    gettick() + (map_config.yell_cooldown * 1000) < charutils::GetCharVar(PChar, "NextYell") )
+                            {
+                                // delete erroneous nextyell values:
+                                // - nextyell + 15m still below current time: way too low but still failed the above check
+                                // - current time + 15m < nextyell: way too high
+                                charutils::SetCharVar(PChar->id, "NextYell", gettick() + (map_config.yell_cooldown * 1000));
+                            }
                             PChar->pushPacket(new CMessageStandardPacket(PChar, 0, MsgStd::WaitLonger));
                         }
                     }
@@ -6237,6 +6302,7 @@ void SmallPacket0x0E7(map_session_data_t* const PSession, CCharEntity* const PCh
     if (PChar->StatusEffectContainer->HasPreventActionEffect())
         return;
 
+    charutils::SaveCharEquip(PChar);
     if (PChar->m_moghouseID || PChar->nameflags.flags & FLAG_GM || PChar->m_GMlevel > 1)
     {
         charutils::RemoveGuestsFromMogHouse(PChar);
@@ -6977,6 +7043,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->health.mp = PChar->GetMaxMP();
         PChar->updatemask |= UPDATE_HP;
 
+        // saves equipment when check completes
         charutils::CheckValidEquipment(PChar);
         charutils::SaveCharStats(PChar);
 

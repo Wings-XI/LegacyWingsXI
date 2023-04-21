@@ -24,6 +24,7 @@ function onMobFight(mob, target)
     if mobPos.x == 5.5 and mobPos.y == -31 and mobPos.z == 47 then
         mob:hideName(true)
         mob:untargetable(true)
+        mob:setUnkillable(true)
         mob:setStatus(tpz.status.INVISIBLE)
         mob:disengage()
         mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
@@ -35,6 +36,7 @@ function onMobFight(mob, target)
 end
 
 function onCastStarting(mob, spell)
+    mob:setUnkillable(false)
     mob:SetMagicCastingEnabled(false)
     mob:pathTo(5.500, -31.000, 47.000)
 end

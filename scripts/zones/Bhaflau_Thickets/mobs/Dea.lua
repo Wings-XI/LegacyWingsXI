@@ -26,32 +26,43 @@ function onMobWeaponSkillPrepare(mob, target)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local QueuedAbility = mob:getLocalVar("QueuedAbility")
-
-    if skill:getID() == 2101 then
-        mob:useMobAbility(2104)
-    end
-    if skill:getID() == 2102 then
-        mob:setLocalVar("QueuedAbility", math.random(1,3))
-        if QueuedAbility == 1 then
-            mob:useMobAbility(2104)
-        elseif QueuedAbility == 2 or 3 then
-            if target:isBehind(mob, 96) then
-                mob:useMobAbility(2099)
-            elseif target:isInfront(mob, 90) then
-                mob:useMobAbility(2100)
-            else
-                mob:useMobAbility(2104)
-            end
-        end
-    end
     local skillID = skill:getID()
-    if skillID == 2099 or skillID == 2100 or skillID == 2104 then
+
+    if skillID == 2101 then
+        -- Crippling slam after Demoralizing Roar
+        mob:setLocalVar("QueuedAbility", 1)
+    elseif skillID == 2102 then
+        -- Random skill based on target's position after boiling blood
+        mob:setLocalVar("QueuedAbility", 2)
+    else
+        -- Ensure we don't have a queued ability
         mob:setLocalVar("QueuedAbility", 0)
-    end   
+    end
 end
 
 function onMobFight(mob, target)
+    local QueuedAbility = mob:getLocalVar("QueuedAbility")
+    if QueuedAbility > 0 and mob:actionQueueEmpty() then
+        mob:setLocalVar("QueuedAbility", 0)
+        -- queue ability (only one) in one place to avoid a race condition in spamming TP moves
+
+        if QueuedAbility == 1 then
+            mob:useMobAbility(2104)
+        elseif QueuedAbility == 2 then
+            if math.random(1,3) == 1 then
+                mob:useMobAbility(2104)
+            else
+                if target:isBehind(mob, 96) then
+                    mob:useMobAbility(2099)
+                elseif target:isInfront(mob, 90) then
+                    mob:useMobAbility(2100)
+                else
+                    mob:useMobAbility(2104)
+                end
+            end
+        end
+    end
+
     if mob:hasStatusEffect(tpz.effect.PHYSICAL_SHIELD) then
         mob:setMod(tpz.mod.DOUBLE_ATTACK, 100)
     else

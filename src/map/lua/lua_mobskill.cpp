@@ -123,6 +123,28 @@ inline int32 CLuaMobSkill::isConal(lua_State *L)
     return 1;
 }
 
+/*************************************************************************
+
+    Set AoE values:
+    0:  None
+    1:  AoE, centered on caster
+    2:  AoE, centered on target (default 8.0 yalm radius)
+    3:  ???
+    4:  Conal, 20-30' front wide range
+    5:  Conal, backward arc
+    6:  Conal, 10' front narrow range
+    7:  Conal, 20-30' front and back wide range
+
+**************************************************************************/
+
+inline int32 CLuaMobSkill::setAoE(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
+
+    m_PLuaMobSkill->setAoe((uint8)lua_tointeger(L, -1));
+    return 0;
+}
+
 inline int32 CLuaMobSkill::getTotalTargets(lua_State *L)
 {
     TPZ_DEBUG_BREAK_IF(m_PLuaMobSkill == nullptr);
@@ -207,14 +229,15 @@ Lunar<CLuaMobSkill>::Register_t CLuaMobSkill::methods[] =
 {
     LUNAR_DECLARE_METHOD(CLuaMobSkill,setAnim),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,setMsg),
-    LUNAR_DECLARE_METHOD(CLuaMobSkill,getMsg),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,hasMissMsg),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,isSingle),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,isAoE),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,isConal),
-    LUNAR_DECLARE_METHOD(CLuaMobSkill,isSingle),
-    LUNAR_DECLARE_METHOD(CLuaMobSkill,getParam),
-    LUNAR_DECLARE_METHOD(CLuaMobSkill,getID),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,setAoE),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTotalTargets),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,getMsg),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,getID),
+    LUNAR_DECLARE_METHOD(CLuaMobSkill,getParam),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getTP),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,getMobHPP),
     LUNAR_DECLARE_METHOD(CLuaMobSkill,setGuardReaction),

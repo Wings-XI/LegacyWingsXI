@@ -19,11 +19,26 @@ function onPetAbility(target, pet, skill, summoner)
     if bonus > 90 then
         bonus = 90
     end
+    local power = 1494 -- 153/1024 ~14.94%
+    local duration = 90 + bonus
+
     -- Garuda's Hastega is a weird exception and uses 153/1024 instead of 150/1024 like Haste spell
     -- That's why it overwrites some things regular haste won't.
-    target:addStatusEffect(tpz.effect.HASTE, 1494, 0, 90+bonus) -- 153/1024 ~14.94%
-    skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
+    -- WINGSCUSTOM: Special modification to allow regular haste not to be overwritten by hastega
+    -- if the time left is greater than duration supplied by hastega.
+    local currentHaste = target:getStatusEffect(tpz.effect.HASTE)
+    if currentHaste then
+        if
+            (currentHaste:getPower() > 1450 and
+            currentHaste:getTimeRemaining()/1000 > duration)
+        then
+            skill:setMsg(tpz.msg.basic.NO_EFFECT)
+            return tpz.effect.HASTE
+        end
+    end
 
+    target:addStatusEffect(tpz.effect.HASTE, power, 0, duration)
+    skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
     pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))
 
     return tpz.effect.HASTE

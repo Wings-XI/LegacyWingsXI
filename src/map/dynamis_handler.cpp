@@ -88,7 +88,7 @@ bool CDynamisHandler::LoadDynamis(uint32 charid, uint32 token, uint32 originalRe
     EjectAllPlayers(true);
     RegisterPlayer(charid);
     DynamisSetToken(token);
-    uint32 expiry = (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()) + 1h).count();
+    uint32 expiry = (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()) + 1h + 5min).count();
     DynamisSetExpiryTimepoint(expiry);
     m_originalRegistrantID = originalRegistrant;
     m_currencyAutoDistribute = true;

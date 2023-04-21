@@ -444,6 +444,7 @@ INSERT INTO `mob_skill_lists` VALUES('Euvhi', 109, 1452);
 INSERT INTO `mob_skill_lists` VALUES('Euvhi', 109, 1453);
 INSERT INTO `mob_skill_lists` VALUES('EvilWeapon', 110, 513);
 INSERT INTO `mob_skill_lists` VALUES('EvilWeapon', 110, 514);
+INSERT INTO `mob_skill_lists` VALUES('EvilWeapon', 110, 1560);
 INSERT INTO `mob_skill_lists` VALUES('Konjac', 111, 433);
 INSERT INTO `mob_skill_lists` VALUES('Flan', 112, 1821);
 INSERT INTO `mob_skill_lists` VALUES('Flan', 112, 1822);
@@ -910,10 +911,10 @@ INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 266);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 267);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 268);
 INSERT INTO `mob_skill_lists` VALUES('Ram', 208, 269);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 374);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 376);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 379);
-INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 380);
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 374); -- Ripper fang
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 376); -- Foul breath
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 379); -- Chomp rush
+INSERT INTO `mob_skill_lists` VALUES('Raptor', 210, 380); -- Scythe tail
 INSERT INTO `mob_skill_lists` VALUES('Ruszor', 211, 2435);
 INSERT INTO `mob_skill_lists` VALUES('Ruszor', 211, 2436);
 INSERT INTO `mob_skill_lists` VALUES('Ruszor', 211, 2437);
@@ -970,10 +971,10 @@ INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 224, 671);
 INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 224, 672);
 INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 224, 673);
 INSERT INTO `mob_skill_lists` VALUES('ShadowLord', 225, 669);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 260);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 261);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 262);
-INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 264);
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 260); -- Lamb chop
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 261); -- Rage
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 262); -- Sheep Charge
+INSERT INTO `mob_skill_lists` VALUES('Sheep', 226, 264); -- Sheep song
 INSERT INTO `mob_skill_lists` VALUES('Skeleton', 227, 478);
 INSERT INTO `mob_skill_lists` VALUES('Skeleton', 227, 479);
 INSERT INTO `mob_skill_lists` VALUES('Skeleton', 227, 484);
@@ -1360,27 +1361,26 @@ INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1753);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1758);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1929);
 INSERT INTO `mob_skill_lists` VALUES('ExperimentalLa', 310, 1754);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1829);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1830);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1831);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1832);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1834);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1835);
-INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1836);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1785);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1786);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1787);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1788);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1789);
-INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1790);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2022);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2023);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2024);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2025);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2026);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027);
-INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2028);
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1828); -- pyric blast
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1829); -- pyric bulwark
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1830); -- polar blast
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1831); -- polar bulwark
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1832); -- barofield
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1834); -- trembling
+INSERT INTO `mob_skill_lists` VALUES('Tinnin', 313, 1835); -- ser tail
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1785); -- lava spit
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1786); -- sulf breath
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1787); -- scortch lash
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1788); -- ullu
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1789); -- mag hop
+INSERT INTO `mob_skill_lists` VALUES('Sarameya', 314, 1790); -- goh
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2022); -- ten mist
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2023); -- thunderstrike
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 3267); -- howl
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2025); -- dreadstorm
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2026); -- foss breath
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2027); -- plague swipe
+INSERT INTO `mob_skill_lists` VALUES('Tyger', 315, 2028); -- fulm
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2113);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2114);
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium', 316, 2115);
@@ -2143,10 +2143,17 @@ INSERT INTO `mob_skill_lists` VALUES('Astral_Flow_Pet', 495, 916);
 INSERT INTO `mob_skill_lists` VALUES('Astral_Flow_Pet', 495, 917);
 INSERT INTO `mob_skill_lists` VALUES('Astral_Flow_Pet', 495, 918);
 INSERT INTO `mob_skill_lists` VALUES('ChanequeMandragora', 496, 2210);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 270);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 271);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 273);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1322);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 813);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 814);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 815);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 816);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 817);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 818);
+INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 822);
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 270); -- Roar
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 271); -- Razor Fang
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1322); -- Gerjis Grip
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1340); -- Crossthrash
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 347);
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 419);
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 422);
@@ -3481,6 +3488,11 @@ INSERT INTO `mob_skill_lists` VALUES('Boompadu', 2032, 2073);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1771);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1772);
 INSERT INTO `mob_skill_lists` VALUES('MerrowNo5', 2033, 1775);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 622);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 623);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1159);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1160);
+INSERT INTO `mob_skill_lists` VALUES('Broadside_Bird', 2034, 1161);
 -- Scylla exclusive lists/skills
 INSERT INTO `mob_skill_lists` VALUES('Scylla_IG', 2440, 2440);
 INSERT INTO `mob_skill_lists` VALUES('Scylla_AC', 2441, 2441);
@@ -3496,12 +3508,10 @@ INSERT INTO `mob_skill_lists` VALUES('Koschei', 5032, 650); -- Thornsong
 INSERT INTO `mob_skill_lists` VALUES('Aitvaras', 5033, 649); -- Voidsong
 INSERT INTO `mob_skill_lists` VALUES('Vishap', 5034, 643); -- Poison Breath
 -- Dynamis - Valkurm
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 321);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 322);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1626);
-INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1120);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 321); -- Needleshot
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 322); -- 1000 Needles
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 324); -- Photosynthesis
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sabotender', 5029, 1625); -- 2000 Needles
 -- Anantaboga
 INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 644); -- Wind Breath
 INSERT INTO `mob_skill_lists` VALUES('Anantaboga_Silenced', 5298, 645); -- Bodyslam
@@ -3521,6 +3531,43 @@ INSERT INTO `mob_skill_lists` VALUES('Nuhntwo', 5306, 1696); -- Seismic Tail
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 334);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 1847);
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Hornet', 5307, 336);
+-- Nightmare Bunny
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 257);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 258);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 259);
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Bunny', 5308, 323);
+-- Nightmare Scorpion
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 348); -- Numbing breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 349); -- Cold breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 353); -- Death scissors
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 354); -- Wild rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 356); -- Sharp strike
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 717); -- Venom breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 719); -- Critical bite
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 720); -- Venom sting
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 721); -- Stasis
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 722); -- Venom storm
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 723); -- Earth breaker
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Scorpion', 5309, 724); -- Evasion
+-- Nightmare Sheep
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 260); -- Lamb chop
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 261); -- Rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 262); -- Sheep Charge
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 263); -- Sheep Bleat
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Sheep', 5310, 264); -- Sheep song
+-- Nightmare Raptor
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 374); -- Ripper fang
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 376); -- Foul breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 377); -- Frost breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 378); -- Thunderbolt breath
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 379); -- Chomp rush
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Raptor', 5311, 380); -- Scythe tail
+-- Nightmare Weapon
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 397); -- Flurry of rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 513); -- Smite of rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 514); -- Whirl of rage
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 1560); -- Whispers of ire
+
 -- Pandemonium Warden Dvergar phases before final
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5313, 2115);
 

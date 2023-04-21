@@ -35,6 +35,7 @@ function onEventFinish(player, csid, option)
         if player:getCurrentMission(COP) == tpz.mission.id.cop.DESIRES_OF_EMPTINESS and player:getCharVar("PromathiaStatus") == 8 then
             player:setCharVar("PromathiaStatus", 9)
         end
+        player:addExp(1500)
         player:addTitle(tpz.title.FROZEN_DEAD_BODY)
         player:setPos(-340.00, -100.25, 140.00, 64, 111) -- {R}
     end

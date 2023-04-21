@@ -23,6 +23,10 @@ function onMobSpawn(mob)
     mob:AnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
     mob:setLocalVar("state", 0)
     grounded(mob)
+    -- cleanup if mob wasn't killed from previous run and was below 33%
+    mob:delStatusEffectSilent(tpz.effect.EVASION_BOOST)
+    mob:delStatusEffectSilent(tpz.effect.DEFENSE_BOOST)
+    mob:delStatusEffectSilent(tpz.effect.MAGIC_DEF_BOOST)
 end
 
 function onMobEngaged(mob, target)

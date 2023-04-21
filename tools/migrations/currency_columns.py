@@ -1,5 +1,5 @@
 import array
-import mysql.connector
+import mariadb
 
 def migration_name():
 	return "Adding currency columns to char_points table"
@@ -33,5 +33,5 @@ def migrate(cur, db):
 		ADD COLUMN `unity_accolades` int(5) unsigned NOT NULL DEFAULT 0, \
 		ADD COLUMN `deeds` smallint(5) unsigned NOT NULL DEFAULT 0;")
 		db.commit()
-	except mysql.connector.Error as err:
+	except mariadb.Error as err:
 		print("Something went wrong: {}".format(err))

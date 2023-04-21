@@ -12,6 +12,8 @@ require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/dynamis")
 
+local currency = {1449,1450,1451}
+
 -----------------------------------
 -- onTrade Action
 -----------------------------------
@@ -31,12 +33,16 @@ function onTrade(player, npc, trade)
             return
 
          -- Currency Exchanges
-         elseif (count == CURRENCY_EXCHANGE_RATE and trade:hasItemQty(1449, CURRENCY_EXCHANGE_RATE)) then -- Single -> Hundred
+         elseif (count == CURRENCY_EXCHANGE_RATE and trade:hasItemQty(currency[1], CURRENCY_EXCHANGE_RATE)) then -- Single -> Hundred
             player:startEvent(55, CURRENCY_EXCHANGE_RATE)
-         elseif (count == CURRENCY_EXCHANGE_RATE and trade:hasItemQty(1450, CURRENCY_EXCHANGE_RATE)) then -- Hundred -> Ten thousand
+         elseif (count == CURRENCY_EXCHANGE_RATE and trade:hasItemQty(currency[2], CURRENCY_EXCHANGE_RATE)) then -- Hundred -> Ten thousand
             player:startEvent(56, CURRENCY_EXCHANGE_RATE)
-         elseif (count == 1 and trade:hasItemQty(1451, 1)) then -- Ten thousand -> 100 Hundreds
-            player:startEvent(58, 1451, 1450, CURRENCY_EXCHANGE_RATE)
+         elseif (count == 1 and trade:hasItemQty(currency[3], 1)) then -- Ten thousand -> 100 Hundreds
+            player:setLocalVar("CurrencyOrigID", 3)
+            player:startEvent(58, currency[3], currency[2], CURRENCY_EXCHANGE_RATE)
+         elseif (count == 1 and trade:hasItemQty(currency[2], 1)) then -- Hundred -> 100 Singles
+            player:setLocalVar("CurrencyOrigID", 2)
+            player:startEvent(58, currency[2], currency[1], CURRENCY_EXCHANGE_RATE)
 
          -- Currency Shop
          elseif (count == 7 and trade:hasItemQty(1450, 7)) then -- Angel Skin (1312)
@@ -84,7 +90,7 @@ end
 
 function onTrigger(player, npc)
    if (player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) == true) then
-      player:startEvent(53, 1449, CURRENCY_EXCHANGE_RATE, 1450, CURRENCY_EXCHANGE_RATE, 1451, TIMELESS_HOURGLASS_COST, 4236, TIMELESS_HOURGLASS_COST)
+      player:startEvent(53, currency[1], CURRENCY_EXCHANGE_RATE, currency[2], CURRENCY_EXCHANGE_RATE, currency[3], TIMELESS_HOURGLASS_COST, 4236, TIMELESS_HOURGLASS_COST)
    else
       player:startEvent(50)
    end
@@ -101,7 +107,7 @@ function onEventUpdate(player, csid, option)
       if (option == 11) then -- Main menu, and many others.  Param1 = map bitmask, param2 = player's gil
          player:updateEvent(getDynamisMapList(player), player:getGil())
       elseif (option == 10) then -- Final line of the ancient currency explanation.  "I'll trade you param3 param2s for a param1."
-         player:updateEvent(1451, 1450, CURRENCY_EXCHANGE_RATE)
+         player:updateEvent(currency[3], currency[2], CURRENCY_EXCHANGE_RATE)
 
       -- Map sales handling.
       elseif (option >= tpz.ki.MAP_OF_DYNAMIS_SANDORIA and option <= tpz.ki.MAP_OF_DYNAMIS_TAVNAZIA) then
@@ -148,30 +154,37 @@ function onEventFinish(player, csid, option)
       --player:messageSpecial(ID.text.GIL_OBTAINED, TIMELESS_HOURGLASS_COST)
    elseif (csid == 55) then -- Trading Singles for a Hundred
       if (player:getFreeSlotsCount() == 0) then
-         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1450)
+         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, currency[2])
       else
          player:tradeComplete()
-         player:addItem(1450)
-         player:messageSpecial(ID.text.ITEM_OBTAINED, 1450)
+         player:addItem(currency[2])
+         player:messageSpecial(ID.text.ITEM_OBTAINED, currency[2])
       end
    elseif (csid == 56) then -- Trading 100 Hundreds for Ten thousand
       if (player:getFreeSlotsCount() == 0) then
-         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1451)
+         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, currency[3])
       else
          player:tradeComplete()
-         player:addItem(1451)
-         player:messageSpecial(ID.text.ITEM_OBTAINED, 1451)
+         player:addItem(currency[3])
+         player:messageSpecial(ID.text.ITEM_OBTAINED, currency[3])
       end
-   elseif (csid == 58) then -- Trading Ten thousand for 100 Hundreds
-      if (player:getFreeSlotsCount() <= 1) then
-         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1450)
+   elseif (csid == 58) then -- Trading down currency
+      local stackSize = 99
+      local slotsReq = math.ceil(CURRENCY_EXCHANGE_RATE / stackSize);
+      if (player:getFreeSlotsCount() < slotsReq) then
+         player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,currency[2]);
       else
-         player:tradeComplete()
-         player:addItem(1450, CURRENCY_EXCHANGE_RATE)
-         if (CURRENCY_EXCHANGE_RATE >= 100) then -- Turns out addItem cannot add > stackSize, so we need to addItem twice for quantities > 99.
-            player:addItem(1450,CURRENCY_EXCHANGE_RATE - 99)
+         local newItem = currency[player:getLocalVar("CurrencyOrigID") - 1]
+         player:setLocalVar("CurrencyOrigID", 0)
+         player:tradeComplete();
+         for i=1,slotsReq do
+            if (i < slotsReq or (CURRENCY_EXCHANGE_RATE % stackSize) == 0) then
+               player:addItem(newItem,stackSize);
+            else
+               player:addItem(newItem,CURRENCY_EXCHANGE_RATE % stackSize);
+            end
          end
-         player:messageSpecial(ID.text.ITEMS_OBTAINED, 1450, CURRENCY_EXCHANGE_RATE)
+         player:messageSpecial(ID.text.ITEMS_OBTAINED,newItem,CURRENCY_EXCHANGE_RATE);
       end
    end
 end

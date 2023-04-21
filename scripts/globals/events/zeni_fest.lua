@@ -39,7 +39,12 @@ zeni_fest.onSanrakuPlateTradeComplete = function(player, zeni_base)
     -- give bonus zeni if not a default plate
     if zeni_base > 5 then
         local totalBonusThisPeriod = player:getCharVar("[ZENI_FEST]TotalZeniBonus")
-        local normalizedMaxZeni = 150
+        local normalizedMaxZeni = 105
+		if zeni_base > 125 then
+			normalizedMaxZeni = 250
+		elseif zeni_base > 75 then
+			normalizedMaxZeni = 150
+		end
         local zeniPercOfMax = zeni_base / normalizedMaxZeni
         -- bonus zeni is half the distance to the normalized max
         local bonusZeni = utils.clamp(math.floor(normalizedMaxZeni * (.5) * (1 - zeniPercOfMax)), 0, zeni_fest.params.MaxBonusZeni - totalBonusThisPeriod)

@@ -34,6 +34,7 @@
 #include "../packets/entity_update.h"
 #include "../packets/message_basic.h"
 #include "../packets/inventory_finish.h"
+#include "../packets/chat_message.h"
 
 #include "../lua/luautils.h"
 
@@ -724,7 +725,7 @@ namespace battleutils
             {
                 case SPIKE_BLAZE:
                 case SPIKE_ICE:
-                case SPIKE_SHOCK: //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it. 
+                case SPIKE_SHOCK: //See MR !2167 - Retail behavior is that spike damage does not break bind. Only direct damage as a result of a spell/attack/job ability/weaponskill can break it.
                     PAttacker->takeDamage(Action->spikesParam / getElementalSDTDivisor(PAttacker, element), PDefender, ATTACK_MAGICAL, GetSpikesDamageType(Action->spikesEffect), false);
                     break;
 
@@ -1935,7 +1936,7 @@ namespace battleutils
     {
         CItemWeapon* PWeapon = GetEntityWeapon(PDefender, SLOT_MAIN);
         // An Entity using not using HtH and not a mob (weapon ID 0 signifies a mob/pet)
-        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) || 
+        if (((PWeapon != nullptr && PWeapon->getID() != 0 && PWeapon->getID() != 65535 && PWeapon->getSkillType() != SKILL_HAND_TO_HAND) ||
              (PDefender->objtype == TYPE_PET && static_cast<CPetEntity*>(PDefender)->getPetType() == PETTYPE_AUTOMATON && PDefender->GetMJob() == JOB_PLD)) // Valoredge Puppet
             && PDefender->PAI->IsEngaged()) // Everyone has to be engaged to parry
         {
@@ -4703,10 +4704,14 @@ namespace battleutils
         }
         else
         {
+            ShowInfo("MobID (%u) claimshield lottery canceled due to no actions\n", PMob->id);
             return;
         }
         if (!i)
+        {
+            ShowInfo("MobID (%u) claimshield lottery canceled due to no actions\n", PMob->id);
             return;
+        }
 
         CBattleEntity* winner;
 
@@ -4720,14 +4725,17 @@ namespace battleutils
         }
 
         // clear enmity for everyone except the winner and their pet
+        std::vector<uint16> vec;
         for (auto member : *enmityList)
         {
             if (member.first != winner->id &&
                 !(member.second.PEnmityOwner->PMaster && member.second.PEnmityOwner->PMaster->objtype == TYPE_PC && member.second.PEnmityOwner->PMaster->id == winner->id)) // winner's pet, don't clear enmity
             {
-                enmityList->erase(member.first);
+                vec.emplace_back(member.first);
             }
         }
+        for (auto&& key : vec)
+            enmityList->erase(key);
 
         // purge all pets attacking me due to the topaz bug of pets stealing claims
         CZone* PZone = zoneutils::GetZone(PMob->getZone());
@@ -4742,6 +4750,10 @@ namespace battleutils
         });
 
         ClaimMob((CBattleEntity*)PMob, winner);
+        auto PChar = (CCharEntity*)winner;
+        auto message = fmt::sprintf("MobID (%u) claimshield lottery, out of %zu players, chose: %s", PMob->id, lotteryList.size(), winner->name);
+        ShowInfo("%s\n", message);
+        PMob->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, const_cast<char*>(message.c_str())));
 
         PMob->health.hp = PMob->health.maxhp;
         PMob->StatusEffectContainer->KillAllStatusEffect();
@@ -4794,6 +4806,7 @@ namespace battleutils
                         return;
                     }
                 }
+                // Claimshield currently active
                 if (mob->PAI)
                 {
                     CState* state = mob->PAI->GetCurrentState();
@@ -4801,6 +4814,11 @@ namespace battleutils
                     {
                         return;
                     }
+                }
+                // Claimshield activating directly after OnEngage executes
+                if(mob->GetLocalVar("ClaimshieldWindow") > 0 && mob->GetLocalVar("ClaimshieldWindow") > std::chrono::time_point_cast<std::chrono::seconds>(server_clock::now()).time_since_epoch().count())
+                {
+                    return;
                 }
                 if (!passing)
                 {

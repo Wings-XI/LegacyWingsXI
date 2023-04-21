@@ -18,7 +18,7 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 1
     local dmgmod = 2.8
 	
-	if mob:getID() == 16793776 then -- Splacknuck,3x hits
+	if (mob:getID() == 16793776 or mob:getZone():getType() == tpz.zoneType.DYNAMIS) then -- Splacknuck and nightmare efts, 3x hits
 		numhits = 3
 		dmgmod = 2
 	end

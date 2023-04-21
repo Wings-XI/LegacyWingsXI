@@ -12533,6 +12533,7 @@ INSERT INTO `item_mods` VALUES (14074,23,12);
 INSERT INTO `item_mods` VALUES (14074,54,6);
 INSERT INTO `item_mods` VALUES (14075,1,12);
 INSERT INTO `item_mods` VALUES (14075,12,-7);
+INSERT INTO `item_mods` VALUES (14075,897,50);
 INSERT INTO `item_mods` VALUES (14076,1,25);
 INSERT INTO `item_mods` VALUES (14076,2,8);
 INSERT INTO `item_mods` VALUES (14076,8,7);
@@ -16244,6 +16245,7 @@ INSERT INTO `item_mods` VALUES (15122,1,34);
 INSERT INTO `item_mods` VALUES (15122,2,19);
 INSERT INTO `item_mods` VALUES (15122,27,4);
 INSERT INTO `item_mods` VALUES (15122,298,5);
+INSERT INTO `item_mods` VALUES (15122,897,8);
 INSERT INTO `item_mods` VALUES (15123,1,43);      -- Valor Breeches: DEF 43
 INSERT INTO `item_mods` VALUES (15123,2,20);      -- HP +20
 INSERT INTO `item_mods` VALUES (15123,8,5);       -- STR +5
@@ -16282,6 +16284,7 @@ INSERT INTO `item_mods` VALUES (15130,363,10);
 INSERT INTO `item_mods` VALUES (15131,1,29);      -- Summoner's Spats: DEF 29
 INSERT INTO `item_mods` VALUES (15131,5,20);      -- MP +20
 INSERT INTO `item_mods` VALUES (15131,13,3);      -- MND +3
+INSERT INTO `item_mods` VALUES (15131,960,5);     -- Spirit recast time -5s
 INSERT INTO `item_mods` VALUES (15131,357,2);     -- Blood Pact ability delay -2
 INSERT INTO `item_mods` VALUES (15132,1,19);
 INSERT INTO `item_mods` VALUES (15132,2,10);
@@ -17731,6 +17734,7 @@ INSERT INTO `item_mods` VALUES (15585,1,35);
 INSERT INTO `item_mods` VALUES (15585,2,25);
 INSERT INTO `item_mods` VALUES (15585,27,5);
 INSERT INTO `item_mods` VALUES (15585,298,5);
+INSERT INTO `item_mods` VALUES (15585,897,8);
 INSERT INTO `item_mods` VALUES (15586,1,44);      -- Valor Breeches +1: DEF 44
 INSERT INTO `item_mods` VALUES (15586,2,20);      -- HP +20
 INSERT INTO `item_mods` VALUES (15586,8,6);       -- STR +6
@@ -17769,6 +17773,7 @@ INSERT INTO `item_mods` VALUES (15593,9,6);
 INSERT INTO `item_mods` VALUES (15593,363,10);
 INSERT INTO `item_mods` VALUES (15594,1,30);      -- Summoner's Spats +1: DEF 30
 INSERT INTO `item_mods` VALUES (15594,5,25);      -- MP +25
+INSERT INTO `item_mods` VALUES (15594,960,5);     -- Spirit recast time -5s
 INSERT INTO `item_mods` VALUES (15594,357,2);     -- Blood Pact ability delay -2
 INSERT INTO `item_mods` VALUES (15595,1,32);
 INSERT INTO `item_mods` VALUES (15595,25,10);
@@ -20920,6 +20925,7 @@ INSERT INTO `item_mods` VALUES (17487,431,1);
 INSERT INTO `item_mods` VALUES (17491,25,2);
 INSERT INTO `item_mods` VALUES (17492,12,3);
 INSERT INTO `item_mods` VALUES (17492,25,8);
+INSERT INTO `item_mods` VALUES (17492,431,1);
 INSERT INTO `item_mods` VALUES (17493,25,10);
 INSERT INTO `item_mods` VALUES (17494,25,12);
 INSERT INTO `item_mods` VALUES (17495,23,2);
@@ -23364,6 +23370,7 @@ INSERT INTO `item_mods` VALUES (18947,96,2);
 INSERT INTO `item_mods` VALUES (18948,8,3);
 INSERT INTO `item_mods` VALUES (18948,9,3);
 INSERT INTO `item_mods` VALUES (18948,68,-6);
+INSERT INTO `item_mods` VALUES (18948,431,1);
 INSERT INTO `item_mods` VALUES (18950,12,4);
 INSERT INTO `item_mods` VALUES (18950,28,8);
 INSERT INTO `item_mods` VALUES (18951,230,2);
@@ -52161,6 +52168,8 @@ INSERT INTO `item_mods` VALUES (17551,431,1);     -- earth staff additional effe
 INSERT INTO `item_mods` VALUES (17545,431,1);     -- fire staff additional effect
 INSERT INTO `item_mods` VALUES (17291,431,1);     -- flame boomerang additional effect
 INSERT INTO `item_mods` VALUES (16522,431,1);     -- flame degen additional effect
+INSERT INTO `item_mods` VALUES (16523,431,1);     -- holy degen AE
+INSERT INTO `item_mods` VALUES (16817,431,1);     -- holy degen +1 AE
 INSERT INTO `item_mods` VALUES (16823,431,1);     -- flame degen +1 additional effect
 INSERT INTO `item_mods` VALUES (16726,431,1);     -- forsetis axe additional effect
 INSERT INTO `item_mods` VALUES (17576,431,1);     -- grim staff additional effect

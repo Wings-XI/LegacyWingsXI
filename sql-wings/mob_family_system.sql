@@ -349,7 +349,7 @@ INSERT INTO `mob_family_system` VALUES(281, 'Kirin', 6, 'Beast', 3, 60, 140, 130
 INSERT INTO `mob_family_system` VALUES(282, 'Grav_iton', 7, 'Beastmen', 1, 40, 91, 140, 3, 1, 3, 2, 1, 5, 4, 3, 3, 3, 2, 1, 1, 1, 1, 1, 1.25, 1, 1, 1, 1, 0.5, 1, 7, 1, 0);
 INSERT INTO `mob_family_system` VALUES(284, 'Vampyr', 19, 'Undead', 3, 40, 100, 120, 4, 3, 2, 4, 3, 6, 6, 3, 1, 3, 3, 1, 1, 1, 1, 0.6, 0.3, 0.4, 0.4, 0.6, 0.6, 0.85, 0.05, 8, 6, 0);
 INSERT INTO `mob_family_system` VALUES(285, 'MamoolJa', 7, 'Beastmen', 4, 40, 112, 120, 3, 1, 4, 3, 4, 4, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.3, 0.7, 1, 1.15, 1, 1, 1.15, 3, 1, 0);
-INSERT INTO `mob_family_system` VALUES(286, 'Vulpangue', 10, 'Dragon', 1, 40, 100, 90, 6, 4, 3, 3, 6, 6, 5, 3, 2, 3, 3, 3, 1.25, 1, 1, 1, 1.125, 1, 0.1, 1, 1, 1, 1, 3, 3, 0);
+INSERT INTO `mob_family_system` VALUES(286, 'Vulpangue', 10, 'Dragon', 1, 40, 100, 90, 6, 4, 3, 3, 6, 6, 5, 3, 2, 3, 3, 1.25, 1.25, 1, 1, 1, 1.125, 1, 0.1, 1, 1, 1, 1, 3, 3, 0);
 INSERT INTO `mob_family_system` VALUES(287, 'Chamrosh', 8, 'Bird', 3, 60, 80, 140, 4, 4, 5, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1.25, 1, 1, 0.875, 1, 0.6, 0.875, 0.875, 0.875, 1, 0.875, 3, 2, 0);
 INSERT INTO `mob_family_system` VALUES(288, 'CheeseHoarder', 7, 'Beastmen', 2, 40, 90, 140, 4, 1, 4, 1, 1, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1.125, 1, 1, 1, 1, 1, 4, 272, 0);
 INSERT INTO `mob_family_system` VALUES(289, 'BrassBorer', 20, 'Vermin', 2, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 1.125, 1, 1, 1, 1, 1, 1, 1, 2, 0);

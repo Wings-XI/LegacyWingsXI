@@ -1,12 +1,11 @@
 -----------------------------------------
--- ID: 15446
+-- ID: 15452
 -- Item: Fisherman's Belt
--- Enchantment: Synthesis image support
--- 2Min, All Races
+-- Enchantment: Fishing imagery
 -----------------------------------------
--- Enchantment: Synthesis image support
--- Duration: 2Min
--- Fishing Skill +3
+-- Enchantment: Fishing imagery
+-- Duration: 2 hrs
+-- Fishing Skill +2
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
@@ -36,7 +35,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.FISHING_IMAGERY, 3, 0, 120)
+    target:addStatusEffect(tpz.effect.FISHING_IMAGERY, 2, 0, 7200) -- 2 hours
 end
 
 function onEffectGain(target, effect)

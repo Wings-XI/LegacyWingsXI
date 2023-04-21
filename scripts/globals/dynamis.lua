@@ -328,7 +328,6 @@ dynamis.dynaInfo =
         {
             {-214.161, 15.360, -269.202, 54},
             {620.425, 7.306, -266.427, 71},
-            {427.460, -0.308, 189.224, 50},
             {320.489, -0.642, 366.648, 101},
         }
     },
@@ -404,8 +403,8 @@ dynamis.maxchars = 64
 
 dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level, message_another_group, message_cannot_enter)
     -- rate limit hourglass trades
-    if npc:getLocalVar("LastTrade") > os.time() - 8 then
-        player:PrintToPlayer("DynamisTrade: Please wait 8s between hourglass trades!", 0xD)
+    if npc:getLocalVar("LastTrade") > os.time() - 2 then
+        player:PrintToPlayer("DynamisTrade: Please wait 2s between hourglass trades!", 0xD)
         return
     end
     npc:setLocalVar("LastTrade", os.time())
@@ -443,11 +442,13 @@ dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level
         if hgValid > 0 then -- 0 = can't enter (wrong glass or didn't wait 71 hours since last dynamis), 1 = entering, 2 = re-entering (weakness)
             local playersEntered = GetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID))
             if hgValid == 2 or (hgValid == 1 and playersEntered < maxchars) then
-                player:prepareDynamisEntry(trade:getItem(0), hgValid) -- save the hourglass's params to the character while they are viewing the cs
-                player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
                 if hgValid == 1 then
-                    SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), playersEntered + 1)
+                    player:setCharVar("FirstDynaEntry", 1)
                 end
+                -- passing 2 in the second param forces weakness on dyna entry, only pass if it's not the first dyna entry
+                -- crashing or bugging on entry doesn't reset the char var, only a proper entry into dyna
+                player:prepareDynamisEntry(trade:getItem(0), utils.clamp(2 - player:getCharVar("FirstDynaEntry"), 1, 2)) -- save the hourglass's params to the character while they are viewing the cs
+                player:startEvent(dynamis.entryInfo[playerZoneID].csDyna,dynamis.entryInfo[playerZoneID].csBit,hasEntered == 1 and 0 or 1,dynamis.reservation_cancel,dynamis.reentry_days,maxchars,tpz.ki.VIAL_OF_SHROUDED_SAND,dynamis.timeless,dynamis.perpetual)
             else
                 player:PrintToPlayer(string.format("Dynamis is at maximum capacity. %u players have entered already.", playersEntered), 29)
             end
@@ -546,6 +547,11 @@ dynamis.entryNpcOnDynamisServerReply = function(player, result, message_informat
         -- Entry when trading perpetual hourglass
         local entryPos = dynamis.entryInfo[playerZoneID].enterPos
         if entryPos == nil then return end
+        -- update headcount after the rpc callback to avoid crashes incrementing multiple times for the same player
+        if player:getCharVar("FirstDynaEntry") == 1 then
+            SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), GetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID)) + 1)
+            player:setCharVar("FirstDynaEntry", 0)
+        end
         player:setCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar, 1)
         player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4], entryPos[5])
     elseif result == 3 then

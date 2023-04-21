@@ -25,5 +25,9 @@ function onMobWeaponSkill(target, mob, skill)
 
     skill:setMsg(tpz.msg.basic.SELF_HEAL)
 
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
+        mob:eraseStatusEffect()
+    end
+
     return MobHealMove(mob, mob:getMaxHP() * potency / 100)
 end

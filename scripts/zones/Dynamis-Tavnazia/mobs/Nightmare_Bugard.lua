@@ -13,6 +13,8 @@ function onMobSpawn(mob)
     local mobID = mob:getID()
     dynamis.statueOnSpawn(mob, mobList[zone][mobID] ~= nil and mobList[zone][mobID].eyes or 0)
     dynamis.setMobStats(mob)
+
+    mob:setMod(tpz.mod.HPP, mob:getMod(tpz.mod.HPP) + 50)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -35,4 +37,6 @@ function onMobEngaged(mob, target)
     randomChildrenListArg = nil
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
+
+    mob:setMod(tpz.mod.REGAIN, 500)
 end

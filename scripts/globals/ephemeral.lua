@@ -9,7 +9,8 @@ tpz = tpz or {}
 tpz.ephemeral = {}
 
 -- Cap per crystal type that can be stored. Retail/Default is 5000
-local CrystalCap = 5000
+-- WINGSCUSTOM cap at 12 clusters' worth of crystals per element
+local CrystalCap = 144
 
 -- Information for currency storage and event params
 local crystalData =
@@ -37,7 +38,7 @@ tpz.ephemeral.onTrade = function(player, trade, successEvent, failEvent)
     local params = { 0, 0, 0, 0, 0, 0, 0, 0 }
     local success = false
     for _, v in pairs(crystalData) do
-        if npcUtil.tradeHas(trade, v.crystal) or npcUtil.tradeHas(trade, v.cluster) then
+        if npcUtil.tradeHas(trade, v.crystal, false, false) or npcUtil.tradeHas(trade, v.cluster, false, false) then
             -- Check how far from crystal cap we are
             local currentCount = math.min(player:getCurrency(v.name), CrystalCap) -- In case there is a db discrepancy
             local diff = CrystalCap - currentCount

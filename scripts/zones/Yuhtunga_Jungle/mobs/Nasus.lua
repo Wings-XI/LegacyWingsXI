@@ -11,5 +11,7 @@ end
 
 function onMobDeath(mob, player, isKiller)
     local qm = GetNPCByID(ID.npc.TUNING_OUT_QM)
-    qm:setLocalVar("NasusKilled", qm:getLocalVar("NasusKilled") + 1)
+    if isKiller then
+        qm:setLocalVar("NasusKilled", qm:getLocalVar("NasusKilled") + 1)
+    end
 end

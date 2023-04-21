@@ -15,7 +15,7 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    local duration = 180
+    local duration = 180 + target:getMod(tpz.mod.INVISIBLE_DURATION)
     target:delStatusEffect(tpz.effect.INVISIBLE)
     target:addStatusEffect(tpz.effect.INVISIBLE, 0, 10, math.floor(duration * SNEAK_INVIS_DURATION_MULTIPLIER))
     target:addStatusEffect(tpz.effect.MEDICINE, 0, 0, 180)

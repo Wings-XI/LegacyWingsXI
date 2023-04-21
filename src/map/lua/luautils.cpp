@@ -3268,7 +3268,7 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PBattlefield == nullptr);
 
-        lua_prepscript("scripts/zones/%s/bcnms/%s.lua", PBattlefield->GetZone()->GetName(), PBattlefield->GetName().c_str());
+        lua_prepscript("scripts/globals/battlefield.lua");
 
         if (prepFile(File, "onBattlefieldStatusChange"))
         {

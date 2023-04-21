@@ -506,7 +506,7 @@ tpz.effect =
     COMPANIONS_ROLL          = 337,
     AVENGERS_ROLL            = 338,
     NATURALISTS_ROLL         = 339,
-    WARRIORS_CHARGE         = 340,
+    WARRIORS_CHARGE          = 340,
     FORMLESS_STRIKES         = 341,
     ASSASSINS_CHARGE         = 342,
     FEINT                    = 343,
@@ -1758,6 +1758,7 @@ tpz.mod =
 
     SUBTLE_BLOW_II            = 993, -- Subtle Blow II Effect (Cap 50%) Total Effect (SB + SB_II cap 75%)
     GARDENING_WILT_BONUS      = 995, -- Increases the number of Vanadays a plant can survive before it wilts
+    CRYSTAL_DROPRATE          = 996, -- Increases droprate from crystals (nation aketons)
 
     SUPER_JUMP = 988,
 

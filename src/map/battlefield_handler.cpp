@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
 Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -250,8 +250,8 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, uint16 battle
         }
         else
         {
-            // todo: probably clear registered chars
             // can't enter, mobs been slapped
+            PBattlefield->SetStatus(BATTLEFIELD_STATUS_LOCKED);
             return BATTLEFIELD_RETURN_CODE_LOCKED;
         }
     }

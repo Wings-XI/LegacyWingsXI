@@ -742,9 +742,22 @@ void CBattlefield::Cleanup()
             updateRecord = Sql_GetUIntData(SqlHandle, 0) > std::chrono::duration_cast<std::chrono::seconds>(m_Record.time).count();
         }
 
-        if (updateRecord)
+        bool gmInZone = false;
+
+        GetZone()->ForEachChar([&gmInZone](CCharEntity* PChar)
         {
-            query = "UPDATE bcnm_info SET fastestName = '%s', fastestTime = %u, fastestPartySize = %u WHERE bcnmId = %u AND zoneid = %u";
+            ShowInfo("char %s gmlvl %u", PChar->GetName(), PChar->m_GMlevel);
+            if (PChar->m_GMlevel > 0)
+            {
+                gmInZone = true;
+            }
+        });
+        if (updateRecord && !gmInZone)
+        {
+            query = "UPDATE bcnm_info SET previousName = if(previousTime > fastestTime, fastestName, previousName), \
+                    previousPartySize = if(previousTime > fastestTime, fastestPartySize, previousPartySize), \
+                    previousTime = if(previousTime > fastestTime, fastestTime, previousTime), \
+                    fastestName = '%s', fastestTime = %u, fastestPartySize = %u WHERE bcnmId = %u AND zoneid = %u";
             auto timeThing = std::chrono::duration_cast<std::chrono::seconds>(m_Record.time).count();
 
             Sql_Query(SqlHandle, query, m_Record.name.c_str(), timeThing, m_Record.partySize, this->GetID(), GetZoneID());

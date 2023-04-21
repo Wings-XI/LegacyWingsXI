@@ -297,9 +297,9 @@ namespace message
             if (!PChar)
             {
                 Sql_Query(SqlHandle, "DELETE FROM accounts_sessions WHERE charid = %d;", ref<uint32>((uint8*)extra, 0));
-                // flist stuff
-                if (FLgetSettingByID(ref<uint32>((uint8*)extra, 0), 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), ref<uint32>((uint8*)extra, 0)); }
-                Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", ref<uint32>((uint8*)extra, 0));
+                // flist stuff - moved to packet_system.cpp Server Message Request
+                //if (FLgetSettingByID(ref<uint32>((uint8*)extra, 0), 2) == 1) { Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), ref<uint32>((uint8*)extra, 0)); }
+                //Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u", ref<uint32>((uint8*)extra, 0));
                 //FLnotify()
             }
             else
@@ -904,13 +904,16 @@ namespace message
                 // Character is logging in
                 // FIXME: This will actually get executed by all map servers (if the server
                 // is clustered). Not a big deal in the case of flist but can cause issues
+                // (except it is in this case due to the blocking nature of updating the same row at the same time across all map clusters)
                 // if we have any logic that depends on being executed only once.
                 // Since this is *not* guaranteed to run after IncrementZoneCounter, for
                 // a proper fix we will need to query the DB manually to check whether the
                 // character is about to connect to this instance.
-                if (FLgetSettingByID(login_header->dwCharacterID, 2) == 1) {
-                    Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), login_header->dwCharacterID);
-                }
+
+            // flist stuff - moved to packet_system.cpp Server Message Request
+                //if (FLgetSettingByID(login_header->dwCharacterID, 2) == 1) {
+                //    Sql_Query(SqlHandle, "UPDATE flist_settings SET lastonline = %u WHERE callingchar = %u;", (uint32)CVanaTime::getInstance()->getVanaTime(), login_header->dwCharacterID);
+                //}
                 // Sql_Query(SqlHandle, "UPDATE flist SET status = 0 WHERE listedchar = %u;", login_header->dwCharacterID);
             }
             return true;

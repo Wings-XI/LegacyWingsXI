@@ -140,8 +140,8 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
             std::string escaped_full_string; escaped_full_string.reserve(strlen((char*)commandline) * 2 + 1);
             Sql_EscapeString(SqlHandle, escaped_full_string.data(), (char*)commandline);
 
-            const char* fmtQuery = "INSERT into audit_gm (date_time,gm_name,command,full_string) VALUES(current_timestamp(),'%s','%s','%s')";
-            if (Sql_Query(SqlHandle, fmtQuery, escaped_name, escaped_gm_cmd.data(), escaped_full_string.data()) == SQL_ERROR)
+            const char* fmtQuery = "INSERT into audit_gm (date_time,zoneid,gm_name,command,full_string) VALUES(current_timestamp(),'%u','%s','%s','%s')";
+            if (Sql_Query(SqlHandle, fmtQuery, PChar->getZone(), escaped_name, escaped_gm_cmd.data(), escaped_full_string.data()) == SQL_ERROR)
             {
                 ShowError("cmdhandler::call: Failed to log GM command.\n");
             }

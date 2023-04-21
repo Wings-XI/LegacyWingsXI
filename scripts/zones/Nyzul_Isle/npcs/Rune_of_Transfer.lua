@@ -67,6 +67,9 @@ function onTrigger(player, npc)
             -- Param 1 = key item - hardcoded to RUNIC_DISC.  Need to confirm if a player with RUNIC_KEY shows RUNIC_KEY instead
             -- Param 2-7 = unused
             -- Param 8 is a bitmask to hide floors
+            if player:getCharVar("NyzulClimbNumber") > 0 then
+                player:PrintToPlayer(string.format("Welcome! You are currently on Nyzul climb number %d.",player:getCharVar("NyzulClimbNumber")+1), 0x1F)
+            end
             player:startEvent(94, tpz.ki.RUNIC_DISC, 0, 0, 0, 0, 0, 0, floorBitMask)
         else
             player:messageSpecial(ID.text.NEW_USER_CONFIRMED, tpz.ki.RUNIC_DISC)

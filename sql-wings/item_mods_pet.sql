@@ -162,6 +162,7 @@ INSERT INTO `item_mods_pet` VALUES(15679, 357, -2, 1);
 INSERT INTO `item_mods_pet` VALUES(15910, 1, 5, 0);
 INSERT INTO `item_mods_pet` VALUES(15910, 27, 3, 0);
 INSERT INTO `item_mods_pet` VALUES(15944, 163, -7, 0);
+INSERT INTO `item_mods_pet` VALUES(16000, 30, 10, 0);
 INSERT INTO `item_mods_pet` VALUES(16173, 1, 10, 0);
 INSERT INTO `item_mods_pet` VALUES(16245, 23, 15, 3);
 INSERT INTO `item_mods_pet` VALUES(16270, 2, 50, 2);

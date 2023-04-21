@@ -12,7 +12,6 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-
     if (mob:getFamily() == 316) then
         local mobSkin = mob:getModelId()
 
@@ -39,9 +38,18 @@ function onMobWeaponSkill(target, mob, skill)
     local accmod = 2
     local dmgmod = 5
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_DMG_VARIES, 2, 3, 4)
-    local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
+    local dmg = 0
 
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
-	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+    if info.hitslanded > 0 then
+        dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING, MOBPARAM_3_SHADOW)
+    else
+        skill:setMsg(tpz.msg.basic.EVADES)
+        return
+    end
+    if skill:getMsg() ~= tpz.msg.basic.SHADOW_ABSORB then
+        target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.SLASHING)
+        skill:setMsg(tpz.msg.basic.DAMAGE)
+        if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
+    end
     return dmg
 end

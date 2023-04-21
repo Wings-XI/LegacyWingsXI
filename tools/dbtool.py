@@ -6,11 +6,10 @@ import yaml
 import fileinput
 import distutils.spawn
 from git import Repo
-import mysql.connector
+import mariadb
 import colorama
 import subprocess
 from colorama import Fore, Style
-from mysql.connector import Error, errorcode
 from migrations import spell_blobs_to_spell_table
 from migrations import unnamed_flags
 from migrations import char_unlock_table_columns
@@ -32,6 +31,9 @@ from migrations import blocked_ranges
 from migrations import ip_exempt
 from migrations import two_factor_authentication
 from migrations import login_log_exempt
+from migrations import temp_exemptions
+from migrations import battlefield_records_preserve
+from migrations import audit_gm_zoneid
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -55,6 +57,9 @@ migrations = [
 	ip_exempt,
 	two_factor_authentication,
 	login_log_exempt,
+    temp_exemptions,
+    battlefield_records_preserve,
+    audit_gm_zoneid,
 ]
 # These are the default 'protected' files
 player_data = [
@@ -95,6 +100,7 @@ player_data = [
     'linkshells.sql',
     'server_gmcalls.sql',
     'server_variables.sql',
+    'bcnm_info',
 ]
 import_files = []
 backups = []
@@ -284,20 +290,19 @@ def import_file(file):
 def connect():
     global db, cur
     try:
-        db = mysql.connector.connect(host=host,
+        db = mariadb.connect(host=host,
                 user=login,
                 passwd=password,
                 db=database,
-                port=port,
-                use_pure=True)
+                port=port)
         cur = db.cursor()
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print(Fore.RED + 'Incorrect mysql_login or mysql_password, update ../conf/map.conf.')
+    except mariadb.Error as err:
+        if err.errno == mariadb.errorcode.ER_ACCESS_DENIED_ERROR:
+            print(colorama.Fore.RED + 'Incorrect mysql_login or mysql_password, update ../settings/network.lua.')
             close()
             return False
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print(Fore.RED + 'Database ' + database + ' does not exist.')
+        elif err.errno == mariadb.errorcode.ER_BAD_DB_ERROR:
+            print(colorama.Fore.RED + 'Database ' + database + ' does not exist.')
             if input('Would you like to create new database: ' + database + '? [y/N] ').lower() == 'y':
                 with open(error_log_file, "w") as errorlog:
                     subprocess.run([mysql_bin + 'mysqladmin' + exe, "-h", host, "-P", str(port), "-u", login, "-p"+password, "CREATE", database], stderr=errorlog)

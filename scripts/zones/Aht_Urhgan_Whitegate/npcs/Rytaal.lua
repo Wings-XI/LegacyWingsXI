@@ -116,7 +116,7 @@ function onEventFinish(player, csid, option)
         end
         npcUtil.giveKeyItem(player, tpz.ki.IMPERIAL_ARMY_ID_TAG)
 
-        if tagStock >= 3 then
+        if tagStock >= 7 then
             player:setCharVar("lastTagTime", os.time() + 86400)
         end
         player:setCurrency("id_tags", tagStock - 1)

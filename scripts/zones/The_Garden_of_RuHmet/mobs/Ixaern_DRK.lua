@@ -15,6 +15,11 @@ require("scripts/globals/status")
 
 local aernA = 16921019
 local aernB = 16921020
+local msgTiers = {
+    [3] = "The Ix'Aern looks weakened.",
+    [10] = "The Ix'Aern looks like it's in rough shape.",
+    [54] = "The Ix'Aern looks like it can barely hold it together."
+}
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
@@ -22,6 +27,7 @@ function onMobInitialize(mob)
         if killer then
             if(math.random (1, 10) < 10) then
                 -- reraise
+                mob:setLocalVar("AERN_RERAISES", mob:getLocalVar("AERN_RERAISES") + 1)
                 mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
                 local target = mob:getTarget()
                 mob:timer(9000, function(mob)
@@ -68,6 +74,29 @@ function onMobInitialize(mob)
 end
 
 function onMobEngaged(mob, target)
+    -- WINGSCUSTOM: reduce max hp based on # of reraises
+    local rrcount = math.abs(mob:getLocalVar("AERN_RERAISES"))
+    HPPreduction = math.ceil(110 - 15 * math.log(1 + rrcount))
+    HPPreduction = utils.clamp(HPPreduction, 10, 100)
+    if HPPreduction < 95 then
+        mob:setMod(tpz.mod.HPP, -100 + HPPreduction)
+        mob:updateHealth()
+        if target:isPC() then
+            local msgIndex = 0
+            if rrcount >= 54 then
+                msgIndex = 54
+            elseif rrcount >= 10 then
+                msgIndex = 10
+            elseif rrcount >= 3 then
+                msgIndex = 3
+            end
+
+            if msgIndex > 0 then
+                target:PrintToArea(msgTiers[msgIndex] .. string.format(" (%s)", rrcount), tpz.msg.channel.SYSTEM_3, tpz.msg.area.SAY)
+            end
+        end
+    end
+
     local mobID = mob:getID()
     for i = mobID+1, mobID+2 do
         local m = GetMobByID(i)

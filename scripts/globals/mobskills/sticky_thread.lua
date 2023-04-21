@@ -13,8 +13,15 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.SLOW
+    local zone = mob:getZone()
 
-    skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 1250, 0, 120))
+    if (zone:getType() == tpz.zoneType.DYNAMIS) then
+        local dMND =  mob:getStat(tpz.mod.MND) - target:getStat(tpz.mod.MND)
+        local power = utils.clamp(math.floor((dMND + 20) * 204 / 10) + 1466, 1466, 3510)
+        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, 0, 120))
+    else
+        skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, 140, 0, 120))
+    end
 
     return typeEffect
 end

@@ -539,6 +539,13 @@ namespace charutils
             PChar->profile.rank[0] = (uint8)Sql_GetIntData(SqlHandle, 1);
             PChar->profile.rank[1] = (uint8)Sql_GetIntData(SqlHandle, 2);
             PChar->profile.rank[2] = (uint8)Sql_GetIntData(SqlHandle, 3);
+            for (uint8 i = 0; i <= 2; ++i)
+            {
+                if (PChar->profile.rank[i] > 10)
+                {
+                    PChar->profile.rank[i] = 1;
+                }
+            }
 
             PChar->profile.fame[0] = (uint16)Sql_GetIntData(SqlHandle, 4);    //Sandoria
             PChar->profile.fame[1] = (uint16)Sql_GetIntData(SqlHandle, 5);    //Bastok
@@ -927,7 +934,8 @@ namespace charutils
         PChar->StatusEffectContainer->LoadStatusEffects();
         PChar->m_fomorHate = GetCharVar(PChar, "FOMOR_HATE");
         PChar->m_pixieHate = GetCharVar(PChar, "PIXIE_HATE");
-        PChar->m_nyzulProgress = GetCharVar(PChar, "Nyzul_RunicDiscProgress");
+        // WINGSCUSTOM nyzul climb reset custom quest
+        PChar->m_nyzulProgress = (GetCharVar(PChar, "NyzulClimbNumber") > 0 ? 100 : GetCharVar(PChar, "Nyzul_RunicDiscProgress"));
 
         charutils::LoadEquip(PChar);
         luautils::CheckForGearSet(PChar);
@@ -2268,7 +2276,7 @@ namespace charutils
         if (!PChar->getStyleLocked())
             return;
 
-        auto appearance = (CItemEquipment*)itemutils::GetItem(PChar->styleItems[equipSlotID]);
+        CItemEquipment* appearance      = dynamic_cast<CItemEquipment*>(itemutils::GetItemPointer(PChar->styleItems[equipSlotID]));
         auto appearanceModel = (appearance == nullptr) ? 0 : appearance->getModelId();
 
         switch (equipSlotID)
@@ -3862,12 +3870,22 @@ namespace charutils
             // all members might not be in range
             if (members.size() > 0)
             {
-                // distribute gil
-                int32 gilPerPerson = static_cast<int32>(gil / members.size());
+                // Distribute Gil
+                int32 gilPerPerson    = static_cast<int32>(gil / members.size());
+                int16 gilFinderActive = 0;
+
                 for (auto PMember : members)
                 {
-                    // Check for gilfinder
-                    gilPerPerson += gilPerPerson * PMember->getMod(Mod::GILFINDER) / 100;
+                    // Check for highest gilfinder tier
+                    if (PMember->getMod(Mod::GILFINDER) > gilFinderActive)
+                    {
+                        gilFinderActive = PMember->getMod(Mod::GILFINDER);
+                    }
+                }
+                // if gilFinderActive == 0, no change
+                gilPerPerson = gilPerPerson * (100 + gilFinderActive) / 100;
+                for (auto PMember : members)
+                {
                     UpdateItem(PMember, LOC_INVENTORY, 0, gilPerPerson);
                     PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, gilPerPerson, 0, 565));
                 }
@@ -5757,7 +5775,7 @@ namespace charutils
         if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             auto tstamp = (uint32)Sql_GetIntData(SqlHandle, 0);
-            if (CVanaTime::getInstance()->getVanaTime() < tstamp) {
+            if (CVanaTime::getInstance()->getVanaTime() < tstamp +1) { // adding 1 to overflow and keep compatibility with our lua scripts assigning -1 as the expired timestamp
                 return true;
             }
         }
@@ -5874,6 +5892,21 @@ namespace charutils
         BuildingCharWeaponSkills(PChar);
     }
 
+    bool isSendBoxOpen(CCharEntity* PChar)
+    {
+        return PChar->UContainer->GetType() == UCONTAINER_SEND_DELIVERYBOX;
+    }
+
+    bool isRecvBoxOpen(CCharEntity* PChar)
+    {
+        return PChar->UContainer->GetType() == UCONTAINER_RECV_DELIVERYBOX;
+    }
+
+    bool isAnyDeliveryBoxOpen(CCharEntity* PChar)
+    {
+        return isSendBoxOpen(PChar) || isRecvBoxOpen(PChar);
+    }
+
     /************************************************************************
     *                                                                       *
     *  Opens the characters send box                                        *
@@ -5883,7 +5916,7 @@ namespace charutils
     void OpenSendBox(CCharEntity* PChar)
     {
         PChar->UContainer->Clean();
-        PChar->UContainer->SetType(UCONTAINER_DELIVERYBOX);
+        PChar->UContainer->SetType(UCONTAINER_SEND_DELIVERYBOX);
 
         PChar->pushPacket(new CDeliveryBoxPacket(0x0D, 2, 0, 0x01));
         return;
@@ -6302,7 +6335,8 @@ namespace charutils
         {
             SaveCharPosition(PChar);
         }
-
+        
+        charutils::SaveCharEquip(PChar);
         PChar->pushPacket(new CServerIPPacket(PChar, type, ipp));
     }
 

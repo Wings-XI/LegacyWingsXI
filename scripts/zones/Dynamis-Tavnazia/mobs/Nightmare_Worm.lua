@@ -27,6 +27,8 @@ function onMobSpawn(mob)
 
     mob:setSpawn(spawnSpots[mob:getLocalVar("spawnSpot")])
     mob:setPos(spawnSpots[mob:getLocalVar("spawnSpot")])
+
+    mob:setMod(tpz.mod.HPP, mob:getMod(tpz.mod.HPP) + 50)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -70,4 +72,6 @@ function onMobEngaged(mob, target)
     randomChildrenListArg = nil
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
+
+    mob:setMod(tpz.mod.REGAIN, 500)
 end

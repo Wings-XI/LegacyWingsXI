@@ -37,6 +37,7 @@ CSpiritController::CSpiritController(CPetEntity* PPet) : CPetController(PPet),
 
 void CSpiritController::setMagicCooldowns(bool initial)
 {
+    // https://ffxiclopedia.fandom.com/wiki/Spirit_Guide_by_Spira#Elemental_Spirit_Casting_Timer
     CBattleEntity* PSummoner = PSpirit->PMaster;
     int16 mod = 0;
     if (PSummoner && PSummoner->objtype == TYPE_PC)
@@ -49,14 +50,16 @@ void CSpiritController::setMagicCooldowns(bool initial)
     m_magicCooldown = 45000ms - 333ms * skill - 1000ms * mod - 3000ms * day - 2000ms * weather - 5000ms * AF;
     m_actionCooldown = 3000ms - 25ms * skill;
     if (initial)
-        m_LastMagicTime = m_Tick - m_magicCooldown + std::clamp<std::chrono::milliseconds>(13000ms * tpzrand::GetRandomNumber(75, 100) / 100 - 50ms * skill - 3000ms * day - 2000ms * weather - 333ms * mod - AF * 5000ms, 1500ms, 20000ms);
-    // initial cooldown 9 to 12 seconds. actioncooldown is intervals of 2-3 sec so this can in reality be 9 to 15 seconds
-    // +33 skill = approx -1 second on this initial cooldown ... AF -5 sec
-    // day weather ... unfavorable = ~20 seconds ... neutral = ~15 seconds ... favorable = 10 seconds
+        m_LastMagicTime = m_Tick - m_magicCooldown / 2;
+    // All elementals when freshly summoned, have their spirit timer already counting down from half.
 }
 
 void CSpiritController::DoRoamTick(time_point tick)
 {
+    // if it is interrupted, casting delay starts 1 second after it becomes interrupted.
+    if (m_LastMagicTime - 1s > m_Tick)
+        m_LastMagicTime = m_Tick + 1s;
+
     if (TryAction() && TryIdleSpellcast())
     {
         setMagicCooldowns(false);
@@ -70,10 +73,25 @@ void CSpiritController::DoRoamTick(time_point tick)
 
 void CSpiritController::DoCombatTick(time_point tick)
 {
+    // if it is interrupted, casting delay starts 1 second after it becomes interrupted.
+    if (m_LastMagicTime - 1s > m_Tick)
+        m_LastMagicTime = m_Tick + 1s;
+
     if ((PSpirit->PMaster == nullptr || PSpirit->PMaster->isDead()) && PSpirit->isAlive()) {
         PSpirit->Die();
         return;
     }
+
+    if (PTarget == nullptr && PSpirit->PMaster != nullptr && // PTarget is set by this function, so being null implies it's the first combat tick
+        static_cast<CBattleEntity*>(PSpirit->GetEntity(PSpirit->GetBattleTargetID()))->GetBattleTarget() != PSpirit->PMaster)  // if spirit's target isn't currently targetting the smn, then assault was used
+    {
+        ShowDebug("resetting spirit cast timer\n");
+        m_LastMagicTime = m_Tick + 1s; // The pet commands "Assault" and "Retreat" reset the spirit timer.
+    }
+    // else
+    // {
+    //     //ShowDebug("spirit timer left alone");
+    // }
 
     PTarget = static_cast<CBattleEntity*>(PSpirit->GetEntity(PSpirit->GetBattleTargetID()));
 
@@ -139,7 +157,8 @@ bool CSpiritController::TrySpellcast()
         if (spell == SpellID::NULLSPELL                                                                                  ) { spell = GetHighestNuke(petid); } // everything else
         break;
     case PETID_LIGHTSPIRIT:
-        if (                                                                                                         true) { spell = GetHighestCure(); }
+    // TODO determine if it should be able to cure in combat and curaga on other alliance parties
+        if (TryIdleSpellcast()                                                                                           ) {  } // spell set in TryIdleSpellCast function. Light spirit can buff and heal in combat
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.50f                       - AF * 1.0f) { spell = GetDOT(petid); } // dia,dia2
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.17f - 0.002f * skillbonus - AF * 1.0f) { spell = GetEnfeeble(petid); } // flash
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.30f - 0.002f * skillbonus + AF * 1.0f) { spell = GetAM(petid); } // holy
@@ -152,7 +171,9 @@ bool CSpiritController::TrySpellcast()
 
     if (spell != SpellID::NULLSPELL && PCastTarget && Cast(PCastTarget->targid, spell))
     {
-        m_LastMagicTime = m_Tick;
+        // The specific duration of the spirit timer is from the time your elemental completes its first spell
+        // until the time it starts casting the next spell.
+        m_LastMagicTime = m_Tick + 1ms * spell::GetSpell(spell)->getCastTime();
         return true;
     }
 
@@ -172,9 +193,26 @@ bool CSpiritController::TryIdleSpellcast()
 
     if (spell != SpellID::NULLSPELL && PCastTarget && Cast(PCastTarget->targid, spell))
     {
-        m_LastMagicTime = m_Tick;
+        m_LastMagicTime = m_Tick + 1ms * spell::GetSpell(spell)->getCastTime();
+
+        bool aoeSpell = false;
         if (spell > SpellID::Curaga_V)
-            m_LastMagicTime = m_Tick - m_magicCooldown / 2; // for buffs put it into the past, halfway into the cooldown already
+        {
+            // AoE all buff spells except this list
+            if ((std::set<SpellID> {SpellID::Regen, SpellID::Haste}).count(spell) == 0)
+            {
+                aoeSpell = true; // Make all other buffs AoE
+            }
+            m_LastMagicTime = m_LastMagicTime - m_magicCooldown / 2; // for buffs put the timer into the past, to reduce magic cooldown in "buff mode"
+        }
+        else if (PSpirit->GetMLevel() > 15 && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.6f) // make heals AoE 60% of the time
+        {
+            aoeSpell = true;
+        }
+
+        if (aoeSpell)
+            PSpirit->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_ACCESSION, EFFECT_ACCESSION, 1, 0, 15));
+
         return true;
     }
     return false;
@@ -444,17 +482,6 @@ SpellID CSpiritController::GetHighestCure()
         cure = SpellID::Cure_II;
     else
         cure = SpellID::Cure;
-    if (tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.6f) // prefer curagas, even on a party of one
-    {
-        if (level > 70)
-            cure = SpellID::Curaga_IV;
-        else if (level > 50)
-            cure = SpellID::Curaga_III;
-        else if (level > 30)
-            cure = SpellID::Curaga_II;
-        else if (level > 15)
-            cure = SpellID::Curaga;
-    }
 
     if (cure != SpellID::NULLSPELL)
     {
@@ -578,6 +605,15 @@ bool CSpiritController::Engage(uint16 targid)
 
 bool CSpiritController::Disengage()
 {
+    if (PTarget != nullptr && PSpirit->PMaster != nullptr && !PTarget->isDead())  // if target of spirit isn't dead, retreat was used
+    {
+        ShowDebug("resetting spirit cast timer\n");
+        m_LastMagicTime = m_Tick + 1s; // The pet commands "Assault" and "Retreat" reset the spirit timer.
+    }
+    // else
+    // {
+    //     // ShowDebug("spirit timer left alone\n");
+    // }
     PTarget = nullptr;
     return CMobController::Disengage();
 }

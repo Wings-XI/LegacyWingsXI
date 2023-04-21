@@ -15,11 +15,11 @@ end
 function onTrigger(player, npc)
     local asaPrimal = player:getCharVar("ASA_Leviathan")
 
-    if player:getCurrentMission(ASA) == tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)
+    if player:getCurrentMission(ASA) >= tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)
     and asaPrimal == 0 then
         player:messageSpecial(ID.text.POWER_STYMIES, tpz.ki.DOMINAS_CERULEAN_SEAL)
         player:setCharVar("ASA_Leviathan", 1)
-    elseif player:getCurrentMission(ASA) == tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)
+    elseif player:getCurrentMission(ASA) >= tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_CERULEAN_SEAL)
     and asaPrimal == 2 then
         player:startEvent(2)
         player:setCharVar("ASA_Leviathan", 3)

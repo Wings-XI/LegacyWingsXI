@@ -24,11 +24,17 @@ function onMobDeath(mob, player, isKiller)
     if mobID == ID.mobs.Eye_Floor1[1] or mobID == ID.mobs.Eye_Floor1[2] then
         -- floor 1 qm3 spawn
         local npc = GetNPCByID(ID.mobs.QM3_Floor1)
-        npc:setStatus(tpz.status.NORMAL)
+        if npc:getStatus() ~= tpz.status.NORMAL then
+            npc:setStatus(tpz.status.NORMAL)
+            npc:setLocalVar("activated", 0)
+        end
     elseif mobID == ID.mobs.Eye_Floor2[1] or mobID == ID.mobs.Eye_Floor2[2] then
         -- floor 2 qm3 spawn
         local npc = GetNPCByID(ID.mobs.QM3_Floor2)
-        npc:setStatus(tpz.status.NORMAL)
+        if npc:getStatus() ~= tpz.status.NORMAL then
+            npc:setStatus(tpz.status.NORMAL)
+            npc:setLocalVar("activated", 0)
+        end
     end
 end
 
@@ -46,25 +52,29 @@ function onMobEngaged(mob, target)
     if mob:getLocalVar("dynaReadyToSpawnChildren") == 1 then
         randomChildrenListArg = nil
         if mobList[zone][mob:getID()] ~= nil and mobList[zone][mob:getID()].randomChildrenList1 ~= nil then
+            mob:setLocalVar("dynaReadyToSpawnChildren", 1)
             randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList1]
             mobList[zone][mob:getID()].randomChildrenCount = mobList[zone][mob:getID()].randomChildrenCount1
             dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
         end
 
-        mob:setLocalVar("dynaReadyToSpawnChildren", 1)
         randomChildrenListArg = nil
         if mobList[zone][mob:getID()] ~= nil and mobList[zone][mob:getID()].randomChildrenList2 ~= nil then
+            mob:setLocalVar("dynaReadyToSpawnChildren", 1)
             randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList2]
             mobList[zone][mob:getID()].randomChildrenCount = mobList[zone][mob:getID()].randomChildrenCount2
             dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
         end
 
-        mob:setLocalVar("dynaReadyToSpawnChildren", 1)
         randomChildrenListArg = nil
         if mobList[zone][mob:getID()] ~= nil and mobList[zone][mob:getID()].randomChildrenList3 ~= nil then
+            mob:setLocalVar("dynaReadyToSpawnChildren", 1)
             randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList3]
             mobList[zone][mob:getID()].randomChildrenCount = mobList[zone][mob:getID()].randomChildrenCount3
             dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
         end
+
+        -- clear variable as a failsafe
+        mob:setLocalVar("dynaReadyToSpawnChildren", 0)
     end
 end

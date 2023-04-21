@@ -1,9 +1,9 @@
 -----------------------------------
 -- Area: Wajaom Woodlands
 --  ZNM: Tinnin
--- !pos 276 0 -694
--- Spawned with Monkey Wine: @additem 2573
--- Wiki: http://ffxiclopedia.wikia.com/wiki/Tinnin
+-- !pos 276 0 -694 51
+-- Spawned with Monkey Wine: !additembyid 2573
+-- Wiki: https://ffxiclopedia.fandom.com/wiki/Tinnin
 -----------------------------------
 mixins =
 {
@@ -14,20 +14,30 @@ require("scripts/globals/magic")
 require("scripts/globals/status")
 -----------------------------------
 
+--[[
+    Has Alliance Hate.
+]]
+
 function onMobInitialize(mob)
-    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
-    mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
-    mob:setMobMod(tpz.mobMod.MUG_GIL, 8000)
-    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
-    mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
-    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setHP(mob:getMaxHP()/2)
     mob:setUnkillable(true)
+    mob:setMod(tpz.mod.REGEN_DOWN, 1) -- so it doesn't regen during roaming
+    mob:setMobMod(tpz.mobMod.NO_REST, 1) -- so it doesn't regen during roaming
+    mob:setMobMod(tpz.mobMod.MUG_GIL, 4000)
     mob:setMod(tpz.mod.REGEN, 50)
+    mob:setMod(tpz.mod.STR, 40)
+    mob:setMod(tpz.mod.ATTP, 30)
+    mob:setMod(tpz.mod.MAIN_DMG_RATING, 50)
+    mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
+    mob:setMod(tpz.mod.STUNRES, 100)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)  -- IDLE_DESPAWN only goes into effect after disengage and we are not spawning the mob engaged, but why would anyone spawn it and just leave?
 
     -- Regen Head every 1.5-4 minutes 90-240
     mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
@@ -84,9 +94,8 @@ function onMobFight(mob, target)
         if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- disable no turning for the forced mobskills upon head growth
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
         end
-        -- These need to be listed in reverse order as forced moves are added to the top of the queue.
-        mob:useMobAbility(1830) -- Polar Blast
         mob:useMobAbility(1832) -- Barofield
+        mob:useMobAbility(1830) -- Polar Blast
 
     elseif (mob:AnimationSub() == 1 and os.time() > headTimer) then
         mob:AnimationSub(0)
@@ -104,10 +113,9 @@ function onMobFight(mob, target)
         if (bit.band(mob:getBehaviour(), tpz.behavior.NO_TURN) > 0) then -- disable no turning for the forced mobskills upon head growth
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
         end
-        -- Reverse order, same deal.
-        mob:useMobAbility(1828) -- Pyric Blast
-        mob:useMobAbility(1830) -- Polar Blast
         mob:useMobAbility(1832) -- Barofield
+        mob:useMobAbility(1830) -- Polar Blast
+        mob:useMobAbility(1828) -- Pyric Blast
     end
 end
 

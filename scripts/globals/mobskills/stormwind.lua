@@ -37,5 +37,9 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, tpz.damageType.WIND, MOBPARAM_WIPE_SHADOWS)
 
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.WIND)
+
+    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+        MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.SILENCE, 1, 0, math.random(60, 120))
+    end
     return dmg
 end
