@@ -36,6 +36,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.ATTP, 30)
     mob:setMod(tpz.mod.MAIN_DMG_RATING, 50)
     mob:setMod(tpz.mod.UDMGBREATH, -100) -- immune to breath damage
+    mob:setMod(tpz.mod.MEVA, 400) -- Resistances based on Hydra
     mob:setMod(tpz.mod.STUNRES, 100)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)  -- IDLE_DESPAWN only goes into effect after disengage and we are not spawning the mob engaged, but why would anyone spawn it and just leave?
 

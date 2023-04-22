@@ -12,7 +12,9 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if(mob:getFamily() == 316) then
+    local family = mob:getFamily()
+
+    if(family == 316) then
         local mobSkin = mob:getModelId()
 
         if (mobSkin == 1805) then
@@ -21,7 +23,7 @@ function onMobSkillCheck(target, mob, skill)
             return 1
         end
     end
-    local family = mob:getFamily()
+
     local mobhp = mob:getHPP()
     local result = 1
 

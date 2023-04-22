@@ -376,9 +376,9 @@ INSERT INTO `mob_family_system` VALUES(309, 'Nosferatu', 19, 'Undead', 2, 40, 10
 INSERT INTO `mob_family_system` VALUES(310, 'ExperimentalLa', 7, 'Beastmen', 1, 40, 100, 140, 3, 3, 3, 1, 1, 2, 2, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.125, 1, 1, 1.125, 0.875, 1, 1, 8, 1, 0);
 INSERT INTO `mob_family_system` VALUES(311, 'MahjlaefThePai', 9, 'Demon', 1, 40, 100, 140, 6, 3, 3, 3, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 1, 1, 1.125, 1, 1.125, 0.5, 6, 162, 0);
 INSERT INTO `mob_family_system` VALUES(312, 'Nuhn', 2, 'Aquan', 4, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1.125, 0.875, 1, 1, 6, 2, 0);
-INSERT INTO `mob_family_system` VALUES(313, 'Tinnin', 10, 'Dragon', 5, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 0.875, 1, 1, 1, 1, 1, 1, 1, 1, 6, 2, 0);
-INSERT INTO `mob_family_system` VALUES(314, 'Sarameya', 6, 'Beast', 4, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0);
-INSERT INTO `mob_family_system` VALUES(315, 'Tyger', 3, 'Arcana', 5, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1.125, 1, 1.125, 1, 1, 1, 1, 5, 3, 0);
+INSERT INTO `mob_family_system` VALUES(313, 'Tinnin', 10, 'Dragon', 5, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 0.875, 0.3, 0.3, 0.3, 0.6, 0.6, 0.6, 0.6, 0.6, 6, 2, 0);
+INSERT INTO `mob_family_system` VALUES(314, 'Sarameya', 6, 'Beast', 4, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.1, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 7, 3, 0);
+INSERT INTO `mob_family_system` VALUES(315, 'Tyger', 3, 'Arcana', 5, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.4, 0.8, 0.4, 0.5, 0.3, 0.8, 0.5, 0.8, 5, 3, 0);
 INSERT INTO `mob_family_system` VALUES(316, 'Pandemonium', 9, 'Demon', 3, 40, 100, 140, 6, 3, 3, 3, 1, 5, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.875, 0, 1, 0);
 INSERT INTO `mob_family_system` VALUES(319, 'Avatar-Shiva', 5, 'Avatar', 1, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(320, 'Avatar-Ramuh', 5, 'Avatar', 1, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 1, 0.875, 0.875, 0.875, 0.875, 0, 41, 0);
