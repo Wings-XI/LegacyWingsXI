@@ -321,7 +321,7 @@ function handlePet(mob, newPet, oldPet, target, modelId, phase)
         newPet:spawn()
         newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     end
-    newPet:setPos(mob:getXPos() + math.random(-2, 2), mob:getYPos(), mob:getZPos() + math.random(-2, 2))
+    newPet:setPos(mob:getXPos() + 2 * math.random(-2, 2), mob:getYPos(), mob:getZPos() + 2 * math.random(-2, 2))
     newPet:updateEnmity(target)
 end
 
