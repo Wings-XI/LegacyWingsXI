@@ -117,7 +117,7 @@ function onMobSkillFinished(mob, target, skill)
         -- transitional Dvergar stage, uses cackle, then hellsnap, then changes again
         local hellsnapID = 2113
         if skill:getID() ~= hellsnapID then
-            mob:timer(2000, function(mobArg)
+            mob:timer(5000, function(mobArg)
                 mobArg:useMobAbility(hellsnapID) -- hellsnap
             end)
             mob:timer(10000, function(mobArg) -- enough delay to let the pets get off a long spell (coupled with the timeSinceWS timer)
