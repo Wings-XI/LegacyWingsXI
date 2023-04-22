@@ -7,7 +7,8 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
     -- don't autoattack between TP moves
-    if mob:getLocalVar("timeSinceWS") > os.time() - 2 then
+    -- only initiate attack within 15 yalms, but db has higher range so you can't "outrun" an attack that starts
+    if mob:getLocalVar("timeSinceWS") > os.time() - 1 or mob:checkDistance(target) > 15 then
         return 1
     else
         return 0

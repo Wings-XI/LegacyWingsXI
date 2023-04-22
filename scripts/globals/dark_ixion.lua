@@ -595,6 +595,7 @@ darkixion.onMobRoam = function(mob)
 end
 
 darkixion.onMobEngaged = function(mob, target)
+    mob:setMod(tpz.mod.REGAIN, 200) -- "has tp regen": https://www.bluegartr.com/threads/59044-Ixion-discussion-thread/page8
     darkixion.roamingMods(mob)
     -- if stygian ash missed or aggro via any other means, immediately disengage (even if hearing aggro "If you get too close, DI runs away")
     if mob:getLocalVar("StygianLanded") ~= 1 then
