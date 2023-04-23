@@ -26,8 +26,6 @@ function onMobRoamAction(mob)
 end
 
 function onMobRoam(mob)
-    mob:setMod(tpz.mod.REGAIN, 0)
-    mob:setTP(0)
 end
 
 function onMobEngaged(mob, target)
@@ -35,8 +33,12 @@ function onMobEngaged(mob, target)
     randomChildrenListArg = nil
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
-    
-    mob:setMod(tpz.mod.REGAIN, 500)
+end
+
+function onMobFight(mob, target)
+    if hasSleepEffects(mob) then
+        mob:setTP(3000)
+    end
 end
 
 function onMobWeaponSkillPrepare(mob, target)
