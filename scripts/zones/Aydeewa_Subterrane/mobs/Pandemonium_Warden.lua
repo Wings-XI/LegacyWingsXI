@@ -117,7 +117,7 @@ function onMobSkillFinished(mob, target, skill)
         -- transitional Dvergar stage, uses cackle, then hellsnap, then changes again
         local hellsnapID = 2113
         if skill:getID() ~= hellsnapID then
-            mob:timer(2000, function(mobArg)
+            mob:timer(5000, function(mobArg)
                 mobArg:useMobAbility(hellsnapID) -- hellsnap
             end)
             mob:timer(10000, function(mobArg) -- enough delay to let the pets get off a long spell (coupled with the timeSinceWS timer)
@@ -321,7 +321,7 @@ function handlePet(mob, newPet, oldPet, target, modelId, phase)
         newPet:spawn()
         newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     end
-    newPet:setPos(mob:getXPos() + math.random(-2, 2), mob:getYPos(), mob:getZPos() + math.random(-2, 2))
+    newPet:setPos(mob:getXPos() + 2 * math.random(-2, 2), mob:getYPos(), mob:getZPos() + 2 * math.random(-2, 2))
     newPet:updateEnmity(target)
 end
 
