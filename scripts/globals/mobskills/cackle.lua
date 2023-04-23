@@ -20,25 +20,16 @@ function onMobWeaponSkill(target, mob, skill)
     local power = 40
     local duration = 60
     local returnEffect = tpz.effect.NONE
-    local typeEffect = tpz.effect.MAGIC_ATK_DOWN
-    if MobStatusEffectMove(mob, target, typeEffect, power, 0, duration) == typeEffect then
-        returnEffect = typeEffect
-    end
+    local typeEffect = {
+        tpz.effect.MAGIC_ATK_DOWN,
+        tpz.effect.MAGIC_ACC_DOWN,
+        tpz.effect.MAGIC_DEF_DOWN,
+    }
 
-    typeEffect = tpz.effect.MAGIC_ACC_DOWN
-    if MobStatusEffectMove(mob, target, typeEffect, power, 0, duration) == typeEffect then
-        returnEffect = typeEffect
-    end
-
-    typeEffect = tpz.effect.MAGIC_DEF_DOWN
-    if MobStatusEffectMove(mob, target, typeEffect, power, 0, duration) == typeEffect then
-        returnEffect = typeEffect
-    end
-
-    if returnEffect == tpz.effect.NONE then
-        skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
-    else
-        skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
+    for i = 1, 3 do
+        if MobStatusEffectMove(mob, target, typeEffect[i], power, 0, duration) == tpz.msg.basic.SKILL_ENFEEB_IS then
+            returnEffect = typeEffect[i]
+        end
     end
     return returnEffect
 end
