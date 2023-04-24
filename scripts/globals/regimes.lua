@@ -513,8 +513,8 @@ local regimeInfo = {
                 event = 18,
                 page =
                 {
-                    { 3, 4, 0, 0, 25, 34, 775, 782}, -- goblins/bats
-                    { 3, 4, 0, 0, 25, 34, 775, 783}, -- gigas/bats
+                    { 3, 4, 0, 0, 25, 34, 775, 782}, -- goblins/bats -- DAT changes make names swapped for some people
+                    { 3, 4, 0, 0, 25, 34, 775, 783}, -- gigas/bats -- DAT changes make names swapped for some people
                     { 4, 4, 0, 0, 30, 34, 775, 784}, -- goblins/gigas
                 },
             },
@@ -624,7 +624,7 @@ local regimeInfo = {
                     { 3, 3, 0, 0, 22, 30, 717, 728}, -- seeker bats/combats
                     { 4, 2, 0, 0, 23, 31, 741, 729}, -- huge spiders/jellies
                     { 6, 0, 0, 0, 28, 31, 741, 730}, -- thread leeches
-                    { 6, 0, 0, 0, 29, 33, 752, 731}, -- clippers/greater pugils (no pugils, changed to 6 clippers)
+                    { 6, 0, 0, 0, 29, 33, 752, 731}, -- clippers/greater pugils (era has no pugils, changed to 6 clippers)
                     { 4, 0, 0, 0, 30, 33, 752, 732}, -- bogies
                     { 6, 0, 0, 0, 35, 37, 844, 733}, -- gigas family
                     -- { 4, 3, 0, 0, 87, 91, 2140, 734}, -- lacerators/spool leeches
