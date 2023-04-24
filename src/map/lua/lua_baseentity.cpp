@@ -2363,6 +2363,26 @@ inline int32 CLuaBaseEntity::stopwait(lua_State* L)
 }
 
 /************************************************************************
+ *  Function: setCarefulPathing(...)
+ *  Purpose : Enables or disables careful pathing for an entity.
+ *  Example : mob:setCarefulPathing(true)
+ *  Notes   : !!! THIS IS VERY EXPENSIVE !!!. Only use this as a last resort!
+ ************************************************************************/
+
+inline int32 CLuaBaseEntity::setCarefulPathing(lua_State *L)
+{
+    bool careful = true;
+    if (lua_isboolean(L, 1)) {
+        careful = lua_toboolean(L, 1);
+    }
+
+    if (m_PBaseEntity->PAI->PathFind)
+    {
+        m_PBaseEntity->PAI->PathFind->SetCarefulPathing(careful);
+    }
+}
+
+/************************************************************************
 *  Function: openDoor()
 *  Purpose : Opens a door for 7 seconds; different time can be specified
 *  Example : npc:openDoor(30) -- Open for 30 sec; npc:openDoor() -- 7 sec

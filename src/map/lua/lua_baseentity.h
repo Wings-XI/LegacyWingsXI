@@ -128,6 +128,7 @@ public:
     // int32 WarpTo(lua_State* L);           // warp to the given point
     // int32 RoamAround(lua_State* L);       // pick a random point to walk to
     // int32 LimitDistance(lua_State* L);    // limits the current path distance to given max distance
+    int32 setCarefulPathing(lua_State*);     // enables/disables careful pathing for a mob
 
     int32 openDoor(lua_State*);              // открываем дверь
     int32 closeDoor(lua_State*);             // npc.closeDoor(timeToStayClosed)
