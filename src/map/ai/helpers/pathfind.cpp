@@ -248,9 +248,14 @@ void CPathFind::StopWithin(float within)
 void CPathFind::FollowPath()
 {
     TracyZoneScoped;
-    if (!IsFollowingPath()) return;
+    if (!IsFollowingPath())
+    {
+        return;
+    }
 
     m_onPoint = false;
+
+    // move mob to next point
     position_t& targetPoint = m_points[m_currentPoint];
 
     StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
@@ -264,29 +269,18 @@ void CPathFind::FollowPath()
     {
         // if I have a max distance, check to stop me
         Clear();
-        m_onPoint = true;
-        return;
-    }
-
-    // Iterate over points in the current path and find the first point
-    // that we haven't successfully arrived at already.
-    while (m_currentPoint < (int16)m_points.size())
-    {
-        targetPoint = m_points[m_currentPoint];
-        
-        if (AtPoint(targetPoint))
-            m_currentPoint++;
-        else
-            break;
 
         m_onPoint = true;
     }
-
-    StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
-    
-    if (m_currentPoint >= (int16)m_points.size())
+    else if (AtPoint(targetPoint))
     {
-        FinishedPath();
+        m_currentPoint++;
+
+        if (m_currentPoint >= (int16)m_points.size())
+        {
+            FinishedPath();
+        }
+
         m_onPoint = true;
     }
 }
@@ -435,7 +429,7 @@ float CPathFind::GetRealSpeed()
     uint8 realSpeed = m_POwner->speed;
 
     // 'GetSpeed()' factors in movement bonuses such as map confs and modifiers.
-    // Lets not factor in player map conf or mod's to non players. 
+    // Lets not factor in player map conf or mod's to non players.
     // (Mobs should just have speed set directly instead, and NPC's don't have mods)
     // Twilight: Let's revert that so we don't break the gravity spell when cast on mobs
     if (m_POwner->objtype != TYPE_NPC)
