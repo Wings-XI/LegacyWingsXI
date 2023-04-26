@@ -20,10 +20,10 @@
 */
 
 #include "navmesh.h"
-#include "../../ext/detour/detour/DetourCommon.h"
-#include "../../ext/detour/detour/DetourNavMeshQuery.h"
+#include "../common/detour/DetourCommon.h"
+#include "../common/detour/DetourNavMeshQuery.h"
 #include "../common/utils.h"
-#include "../common/xirand.h"
+#include "../common/tpzrand.h"
 #include <cfloat>
 #include <cstring>
 #include <fstream>
@@ -34,7 +34,7 @@ constexpr int8  CNavMesh::ERROR_NEARESTPOLY;
 constexpr float smallPolyPickExt[3]  = {  0.5f,  1.0f,  0.5f };
 constexpr float polyPickExt[3]       = {  5.0f, 10.0f,  5.0f };
 constexpr float skinnyPolyPickExt[3] = { 0.01f, 10.0f, 0.01f };
-constexpr float verticalLimit        = 5.0f;
+constexpr float verticalLimit        = 1.0f;
 
 void CNavMesh::ToFFXIPos(const position_t* pos, float* out)
 {

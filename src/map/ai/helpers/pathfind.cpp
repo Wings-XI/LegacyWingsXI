@@ -248,10 +248,12 @@ void CPathFind::FollowPath()
 
     // move mob to next point
     position_t& targetPoint = m_points[m_currentPoint];
+    position_t startingPoint = m_POwner->loc.p;
 
     StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
 
-    if (isNavMeshEnabled() && m_carefulPathing)
+    // loosen the meaning of "careful pathing" to only snap if you can't raycast from the starting to the ending positions
+    if (isNavMeshEnabled() && m_carefulPathing && !m_POwner->loc.zone->m_navMesh->raycast(startingPoint, targetPoint, false))
     {
         m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
     }
@@ -459,17 +461,17 @@ float CPathFind::GetRealSpeed()
     // Lets not check mob things on non mobs
     if (m_POwner->objtype == TYPE_MOB)
     {
-        if (baseSpeed == 0 && (m_roamFlags & ROAMFLAG_WORM))
+        if (realSpeed == 0 && (m_roamFlags & ROAMFLAG_WORM))
         {
-            baseSpeed = 20;
+            realSpeed = 20;
         }
         else if (m_POwner->animation == ANIMATION_ATTACK)
         {
-            baseSpeed = baseSpeed + map_config.mob_speed_mod;
+            realSpeed = realSpeed + map_config.mob_speed_mod;
         }
     }
 
-    return baseSpeed;
+    return realSpeed;
 }
 
 bool CPathFind::IsFollowingPath()

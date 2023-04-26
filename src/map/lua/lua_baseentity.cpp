@@ -2379,7 +2379,9 @@ inline int32 CLuaBaseEntity::setCarefulPathing(lua_State *L)
     if (m_PBaseEntity->PAI->PathFind)
     {
         m_PBaseEntity->PAI->PathFind->SetCarefulPathing(careful);
+        return 0;
     }
+    return 1;
 }
 
 /************************************************************************
@@ -19112,6 +19114,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkDistance),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,wait),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,stopwait),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setCarefulPathing),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,openDoor),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeDoor),
