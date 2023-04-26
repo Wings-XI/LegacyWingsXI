@@ -134,7 +134,7 @@ bool CNavMesh::load(const std::string& filename)
     dtStatus status = m_navMesh->init(&header.params);
     if (dtStatusFailed(status))
     {
-        ShowNavError("CNavMesh::load Could not initialize detour for (%s)", filename);
+        ShowNavError("CNavMesh::load Could not initialize detour for (%s)\n", filename);
         outputError(status);
         return false;
     }
@@ -173,35 +173,35 @@ void CNavMesh::outputError(uint32 status)
 {
     if (status & DT_WRONG_MAGIC)
     {
-        ShowNavError("Detour: Input data is not recognized.");
+        ShowNavError("Detour: Input data is not recognized.\n");
     }
     else if (status & DT_WRONG_VERSION)
     {
-        ShowNavError("Detour: Input data is in wrong version.");
+        ShowNavError("Detour: Input data is in wrong version.\n");
     }
     else if (status & DT_OUT_OF_MEMORY)
     {
-        ShowNavError("Detour: Operation ran out of memory.");
+        ShowNavError("Detour: Operation ran out of memory.\n");
     }
     else if (status & DT_INVALID_PARAM)
     {
-        ShowNavError("Detour: An input parameter was invalid.");
+        ShowNavError("Detour: An input parameter was invalid.\n");
     }
     else if (status & DT_BUFFER_TOO_SMALL)
     {
-        ShowNavError("Detour: Result buffer for the query was too small to store all results.");
+        ShowNavError("Detour: Result buffer for the query was too small to store all results.\n");
     }
     else if (status & DT_OUT_OF_NODES)
     {
-        ShowNavError("Detour: Query ran out of nodes during search.");
+        ShowNavError("Detour: Query ran out of nodes during search.\n");
     }
     else if (status & DT_PARTIAL_RESULT)
     {
-        ShowNavError("Detour: Query did not reach the end location, returning best guess.");
+        ShowNavError("Detour: Query did not reach the end location, returning best guess.\n");
     }
     else if (status & DT_ALREADY_OCCUPIED)
     {
-        ShowNavError("Detour: A tile has already been assigned to the given x,y coordinate");
+        ShowNavError("Detour: A tile has already been assigned to the given x,y coordinate\n");
     }
 }
 
@@ -400,7 +400,7 @@ void CNavMesh::snapToValidPosition(position_t& position)
 
     if (dtStatusFailed(status))
     {
-        ShowNavError("CNavMesh::Failed to find nearby valid poly (%f, %f, %f) (%u)", spos[0], spos[1], spos[2], m_zoneID);
+        ShowNavError("CNavMesh::Failed to find nearby valid poly (%f, %f, %f) (%u)\n", spos[0], spos[1], spos[2], m_zoneID);
         outputError(status);
         return;
     }
@@ -434,7 +434,7 @@ bool CNavMesh::onSameFloor(const position_t& start, float* spos, const position_
 
         if (dtStatusFailed(status) || polyCount <= 0)
         {
-            ShowNavError("CNavMesh::Bad vertical polygon query (%f, %f, %f) (%u)", epos[0], epos[1], epos[2], m_zoneID);
+            ShowNavError("CNavMesh::Bad vertical polygon query (%f, %f, %f) (%u)\n", epos[0], epos[1], epos[2], m_zoneID);
             outputError(status);
             return false;
         }

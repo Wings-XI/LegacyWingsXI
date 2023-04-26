@@ -355,7 +355,7 @@ bool CPathFind::FindPath(const position_t& start, const position_t& end)
 
     if (m_points.size() <= 0)
     {
-        ShowNavError("CPathFind::FindPath Entity (%s - %d) could not find path", m_POwner->GetName(), m_POwner->id);
+        ShowNavError("CPathFind::FindPath Entity (%s - %d) could not find path\n", m_POwner->GetName(), m_POwner->id);
         return false;
     }
 
