@@ -2,7 +2,7 @@
  *	@file Authentication.h
  *	User authentication routines
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #ifndef FFXI_LOGIN_AUTHENTICATION_H
@@ -104,11 +104,11 @@ public:
      *  Log the login into the logins log
      *  @param dwAccountId Account ID of the client, zero if nonexistent
      *  @param dwOperation The operation being performed
-     *  @param dwResult Whether the result is successful (0 = fail, 1 = success, 2 = OTP requested)
+     *  @param bResult Whether the result is successful
      *  @param bIPExempt If one account per IP is enabled, skip this check
      *  @return If one account per IP is enabled, this will return whether login can proceed
      */
-    uint32_t LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOperation, uint32_t dwResult, bool bIPExempt = false);
+    bool LogAccess(uint32_t dwAccountId, AUTH_LOG_OPERATIONS dwOperation, bool bResult, bool bIPExempt = false);
 
     /**
      *  Check if the IP address associated with the current

@@ -22,7 +22,7 @@ void SSLConnection::CleanupSSL()
     EVP_cleanup();
 }
 
-SSLConnection::SSLConnection(BoundSocket& ConnectionDetails, const char* pszCertificateFile, const char* pszKeyFile) :
+SSLConnection::SSLConnection(BoundSocket& ConnectionDetails, const char* pszCertificateFile, const char* pszKeyFile, int iSecurityLevel) :
     TCPConnection(ConnectionDetails), mbSSLClosed(false)
 {
     LOG_DEBUG0("Called.");
@@ -33,23 +33,30 @@ SSLConnection::SSLConnection(BoundSocket& ConnectionDetails, const char* pszCert
         LOG_ERROR("Unable to create new SSL context.");
         throw std::runtime_error("SSL context creation failed.");
     }
-    SSL_CTX_set_ecdh_auto(mpCtx, 1);
+    // Deprecated, enabled by default
+    // SSL_CTX_set_ecdh_auto(mpCtx, 1);
+    // allow older clients to connect: https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set_security_level.html
+    if(!SSL_CTX_set_security_level(mpCtx, 1))
+        LOG_ERROR("Unable to enable legacy TLS support.");
+    if (iSecurityLevel >= 0) {
+        SSL_CTX_set_security_level(mpCtx, iSecurityLevel);
+    }
     if (SSL_CTX_use_certificate_file(mpCtx, pszCertificateFile, SSL_FILETYPE_PEM) <= 0) {
-        LOG_ERROR("Unable to open certificate file.");
+        LOG_ERROR("Unable to open certificate file (%s).", ERR_error_string(ERR_get_error(), NULL));
         throw std::runtime_error("Certificate file error.");
     }
     if (SSL_CTX_use_PrivateKey_file(mpCtx, pszKeyFile, SSL_FILETYPE_PEM) <= 0) {
-        LOG_ERROR("Unable to open private key file.");
+        LOG_ERROR("Unable to open private key file (%s).", ERR_error_string(ERR_get_error(), NULL));
         throw std::runtime_error("Key file error.");
     }
     mpSSL = SSL_new(mpCtx);
     if (!mpSSL) {
-        LOG_ERROR("Unable to create SSL wrapper object.");
+        LOG_ERROR("Unable to create SSL wrapper object (%s).", ERR_error_string(ERR_get_error(), NULL));
         throw std::runtime_error("SSL_new failed.");
     }
     SSL_set_fd(mpSSL, ConnectionDetails.iSock);
     if (SSL_accept(mpSSL) <= 0) {
-        LOG_ERROR("Initialization of SSL connection failed.");
+        LOG_ERROR("Initialization of SSL connection failed (%s).", ERR_error_string(ERR_get_error(), NULL));
         throw std::runtime_error("SSL handshake failed.");
     }
 }

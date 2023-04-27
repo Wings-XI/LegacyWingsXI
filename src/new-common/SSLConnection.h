@@ -21,8 +21,9 @@ public:
      *	@param ConnectionDetails BoundSocket struct with connection socket and metadata
      *  @param pszCertificateFile Filename of a PEM file containing the server certificate
      *  @param pszKeyFile Filename of a PEM file containing the associated private key
+     *  @param iSecurityLevel Minimum security level accepted by OpenSSL
      */
-    SSLConnection(BoundSocket& ConnectionDetails, const char* pszCertificateFile, const char* pszKeyFile);
+    SSLConnection(BoundSocket& ConnectionDetails, const char* pszCertificateFile, const char* pszKeyFile, int iSecurityLevel = -1);
 
     /**
      *	Destructor will auto-close connections.

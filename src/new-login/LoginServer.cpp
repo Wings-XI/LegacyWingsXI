@@ -2,7 +2,7 @@
  *	@file LoginServer.cpp
  *	TCP server routines
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #include "LoginServer.h"
@@ -125,6 +125,7 @@ void LoginServer::Run()
     // SSL files
     std::string SSLCertificate = LoginGlobalConfig::GetInstance()->GetConfigString("ssl_certificate_file");
     std::string SSLKey = LoginGlobalConfig::GetInstance()->GetConfigString("ssl_private_key_file");
+    int iSecurityLevel = LoginGlobalConfig::GetInstance()->GetConfigInt("ssl_security_level");
 #ifdef _WIN32
     char* pTimeout = reinterpret_cast<char*>(&dwRecvTimeout);
     uint32_t cbTimeout = sizeof(dwRecvTimeout);
@@ -186,7 +187,7 @@ void LoginServer::Run()
                     NewConnection.bSecure = mvecListeningSockets[i].bSecure;
                     NewConnection.iAssociatedProtocol = static_cast<int>(ProtocolFactory::PROTOCOL_STUB);
                     if (NewConnection.bSecure) {
-                        NewTCPConnection = std::shared_ptr<TCPConnection>(new SSLConnection(NewConnection, SSLCertificate.c_str(), SSLKey.c_str()));
+                        NewTCPConnection = std::shared_ptr<TCPConnection>(new SSLConnection(NewConnection, SSLCertificate.c_str(), SSLKey.c_str(), iSecurityLevel));
                     }
                     else {
                         NewTCPConnection = std::shared_ptr<TCPConnection>(new TCPConnection(NewConnection));

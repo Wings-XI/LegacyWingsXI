@@ -2,7 +2,7 @@
  *	@file SessionTracker.cpp
  *	Keeps track of open sessions, allows cross referencing between protocols
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #include "SessionTracker.h"

@@ -2,7 +2,7 @@
  *	@file DataHandler.h
  *	Implementation of the data protocol
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #ifndef FFXI_LOGIN_DATAHANDLER_H

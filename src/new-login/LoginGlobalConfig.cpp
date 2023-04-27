@@ -48,13 +48,13 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
         return "3306";
     }
     else if (strConfigName == "db_database") {
-        return "topaz_login";
+        return "wings_login";
     }
     else if (strConfigName == "db_username") {
-        return "topaz";
+        return "wings";
     }
     else if (strConfigName == "db_password") {
-        return "topaz";
+        return "wings";
     }
     else if (strConfigName == "db_prefix") {
         return "";
@@ -97,6 +97,9 @@ std::string LoginGlobalConfig::GetDefaultValue(const std::string& strConfigName)
     }
     else if (strConfigName == "ssl_data_port") {
         return "54330";
+    }
+    else if (strConfigName == "ssl_security_level") {
+        return "-1";
     }
     else if (strConfigName == "password_hash_secret") {
         // Secret to add to password hashes, change this to something random
