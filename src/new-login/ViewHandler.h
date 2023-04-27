@@ -2,7 +2,7 @@
  *	@file ViewHandler.h
  *	Implementation of the view protocol
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #ifndef FFXI_LOGIN_VIEWHANDLER_H

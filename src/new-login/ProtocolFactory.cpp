@@ -2,7 +2,7 @@
  *	@file ProtocolFactory.cpp
  *	Creates instances of protocol handlers by given type
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #include "ProtocolFactory.h"

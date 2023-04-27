@@ -2,7 +2,7 @@
  *	@file WorldManager.h
  *	Manages world list and MQ connections to world servers
  *	@author Twilight
- *	@copyright 2020, all rights reserved. Licensed under GPLv3
+ *	@copyright 2020, all rights reserved. Licensed under AGPLv3
  */
 
 #ifndef FFXI_LOGIN_WORLDMANAGER_H
