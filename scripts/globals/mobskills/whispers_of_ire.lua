@@ -11,7 +11,10 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getPool() == 5730 or mob:getZone():getType() == tpz.zoneType.DYNAMIS) then -- Blighting Brand, Nightmare Weapons
+    if -- Blighting Brand, Nightmare Weapons
+        mob:getPool() == 5730 or
+        mob:getZone():getType() == tpz.zoneType.DYNAMIS
+    then
         return 0
     end
     return 1

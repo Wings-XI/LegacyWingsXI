@@ -13,10 +13,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.DEFENSE_BOOST
-    local zone = mob:getZone()
     local power = 50
-    
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         power = 300
     end
 

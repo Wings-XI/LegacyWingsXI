@@ -19,14 +19,13 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local count = 1
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         count = 3
     end
 
     local dispel = target:dispelStatusEffect()
 
-
-    if (dispel == tpz.effect.NONE) then
+    if dispel == tpz.effect.NONE then
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
     else
         skill:setMsg(tpz.msg.basic.SKILL_ERASE)
