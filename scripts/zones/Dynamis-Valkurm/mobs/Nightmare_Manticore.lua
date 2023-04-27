@@ -34,7 +34,7 @@ function onMobEngaged(mob, target)
     if mobList[zone][mob:getID()].randomChildrenList ~= nil then randomChildrenListArg = randomChildrenList[zone][mobList[zone][mob:getID()].randomChildrenList] end
     dynamis.statueOnEngaged(mob, target, mobList[zone], randomChildrenListArg)
 
-    mob:setMod(tpz.mod.REGAIN, 500)
+    mob:setMod(tpz.mod.REGAIN, 300)
     mob:useMobAbility()
 end
 

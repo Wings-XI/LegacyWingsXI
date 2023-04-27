@@ -37,7 +37,9 @@ end
 
 function onMobFight(mob, target)
     if hasSleepEffects(mob) then
-        mob:setTP(3000)
+        mob:setMod(tpz.mod.REGAIN, 300)
+    else
+        mob:setMod(tpz.mod.REGAIN, 0)
     end
 end
 
