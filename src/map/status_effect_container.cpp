@@ -1687,7 +1687,12 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
 void CStatusEffectContainer::TickEffects(time_point tick)
 {
     TracyZoneScoped;
-    TPZ_DEBUG_BREAK_IF(m_POwner == nullptr);
+
+    if (m_POwner == nullptr)
+    {
+        ShowWarning("CStatusEffectContainer::TickEffects() - m_POwner is null.");
+        return;
+    }
 
     if (!m_POwner->isDead())
     {
@@ -1723,7 +1728,12 @@ void CStatusEffectContainer::TickEffects(time_point tick)
 void CStatusEffectContainer::TickRegen(time_point tick)
 {
     TracyZoneScoped;
-    TPZ_DEBUG_BREAK_IF(m_POwner == nullptr);
+
+    if (m_POwner == nullptr)
+    {
+        ShowWarning("CStatusEffectContainer::TickRegen() - m_POwner is null.");
+        return;
+    }
 
     if (!m_POwner->isDead())
     {
