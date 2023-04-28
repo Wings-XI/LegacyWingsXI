@@ -5,6 +5,13 @@
 --       to do anything to runtime pathing
 -----------------------------------
 
+cmdprops =
+{
+    permission = 4,
+    parameters = ""
+}
+
 function onTrigger(player)
     player:getZone():reloadNavmesh()
+    player:PrintToPlayer("Navmesh reload command sent.")
 end
