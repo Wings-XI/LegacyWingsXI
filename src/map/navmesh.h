@@ -68,7 +68,7 @@ public:
     CNavMesh(uint16 zoneID);
     ~CNavMesh();
 
-    bool load(const std::string& path);
+    bool load(std::string const& filename);
     void reload();
     void unload();
 
@@ -96,7 +96,7 @@ private:
     void outputError(uint32 status);
     bool onSameFloor(const position_t& start, float* spos, const position_t& end, float* epos, dtQueryFilter& filter);
 
-    std::string                filename;
+    std::string                m_filename;
     uint16                     m_zoneID;
     dtRaycastHit               m_hit;
     dtPolyRef                  m_hitPath[20];

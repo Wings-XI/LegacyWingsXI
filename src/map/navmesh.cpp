@@ -34,7 +34,7 @@ constexpr int8  CNavMesh::ERROR_NEARESTPOLY;
 constexpr float smallPolyPickExt[3]  = {  0.5f,  1.0f,  0.5f };
 constexpr float polyPickExt[3]       = {  5.0f, 10.0f,  5.0f };
 constexpr float skinnyPolyPickExt[3] = { 0.01f, 10.0f, 0.01f };
-constexpr float verticalLimit        = 1.0f;
+constexpr float verticalLimit        = .25f;
 
 void CNavMesh::ToFFXIPos(const position_t* pos, float* out)
 {
@@ -104,11 +104,11 @@ CNavMesh::~CNavMesh()
 {
 }
 
-bool CNavMesh::load(const std::string& filename)
+bool CNavMesh::load(std::string const& filename)
 {
-    this->filename = filename;
+    this->m_filename = filename;
 
-    std::ifstream file(filename.c_str(), std::ios_base::in | std::ios_base::binary);
+    std::ifstream file(m_filename.c_str(), std::ios_base::in | std::ios_base::binary);
 
     if (!file.good())
     {
@@ -174,7 +174,7 @@ bool CNavMesh::load(const std::string& filename)
 void CNavMesh::reload()
 {
     this->unload();
-    this->load(this->filename);
+    this->load(this->m_filename);
 }
 
 void CNavMesh::unload()
@@ -524,16 +524,15 @@ bool CNavMesh::onSameFloor(const position_t& start, float* spos, const position_
             if (!dtStatusFailed(status))
             {
                 // Truncate the height and round to nearest multiple of verticalLimitTrunc for easier de-duping
-                uint8 rounded = static_cast<uint8>(height) + abs((static_cast<uint8>(height) % verticalLimitTrunc) - verticalLimitTrunc);
-                heights.insert(rounded);
+                heights.insert((uint8)i);
             }
         }
 
         // Multiple floors detected, we need to disambiguate
         if (heights.size() > 1)
         {
-            auto startHeight = static_cast<uint8>(spos[1]) + abs((static_cast<uint8>(spos[1]) % verticalLimitTrunc) - verticalLimitTrunc);
-            auto endHeight   = static_cast<uint8>(epos[1]) + abs((static_cast<uint8>(epos[1]) % verticalLimitTrunc) - verticalLimitTrunc);
+            float startHeight = spos[1] + abs(std::fmod(spos[1], verticalLimit) - verticalLimit);
+            float endHeight   = epos[1] + abs(std::fmod(epos[1], verticalLimit) - verticalLimit);
 
             // Since we've already truncated and rounded to nearest multiples of verticalLimitTrunc,
             // if we are within verticalLimitTrunc of a point, that's our closest.
@@ -553,6 +552,11 @@ bool CNavMesh::raycast(const position_t& start, const position_t& end, bool look
     TracyZoneScoped;
 
     if (start.x == end.x && start.y == end.y && start.z == end.z)
+    {
+        return true;
+    }
+
+    if (!m_navMesh)
     {
         return true;
     }

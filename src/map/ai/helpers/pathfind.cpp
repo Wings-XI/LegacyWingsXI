@@ -255,7 +255,9 @@ void CPathFind::FollowPath()
     // loosen the meaning of "careful pathing" to only snap if you can't raycast from the starting to the ending positions
     if (isNavMeshEnabled() && m_carefulPathing && !m_POwner->loc.zone->m_navMesh->raycast(startingPoint, targetPoint, false))
     {
+        Clear();
         m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
+        return;
     }
 
     if (m_maxDistance && m_distanceMoved >= m_maxDistance)
@@ -355,7 +357,7 @@ bool CPathFind::FindPath(const position_t& start, const position_t& end)
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
 
-    if (m_points.size() <= 0)
+    if (m_points.empty())
     {
         ShowNavError("CPathFind::FindPath Entity (%s - %d) could not find path\n", m_POwner->GetName(), m_POwner->id);
         return false;
