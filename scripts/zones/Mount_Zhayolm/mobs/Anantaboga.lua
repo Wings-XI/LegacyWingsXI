@@ -10,6 +10,7 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 4500)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 7500)
+    mob:setCarefulPathing()
 end
 
 function onMobSpawn(mob)

@@ -12,6 +12,6 @@ cmdprops =
 }
 
 function onTrigger(player)
-    player:getZone():reloadNavmesh()
-    player:PrintToPlayer("Navmesh reload command sent.")
+    -- player:getZone():reloadNavmesh()
+    player:PrintToPlayer("Navmesh reload command NOT sent. Command disabled until it doesn't crash the zone...")
 end
