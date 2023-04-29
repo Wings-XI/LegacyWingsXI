@@ -252,12 +252,56 @@ void CPathFind::FollowPath()
 
     StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
 
-    // loosen the meaning of "careful pathing" to only snap if you can't raycast from the starting to the ending positions
-    if (isNavMeshEnabled() && m_carefulPathing && !m_POwner->loc.zone->m_navMesh->raycast(startingPoint, targetPoint, false))
+    if (isNavMeshEnabled() && m_carefulPathing)
     {
-        Clear();
-        m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
-        return;
+        if (m_POwner->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_POwner)->GetBattleTargetID() != 0)
+        {
+            if (m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1)
+            {
+                m_POwner->SetLocalVar("CarefulPathSnapMax", 10);
+                m_POwner->SetLocalVar("CarefulPathSnapMin", 1);
+            }
+
+        }
+        else
+        {
+            // So roaming works more cleanly, but wallhacks more
+            m_POwner->SetLocalVar("CarefulPathSnapMax", 1);
+            m_POwner->SetLocalVar("CarefulPathSnapMin", 0);
+        }
+
+        // loosen the meaning of "careful pathing" to only snap so many times if you can't raycast to the next point
+        if (!m_POwner->loc.zone->m_navMesh->raycast(startingPoint, targetPoint, false))
+            m_POwner->SetLocalVar("CarefulPathSnapCount", m_POwner->GetLocalVar("CarefulPathSnapCount") + 1);
+        else
+            m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
+
+        if (m_POwner->GetLocalVar("CarefulPathSnapCount") < m_POwner->GetLocalVar("CarefulPathSnapMax"))
+        {
+            if (m_POwner->GetLocalVar("CarefulPathSnapCount") > m_POwner->GetLocalVar("CarefulPathSnapMin"))
+            {
+                m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
+            }
+        }
+        else
+        {
+            ShowDebug("Mob %s snapped %u times and is resetting path\n", m_POwner->GetName(), m_POwner->GetLocalVar("CarefulPathSnapCount"));
+            m_POwner->SetLocalVar("CarefulPathSnapMax", m_POwner->GetLocalVar("CarefulPathSnapMax") + 1);
+            m_POwner->SetLocalVar("CarefulPathSnapMin", m_POwner->GetLocalVar("CarefulPathSnapMin") + 1);
+
+            position_t nextPoint;
+            // path to the point in the middle of the pathList
+            if (m_currentPoint + 2 < m_points.size())
+                nextPoint = m_points[(int16)((m_currentPoint + m_points.size())/2)];
+            else
+                nextPoint = m_points[m_points.size() - 1];
+            Clear();
+            m_carefulPathing = false;
+            FindClosestPath(startingPoint, nextPoint);
+            m_carefulPathing = true;
+            m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
+            return;
+        }
     }
 
     if (m_maxDistance && m_distanceMoved >= m_maxDistance)
@@ -419,7 +463,9 @@ bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
-    m_points.push_back(end);  // this prevents exploits with navmesh / impassible terrain
+    if (!m_carefulPathing) {
+        m_points.push_back(end);  // this prevents exploits with navmesh / impassible terrain
+    }
 
 /* this check requirement is never met as intended since m_points are never empty when mob has a path
     if (m_points.empty())
