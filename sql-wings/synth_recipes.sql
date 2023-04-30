@@ -4035,6 +4035,21 @@ INSERT INTO `synth_recipes` VALUES(4601, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 4100, 4
 INSERT INTO `synth_recipes` VALUES(4602, 1, 0, 0, 43, 0, 0, 11, 0, 0, 0, 4100, 4242, 12962, 0, 0, 0, 0, 0, 0, 0, 852, 852, 852, 852, 1, 2, 2, 2, 'Leggings_Desynth');
 INSERT INTO `synth_recipes` VALUES(4603, 0, 2041, 0, 0, 0, 0, 0, 0, 0, 66, 4096, 4238, 614, 626, 633, 1590, 1776, 4387, 4390, 5448, 5193, 5193, 5202, 5202, 2, 4, 2, 4, 'Nero_di_Seppia');
 INSERT INTO `synth_recipes` VALUES(4604, 0, 2041, 0, 0, 0, 0, 0, 0, 0, 66, 4096, 4238, 614, 626, 633, 1590, 1776, 4387, 4390, 5128, 5193, 5193, 5202, 5202, 2, 4, 2, 4, 'Nero_di_Seppia');
+INSERT INTO `synth_recipes` VALUES(4606, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 4096, 4238, 1590, 2561, 4390, 5194, 5684, 0, 0, 0, 5695, 5696, 5696, 5696, 1, 1, 1, 1, 'Margherita Pizza');
+-- WINGSCUSTOM OOE sliced pizzas and custom craft to slice an existing pizza
+INSERT INTO `synth_recipes` VALUES(4607, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 4096, 4238, 651, 714, 0, 0, 0, 0, 0, 0, 8740, 8740, 8740, 8740, 6, 8, 10, 12, 'Pizza Cutter');
+INSERT INTO `synth_recipes` VALUES(4608, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 4096, 4238, 614, 622, 1590, 2561, 5684, 5747, 8740, 0, 6211, 6211, 6212, 6212, 6, 8, 6, 8, 'Marinara Slice');
+INSERT INTO `synth_recipes` VALUES(4609, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5743, 8740, 0, 0, 0, 0, 0, 0, 6211, 6211, 6211, 6211, 6, 6, 6, 6, 'Marinara Slice');
+INSERT INTO `synth_recipes` VALUES(4610, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5744, 8740, 0, 0, 0, 0, 0, 0, 6212, 6212, 6212, 6212, 4, 4, 4, 4, 'Marinara Slice+1');
+INSERT INTO `synth_recipes` VALUES(4611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 4096, 4238, 1590, 2561, 4390, 5194, 5684, 8740, 0, 0, 6213, 6213, 6214, 6214, 6, 8, 6, 8, 'Margherita Slice');
+INSERT INTO `synth_recipes` VALUES(4612, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5695, 8740, 0, 0, 0, 0, 0, 0, 6213, 6213, 6213, 6213, 6, 6, 6, 6, 'Margherita Slice');
+INSERT INTO `synth_recipes` VALUES(4613, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5696, 8740, 0, 0, 0, 0, 0, 0, 6214, 6214, 6214, 6214, 4, 4, 4, 4, 'Margherita Slice+1');
+INSERT INTO `synth_recipes` VALUES(4614, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 4096, 4238, 2561, 5194, 5195, 5660, 5680, 5684, 8740, 0, 6215, 6215, 6216, 6216, 6, 8, 6, 8, 'Pepperoni Slice');
+INSERT INTO `synth_recipes` VALUES(4615, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5697, 8740, 0, 0, 0, 0, 0, 0, 6215, 6215, 6215, 6215, 6, 6, 6, 6, 'Pepperoni Slice');
+INSERT INTO `synth_recipes` VALUES(4616, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5698, 8740, 0, 0, 0, 0, 0, 0, 6216, 6216, 6216, 6216, 4, 4, 4, 4, 'Pepperoni Slice+1');
+INSERT INTO `synth_recipes` VALUES(4617, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 4096, 4238, 622, 1590, 2561, 5194, 5652, 5684, 8740, 0, 6217, 6217, 6218, 6218, 6, 8, 6, 8, 'Anchovy Slice');
+INSERT INTO `synth_recipes` VALUES(4618, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5699, 8740, 0, 0, 0, 0, 0, 0, 6217, 6217, 6217, 6217, 6, 6, 6, 6, 'Anchovy Slice');
+INSERT INTO `synth_recipes` VALUES(4619, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5700, 8740, 0, 0, 0, 0, 0, 0, 6218, 6218, 6218, 6218, 4, 4, 4, 4, 'Anchovy Slice+1');
 
 -- -----------
 -- RECIPES END
