@@ -710,7 +710,8 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
                 && (PStatusEffect->GetStatusID() == EFFECT_REFRESH || PStatusEffect->GetStatusID() == EFFECT_REGEN)
                 && PStatusEffect->GetSubPower() == 128
                 && this->m_POwner
-                && zoneutils::GetZone(this->m_POwner->getZone())->GetType() == ZONETYPE::ZONETYPE_OUTDOORS)
+                && (zoneutils::GetZone(this->m_POwner->getZone())->GetType() == ZONETYPE::ZONETYPE_OUTDOORS ||
+                    zoneutils::GetZone(this->m_POwner->getZone())->GetType() == ZONETYPE::ZONETYPE_DUNGEON))
 
                 continue; // book refresh/regen persists through level sync application
 
