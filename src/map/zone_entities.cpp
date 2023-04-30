@@ -302,9 +302,10 @@ void CZoneEntities::WeatherChange(WEATHER weather)
             if (PCurrentMob->m_Element == element)
             {
                 PCurrentMob->m_AllowRespawn = true;
+                PCurrentMob->SetDespawnTime(0s);
                 if (!PCurrentMob->isAlive())
                    {
-                       PCurrentMob->Spawn();
+                        PCurrentMob->Spawn();
                    } 
             }
             else
