@@ -12,7 +12,7 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         skill:setAoE(4)
     end
     return 0

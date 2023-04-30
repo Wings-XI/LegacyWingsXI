@@ -13,7 +13,10 @@ require("scripts/globals/monstertpmoves")
 
 function onMobSkillCheck(target, mob, skill)
     -- only used in Uleguerand_Range and Dynamis-Qufim
-    if (mob:getZoneID() == 5 or mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if
+        mob:getZoneID() == 5 or
+        mob:getZone():getType() == tpz.zoneType.DYNAMIS
+    then
         return 0
     end
     return 1
@@ -22,7 +25,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.PARALYSIS
     local power = 25
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         power = 75
     end
 

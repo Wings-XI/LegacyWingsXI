@@ -32,6 +32,9 @@ function onMobWeaponSkill(target, mob, skill)
 
     local typeEffect = tpz.effect.POISON
     local power = mob:getMainLvl() / 4 + 1
+    if mob:getPool() == 1281 then -- Fairy Ring (Dynamis-Valkurm)
+        power = 51
+    end
 
     MobPhysicalStatusEffectMove(mob, target, skill, typeEffect, power, 3, 60)
 

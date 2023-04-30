@@ -21,7 +21,7 @@ function onMobWeaponSkill(target, mob, skill)
     local duration = 60
     local typeEffect = tpz.effect.AGI_BOOST
 
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         typeEffect = tpz.effect.EVASION_BOOST
     end
 

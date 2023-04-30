@@ -1143,6 +1143,7 @@ INSERT INTO `fishing_group` VALUES(139, 4443, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*
 INSERT INTO `fishing_group` VALUES(139, 5472, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Garpike*/
 INSERT INTO `fishing_group` VALUES(139, 4461, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Bastore Bream*/
 INSERT INTO `fishing_group` VALUES(139, 5468, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Matsya*/
+INSERT INTO `fishing_group` VALUES(139, 5475, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Gigant Octopus*/
 
 INSERT INTO `fishing_group` VALUES(139, 688, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0');/*Arrowwood Log*/
 INSERT INTO `fishing_group` VALUES(139, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0'); /*Rusty Bucket*/

@@ -17,9 +17,8 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local zone = mob:getZone()
     local typeEffect = tpz.effect.SILENCE
-    if (zone:getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         typeEffect = tpz.effect.MUTE
     end
 

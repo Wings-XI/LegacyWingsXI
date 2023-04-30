@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
     local subEffect = tpz.effect.BIO
     local subPower = 10 -- Must be greater than 9 in order for target to stay asleep through damage.  See nightmare.lua for full description
 
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         skill:setMsg(MobStatusEffectMove(mob, target, typeEffect, power, tick, duration, subEffect, subPower))
         target:delStatusEffectSilent(subEffect)
     else

@@ -12,7 +12,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
     -- not used in Uleguerand_Range
-    if (mob:getZoneID() == 5) then
+    if mob:getZoneID() == 5 then
         return 1
     end
     return 0
@@ -29,7 +29,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(dmgmod, mob, skill, target, tpz.attackType.BREATH, tpz.damageType.LIGHTNING, MOBPARAM_IGNORE_SHADOWS)
 
     target:takeDamage(dmg, mob, tpz.attackType.BREATH, tpz.damageType.LIGHTNING)
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.STUN, 1, 0, math.random(5, 10))
     end
     return dmg

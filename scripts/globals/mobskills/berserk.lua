@@ -14,7 +14,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.BERSERK
     skill:setMsg(MobBuffMove(mob, typeEffect, 25, 0, 180))
-    if (mob:getZone():getType() == tpz.zoneType.DYNAMIS) then
+    if mob:getZone():getType() == tpz.zoneType.DYNAMIS then
         effect = mob:getStatusEffect(tpz.effect.BERSERK)
         -- addMod added twice due to limitation with core behavior with effect:addMod not adding a mod with the currect effect
         mob:addMod(tpz.mod.ATT, 799)
