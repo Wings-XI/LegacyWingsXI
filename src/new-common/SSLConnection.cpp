@@ -36,8 +36,6 @@ SSLConnection::SSLConnection(BoundSocket& ConnectionDetails, const char* pszCert
     // Deprecated, enabled by default
     // SSL_CTX_set_ecdh_auto(mpCtx, 1);
     // allow older clients to connect: https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_set_security_level.html
-    if(!SSL_CTX_set_security_level(mpCtx, 1))
-        LOG_ERROR("Unable to enable legacy TLS support.");
     if (iSecurityLevel >= 0) {
         SSL_CTX_set_security_level(mpCtx, iSecurityLevel);
     }
