@@ -265,29 +265,37 @@ void CPathFind::FollowPath()
         }
         else
         {
-            // So roaming works more cleanly, but wallhacks more
+            // do not snapTo while not in combat
             m_POwner->SetLocalVar("CarefulPathSnapMax", 1);
             m_POwner->SetLocalVar("CarefulPathSnapMin", 0);
         }
 
-        // loosen the meaning of "careful pathing" to only snap so many times if you can't raycast to the next point
-        if (!m_POwner->loc.zone->m_navMesh->raycast(startingPoint, targetPoint, false))
+        // loosen the meaning of "careful pathing" to only snap so many times if you can't raycast to the next pathPoint
+        if (m_POwner->GetLocalVar("CarefulPathSnapMax") > 1 &&
+            !m_POwner->loc.zone->m_navMesh->raycast(startingPoint, targetPoint, false))
+        {
             m_POwner->SetLocalVar("CarefulPathSnapCount", m_POwner->GetLocalVar("CarefulPathSnapCount") + 1);
+        }
         else
+        {
             m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
+        }
 
         // Snap mob to closest navmesh every StepTo, unless we've hit our limit on snapping when unable to raycast to next point
-        if (m_POwner->GetLocalVar("CarefulPathSnapCount") < m_POwner->GetLocalVar("CarefulPathSnapMax"))
+        // do not re-path if not in combat
+        if (m_POwner->GetLocalVar("CarefulPathSnapCount") < m_POwner->GetLocalVar("CarefulPathSnapMax") ||
+            m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1)
         {
             // When snapping, get sloppier over time by skipping the first few Steps when unable to raycast to next point
-            if (m_POwner->GetLocalVar("CarefulPathSnapCount") > m_POwner->GetLocalVar("CarefulPathSnapMin"))
+            if (m_POwner->GetLocalVar("CarefulPathSnapCount") > m_POwner->GetLocalVar("CarefulPathSnapMin") &&
+                m_POwner->GetLocalVar("CarefulPathSnapMax") > 1)
             {
                 m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
             }
         }
         else
         {
-            ShowDebug("Mob %s snapped %u times and is resetting path\n", m_POwner->GetName(), m_POwner->GetLocalVar("CarefulPathSnapCount"));
+            ShowDebug("Mob %s (%u) snapped %u times and is resetting path\n", m_POwner->GetName(), m_POwner->id, m_POwner->GetLocalVar("CarefulPathSnapCount"));
             m_POwner->SetLocalVar("CarefulPathSnapMax", m_POwner->GetLocalVar("CarefulPathSnapMax") + 1);
             m_POwner->SetLocalVar("CarefulPathSnapMin", m_POwner->GetLocalVar("CarefulPathSnapMin") + 1);
 
