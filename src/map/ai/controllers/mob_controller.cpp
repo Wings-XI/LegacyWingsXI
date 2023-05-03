@@ -754,7 +754,7 @@ void CMobController::Move()
             else if (CanMoveForward(currentDistance) && m_DrawInWait < server_clock::now())
             {
                 if ((!PMob->PAI->PathFind->IsFollowingPath() ||
-                    distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 100) // recalculate path only if player moves more than 10 yalms
+                    distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10 * 10) // recalculate path only if player moves more than X yalms
                     && currentDistance > closureDistance)
                 {
                     //path to the target if we don't have a path already

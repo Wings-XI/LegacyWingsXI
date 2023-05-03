@@ -247,7 +247,7 @@ void CPathFind::FollowPath()
     m_onPoint = false;
 
     // move mob to next point
-    position_t& targetPoint = m_points[m_currentPoint];
+    position_t targetPoint = m_points[m_currentPoint];
     position_t startingPoint = m_POwner->loc.p;
 
     StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
@@ -287,7 +287,7 @@ void CPathFind::FollowPath()
             m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1)
         {
             // When snapping, get sloppier over time by skipping the first few Steps when unable to raycast to next point
-            if (m_POwner->GetLocalVar("CarefulPathSnapCount") > m_POwner->GetLocalVar("CarefulPathSnapMin") &&
+            if (m_POwner->GetLocalVar("CarefulPathSnapCount") >= m_POwner->GetLocalVar("CarefulPathSnapMin") &&
                 m_POwner->GetLocalVar("CarefulPathSnapMax") > 1)
             {
                 m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
@@ -306,7 +306,7 @@ void CPathFind::FollowPath()
             else
                 nextPoint = m_points[m_points.size() - 1];
             Clear();
-            m_carefulPathing = false;
+            m_carefulPathing = false; // so path isn't immediately recalculated in mobcontroller.cpp
             FindClosestPath(startingPoint, nextPoint);
             m_carefulPathing = true;
             m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
@@ -473,17 +473,11 @@ bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
-    if (!m_carefulPathing) {
+    if (!m_carefulPathing ||
+        m_points.empty() ||
+        distanceSquared(GetDestination(), end) >= 5 * 5) { // so carefulpathing-enabled mobs don't hop across navmesh paths instead of walking around
         m_points.push_back(end);  // this prevents exploits with navmesh / impassible terrain
     }
-
-/* this check requirement is never met as intended since m_points are never empty when mob has a path
-    if (m_points.empty())
-    {
-        // this is a trick to make mobs go up / down impassible terrain
-        m_points.push_back(end);
-    }
-*/
 
     return true;
 }
