@@ -276,8 +276,10 @@ void CPathFind::FollowPath()
         else
             m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
 
+        // Snap mob to closest navmesh every StepTo, unless we've hit our limit on snapping when unable to raycast to next point
         if (m_POwner->GetLocalVar("CarefulPathSnapCount") < m_POwner->GetLocalVar("CarefulPathSnapMax"))
         {
+            // When snapping, get sloppier over time by skipping the first few Steps when unable to raycast to next point
             if (m_POwner->GetLocalVar("CarefulPathSnapCount") > m_POwner->GetLocalVar("CarefulPathSnapMin"))
             {
                 m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
@@ -290,7 +292,7 @@ void CPathFind::FollowPath()
             m_POwner->SetLocalVar("CarefulPathSnapMin", m_POwner->GetLocalVar("CarefulPathSnapMin") + 1);
 
             position_t nextPoint;
-            // path to the point in the middle of the pathList
+            // recalculate path by pathing to the point in the middle of the pathList
             if (m_currentPoint + 2 < m_points.size())
                 nextPoint = m_points[(int16)((m_currentPoint + m_points.size())/2)];
             else
