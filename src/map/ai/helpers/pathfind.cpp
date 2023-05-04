@@ -307,9 +307,10 @@ void CPathFind::FollowPath()
             else
                 nextPoint = m_points[m_points.size() - 1];
             Clear();
-            m_carefulPathing = false; // so path isn't immediately recalculated in mobcontroller.cpp
+            // Even with careful pathing I don't think we need to limit the endpoint
+            // m_carefulPathing = false; // so path isn't immediately recalculated in mobcontroller.cpp
             FindClosestPath(startingPoint, nextPoint);
-            m_carefulPathing = true;
+            // m_carefulPathing = true;
             m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
             return;
         }
@@ -348,6 +349,7 @@ void CPathFind::StepTo(const position_t& pos, bool run)
         speed /= 2;
     }
 
+    // TODO should this be /20 instead of /24.5?
     float stepDistance = speed / 24.5f; // 40 ms means 4 units per second, so 1.6 units per step (server tick rate is 2.5/sec)
     float distanceTo = distance(m_POwner->loc.p, pos);
 
@@ -369,7 +371,16 @@ void CPathFind::StepTo(const position_t& pos, bool run)
             float radians = (1 - (float)m_POwner->loc.p.rotation / 256) * 2 * (float)M_PI;
 
             m_POwner->loc.p.x += cosf(radians) * (distanceTo - m_distanceFromPoint);
-            m_POwner->loc.p.y = pos.y;
+            // Don't step too far veritcally
+            if (abs(pos.y - m_POwner->loc.p.y) > .5f)
+            {
+                // .5 yalms veritically in the direction of the destination
+                m_POwner->loc.p.y = m_POwner->loc.p.y + (pos.y - m_POwner->loc.p.y) / (2 * abs(pos.y - m_POwner->loc.p.y));
+            }
+            else
+            {
+                m_POwner->loc.p.y = pos.y;
+            }
             m_POwner->loc.p.z += sinf(radians) * (distanceTo - m_distanceFromPoint);
         }
     }
@@ -380,7 +391,16 @@ void CPathFind::StepTo(const position_t& pos, bool run)
         float radians = (1 - (float)m_POwner->loc.p.rotation / 256) * 2 * (float)M_PI;
 
         m_POwner->loc.p.x += cosf(radians) * stepDistance;
-        m_POwner->loc.p.y = pos.y;
+        // Don't step too far veritcally
+        if (abs(pos.y - m_POwner->loc.p.y) > .5f)
+        {
+            // .5 yalms veritically in the direction of the destination
+            m_POwner->loc.p.y = m_POwner->loc.p.y + (pos.y - m_POwner->loc.p.y) / (2 * abs(pos.y - m_POwner->loc.p.y));
+        }
+        else
+        {
+            m_POwner->loc.p.y = pos.y;
+        }
         m_POwner->loc.p.z += sinf(radians) * stepDistance;
     }
 
@@ -474,11 +494,12 @@ bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
 
     m_points       = m_POwner->loc.zone->m_navMesh->findPath(start, end);
     m_currentPoint = 0;
-    if (!m_carefulPathing ||
-        m_points.empty() ||
-        distanceSquared(GetDestination(), end) >= 5 * 5) { // so carefulpathing-enabled mobs don't hop across navmesh paths instead of walking around
+    // Even with careful pathing I don't think we need to limit the endpoint
+    //if (!m_carefulPathing ||
+    //    m_points.empty() ||
+    //    distanceSquared(GetDestination(), end) >= 5 * 5) { // so carefulpathing-enabled mobs don't hop across navmesh paths instead of walking around
         m_points.push_back(end);  // this prevents exploits with navmesh / impassible terrain
-    }
+    //}
 
     return true;
 }
