@@ -1208,6 +1208,7 @@ INSERT INTO `mob_skills` VALUES(1645, 876, 'freeze_rush', 0, 7.0, 2000, 1800, 4,
 INSERT INTO `mob_skills` VALUES(1646, 877, 'cold_wave', 4, 10.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1647, 875, 'berserk', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1671, 202, 'ink_jet_alt', 0, 7.0, 2000, 0, 4, 16, 0, 3, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(1680, 1680, 'predatory_glare', 4, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1693, 1164, 'gnash', 0, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1694, 1165, 'vile_belch', 1, 16.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(1695, 1166, 'hypnic_lamp', 1, 16.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
