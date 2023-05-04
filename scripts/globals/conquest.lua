@@ -177,12 +177,15 @@ local function suppliesAvailableBitmask(player, nation)
 end
 
 local function areSuppliesRotten(player, npc, guardType)
-    local fresh   = player:getCharVar("supplyQuest_fresh")
-    local region  = player:getCharVar("supplyQuest_region")
-    local rotten  = false
-    local text    = zones[player:getZoneID()].text
+    local fresh = player:getCharVar("supplyQuest_fresh")
+    local region = player:getCharVar("supplyQuest_region") - 1
+    local rotten = false
+    local text = zones[player:getZoneID()].text
 
-    if region > 0 and fresh <= os.time() then
+    if
+        region >= 0 and
+        fresh <= os.time()
+    then
         rotten = true
     end
 
@@ -207,7 +210,7 @@ end
 local function canDeliverSupplies(player, guardNation, guardEvent, guardRegion)
     local delivered = false
 
-    local region = player:getCharVar("supplyQuest_region")
+    local region = player:getCharVar("supplyQuest_region") - 1
     if region == guardRegion and player:hasKeyItem(outposts[region].ki) then
         delivered = true
         player:startEvent(guardEvent, 16, 0, 0, 0, 1, 0, 0, 255) -- "you have brought us supplies!"
@@ -1154,7 +1157,7 @@ end
 tpz.conquest.overseerOnEventFinish = function(player, csid, option, guardNation, guardType, guardRegion)
     local pNation  = player:getNation()
     local pRank    = player:getRank()
-    local sRegion  = player:getCharVar("supplyQuest_region")
+    local sRegion  = player:getCharVar("supplyQuest_region") - 1
     local sOutpost = outposts[sRegion]
     local mOffset  = zones[player:getZoneID()].text.CONQUEST
 
@@ -1172,7 +1175,7 @@ tpz.conquest.overseerOnEventFinish = function(player, csid, option, guardNation,
         if outpost ~= nil then
             npcUtil.giveKeyItem(player, outpost.ki)
             player:setCharVar("supplyQuest_started", vanaDay())
-            player:setCharVar("supplyQuest_region", region)
+            player:setCharVar("supplyQuest_region", region + 1) -- Offset by 1 to avoid conflict betwen ronfaure and an unset variable both being "0"
             player:setCharVar("supplyQuest_fresh", getConquestTally())
         end
 
