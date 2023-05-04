@@ -287,7 +287,8 @@ void CPathFind::FollowPath()
             m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1)
         {
             // When snapping, get sloppier over time by skipping the first few Steps when unable to raycast to next point
-            if (m_POwner->GetLocalVar("CarefulPathSnapCount") >= m_POwner->GetLocalVar("CarefulPathSnapMin") &&
+            // But only skip the snapto after a few un-raycastable pathpoints
+            if (m_POwner->GetLocalVar("CarefulPathSnapCount") >= m_POwner->GetLocalVar("CarefulPathSnapMin") - 4 &&
                 m_POwner->GetLocalVar("CarefulPathSnapMax") > 1)
             {
                 m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
