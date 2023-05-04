@@ -2143,6 +2143,10 @@ INSERT INTO `mob_skill_lists` VALUES('Astral_Flow_Pet', 495, 916);
 INSERT INTO `mob_skill_lists` VALUES('Astral_Flow_Pet', 495, 917);
 INSERT INTO `mob_skill_lists` VALUES('Astral_Flow_Pet', 495, 918);
 INSERT INTO `mob_skill_lists` VALUES('ChanequeMandragora', 496, 2210);
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 270); -- Roar
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 271); -- Razor Fang
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1322); -- Gerjis Grip
+INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1340); -- Crossthrash
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 813);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 814);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 815);
@@ -2150,10 +2154,6 @@ INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 816);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 817);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 818);
 INSERT INTO `mob_skill_lists` VALUES('Cyranuce_M_Cutauleon', 498, 822);
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 270); -- Roar
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 271); -- Razor Fang
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1322); -- Gerjis Grip
-INSERT INTO `mob_skill_lists` VALUES('Gerjis', 497, 1340); -- Crossthrash
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 347);
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 419);
 INSERT INTO `mob_skill_lists` VALUES('Mammet', 503, 422);
@@ -3567,9 +3567,15 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 397); -- Flurry o
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 513); -- Smite of rage
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 514); -- Whirl of rage
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Weapon', 5312, 1560); -- Whispers of ire
+-- Nightmare Tiger
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 270); -- Roar
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 271); -- Razor fang
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 273); -- Claw cyclone
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 1340); -- Crossthrash
+INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 1680); -- Predatory glare
 
 -- Pandemonium Warden Dvergar phases before final
-INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5313, 2115);
+INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5400, 2115);
 
 --
 -- Indexes for dumped tables
