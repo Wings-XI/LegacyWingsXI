@@ -53,21 +53,20 @@ function onTrade(player, npc, trade)
     end
 
     if invalidTrade then
-        player:PrintToPlayer(string.format("%s : You must trade equal parts of all types of crafted tools", npc:getName()), 0xD)
+        player:PrintToPlayer(string.format("%s : You must trade equal parts of all types of crafted tools in single stacks.", npc:getName()), 0xD)
         return
     end
 
     -- Ensure exact tool counts, but again do not confirm the trade items
     for i = 1, #toolList[toolIndex][1], 1 do
-        printf("tool %u count %u",toolList[toolIndex][1][i],toolCount)
-        if not npcUtil.tradeHas(trade, toolList[toolIndex][1][i], false, false) then
+        if not (trade:hasItemQty(toolList[toolIndex][1][i], toolCount)) then
             invalidTrade = true
             break
         end
     end
 
     if invalidTrade then
-        player:PrintToPlayer(string.format("%s : You must trade all %u types of crafted tools", npc:getName(), #toolList[toolIndex][1]), 0xD)
+        player:PrintToPlayer(string.format("%s : You must trade all %u types of crafted tools.", npc:getName(), #toolList[toolIndex][1]), 0xD)
         return
     end
 
