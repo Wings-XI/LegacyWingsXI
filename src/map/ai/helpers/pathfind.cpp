@@ -363,6 +363,7 @@ void CPathFind::StepTo(const position_t& pos, bool run)
         stepDistance = speed / 20.0f;
     }
     float distanceTo = distance(m_POwner->loc.p, pos);
+    float diff_y       = pos.y - m_POwner->loc.p.y;
 
     // face point mob is moving towards
     LookAt(pos);
@@ -383,14 +384,14 @@ void CPathFind::StepTo(const position_t& pos, bool run)
 
             m_POwner->loc.p.x += cosf(radians) * (distanceTo - m_distanceFromPoint);
             m_POwner->loc.p.z += sinf(radians) * (distanceTo - m_distanceFromPoint);
-            if (abs(pos.y - m_POwner->loc.p.y) > .5f)
+            if (abs(diff_y) > .5f)
             {
-                // Don't step too far vertically by just utilizing the slope
-                float new_y = m_POwner->loc.p.y + stepDistance * (pos.y - m_POwner->loc.p.y) / (sqrt(((pos.x - m_POwner->loc.p.x)*(pos.x - m_POwner->loc.p.x)) + ((pos.z - m_POwner->loc.p.z)*(pos.z - m_POwner->loc.p.z))));
-                float min_y = (pos.y + m_POwner->loc.p.y - abs(pos.y-m_POwner->loc.p.y)) / 2;
-                float max_y = (pos.y + m_POwner->loc.p.y + abs(pos.y-m_POwner->loc.p.y)) / 2;
+                // Don't step too far vertically by simply utilizing the slope
+                float new_y = m_POwner->loc.p.y + stepDistance * (pos.y - m_POwner->loc.p.y) / distance(m_POwner->loc.p, pos, true);
+                float min_y = (pos.y + m_POwner->loc.p.y - abs(pos.y - m_POwner->loc.p.y)) / 2;
+                float max_y = (pos.y + m_POwner->loc.p.y + abs(pos.y - m_POwner->loc.p.y)) / 2;
                 // clamp new_y between start and end vertical position
-                new_y = new_y < min_y ? min_y : new_y;
+                new_y             = new_y < min_y ? min_y : new_y;
                 m_POwner->loc.p.y = new_y > max_y ? max_y : new_y;
             }
             else
@@ -407,14 +408,14 @@ void CPathFind::StepTo(const position_t& pos, bool run)
 
         m_POwner->loc.p.x += cosf(radians) * stepDistance;
         m_POwner->loc.p.z += sinf(radians) * stepDistance;
-        if (abs(pos.y - m_POwner->loc.p.y) > .5f)
+        if (abs(diff_y) > .5f)
         {
-            // Don't step too far vertically by just utilizing the slope
-            float new_y = m_POwner->loc.p.y + stepDistance * (pos.y - m_POwner->loc.p.y) / (sqrt(((pos.x - m_POwner->loc.p.x)*(pos.x - m_POwner->loc.p.x)) + ((pos.z - m_POwner->loc.p.z)*(pos.z - m_POwner->loc.p.z))));
-            float min_y = (pos.y + m_POwner->loc.p.y - abs(pos.y-m_POwner->loc.p.y)) / 2;
-            float max_y = (pos.y + m_POwner->loc.p.y + abs(pos.y-m_POwner->loc.p.y)) / 2;
+            // Don't step too far vertically by simply utilizing the slope
+            float new_y = m_POwner->loc.p.y + stepDistance * (pos.y - m_POwner->loc.p.y) / distance(m_POwner->loc.p, pos, true);
+            float min_y = (pos.y + m_POwner->loc.p.y - abs(pos.y - m_POwner->loc.p.y)) / 2;
+            float max_y = (pos.y + m_POwner->loc.p.y + abs(pos.y - m_POwner->loc.p.y)) / 2;
             // clamp new_y between start and end vertical position
-            new_y = new_y < min_y ? min_y : new_y;
+            new_y             = new_y < min_y ? min_y : new_y;
             m_POwner->loc.p.y = new_y > max_y ? max_y : new_y;
         }
         else
