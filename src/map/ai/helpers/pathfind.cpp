@@ -255,13 +255,14 @@ void CPathFind::FollowPath()
     position_t targetPoint = m_points[m_currentPoint];
     position_t startingPoint = m_POwner->loc.p;
 
+    float origDistanceMoved = m_distanceMoved;
     StepTo(targetPoint, m_pathFlags & PATHFLAG_RUN);
 
     if (isNavMeshEnabled() && m_carefulPathing)
     {
         if (m_POwner->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_POwner)->GetBattleTargetID() != 0)
         {
-            if (m_currentPoint == 0 && m_distanceMoved == 0)// when mob is close to destination, reset sloppy pathing (i.e. when path is recently cleared)
+            if (m_currentPoint == 0 && origDistanceMoved == 0)// when mob is close to destination, reset sloppy pathing (i.e. when path is recently cleared)
             {
                 ShowDebug("Mob %s (%u) is now resetting careful pathing sloppiness\n", m_POwner->GetName(), m_POwner->id);
                 m_POwner->SetLocalVar("CarefulPathSnapMax", 10);
