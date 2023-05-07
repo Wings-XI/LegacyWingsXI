@@ -310,8 +310,11 @@ void CPathFind::FollowPath()
             // recalculate path by:
             // -- backpedaling a few yalms away from the destination, snap to valid point, then clear path
             targetPoint = m_points[m_points.size() - 1];
-            m_POwner->loc.p.x += 2 * (targetPoint.x - m_POwner->loc.p.x) / abs(targetPoint.x - m_POwner->loc.p.x);
-            m_POwner->loc.p.z += 2 * (targetPoint.z - m_POwner->loc.p.z) / abs(targetPoint.z - m_POwner->loc.p.z);
+            // below can NaN if points are close enough
+            if (abs(targetPoint.x - m_POwner->loc.p.x) > .1f)
+                m_POwner->loc.p.x += 2 * (targetPoint.x - m_POwner->loc.p.x) / abs(targetPoint.x - m_POwner->loc.p.x);
+            if (abs(targetPoint.z - m_POwner->loc.p.z) > .1f)
+                m_POwner->loc.p.z += 2 * (targetPoint.z - m_POwner->loc.p.z) / abs(targetPoint.z - m_POwner->loc.p.z);
             m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
             startingPoint = m_POwner->loc.p;
             Clear();
