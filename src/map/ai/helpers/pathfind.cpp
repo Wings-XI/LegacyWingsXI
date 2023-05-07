@@ -101,6 +101,11 @@ bool CPathFind::PathTo(const position_t& point, uint8 pathFlags, bool clear)
 
     if (isNavMeshEnabled())
     {
+        // TODO mobs might literally not be able to get to some places with this?
+        // if (m_carefulPathing){
+        //     m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
+        // }
+
         bool result = false;
 
         if (m_pathFlags & PATHFLAG_WALLHACK)
@@ -256,8 +261,10 @@ void CPathFind::FollowPath()
     {
         if (m_POwner->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_POwner)->GetBattleTargetID() != 0)
         {
-            if (m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1)
+            if (m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1 ||
+                m_currentPoint == m_points.size())// mob is close to destination, reset sloppy pathing
             {
+                ShowDebug("Mob %s (%u) is now resetting careful pathing sloppiness\n", m_POwner->GetName(), m_POwner->id);
                 m_POwner->SetLocalVar("CarefulPathSnapMax", 10);
                 m_POwner->SetLocalVar("CarefulPathSnapMin", 1);
             }
@@ -300,17 +307,15 @@ void CPathFind::FollowPath()
             m_POwner->SetLocalVar("CarefulPathSnapMax", m_POwner->GetLocalVar("CarefulPathSnapMax") + 1);
             m_POwner->SetLocalVar("CarefulPathSnapMin", m_POwner->GetLocalVar("CarefulPathSnapMin") + 1);
 
-            position_t nextPoint;
-            // recalculate path by pathing to the point in the middle of the pathList
-            if (m_currentPoint + 2 < m_points.size())
-                nextPoint = m_points[(int16)((m_currentPoint + m_points.size())/2)];
-            else
-                nextPoint = m_points[m_points.size() - 1];
+            // recalculate path by:
+            // -- backpedaling a few yalms away from the destination, snap to valid point, then clear path
+            targetPoint = m_points[m_points.size() - 1];
+            m_POwner->loc.p.x += 2 * (targetPoint.x - m_POwner->loc.p.x) / abs(targetPoint.x - m_POwner->loc.p.x);
+            m_POwner->loc.p.z += 2 * (targetPoint.z - m_POwner->loc.p.z) / abs(targetPoint.z - m_POwner->loc.p.z);
+            m_POwner->loc.zone->m_navMesh->snapToValidPosition(m_POwner->loc.p);
+            startingPoint = m_POwner->loc.p;
             Clear();
-            // Even with careful pathing I don't think we need to limit the endpoint
-            // m_carefulPathing = false; // so path isn't immediately recalculated in mobcontroller.cpp
-            FindClosestPath(startingPoint, nextPoint);
-            // m_carefulPathing = true;
+            FindClosestPath(startingPoint, targetPoint);
             m_POwner->SetLocalVar("CarefulPathSnapCount", 0);
             return;
         }
@@ -339,7 +344,7 @@ void CPathFind::FollowPath()
 void CPathFind::StepTo(const position_t& pos, bool run)
 {
     TracyZoneScoped;
-    float speed = GetRealSpeed();
+    float speed = GetRealSpeed() + m_POwner->GetLocalVar("CarefulPathSnapCount");
 
     int8 mode = 2;
 
@@ -349,8 +354,12 @@ void CPathFind::StepTo(const position_t& pos, bool run)
         speed /= 2;
     }
 
-    // TODO should this be /20 instead of /24.5?
+    // TODO should this be /20 for everyone?
     float stepDistance = speed / 24.5f; // 40 ms means 4 units per second, so 1.6 units per step (server tick rate is 2.5/sec)
+    if (m_carefulPathing){
+        // increase step distance slightly since we snap positions every tick
+        stepDistance = speed / 20.0f;
+    }
     float distanceTo = distance(m_POwner->loc.p, pos);
 
     // face point mob is moving towards
@@ -371,17 +380,21 @@ void CPathFind::StepTo(const position_t& pos, bool run)
             float radians = (1 - (float)m_POwner->loc.p.rotation / 256) * 2 * (float)M_PI;
 
             m_POwner->loc.p.x += cosf(radians) * (distanceTo - m_distanceFromPoint);
-            // Don't step too far veritcally
+            m_POwner->loc.p.z += sinf(radians) * (distanceTo - m_distanceFromPoint);
             if (abs(pos.y - m_POwner->loc.p.y) > .5f)
             {
-                // .5 yalms veritically in the direction of the destination
-                m_POwner->loc.p.y = m_POwner->loc.p.y + (pos.y - m_POwner->loc.p.y) / (2 * abs(pos.y - m_POwner->loc.p.y));
+                // Don't step too far vertically by just utilizing the slope
+                float new_y = m_POwner->loc.p.y + stepDistance * (pos.y - m_POwner->loc.p.y) / (sqrt(((pos.x - m_POwner->loc.p.x)*(pos.x - m_POwner->loc.p.x)) + ((pos.z - m_POwner->loc.p.z)*(pos.z - m_POwner->loc.p.z))));
+                float min_y = (pos.y + m_POwner->loc.p.y - abs(pos.y-m_POwner->loc.p.y)) / 2;
+                float max_y = (pos.y + m_POwner->loc.p.y + abs(pos.y-m_POwner->loc.p.y)) / 2;
+                // clamp new_y between start and end vertical position
+                new_y = new_y < min_y ? min_y : new_y;
+                m_POwner->loc.p.y = new_y > max_y ? max_y : new_y;
             }
             else
             {
                 m_POwner->loc.p.y = pos.y;
             }
-            m_POwner->loc.p.z += sinf(radians) * (distanceTo - m_distanceFromPoint);
         }
     }
     else
@@ -391,17 +404,21 @@ void CPathFind::StepTo(const position_t& pos, bool run)
         float radians = (1 - (float)m_POwner->loc.p.rotation / 256) * 2 * (float)M_PI;
 
         m_POwner->loc.p.x += cosf(radians) * stepDistance;
-        // Don't step too far veritcally
+        m_POwner->loc.p.z += sinf(radians) * stepDistance;
         if (abs(pos.y - m_POwner->loc.p.y) > .5f)
         {
-            // .5 yalms veritically in the direction of the destination
-            m_POwner->loc.p.y = m_POwner->loc.p.y + (pos.y - m_POwner->loc.p.y) / (2 * abs(pos.y - m_POwner->loc.p.y));
+            // Don't step too far vertically by just utilizing the slope
+            float new_y = m_POwner->loc.p.y + stepDistance * (pos.y - m_POwner->loc.p.y) / (sqrt(((pos.x - m_POwner->loc.p.x)*(pos.x - m_POwner->loc.p.x)) + ((pos.z - m_POwner->loc.p.z)*(pos.z - m_POwner->loc.p.z))));
+            float min_y = (pos.y + m_POwner->loc.p.y - abs(pos.y-m_POwner->loc.p.y)) / 2;
+            float max_y = (pos.y + m_POwner->loc.p.y + abs(pos.y-m_POwner->loc.p.y)) / 2;
+            // clamp new_y between start and end vertical position
+            new_y = new_y < min_y ? min_y : new_y;
+            m_POwner->loc.p.y = new_y > max_y ? max_y : new_y;
         }
         else
         {
             m_POwner->loc.p.y = pos.y;
         }
-        m_POwner->loc.p.z += sinf(radians) * stepDistance;
     }
 
 
