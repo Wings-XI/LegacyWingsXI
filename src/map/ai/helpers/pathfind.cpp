@@ -261,8 +261,7 @@ void CPathFind::FollowPath()
     {
         if (m_POwner->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_POwner)->GetBattleTargetID() != 0)
         {
-            if (m_POwner->GetLocalVar("CarefulPathSnapMax") <= 1 ||
-                m_currentPoint == m_points.size())// mob is close to destination, reset sloppy pathing
+            if (m_currentPoint == 0 && m_distanceMoved == 0)// when mob is close to destination, reset sloppy pathing (i.e. when path is recently cleared)
             {
                 ShowDebug("Mob %s (%u) is now resetting careful pathing sloppiness\n", m_POwner->GetName(), m_POwner->id);
                 m_POwner->SetLocalVar("CarefulPathSnapMax", 10);
