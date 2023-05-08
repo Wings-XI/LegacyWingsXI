@@ -81,6 +81,10 @@ class CPathFind
     // all the way to a point
     void LimitDistance(float maxDistance);
 
+    // will only get this close towards the final point
+    // useful to stop mobs from walking too close to players
+    void StopWithin(float within);
+
     // Prunes the last points of a path, if they are within the given distance
     void PrunePathWithin(float within);
 
