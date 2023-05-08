@@ -79,7 +79,7 @@ function onMobSpawn(mob)
      -- MEVA and elemental resistances based on Cerberus, and Suzaku for fire resistance
     mob:setMod(tpz.mod.UDMGBREATH, -20)
     mob:setMod(tpz.mod.UDMGMAGIC, -20)
-    mob:setMod(tpz.mod.MEVA, 375)
+    mob:setMod(tpz.mod.MEVA, 325) -- but mob is higher level
     mob:setMod(tpz.mod.MDEF, 30)
     mob:setMod(tpz.mod.STR, 40)
     mob:setMod(tpz.mod.ATTP, 30)
