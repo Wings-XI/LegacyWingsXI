@@ -402,12 +402,6 @@ dynamis.reentry_days = 3
 dynamis.maxchars = 64
 
 dynamis.entryNpcOnTrade = function(player, npc, trade, message_not_reached_level, message_another_group, message_cannot_enter)
-    -- rate limit hourglass trades
-    if npc:getLocalVar("LastTrade") > os.time() - 2 then
-        player:PrintToPlayer("DynamisTrade: Please wait 2s between hourglass trades!", 0xD)
-        return
-    end
-    npc:setLocalVar("LastTrade", os.time())
     local playerZoneID = player:getZoneID()
     if dynamis.entryInfo[playerZoneID].enabled == false then return end
     for i, name in ipairs(dynamis.entryInfo[playerZoneID].reqs) do --requirements for northlands and elsewhere
@@ -529,41 +523,43 @@ dynamis.entryNpcOnEventFinish = function(player, csid, option, message_connectin
 end
 
 dynamis.entryNpcOnDynamisServerReply = function(player, result, message_information_recorded, message_obtained, message_another_group)
-    local playerZoneID = player:getZoneID()
-    if dynamis.entryInfo[playerZoneID].enabled == false then return end
-    player:setLocalVar("DynamisWaitingForServer", 0)
-    if result == 2 then
-        -- Ping response when trading timeless hourglass
-        player:release()
-        if player:registerHourglass(dynamis.entryInfo[playerZoneID].enterPos[5]) == true then
-            trade = player:getCurrentTrade()
-            if trade ~= nil and npcUtil.tradeHasExactly(trade, dynamis.timeless) then
-                player:confirmTrade()
-                player:messageSpecial(message_information_recorded, dynamis.perpetual)
-                player:messageSpecial(message_obtained, dynamis.perpetual)
+    if player ~= nil then
+        local playerZoneID = player:getZoneID()
+        if dynamis.entryInfo[playerZoneID].enabled == false then return end
+        player:setLocalVar("DynamisWaitingForServer", 0)
+        if result == 2 then
+            -- Ping response when trading timeless hourglass
+            player:release()
+            if player:registerHourglass(dynamis.entryInfo[playerZoneID].enterPos[5]) == true then
+                trade = player:getCurrentTrade()
+                if trade ~= nil and npcUtil.tradeHasExactly(trade, dynamis.timeless) then
+                    player:confirmTrade()
+                    player:messageSpecial(message_information_recorded, dynamis.perpetual)
+                    player:messageSpecial(message_obtained, dynamis.perpetual)
+                end
             end
+        elseif result == 1 then
+            -- Entry when trading perpetual hourglass
+            local entryPos = dynamis.entryInfo[playerZoneID].enterPos
+            if entryPos == nil then return end
+            -- update headcount after the rpc callback to avoid crashes incrementing multiple times for the same player
+            if player:getCharVar("FirstDynaEntry") == 1 then
+                SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), GetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID)) + 1)
+                player:setCharVar("FirstDynaEntry", 0)
+            end
+            player:setCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar, 1)
+            player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4], entryPos[5])
+        elseif result == 3 then
+            player:messageSpecial(message_another_group, dynamis.entryInfo[playerZoneID].csBit)
+            player:queue(1000, function(player)
+                player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+            end)
+        else
+            player:PrintToPlayer("The Dynamis instance has reached its maximum capacity of 64 registrants.", 29)
+            player:queue(1000, function(player)
+                player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+            end)
         end
-    elseif result == 1 then
-        -- Entry when trading perpetual hourglass
-        local entryPos = dynamis.entryInfo[playerZoneID].enterPos
-        if entryPos == nil then return end
-        -- update headcount after the rpc callback to avoid crashes incrementing multiple times for the same player
-        if player:getCharVar("FirstDynaEntry") == 1 then
-            SetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID), GetServerVariable(string.format("DynamisPlayersEntered_%s", playerZoneID)) + 1)
-            player:setCharVar("FirstDynaEntry", 0)
-        end
-        player:setCharVar(dynamis.entryInfo[playerZoneID].hasEnteredVar, 1)
-        player:setPos(entryPos[1], entryPos[2], entryPos[3], entryPos[4], entryPos[5])
-    elseif result == 3 then
-        player:messageSpecial(message_another_group, dynamis.entryInfo[playerZoneID].csBit)
-        player:queue(1000, function(player)
-            player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
-        end)
-    else
-        player:PrintToPlayer("The Dynamis instance has reached its maximum capacity of 64 registrants.", 29)
-        player:queue(1000, function(player)
-            player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
-        end)
     end
 end
 
