@@ -303,6 +303,15 @@ void CPathFind::FollowPath()
 
     if (isNavMeshEnabled() && m_carefulPathing)
     {
+        // - when careful pathing is enabled on a mob, it snaps to nearest navmesh every `StepTo`
+        //    - If the next point in its pathlist cannot be raycast, it increments a counter `CarefulPathSnapCount`
+        //    - if that counter gets past a threshold
+        //    -  `CarefulPathSnapMax`, the path is cleared and mob is snapped away from the destination a bit and repathed
+        //      - would like to maybe pathfind to the middle point in the list of its remaining pathpoints (`nextPoint = m_points[(int16)(( m_currentPoint + m_points.size() - 1) / 2)];`)
+        //    - Another variable, `CarefulPathSnapMin`, is incremented. This is actually the requisit number of failed aforementioned raycasts.
+        //    - This essentially lets a mob's path get sloppier if it continuously gets stuck
+        //    - For example: pathing Anantaboga back and forth between zoneline near his spawn and the tunnels towards o.crabs got `CarefulPathSnapMin` up to 10, but he still pathed pretty cleanly (cut some corners but never bounced down to the water level, etc)
+        //    - Note that in these changes, raycast has a check for a new concept, `CNavMesh::onSameFloor`. This is, i think, the main thing being relied on when the next pathpoint's raycast failure is determined up above
         if (m_POwner->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_POwner)->GetBattleTargetID() != 0)
         {
             if (m_currentPoint == 0 && origDistanceMoved == 0)// when mob is close to destination, reset sloppy pathing (i.e. when path is recently cleared)
