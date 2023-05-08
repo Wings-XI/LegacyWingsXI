@@ -95,9 +95,9 @@ function onTrigger(player, npc)
         12968,  584, 2,    -- Kyahan
         704,    132, 2,    -- Bamboo Stick
         605,    180, 3,    -- Pickaxe
-        5867, 13500, 3,    -- Toolbag (Ino)
-        5868, 18000, 3,    -- Toolbag (Shika)
-        5869, 18000, 3,    -- Toolbag (Cho)
+        5867, 13500, 3,    -- Toolbag (Ino) -- WINGSCUSTOM enable unified nin tools
+        5868, 18000, 3,    -- Toolbag (Shika) -- WINGSCUSTOM enable unified nin tools
+        5869, 18000, 3,    -- Toolbag (Cho) -- WINGSCUSTOM enable unified nin tools
     }
 
     player:PrintToPlayer(string.format("%s : Trade equal parts of individual Ninjutsu tools to get the unified tools!", npc:getName()), 0xD)

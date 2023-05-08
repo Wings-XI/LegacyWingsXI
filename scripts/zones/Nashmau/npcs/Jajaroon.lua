@@ -20,7 +20,7 @@ function onTrigger(player, npc)
         2181,    48,    -- Water Card
         2182,    48,    -- Light Card
         2183,    48,    -- Dark Card
-        --5870, 10000,    -- Trump Card Case
+        5870, 10000,    -- Trump Card Case -- WINGSCUSTOM enable trump cards
         5488, 35200,    -- Samurai Die
         5489,   600,    -- Ninja Die
         5490, 82500,    -- Dragoon Die
