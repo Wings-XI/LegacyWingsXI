@@ -397,6 +397,13 @@ int32 CLuaZone::setMusicBackgroundNight(lua_State* L)
     return 0;
 }
 
+int32 CLuaZone::reloadNavmesh(lua_State* L)
+{
+    m_pLuaZone->m_navMesh->reload();
+
+    return 1;
+}
+
 /************************************************************************
 *  Function: getPlayerAbilitiesState()
 *  Purpose : Returns whether the zone checks for mobs that react to job abilities
@@ -457,6 +464,7 @@ Lunar<CLuaZone>::Register_t CLuaZone::methods[] =
     LUNAR_DECLARE_METHOD(CLuaZone, setMusicBattleParty),
     LUNAR_DECLARE_METHOD(CLuaZone, setMusicBackgroundDay),
     LUNAR_DECLARE_METHOD(CLuaZone, setMusicBackgroundNight),
+    LUNAR_DECLARE_METHOD(CLuaZone, reloadNavmesh),
     LUNAR_DECLARE_METHOD(CLuaZone, getPlayerAbilitiesState),
     LUNAR_DECLARE_METHOD(CLuaZone, setPlayerAbilitiesState),
 {nullptr,nullptr}

@@ -68,7 +68,8 @@ public:
     CNavMesh(uint16 zoneID);
     ~CNavMesh();
 
-    bool load(const std::string& path);
+    bool load(std::string const& filename);
+    void reload();
     void unload();
 
     std::vector<position_t> findPath(const position_t& start, const position_t& end);
@@ -85,13 +86,20 @@ public:
     bool raycast(const position_t& start, const position_t& end, bool lookOffMesh);
 
     bool validPosition(const position_t& position);
+    bool findClosestValidPoint(const position_t& position, float* validPoint);
+    bool findFurthestValidPoint(const position_t& startPosition, const position_t& endPosition, float* validPoint);
+
+    // Like validPosition(), but will also set the given position to the valid position that it finds.
+    void snapToValidPosition(position_t& position);
 
 private:
     void outputError(uint32 status);
+    bool onSameFloor(const position_t& start, float* spos, const position_t& end, float* epos, dtQueryFilter& filter);
 
-    uint16 m_zoneID;
-    dtRaycastHit m_hit;
-    dtPolyRef m_hitPath[20];
+    std::string                m_filename;
+    uint16                     m_zoneID;
+    dtRaycastHit               m_hit;
+    dtPolyRef                  m_hitPath[20];
     std::unique_ptr<dtNavMesh> m_navMesh;
     dtNavMeshQuery m_navMeshQuery;
 };

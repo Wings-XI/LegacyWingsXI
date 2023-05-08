@@ -605,13 +605,17 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
     return -1
 end
 
+-- not called on zone init, only on waves past initial wave
 dynamis.spawnWave = function(mobList, waveNumber)
     local iStart = 4096*4096+(4096*mobList.zoneID)
     local i = iStart
     local iEnd = iStart + 1023
 
     while i <= iEnd do
-        if mobList[i] ~= nil and mobList[i].waves ~= nil and mobList[i].waves[waveNumber] ~= nil and GetMobByID(i):isSpawned() == false then SpawnMob(i) end
+        if mobList[i] ~= nil then
+            local mob = GetMobByID(i)
+            if mobList[i].waves ~= nil and mobList[i].waves[waveNumber] ~= nil and mob:isSpawned() == false then SpawnMob(i) end
+        end
         i = i + 1
     end
 end

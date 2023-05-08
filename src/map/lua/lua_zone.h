@@ -65,6 +65,7 @@ public:
     int32 setMusicBackgroundDay(lua_State*);
     int32 setMusicBackgroundNight(lua_State*);
     int32 getPlayerAbilitiesState(lua_State*);
+    int32        reloadNavmesh(lua_State*);
     int32 setPlayerAbilitiesState(lua_State*);
 };
 

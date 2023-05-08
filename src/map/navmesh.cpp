@@ -20,16 +20,21 @@
 */
 
 #include "navmesh.h"
+#include "../common/detour/DetourCommon.h"
 #include "../common/detour/DetourNavMeshQuery.h"
-#include <float.h>
-#include <string.h>
-#include <iostream>
-#include <fstream>
 #include "../common/utils.h"
 #include "../common/tpzrand.h"
+#include <cfloat>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <set>
 
-constexpr int8 CNavMesh::ERROR_NEARESTPOLY;
-constexpr float polyPickExt[3] = { 5.0f, 10.0f, 5.0f };
+constexpr int8  CNavMesh::ERROR_NEARESTPOLY;
+constexpr float smallPolyPickExt[3]  = {  0.5f,  1.0f,  0.5f };
+constexpr float polyPickExt[3]       = {  5.0f, 10.0f,  5.0f };
+constexpr float skinnyPolyPickExt[3] = { 0.01f, 10.0f, 0.01f };
+constexpr float verticalLimit        = .5f;
 
 void CNavMesh::ToFFXIPos(const position_t* pos, float* out)
 {
@@ -99,9 +104,11 @@ CNavMesh::~CNavMesh()
 {
 }
 
-bool CNavMesh::load(const std::string& filename)
+bool CNavMesh::load(std::string const& filename)
 {
-    std::ifstream file(filename.c_str(), std::ios_base::in | std::ios_base::binary);
+    this->m_filename = filename;
+
+    std::ifstream file(m_filename.c_str(), std::ios_base::in | std::ios_base::binary);
 
     if (!file.good())
     {
@@ -129,7 +136,7 @@ bool CNavMesh::load(const std::string& filename)
     dtStatus status = m_navMesh->init(&header.params);
     if (dtStatusFailed(status))
     {
-        ShowNavError("CNavMesh::load Could not initialize detour for (%s)", filename);
+        ShowNavError("CNavMesh::load Could not initialize detour for (%s)\n", filename);
         outputError(status);
         return false;
     }
@@ -164,37 +171,51 @@ bool CNavMesh::load(const std::string& filename)
     return true;
 }
 
-void CNavMesh::outputError(uint32 status)
+void CNavMesh::reload()
 {
-    if (status & DT_WRONG_MAGIC)
-    {
-        ShowNavError("Detour wrong magic\n");
-    }
-    else if (status & DT_WRONG_VERSION)
-    {
-        ShowNavError("Detour wrong version\n");
-    }
-    else if (status & DT_OUT_OF_MEMORY)
-    {
-        ShowNavError("Detour out of memory\n");
-    }
-    else if (status & DT_INVALID_PARAM)
-    {
-        ShowNavError("Detour invalid param\n");
-    }
-    else if (status & DT_OUT_OF_NODES)
-    {
-        ShowNavError("Detour out of nodes\n");
-    }
-    else if (status & DT_PARTIAL_RESULT)
-    {
-        ShowNavError("Detour partial result\n");
-    }
+    this->unload();
+    this->load(this->m_filename);
 }
 
 void CNavMesh::unload()
 {
     m_navMesh.reset();
+}
+
+void CNavMesh::outputError(uint32 status)
+{
+    if (status & DT_WRONG_MAGIC)
+    {
+        ShowNavError("Detour: Input data is not recognized.\n");
+    }
+    else if (status & DT_WRONG_VERSION)
+    {
+        ShowNavError("Detour: Input data is in wrong version.\n");
+    }
+    else if (status & DT_OUT_OF_MEMORY)
+    {
+        ShowNavError("Detour: Operation ran out of memory.\n");
+    }
+    else if (status & DT_INVALID_PARAM)
+    {
+        ShowNavError("Detour: An input parameter was invalid.\n");
+    }
+    else if (status & DT_BUFFER_TOO_SMALL)
+    {
+        ShowNavError("Detour: Result buffer for the query was too small to store all results.\n");
+    }
+    else if (status & DT_OUT_OF_NODES)
+    {
+        ShowNavError("Detour: Query ran out of nodes during search.\n");
+    }
+    else if (status & DT_PARTIAL_RESULT)
+    {
+        ShowNavError("Detour: Query did not reach the end location, returning best guess.\n");
+    }
+    else if (status & DT_ALREADY_OCCUPIED)
+    {
+        ShowNavError("Detour: A tile has already been assigned to the given x,y coordinate\n");
+    }
 }
 
 std::vector<position_t> CNavMesh::findPath(const position_t& start, const position_t& end)
@@ -359,7 +380,7 @@ bool CNavMesh::validPosition(const position_t& position)
 
     dtPolyRef startRef;
 
-    dtStatus status = m_navMeshQuery.findNearestPoly(spos, polyPickExt, &filter, &startRef, snearest);
+    dtStatus status = m_navMeshQuery.findNearestPoly(spos, smallPolyPickExt, &filter, &startRef, snearest);
 
     if (dtStatusFailed(status))
     {
@@ -369,11 +390,173 @@ bool CNavMesh::validPosition(const position_t& position)
     return m_navMesh->isValidPolyRef(startRef);
 }
 
+bool CNavMesh::findClosestValidPoint(const position_t& position, float* validPoint)
+{
+    float spos[3];
+    CNavMesh::ToDetourPos(&position, spos);
+
+    float polyPickExt[3];
+    polyPickExt[0] = 30;
+    polyPickExt[1] = 60;
+    polyPickExt[2] = 30;
+
+    dtQueryFilter filter;
+    filter.setIncludeFlags(0xffff);
+    filter.setExcludeFlags(0);
+
+    dtPolyRef startRef;
+
+    dtStatus status = m_navMeshQuery.findNearestPoly(spos, polyPickExt, &filter, &startRef, validPoint);
+
+    if (dtStatusFailed(status))
+    {
+        return false;
+    }
+
+    CNavMesh::ToFFXIPos(validPoint);
+    return true;
+}
+
+bool CNavMesh::findFurthestValidPoint(const position_t& startPosition, const position_t& endPosition, float* validEndPoint)
+{
+    float spos[3];
+    CNavMesh::ToDetourPos(&startPosition, spos);
+
+    float polyPickExt[3];
+    polyPickExt[0] = 30;
+    polyPickExt[1] = 60;
+    polyPickExt[2] = 30;
+
+    dtQueryFilter filter;
+    filter.setIncludeFlags(0xffff);
+    filter.setExcludeFlags(0);
+
+    dtPolyRef startRef;
+    float     validStartPoint[3];
+
+    dtStatus status = m_navMeshQuery.findNearestPoly(spos, polyPickExt, &filter, &startRef, validStartPoint);
+    if (dtStatusFailed(status))
+    {
+        return false;
+    }
+
+    dtPolyRef visited[16];
+    int       visitedCount = 0;
+
+    float targetPoint[3];
+    CNavMesh::ToDetourPos(&endPosition, targetPoint);
+
+    status = m_navMeshQuery.moveAlongSurface(startRef, validStartPoint, targetPoint, &filter, validEndPoint, visited, &visitedCount, 16);
+
+    if (dtStatusFailed(status))
+    {
+        return false;
+    }
+
+    CNavMesh::ToFFXIPos(validEndPoint);
+    return true;
+}
+
+void CNavMesh::snapToValidPosition(position_t& position)
+{
+    TracyZoneScoped;
+    float spos[3];
+    CNavMesh::ToDetourPos(&position, spos);
+
+    float snearest[3];
+
+    dtQueryFilter filter;
+    filter.setIncludeFlags(0xffff);
+    filter.setExcludeFlags(0);
+
+    dtPolyRef startRef;
+
+    dtStatus status = m_navMeshQuery.findNearestPoly(spos, polyPickExt, &filter, &startRef, snearest);
+
+    if (dtStatusFailed(status))
+    {
+        ShowNavError("CNavMesh::Failed to find nearby valid poly (%f, %f, %f) (%u)\n", spos[0], spos[1], spos[2], m_zoneID);
+        outputError(status);
+        return;
+    }
+
+    if (m_navMesh->isValidPolyRef(startRef))
+    {
+        CNavMesh::ToFFXIPos(snearest);
+        position.x = snearest[0];
+        position.y = snearest[1];
+        position.z = snearest[2];
+    }
+}
+
+bool CNavMesh::onSameFloor(const position_t& start, float* spos, const position_t& end, float* epos, dtQueryFilter& filter)
+{
+    TracyZoneScoped;
+
+    float verticalDistance = abs(start.y - end.y);
+    if (verticalDistance > 2 * verticalLimit)
+    {
+        // Too far away, abort check
+        return false;
+    }
+    else if (verticalDistance > verticalLimit)
+    {
+        // Far away, but not too far away.
+        // We're going to try and disambiguate any vertical floors.
+        dtPolyRef polys[16];
+        int       polyCount = -1;
+        dtStatus status = m_navMeshQuery.queryPolygons(epos, skinnyPolyPickExt, &filter, polys, &polyCount, 16);
+
+        if (dtStatusFailed(status) || polyCount <= 0)
+        {
+            ShowNavError("CNavMesh::Bad vertical polygon query (%f, %f, %f) (%u)\n", epos[0], epos[1], epos[2], m_zoneID);
+            outputError(status);
+            return false;
+        }
+
+        // Collect the heights of queried polygons
+        uint8           verticalLimitTrunc = static_cast<uint8>(verticalLimit);
+        float           height;
+        std::set<uint8> heights;
+        for (int i = 0; i < polyCount; i++)
+        {
+            status = m_navMeshQuery.getPolyHeight(polys[i], epos, &height);
+            if (!dtStatusFailed(status))
+            {
+                // Truncate the height and round to nearest multiple of verticalLimitTrunc for easier de-duping
+                heights.insert((uint8)i);
+            }
+        }
+
+        // Multiple floors detected, we need to disambiguate
+        if (heights.size() > 1)
+        {
+            float startHeight = spos[1] + abs(std::fmod(spos[1], verticalLimit) - verticalLimit);
+            float endHeight   = epos[1] + abs(std::fmod(epos[1], verticalLimit) - verticalLimit);
+
+            // Since we've already truncated and rounded to nearest multiples of verticalLimitTrunc,
+            // if we are within verticalLimitTrunc of a point, that's our closest.
+            if (startHeight != endHeight)
+            {
+                // ShowInfo("Different Floors");
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 bool CNavMesh::raycast(const position_t& start, const position_t& end, bool lookOffMesh)
 {
     TracyZoneScoped;
 
     if (start.x == end.x && start.y == end.y && start.z == end.z)
+    {
+        return true;
+    }
+
+    if (!m_navMesh)
     {
         return true;
     }
@@ -389,6 +572,16 @@ bool CNavMesh::raycast(const position_t& start, const position_t& end, bool look
     dtQueryFilter filter;
     filter.setIncludeFlags(0xffff);
     filter.setExcludeFlags(0);
+
+    // Since detour's raycasting ignores the y component of your search, it is possible to
+    // incorrectly raycast between multiple floors. This leads to mobs being able to aggro
+    // you from above/below and then wallhack their way to you. To get around this, we're
+    // going to query in a small column for polys above and below and then test against
+    // the results.
+    if (!onSameFloor(start, spos, end, epos, filter))
+    {
+        return false;
+    }
 
     dtPolyRef startRef;
     float snearest[3];

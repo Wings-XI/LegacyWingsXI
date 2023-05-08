@@ -249,21 +249,12 @@ void CMobController::TryLink()
 bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bool detectDead)
 {
     TracyZoneScoped;
-    if ((!detectDead) && (PTarget->isDead() || PTarget->isMounted())) return false;
-
-    float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
-
-    if (PMob->m_Family != 6 && verticalDistance > 8.0f)
-    {
-        return false;   
-    }
-
-    if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
+    if ((!detectDead) && (PTarget->isDead() || PTarget->isMounted()))
     {
         return false;
     }
 
-    auto detects = PMob->m_Detects;
+    auto detects         = PMob->m_Detects;
     auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
 
     bool detectSight = (detects & DETECT_SIGHT) || forceSight;
@@ -762,7 +753,9 @@ void CMobController::Move()
             }
             else if (CanMoveForward(currentDistance) && m_DrawInWait < server_clock::now())
             {
-                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > closureDistance)
+                if ((!PMob->PAI->PathFind->IsFollowingPath() ||
+                    distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10 * 10) // recalculate path only if player moves more than X yalms
+                    && currentDistance > closureDistance)
                 {
                     //path to the target if we don't have a path already
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);

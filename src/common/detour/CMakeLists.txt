@@ -1,6 +1,7 @@
 set(SOURCES
     DetourAlloc.cpp
     DetourAlloc.h
+    DetourAssert.cpp
     DetourAssert.h
     DetourCommon.cpp
     DetourCommon.h
