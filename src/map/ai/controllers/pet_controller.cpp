@@ -68,8 +68,15 @@ void CPetController::DoRoamTick(time_point tick)
 
     if (currentDistanceSquared > PetRoamDistance * PetRoamDistance)
     {
-        if (currentDistanceSquared < 35.0f * 35.0f && PPet->PAI->PathFind->PathAround(PPet->PMaster->loc.p, 2.0f, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+        if (currentDistanceSquared < 35.0f * 35.0f)
         {
+            if (!PPet->PAI->PathFind->IsFollowingPath() ||
+                distanceSquared(PPet->PAI->PathFind->GetDestination(), PPet->PMaster->loc.p) > 10 * 10){  // recalculate path only if owner moves more than X yalms
+                if (!PPet->PAI->PathFind->PathAround(PPet->PMaster->loc.p, PetRoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+                {
+                    PPet->PAI->PathFind->PathInRange(PPet->PMaster->loc.p, PetRoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK);
+                }
+            }
             PPet->PAI->PathFind->FollowPath();
         }
         else if (PPet->GetSpeed() > 0)
