@@ -401,20 +401,21 @@ void CPathFind::StepTo(const position_t& pos, bool run)
     TracyZoneScoped;
     float speed = GetRealSpeed() + m_POwner->GetLocalVar("CarefulPathSnapCount");
 
-    int8 mode = 2;
-
-    if (!run)
-    {
-        mode = 1;
-        speed /= 2;
-    }
-
     // TODO should this be /20 for everyone?
     float stepDistance = speed / 24.5f; // 40 ms means 4 units per second, so 1.6 units per step (server tick rate is 2.5/sec)
     if (m_carefulPathing){
         // increase step distance slightly since we snap positions every tick
         stepDistance = speed / 20.0f;
     }
+
+    int8 mode = 2;
+
+    if (!run)
+    {
+        mode = 1;
+        stepDistance /= 2;
+    }
+
     float distanceTo = distance(m_POwner->loc.p, pos);
     float diff_y       = pos.y - m_POwner->loc.p.y;
 
