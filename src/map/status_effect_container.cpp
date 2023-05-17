@@ -1708,6 +1708,12 @@ void CStatusEffectContainer::TickEffects(time_point tick)
                 PStatusEffect->IncrementElapsedTickCount();
                 luautils::OnEffectTick(m_POwner, PStatusEffect);
             }
+
+            // If mob is dead from an effect tick, stop processing altogether
+            if (m_POwner->isDead())
+            {
+                return;
+            }
         }
     }
     DeleteStatusEffects();
