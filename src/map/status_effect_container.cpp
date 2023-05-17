@@ -1698,8 +1698,7 @@ void CStatusEffectContainer::TickEffects(time_point tick)
     {
         for (const auto& PStatusEffect : m_StatusEffectSet)
         {
-            if (!m_POwner->isDead() && // stop processing ticks if mob is dead
-                PStatusEffect->GetTickTime() != 0 &&
+            if (PStatusEffect->GetTickTime() != 0 &&
                 PStatusEffect->GetElapsedTickCount() <= std::chrono::duration_cast<std::chrono::milliseconds>(tick - PStatusEffect->GetStartTime()).count() / PStatusEffect->GetTickTime())
             {
                 if (PStatusEffect->GetFlag() & EFFECTFLAG_AURA)
@@ -1711,12 +1710,8 @@ void CStatusEffectContainer::TickEffects(time_point tick)
             }
         }
     }
-    // separate check after loop if mob is still alive (Could have been killed by a status effect tick)
-    if (!m_POwner->isDead())
-    {
-        DeleteStatusEffects();
-        m_POwner->PAI->EventHandler.triggerListener("EFFECTS_TICK", m_POwner);
-    }
+    DeleteStatusEffects();
+    m_POwner->PAI->EventHandler.triggerListener("EFFECTS_TICK", m_POwner);
 }
 
 /************************************************************************
