@@ -53,6 +53,11 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.LULLABYRES, 100)
 
+    -- for spells to land/do non-trivial damage
+    mob:setMod(tpz.mod.MATT, 100)
+    mob:setMod(tpz.mod.MACC, 150)
+
+
     -- Set Vars
     mob:setLocalVar("next2hr", 1) -- 2hr rotation not reset by a wipe
 end
