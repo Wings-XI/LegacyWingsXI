@@ -21,7 +21,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local duration = 15
+    local duration = 10
     local returnEffect = tpz.effect.STUN
 
     skill:setMsg(MobStatusEffectMove(mob, target, returnEffect, 1, 0, duration))
