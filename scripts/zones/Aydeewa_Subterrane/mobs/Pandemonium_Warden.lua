@@ -75,7 +75,7 @@ petIDs[1] = {ID.mob.PANDEMONIUM_WARDEN +9, ID.mob.PANDEMONIUM_WARDEN +10, ID.mob
 -- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,GuloolJ,  Dverg, Medusa,  Dverg,Gurfurl,  Dverg,   Khim,  Dverg,  Hydra,  Dverg,   Cerb,  Dverg
 --                             WAR            WAR            WAR             WAR             NIN,            RNG,            MNK,            WAR,            WAR,            WAR,
 --                        1      2       3      4       5      6       7       8       9      10      11      12      13      14      15      16      17      18      19      20      21
-local mobHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
+local mobPhaseHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
 local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1805,   1840,   1796,   1840,   1793,   1840}
 local mobSkillID = {   5400,  1000,   5400,  1001,   5400,  1002,   5400,   1003,   5400,    285,   5400,    725,   5400,    326,   5400,    168,   5400,    164,   5400,     62,    316}
 local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,    688,      0,    688,      0,    688,      0}
@@ -97,7 +97,7 @@ local petSpellID = {      2,     0,      2,     0,      2,     0,      2,      0
 ]]
 
 function onMobSpawn(mob)
-
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
     mob:setMod(tpz.mod.DEF, 450)
     mob:setMod(tpz.mod.MEVA, 300)
     mob:setMod(tpz.mod.MDEF, 50)
@@ -133,7 +133,7 @@ function onMobRoam(mob)
     local phase = mob:getLocalVar("phase")
 
     -- Reset phases (but not despawn timer) when rested to "full" from deaggro
-    if phase ~= 1 and mob:getHP() >= mobHP[phase] then
+    if phase ~= 1 and mob:getHP() >= mobPhaseHP[phase] then
         -- Prevent death and hide HP until final phase
         mob:setUnkillable(true)
         mob:hideHP(true)
@@ -232,7 +232,7 @@ function onMobFight(mob, target)
         else
             -- use non-dverger 2-hour at 50% hp of current phase
             if phaseSpecialID > 0 then
-                local halfHP = mobHP[phase] / 2
+                local halfHP = mobPhaseHP[phase] / 2
                 if mobHP < halfHP then
                     mob:useMobAbility(phaseSpecialID)
                     mob:setLocalVar("usedSpecial", 1)
@@ -379,7 +379,7 @@ function phaseChange(mob)
     mob:setTP(0)
 
     mob:setModelId(mobModelID[phase])
-    mob:setHP(mobHP[phase])
+    mob:setHP(mobPhaseHP[phase])
     mob:setSkillList(mobSkillID[phase])
     mob:setMobMod(tpz.mobMod.SKILL_LIST, mobSkillID[phase])
     mob:setSpellList(mobSpellID[phase])

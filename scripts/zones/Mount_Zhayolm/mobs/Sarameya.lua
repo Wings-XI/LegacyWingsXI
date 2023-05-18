@@ -70,6 +70,7 @@ function onMobSkillFinished(mob, target, skill)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 12000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 30000)
     mob:setMobMod(tpz.mobMod.MUG_GIL, 4000)
