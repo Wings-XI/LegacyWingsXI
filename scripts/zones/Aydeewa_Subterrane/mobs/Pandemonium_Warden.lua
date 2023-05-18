@@ -216,6 +216,12 @@ end
 
 function phaseChange(mob)
     local phase = mob:getLocalVar("phase")
+    local effects = mob:getStatusEffects()
+
+    for i=1, #effects do
+        mob:delStatusEffect(effects[i]:getType())
+    end
+
     mob:setLocalVar("usedSpecial", 0)
     -- TODO remove all beneficial status effects on phase change (this needs to get rid of 2hour buffs as well)
 
