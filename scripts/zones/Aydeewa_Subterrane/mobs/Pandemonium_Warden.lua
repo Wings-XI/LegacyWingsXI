@@ -8,6 +8,26 @@
 -- Videos: https://youtu.be/oOCCjH8isiA
 --      https://www.youtube.com/watch?v=T_Us2Tmlm-E
 -- Notes: Lamia uses eagle eye shot, safe to say each phase has the respective 2hr?
+--[[
+Outline of fight:
+Each phase has a starting HP amount. The even-numbered phases start low enough that low-hp mobskills are immediately available and less TP is required to use a mobskill
+Odd-numbered phases are dverger form, and are hard-coded to use cackle, then hellsnap, then change phase. No damage can be inflicted.
+Each phase, PW has the job's respective 2-hour ability at 50% (of the starting) HP
+Final phase is the "true form" and every 25% uses astral flow, which resummons all pets as well as 8 avatars.
+    Everyone except tank should be prepared to get away when this happens, though there's plenty of time to run away unless you get stun locked by pet spells
+        "All avatars are summoned at once, and with them plus the lamps up, its hard to move your character."
+        "You will probably get locked in place and die from game mechanics alone."
+During phase change:
+    PW is stunned to interrupt any current action (since it's not dying, just disappearing)
+    PL are despawned
+    PW is disappeared and model/animation sub are adjusted
+    PW reappears and stun is removed
+    PL are respawned
+    All PW buffs are wiped
+    All mobskill LUA were mostly cleared of family-specific restrictions to let this LUA handle everything
+        phase change sets skill and spell list for PW and PL
+If full wipe happens, DoT will keep PW from regen, which will keep him in current form. If he regens past his phase HP, he resets to phase 1
+--]]
 -----------------------------------
 require("scripts/globals/titles")
 require("scripts/globals/status")
@@ -30,7 +50,7 @@ local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688
 local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
 -- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
 local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,   1746,   1841,    421,   1841,    281,   1839}
-local petSkillID = {      0,   150,      0,   150,      0,   150,      0,    150,      0,    176,      0,    171,      0,    246,      0,    198,      0,   5009,      0,     56,    316}
+local petSkillID = {     91,   150,     91,   150,     91,   150,     91,    150,     91,    176,     91,    171,     91,    246,     91,    198,     91,   5009,     91,     56,    316}
 local petSpellID = {      2,     0,      2,     0,      2,     0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:
@@ -49,6 +69,10 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.DEF, 450)
     mob:setMod(tpz.mod.MEVA, 300)
     mob:setMod(tpz.mod.MDEF, 50)
+
+    mob:setMod(tpz.mod.MATT, 100)
+    mob:setMod(tpz.mod.MACC, 150)
+
     mob:setMobMod(tpz.mobMod.NO_REST, 1) -- will still regen HP when roaming unless it has a DoT
     -- Make sure model is reset back to start
     mob:setModelId(mobModelID[1])
@@ -216,7 +240,7 @@ end
 
 function onCriticalHit(mob)
     local phase = mob:getLocalVar("phase")
-    if phase == 16 or phase == 18 then
+    if phase == 18 then -- Hydra phase
         local critNum = mob:getLocalVar("crits")
 
         if ((critNum+1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
@@ -245,8 +269,12 @@ function phaseChange(mob)
     local phase = mob:getLocalVar("phase")
     local effects = mob:getStatusEffects()
 
+    -- remove all status effects and stun to interrupt any current action
     for i=1, #effects do
         mob:delStatusEffect(effects[i]:getType())
+    end
+    if phase > 1 then
+        mob:addStatusEffect(tpz.effect.STUN, 1, 0, 10)
     end
 
     mob:setLocalVar("usedSpecial", 0)
@@ -275,9 +303,16 @@ function phaseChange(mob)
             mob:SetAutoAttackEnabled(true)
             mob:SetMagicCastingEnabled(true)
             mob:SetMobAbilityEnabled(true)
+            mob:delStatusEffectSilent(tpz.effect.STUN)
+            -- ensure we don't lose claim from forced disengage
+            local target = mob:getTarget()
+            if target then
+                mob:updateClaim(target)
+            end
         end)
 
         mob:AnimationSub(0)
+        mob:setMod(tpz.mod.STUNRES, -10)
         -- Number of crits to lose a head, re-randoming
         mob:setLocalVar("CritToTheFace", math.random(10, 30))
         mob:setLocalVar("crits", 0)
@@ -290,6 +325,7 @@ function phaseChange(mob)
                 mob:setMod(tpz.mod.UDMGRANGE  , -100)
                 mob:setMod(tpz.mod.UDMGBREATH , -100)
                 mob:setMod(tpz.mod.UDMGMAGIC  , -100)
+                mob:setMod(tpz.mod.STUNRES, 100)
             end
             mob:timer(5000, function(mob)
                 mob:setTP(3000)  -- Cackle unless final phase (some other skill will be chosen)
