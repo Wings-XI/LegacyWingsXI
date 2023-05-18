@@ -7,6 +7,10 @@ require("scripts/globals/status")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
+    -- don't spam blaze spikes as PW
+    if caster:getFamily() == 316 and target:hasStatusEffect(tpz.effect.BLAZE_SPIKES) then
+        return 1
+    end
     return 0
 end
 

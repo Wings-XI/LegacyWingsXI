@@ -15,15 +15,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-   if(mob:getFamily() == 91) then
-     local mobSkin = mob:getModelId()
-        if (mobSkin == 1680) then
-            return 0
-        else
-            return 1
-        end
-   end
-   if mob:AnimationSub() == 1 or mob:getMainJob() == tpz.job.MNK or mob:getMainJob() == tpz.job.PUP then     
+   if mob:AnimationSub() == 1 or mob:getMainJob() == tpz.job.MNK or mob:getMainJob() == tpz.job.PUP or mob:getFamily() == 91 then
         return 0
    else 
         return 1
