@@ -22,7 +22,9 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local duration = 15
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.STUN, 1, 0, duration)
+    local returnEffect = tpz.effect.STUN
 
-    return tpz.effect.STUN
+    skill:setMsg(MobStatusEffectMove(mob, target, returnEffect, 1, 0, duration))
+
+    return returnEffect
 end
