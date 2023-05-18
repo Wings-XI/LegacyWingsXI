@@ -24,7 +24,7 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.H2H, info.hitslanded)
 
-    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effects.AMNESIA, 1, 0, 60)
+    MobPhysicalStatusEffectMove(mob, target, skill, tpz.effect.AMNESIA, 1, 0, 60)
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.H2H)
 	if dmg > 0 and skill:getMsg() ~= 31 then target:tryInterruptSpell(mob, info.hitslanded) end
