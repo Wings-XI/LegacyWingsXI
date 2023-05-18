@@ -26,7 +26,7 @@ local triggerHPP = {     95,     2,     95,     2,     95,     2,     95,      2
 local mobHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
 local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1805,   1840,   1796,   1840,   1793,   1840}
 local mobSkillID = {   5400,  1000,   5400,  1001,   5400,  1002,   5400,   1003,   5400,    285,   5400,    725,   5400,    326,   5400,    168,   5400,    164,   5400,     62,    316}
-local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,      0,      0,      0,      0,      0,      0}
+local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,    688,      0,    688,      0,    688,      0}
 local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
 -- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
 local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,   1746,   1841,    421,   1841,    281,   1839}
@@ -47,7 +47,7 @@ local petSpellID = {      2,     0,      2,     0,      2,     0,      2,      0
 function onMobSpawn(mob)
 
     mob:setMod(tpz.mod.DEF, 450)
-    mob:setMod(tpz.mod.MEVA, 380)
+    mob:setMod(tpz.mod.MEVA, 300)
     mob:setMod(tpz.mod.MDEF, 50)
     mob:setMobMod(tpz.mobMod.NO_REST, 1) -- will still regen HP when roaming unless it has a DoT
     -- Make sure model is reset back to start
@@ -214,6 +214,33 @@ function onMobDespawn(mob)
     despawnPets()
 end
 
+function onCriticalHit(mob)
+    local phase = mob:getLocalVar("phase")
+    if phase == 16 or phase == 18 then
+        local critNum = mob:getLocalVar("crits")
+
+        if ((critNum+1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
+            if (mob:AnimationSub() == 0) then
+                mob:AnimationSub(1)
+                mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+            elseif (mob:AnimationSub() == 1) then
+                mob:AnimationSub(2)
+                mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+            else
+                -- Meh
+            end
+
+            -- Number of crits to lose a head, re-randoming
+            mob:setLocalVar("CritToTheFace", math.random(10, 30))
+
+            critNum = 0 -- reset the crits on the NM
+        else
+            critNum = critNum + 1
+        end
+        mob:setLocalVar("crits", critNum)
+    end
+end
+
 function phaseChange(mob)
     local phase = mob:getLocalVar("phase")
     local effects = mob:getStatusEffects()
@@ -223,8 +250,11 @@ function phaseChange(mob)
     end
 
     mob:setLocalVar("usedSpecial", 0)
-    -- TODO remove all beneficial status effects on phase change (this needs to get rid of 2hour buffs as well)
 
+    mob:setMod(tpz.mod.UDMGPHYS   , 0)
+    mob:setMod(tpz.mod.UDMGRANGE  , 0)
+    mob:setMod(tpz.mod.UDMGBREATH , 0)
+    mob:setMod(tpz.mod.UDMGMAGIC  , 0)
     if (phase == 21) then -- Prepare for death
         mob:hideHP(false)
         mob:setUnkillable(false)
@@ -239,6 +269,7 @@ function phaseChange(mob)
         mob:SetMagicCastingEnabled(false)
         mob:SetMobAbilityEnabled(false)
 
+        -- disappear for a bit, then come back with the new mob model
         mob:timer(4000, function(mob)
             mob:setStatus(tpz.status.UPDATE)
             mob:SetAutoAttackEnabled(true)
@@ -246,10 +277,29 @@ function phaseChange(mob)
             mob:SetMobAbilityEnabled(true)
         end)
 
+        mob:AnimationSub(0)
+        -- Number of crits to lose a head, re-randoming
+        mob:setLocalVar("CritToTheFace", math.random(10, 30))
+        mob:setLocalVar("crits", 0)
+        -- dverger phases
         if phase % 2 == 1 then
+            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+            -- takes no damage during intermediate dverger phases
+            if phase ~= 21 then
+                mob:setMod(tpz.mod.UDMGPHYS   , -100)
+                mob:setMod(tpz.mod.UDMGRANGE  , -100)
+                mob:setMod(tpz.mod.UDMGBREATH , -100)
+                mob:setMod(tpz.mod.UDMGMAGIC  , -100)
+            end
             mob:timer(5000, function(mob)
                 mob:setTP(3000)  -- Cackle unless final phase (some other skill will be chosen)
             end)
+        else
+            if phase == 16 or phase == 18 or phase == 20 then
+                mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
+            else
+                mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+            end
         end
 
         despawnPets()
@@ -286,6 +336,7 @@ end
 function handlePet(mob, newPet, oldPet, target, modelId, phase)
     newPet:disengage()
     newPet:setTP(0)
+    newPet:setHP(newPet:getMaxHP())
     newPet:setModelId(modelId)
     if phase ~= nil then
         local petSkills = 0

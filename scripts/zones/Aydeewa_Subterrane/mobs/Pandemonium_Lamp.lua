@@ -46,4 +46,6 @@ function onMobEngaged(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
+    -- cleanup quickly since spawning is blocked until mob is fully despawned
+    DespawnMob(mob:getID())
 end
