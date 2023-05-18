@@ -50,7 +50,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.DMGMAGIC, -30)
     mob:setMod(tpz.mod.CURSERES, 100)
 
-    local changeHP = mob:getHP() - (mob:getHP() * .05)
+    local changeHP = mob:getMaxHP() - (mob:getMaxHP() * .05)
     mob:setLocalVar("changeHP", changeHP)
     mob:setLocalVar("DamageTaken", 0)
     mob:AnimationSub(2)
@@ -59,11 +59,11 @@ function onMobSpawn(mob)
         local damageTaken = mob:getLocalVar("DamageTaken")
         local waitTime = mob:getLocalVar("waitTime")
         damageTaken = damageTaken + amount
-        if damageTaken > 2000 then
+        if damageTaken > mob:getMaxHP() * .05 then
             mob:setLocalVar("DamageTaken", 0)
             if mob:AnimationSub() == 1 and os.time() > waitTime then
                 mob:AnimationSub(2)
-                changeHP = mob:getHP() - (mob:getHP() * .05)
+                changeHP = (mob:getHP() - amount) - (mob:getMaxHP() * .05)
                 mob:setLocalVar("changeHP", changeHP)
                 mob:setLocalVar("waitTime", os.time() + 2)
                 outOfShell(mob)
@@ -78,7 +78,7 @@ function onMobFight(mob, target)
     local changeHP = mob:getLocalVar("changeHP")
     local waitTime = mob:getLocalVar("waitTime")
 
-    if mob:getHP() < changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
+    if mob:getHP() <= changeHP and mob:AnimationSub() == 2 and os.time() > waitTime then
         mob:setLocalVar("DamageTaken", 0)
         mob:AnimationSub(1)
         mob:setLocalVar("waitTime", os.time() + 2)
@@ -86,7 +86,7 @@ function onMobFight(mob, target)
     elseif mob:getHPP() == 100 and mob:AnimationSub() == 1 and os.time() > waitTime then
         mob:setLocalVar("DamageTaken", 0)
         mob:AnimationSub(2)
-        changeHP = mob:getHP() - (mob:getHP() * .05)
+        changeHP = mob:getMaxHP() - (mob:getMaxHP() * .05)
         mob:setLocalVar("changeHP", changeHP)
         mob:setLocalVar("waitTime", os.time() + 2)
         outOfShell(mob)
@@ -115,5 +115,6 @@ function onMobDespawn(mob)
         UpdateNMSpawnPoint(ID.mob.ADAMANTOISE)
         GetMobByID(ID.mob.ADAMANTOISE):setRespawnTime(75600 + math.random(0, 6) * 1800) -- 21 - 24 hours with half hour windows
     end
+    mob:resetLocalVars()
     mob:removeListener("ASPID_TAKE_DAMAGE")
 end
