@@ -27,6 +27,39 @@ During phase change:
     All mobskill LUA were mostly cleared of family-specific restrictions to let this LUA handle everything
         phase change sets skill and spell list for PW and PL
 If full wipe happens, DoT will keep PW from regen, which will keep him in current form. If he regens past his phase HP, he resets to phase 1
+In each even phase, he has access to the respective mobskills of that mob model:
+   - Chariots
+     - Phases 2, 4, 6, 8
+	 - 10k HP each
+	 - Pets: Archaic Gears
+   - Gulool Ja Ja
+     - Phase 10
+	 - 15000 HP
+	 - Pets: Mamool Ja
+   - Medusa
+     - Phase 12
+	 - 15000 HP
+	 - Pets: Lamiae
+   - Gurfurlur the Menacing
+     - Phase 14
+	 - 15000 HP
+	 - Pets: Trolls
+   - Khimaira
+     - Phase 16
+	 - 20000 HP
+	 - Pets: Puks
+   - Hydra
+     - Phase 18
+	 - 20000 HP
+	 - Pets: Dahaks
+   - Cerberus
+     - Phase 20
+	 - 20000 HP
+	 - Pets: Bombs
+   - Dvergr
+     - Phase 21
+	 - 147000 HP
+	 - Pets: Miniature Dvergr
 --]]
 -----------------------------------
 require("scripts/globals/titles")
@@ -42,7 +75,6 @@ petIDs[1] = {ID.mob.PANDEMONIUM_WARDEN +9, ID.mob.PANDEMONIUM_WARDEN +10, ID.mob
 -- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,GuloolJ,  Dverg, Medusa,  Dverg,Gurfurl,  Dverg,   Khim,  Dverg,  Hydra,  Dverg,   Cerb,  Dverg
 --                             WAR            WAR            WAR             WAR             NIN,            RNG,            MNK,            WAR,            WAR,            WAR,
 --                        1      2       3      4       5      6       7       8       9      10      11      12      13      14      15      16      17      18      19      20      21
-local triggerHPP = {     95,     2,     95,     2,     95,     2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2}
 local mobHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
 local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1805,   1840,   1796,   1840,   1793,   1840}
 local mobSkillID = {   5400,  1000,   5400,  1001,   5400,  1002,   5400,   1003,   5400,    285,   5400,    725,   5400,    326,   5400,    168,   5400,    164,   5400,     62,    316}
@@ -155,6 +187,7 @@ end
 function onMobFight(mob, target)
 
     -- Init Vars
+    local mobHP = mob:getHP()
     local mobHPP = mob:getHPP()
     local depopTime = mob:getLocalVar("PWDespawnTime")
     local phase = mob:getLocalVar("phase")
@@ -162,7 +195,7 @@ function onMobFight(mob, target)
     local phaseSpecialID = mob:getLocalVar("usedSpecial") ~= 1 and mobSpecID[phase] or 0 -- "special" refers to 2-hour ability
 
     -- Check for phase change
-    if (phase < 21 and mobHPP <= triggerHPP[phase]) and mob:getLocalVar("phaseChange") ~= 1 then
+    if (phase < 21 and mobHP < 2000) and mob:getLocalVar("phaseChange") ~= 1 then
         mob:setLocalVar("phaseChange", 1)
     end
 
@@ -199,8 +232,8 @@ function onMobFight(mob, target)
         else
             -- use non-dverger 2-hour at 50% hp of current phase
             if phaseSpecialID > 0 then
-                local halfHPP = (triggerHPP[phase] + (100 * mobHP[phase]/mob:getMaxHP())) / 2
-                if mobHPP < halfHPP then
+                local halfHP = mobHP[phase] / 2
+                if mobHP < halfHP then
                     mob:useMobAbility(phaseSpecialID)
                     mob:setLocalVar("usedSpecial", 1)
                 end
