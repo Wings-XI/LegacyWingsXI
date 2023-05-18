@@ -642,6 +642,10 @@ INSERT INTO `mob_family_mods` VALUES(200, 10, 15, 1);
 INSERT INTO `mob_family_mods` VALUES(201, 10, 15, 1);
 INSERT INTO `mob_family_mods` VALUES(202, 10, 15, 1);
 
+-- Pandemonium Warden aoe buffs shared with Lamps
+INSERT INTO `mob_family_mods` VALUES(316, 10, 316, 0);
+INSERT INTO `mob_family_mods` VALUES(91, 10, 316, 0);
+
 --
 -- Indexes for dumped tables
 --
