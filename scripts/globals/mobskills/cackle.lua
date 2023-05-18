@@ -26,9 +26,11 @@ function onMobWeaponSkill(target, mob, skill)
         tpz.effect.MAGIC_DEF_DOWN,
     }
 
+    skill:setMsg(tpz.msg.basic.SKILL_MISS)
     for i = 1, 3 do
         if MobStatusEffectMove(mob, target, typeEffect[i], power, 0, duration) == tpz.msg.basic.SKILL_ENFEEB_IS then
             returnEffect = typeEffect[i]
+            skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
         end
     end
     return returnEffect

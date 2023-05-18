@@ -14,16 +14,6 @@ require("scripts/globals/status")
 function onMobSkillCheck(target, mob, skill)
     local family = mob:getFamily()
 
-    if(family == 316) then
-        local mobSkin = mob:getModelId()
-
-        if (mobSkin == 1805) then
-            return 0
-        else
-            return 1
-        end
-    end
-
     local mobhp = mob:getHPP()
     local result = 1
 
@@ -37,6 +27,8 @@ function onMobSkillCheck(target, mob, skill)
         end
         result = 0
     elseif (family == 315 and mobhp <= 50) then -- Tyger < 50%
+        result = 0
+    elseif family == 316 then
         result = 0
     end
 

@@ -12,24 +12,12 @@ require("scripts/globals/monstertpmoves")
 
 ---------------------------------------------
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getFamily() == 316) then
-        local mobSkin = mob:getModelId()
-
-        if (mobSkin == 1796) then
-            return 0
-        else
-            return 1
-        end
+    -- Can always use, only if target is behind and not exclusive like spike flail
+    if target:isBehind(mob, 96) then
+        return 0
     else
-        -- Can always use, only if target is behind and not exclusive like spike flail
-        if target:isBehind(mob, 96) then
-            return 0
-        else
-            return 1
-        end
+        return 1
     end
-
-    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)

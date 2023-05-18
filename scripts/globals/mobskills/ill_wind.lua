@@ -13,7 +13,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getFamily() == 316 and mob:getModelId() == 1746) or (mob:getFamily() == 286) then
+    if (mob:getFamily() == 316) or (mob:getFamily() == 286) then
         return 0
     else
         return 1

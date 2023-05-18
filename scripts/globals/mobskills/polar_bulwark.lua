@@ -13,15 +13,6 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if (mob:getFamily() == 316) then
-        local mobSkin = mob:getModelId()
-
-        if (mobSkin == 1796) then
-            return 0
-        else
-            return 1
-        end
-    end
    --Only used when 2 or more heads alive
     if (mob:AnimationSub() <= 1) then
         return 0

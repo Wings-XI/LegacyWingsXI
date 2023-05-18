@@ -12,15 +12,6 @@ require("scripts/globals/status")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    
-    if mob:getFamily() == 316 then
-        if mob:getModelId() == 1805 then
-            return 0
-        else
-            return 1
-        end
-    end
-    
     if target:isBehind(mob, 48) then
         return 1
     else
