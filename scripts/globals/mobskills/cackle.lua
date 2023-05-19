@@ -1,7 +1,7 @@
 ---------------------------------------------------
 --  Cackle
 --  Reduces magical attack, magical accuracy, or magical defense of targets in an area of effect.
--- Video evidence that it's only ever one effect applied to all targets in AoE
+-- Video evidence that it's only ever one effect applied to all targets in AoE: https://youtu.be/T_Us2Tmlm-E?t=206
 ---------------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
