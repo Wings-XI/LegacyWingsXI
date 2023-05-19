@@ -46,6 +46,8 @@ function onMobEngaged(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    -- cleanup quickly since spawning is blocked until mob is fully despawned
-    DespawnMob(mob:getID())
+    -- cleanup quickly since spawning is blocked until mob is fully despawned, but this runs for every entity on the enmity table
+    if mob:isSpawned() then
+        DespawnMob(mob:getID())
+    end
 end

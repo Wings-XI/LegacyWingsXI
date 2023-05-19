@@ -7,6 +7,10 @@ require("scripts/globals/magic")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
+    -- Pandemonium Lamps do not use -ga elemental spells
+    if caster:getFamily() == 91 then
+        return 1
+    end
     return 0
 end
 

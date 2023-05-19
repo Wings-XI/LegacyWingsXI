@@ -11,8 +11,8 @@
 --[[
 Outline of fight:
 Each phase has a starting HP amount. The even-numbered phases start low enough that low-hp mobskills are immediately available and less TP is required to use a mobskill
-Odd-numbered phases are dverger form, and are hard-coded to use cackle, then hellsnap, then change phase. No damage can be inflicted.
-Each phase, PW has the job's respective 2-hour ability at 50% (of the starting) HP
+Odd-numbered phases are dverger form, and are hard-coded to use cackle, then hellsnap, then change phase. No damage can be inflicted. And pets do not cast spells
+Each phase, PW has the job's respective 2-hour ability at 50% of the starting HP
 Final phase is the "true form" and every 25% uses astral flow, which resummons all pets as well as 8 avatars.
     Everyone except tank should be prepared to get away when this happens, though there's plenty of time to run away unless you get stun locked by pet spells
         "All avatars are summoned at once, and with them plus the lamps up, its hard to move your character."
@@ -20,11 +20,11 @@ Final phase is the "true form" and every 25% uses astral flow, which resummons a
 During phase change:
     PW is stunned to interrupt any current action (since it's not dying, just disappearing)
     PL are despawned
-    PW is disappeared and model/animation sub are adjusted
+    PW/PL are disappeared and model/animation sub are adjusted
     PW reappears and stun is removed
     PL are respawned
     All PW buffs are wiped
-    All mobskill LUA were mostly cleared of family-specific restrictions to let this LUA handle everything
+    All mobskill LUA were mostly cleared of family-specific restrictions to let this single PW LUA handle everything
         phase change sets skill and spell list for PW and PL
 If full wipe happens, DoT will keep PW from regen, which will keep him in current form. If he regens past his phase HP, he resets to phase 1
 In each even phase, he has access to the respective mobskills of that mob model:
@@ -81,23 +81,33 @@ local mobSkillID = {   5400,  1000,   5400,  1001,   5400,  1002,   5400,   1003
 local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,    688,      0,    688,      0,    688,      0}
 local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
 -- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
-local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,   1746,   1841,    421,   1841,    281,   1839}
+local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1682,   1841,   1746,   1841,    421,   1841,    281,   1839}
 local petSkillID = {     91,   150,     91,   150,     91,   150,     91,    150,     91,    176,     91,    171,     91,    246,     91,    198,     91,   5009,     91,     56,    316}
-local petSpellID = {      2,     0,      2,     0,      2,     0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2}
+local petSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      2,      0,      3,      0,      1,      0,      0,      0,      0,      0,      0,      2}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:
+    No phases seem to use AoE elemental magic, and without reworking the core code below if phase ~= 21
         Chariots - Archaic Gears
+            Melee only
         Gulool Ja Ja - Mamool Ja
+            Some cast blm spells
         Medusa - Lamiae
+            some cast rdm spells
         Gurfurlur the Menacing - Trolls
+            some cast whm, some cast ninjutsu?
         Hydra - Dahaks
+            Melee only
         Khimaira - Puks
+            Melee only
         Cerberus - Bombs
+            Melee only
         Dvergr - Miniature Dvergr
+            All cast blm spells
 ]]
 
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.DEF, 450)
     mob:setMod(tpz.mod.MEVA, 300)
     mob:setMod(tpz.mod.MDEF, 50)
@@ -433,7 +443,8 @@ function handlePet(mob, newPet, oldPet, target, modelId, phase)
         else
             newPet:SetMobAbilityEnabled(false)
         end
-        if petSpells > 0 then
+        -- before final phase, not all lamps in a wave use spells
+        if petSpells > 0 and (phase == 21 or math.random(1,2) == 1) then
             newPet:SetMagicCastingEnabled(true)
             newPet:setMobMod(tpz.mobMod.MAGIC_DELAY, 4)
             newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 70)
