@@ -1,8 +1,8 @@
 -----------------------------------
--- Area: Al'Taieu
---  NPC: Cermet Alcove #2 
+-- Area: Grand Palace
+--  NPC: Cermet Alcove #2
 -- Type: Standard NPC
--- !pos -260.000 -1.000 422.500 33
+-- !pos 796.97 -1 459.97 34
 -----------------------------------
 require("scripts/globals/pathfind")
 ----------------------------------
@@ -12,14 +12,15 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
+    local quasiNPC = GetNPCByID(16916906)
     local quasiStatus = npc:getLocalVar("quasiStatus")
 
     if npc:getLocalVar("quasiStatus") == 0 then
-        GetNPCByID(16916906):setPos(796.97, -1, 459.97)
-        GetNPCByID(16916906):showText(GetNPCByID(16916906), 7356)
-        GetNPCByID(16916906):showNPC(2000)
-        GetNPCByID(16916906):pathTo(772.07, 0, 460.7) 
+        quasiNPC:speed(20)
+        quasiNPC:setPos(796.97, -1, 459.97)
+        quasiNPC:showText(quasiNPC, 7356)
+        quasiNPC:showNPC(500)
+        quasiNPC:pathTo(772.07, 0, 460.7)
         npc:setLocalVar("quasiStatus", 1)
         npc:setLocalVar("checkpoint", 1)
     end
