@@ -8,7 +8,7 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, 1183) and npcUtil.popFromQM(player, npc, {ID.mob.CRIMSON_TOOTHED_PAWBERRY, ID.mob.CRIMSON_TOOTHED_PAWBERRY + 2}, {hide = 900}) then
+    if npcUtil.tradeHas(trade, 1183) and npcUtil.popFromQM(player, npc, ID.mob.CRIMSON_TOOTHED_PAWBERRY, {hide = 900}) then
         player:confirmTrade()
     else
         player:messageSpecial(ID.text.NOTHING_HAPPENS)
