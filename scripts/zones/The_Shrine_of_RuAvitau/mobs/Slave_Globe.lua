@@ -12,6 +12,10 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
+function onMobRoam(mob)
+    onPath(mob)
+end
+
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.MOVE, 200)
     onPath(mob)
@@ -24,16 +28,9 @@ end
 function onPath(mob)
     local mother = GetMobByID(ID.mob.MOTHER_GLOBE.MOTHER)
     if mother:isSpawned() then
-        local mobId = mob:getID()
-        local pPet = GetMobByID(mobId - 1)
-        switch (mobId): caseof {
-            [17506397] = function() mob:pathTo(mother:getXPos() + 0.15, mother:getYPos(), mother:getZPos() + 0.15) end,
-            [17506398] = function() mob:pathTo(pPet:getXPos() + 0.15, pPet:getYPos(), pPet:getZPos() + 0.15) end,
-            [17506399] = function() mob:pathTo(pPet:getXPos() + 0.15, pPet:getYPos(), pPet:getZPos() + 0.15) end,
-            [17506400] = function() mob:pathTo(pPet:getXPos() + 0.15, pPet:getYPos(), pPet:getZPos() + 0.15) end,
-            [17506401] = function() mob:pathTo(pPet:getXPos() + 0.15, pPet:getYPos(), pPet:getZPos() + 0.15) end,
-            [17506402] = function() mob:pathTo(pPet:getXPos() + 0.15, pPet:getYPos(), pPet:getZPos() + 0.15) end,
-        }
+        local petOffset = mob:getID() - ID.mob.MOTHER_GLOBE.MOTHER
+        -- path X yalms away from previous pet, but do it all based on the mother's location
+        mob:pathTo(mother:getXPos() + 0.25 * petOffset, mother:getYPos(), mother:getZPos()  + 0.25 * petOffset)
     end
 end
 

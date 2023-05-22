@@ -8,6 +8,59 @@
 -- Videos: https://youtu.be/oOCCjH8isiA
 --      https://www.youtube.com/watch?v=T_Us2Tmlm-E
 -- Notes: Lamia uses eagle eye shot, safe to say each phase has the respective 2hr?
+--[[
+Outline of fight:
+Each phase has a starting HP amount. The even-numbered phases start low enough that low-hp mobskills are immediately available and less TP is required to use a mobskill
+Odd-numbered phases are dverger form, and are hard-coded to use cackle, then hellsnap, then change phase. No damage can be inflicted. And pets do not cast spells
+Each phase, PW has the job's respective 2-hour ability at 50% of the starting HP
+Final phase is the "true form" and every 25% uses astral flow, which resummons all pets as well as 8 avatars.
+    Everyone except tank should be prepared to get away when this happens, though there's plenty of time to run away unless you get stun locked by pet spells
+        "All avatars are summoned at once, and with them plus the lamps up, its hard to move your character."
+        "You will probably get locked in place and die from game mechanics alone."
+During phase change:
+    PW is stunned to interrupt any current action (since it's not dying, just disappearing)
+    PL are despawned
+    PW/PL are disappeared and model/animation sub are adjusted
+    PW reappears and stun is removed
+    PL are respawned
+    All PW buffs are wiped
+    All mobskill LUA were mostly cleared of family-specific restrictions to let this single PW LUA handle everything
+        phase change sets skill and spell list for PW and PL
+If full wipe happens, DoT will keep PW from regen, which will keep him in current form. If he regens past his phase HP, he resets to phase 1
+In each even phase, he has access to the respective mobskills of that mob model:
+   - Chariots
+     - Phases 2, 4, 6, 8
+	 - 10k HP each
+	 - Pets: Archaic Gears
+   - Gulool Ja Ja
+     - Phase 10
+	 - 15000 HP
+	 - Pets: Mamool Ja
+   - Medusa
+     - Phase 12
+	 - 15000 HP
+	 - Pets: Lamiae
+   - Gurfurlur the Menacing
+     - Phase 14
+	 - 15000 HP
+	 - Pets: Trolls
+   - Khimaira
+     - Phase 16
+	 - 20000 HP
+	 - Pets: Puks
+   - Hydra
+     - Phase 18
+	 - 20000 HP
+	 - Pets: Dahaks
+   - Cerberus
+     - Phase 20
+	 - 20000 HP
+	 - Pets: Bombs
+   - Dvergr
+     - Phase 21
+	 - 147000 HP
+	 - Pets: Miniature Dvergr
+--]]
 -----------------------------------
 require("scripts/globals/titles")
 require("scripts/globals/status")
@@ -22,33 +75,46 @@ petIDs[1] = {ID.mob.PANDEMONIUM_WARDEN +9, ID.mob.PANDEMONIUM_WARDEN +10, ID.mob
 -- Phase Arrays       Dverg, Char1,  Dverg, Char2,  Dverg, Char3,  Dverg,  Char4,  Dverg,GuloolJ,  Dverg, Medusa,  Dverg,Gurfurl,  Dverg,   Khim,  Dverg,  Hydra,  Dverg,   Cerb,  Dverg
 --                             WAR            WAR            WAR             WAR             NIN,            RNG,            MNK,            WAR,            WAR,            WAR,
 --                        1      2       3      4       5      6       7       8       9      10      11      12      13      14      15      16      17      18      19      20      21
-local triggerHPP = {     95,     2,     95,     2,     95,     2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2,     95,      2}
-local mobHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
+local mobPhaseHP =      { 147000, 10000, 147000, 10000, 147000, 10000, 147000,  10000, 147000,  15000, 147000,  15000, 147000,  15000, 147000,  20000, 147000,  20000, 147000,  20000, 147000}
 local mobModelID = {   1840,  1825,   1840,  1825,   1840,  1825,   1840,   1825,   1840,   1863,   1840,   1865,   1840,   1867,   1840,   1805,   1840,   1796,   1840,   1793,   1840}
 local mobSkillID = {   5400,  1000,   5400,  1001,   5400,  1002,   5400,   1003,   5400,    285,   5400,    725,   5400,    326,   5400,    168,   5400,    164,   5400,     62,    316}
-local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,      0,      0,      0,      0,      0,      0}
+local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688,      0,    731,      0,    735,      0,    690,      0,    688,      0,    688,      0,    688,      0}
 local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
 -- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
-local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1680,   1841,   1746,   1841,    421,   1841,    281,   1839}
-local petSkillID = {      0,   150,      0,   150,      0,   150,      0,    150,      0,    176,      0,    171,      0,    246,      0,    198,      0,   5009,      0,     56,    316}
-local petSpellID = {      2,     0,      2,     0,      2,     0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2,      0,      2}
+local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1682,   1841,   1746,   1841,    421,   1841,    281,   1839}
+local petSkillID = {     91,   150,     91,   150,     91,   150,     91,    150,     91,    176,     91,    171,     91,    246,     91,    198,     91,   5009,     91,     56,    316}
+local petSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      2,      0,      3,      0,      1,      0,      0,      0,      0,      0,      0,      2}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:
+    No phases seem to use AoE elemental magic, and without reworking the core code below if phase ~= 21
         Chariots - Archaic Gears
+            Melee only
         Gulool Ja Ja - Mamool Ja
+            Some cast blm spells
         Medusa - Lamiae
+            some cast rdm spells
         Gurfurlur the Menacing - Trolls
+            some cast whm, some cast ninjutsu?
         Hydra - Dahaks
+            Melee only
         Khimaira - Puks
+            Melee only
         Cerberus - Bombs
+            Melee only
         Dvergr - Miniature Dvergr
+            All cast blm spells
 ]]
 
 function onMobSpawn(mob)
-
+    mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.DEF, 450)
-    mob:setMod(tpz.mod.MEVA, 380)
+    mob:setMod(tpz.mod.MEVA, 300)
     mob:setMod(tpz.mod.MDEF, 50)
+
+    mob:setMod(tpz.mod.MATT, 100)
+    mob:setMod(tpz.mod.MACC, 150)
+
     mob:setMobMod(tpz.mobMod.NO_REST, 1) -- will still regen HP when roaming unless it has a DoT
     -- Make sure model is reset back to start
     mob:setModelId(mobModelID[1])
@@ -77,7 +143,7 @@ function onMobRoam(mob)
     local phase = mob:getLocalVar("phase")
 
     -- Reset phases (but not despawn timer) when rested to "full" from deaggro
-    if phase ~= 1 and mob:getHP() >= mobHP[phase] then
+    if phase ~= 1 and mob:getHP() >= mobPhaseHP[phase] then
         -- Prevent death and hide HP until final phase
         mob:setUnkillable(true)
         mob:hideHP(true)
@@ -131,6 +197,7 @@ end
 function onMobFight(mob, target)
 
     -- Init Vars
+    local mobHP = mob:getHP()
     local mobHPP = mob:getHPP()
     local depopTime = mob:getLocalVar("PWDespawnTime")
     local phase = mob:getLocalVar("phase")
@@ -138,7 +205,7 @@ function onMobFight(mob, target)
     local phaseSpecialID = mob:getLocalVar("usedSpecial") ~= 1 and mobSpecID[phase] or 0 -- "special" refers to 2-hour ability
 
     -- Check for phase change
-    if (phase < 21 and mobHPP <= triggerHPP[phase]) and mob:getLocalVar("phaseChange") ~= 1 then
+    if (phase < 21 and mobHP < 2000) and mob:getLocalVar("phaseChange") ~= 1 then
         mob:setLocalVar("phaseChange", 1)
     end
 
@@ -175,8 +242,8 @@ function onMobFight(mob, target)
         else
             -- use non-dverger 2-hour at 50% hp of current phase
             if phaseSpecialID > 0 then
-                local halfHPP = (triggerHPP[phase] + (100 * mobHP[phase]/mob:getMaxHP())) / 2
-                if mobHPP < halfHPP then
+                local halfHP = mobPhaseHP[phase] / 2
+                if mobHP < halfHP then
                     mob:useMobAbility(phaseSpecialID)
                     mob:setLocalVar("usedSpecial", 1)
                 end
@@ -214,11 +281,51 @@ function onMobDespawn(mob)
     despawnPets()
 end
 
+function onCriticalHit(mob)
+    local phase = mob:getLocalVar("phase")
+    if phase == 18 then -- Hydra phase
+        local critNum = mob:getLocalVar("crits")
+
+        if ((critNum+1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
+            if (mob:AnimationSub() == 0) then
+                mob:AnimationSub(1)
+                mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+            elseif (mob:AnimationSub() == 1) then
+                mob:AnimationSub(2)
+                mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
+            else
+                -- Meh
+            end
+
+            -- Number of crits to lose a head, re-randoming
+            mob:setLocalVar("CritToTheFace", math.random(10, 30))
+
+            critNum = 0 -- reset the crits on the NM
+        else
+            critNum = critNum + 1
+        end
+        mob:setLocalVar("crits", critNum)
+    end
+end
+
 function phaseChange(mob)
     local phase = mob:getLocalVar("phase")
-    mob:setLocalVar("usedSpecial", 0)
-    -- TODO remove all beneficial status effects on phase change (this needs to get rid of 2hour buffs as well)
+    local effects = mob:getStatusEffects()
 
+    -- remove all status effects and stun to interrupt any current action
+    for i=1, #effects do
+        mob:delStatusEffect(effects[i]:getType())
+    end
+    if phase > 1 then
+        mob:addStatusEffect(tpz.effect.STUN, 1, 0, 10)
+    end
+
+    mob:setLocalVar("usedSpecial", 0)
+
+    mob:setMod(tpz.mod.UDMGPHYS   , 0)
+    mob:setMod(tpz.mod.UDMGRANGE  , 0)
+    mob:setMod(tpz.mod.UDMGBREATH , 0)
+    mob:setMod(tpz.mod.UDMGMAGIC  , 0)
     if (phase == 21) then -- Prepare for death
         mob:hideHP(false)
         mob:setUnkillable(false)
@@ -233,17 +340,45 @@ function phaseChange(mob)
         mob:SetMagicCastingEnabled(false)
         mob:SetMobAbilityEnabled(false)
 
+        -- disappear for a bit, then come back with the new mob model
         mob:timer(4000, function(mob)
             mob:setStatus(tpz.status.UPDATE)
             mob:SetAutoAttackEnabled(true)
             mob:SetMagicCastingEnabled(true)
             mob:SetMobAbilityEnabled(true)
+            mob:delStatusEffectSilent(tpz.effect.STUN)
+            -- ensure we don't lose claim from forced disengage
+            local target = mob:getTarget()
+            if target then
+                mob:updateClaim(target)
+            end
         end)
 
+        mob:AnimationSub(0)
+        mob:setMod(tpz.mod.STUNRES, -10)
+        -- Number of crits to lose a head, re-randoming
+        mob:setLocalVar("CritToTheFace", math.random(10, 30))
+        mob:setLocalVar("crits", 0)
+        -- dverger phases
         if phase % 2 == 1 then
+            mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+            -- takes no damage during intermediate dverger phases
+            if phase ~= 21 then
+                mob:setMod(tpz.mod.UDMGPHYS   , -100)
+                mob:setMod(tpz.mod.UDMGRANGE  , -100)
+                mob:setMod(tpz.mod.UDMGBREATH , -100)
+                mob:setMod(tpz.mod.UDMGMAGIC  , -100)
+                mob:setMod(tpz.mod.STUNRES, 100)
+            end
             mob:timer(5000, function(mob)
                 mob:setTP(3000)  -- Cackle unless final phase (some other skill will be chosen)
             end)
+        else
+            if phase == 16 or phase == 18 or phase == 20 then
+                mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
+            else
+                mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
+            end
         end
 
         despawnPets()
@@ -254,7 +389,7 @@ function phaseChange(mob)
     mob:setTP(0)
 
     mob:setModelId(mobModelID[phase])
-    mob:setHP(mobHP[phase])
+    mob:setHP(mobPhaseHP[phase])
     mob:setSkillList(mobSkillID[phase])
     mob:setMobMod(tpz.mobMod.SKILL_LIST, mobSkillID[phase])
     mob:setSpellList(mobSpellID[phase])
@@ -280,6 +415,7 @@ end
 function handlePet(mob, newPet, oldPet, target, modelId, phase)
     newPet:disengage()
     newPet:setTP(0)
+    newPet:setHP(newPet:getMaxHP())
     newPet:setModelId(modelId)
     if phase ~= nil then
         local petSkills = 0
@@ -307,7 +443,8 @@ function handlePet(mob, newPet, oldPet, target, modelId, phase)
         else
             newPet:SetMobAbilityEnabled(false)
         end
-        if petSpells > 0 then
+        -- before final phase, not all lamps in a wave use spells
+        if petSpells > 0 and (phase == 21 or math.random(1,2) == 1) then
             newPet:SetMagicCastingEnabled(true)
             newPet:setMobMod(tpz.mobMod.MAGIC_DELAY, 4)
             newPet:setMobMod(tpz.mobMod.HP_STANDBACK, 70)

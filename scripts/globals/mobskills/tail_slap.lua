@@ -17,15 +17,6 @@ function onMobSkillCheck(target, mob, skill)
         return 1
     end
 
-  if(mob:getFamily() == 91) then
-    local mobSkin = mob:getModelId()
-
-    if (mobSkin == 1643) then
-        return 0
-    else
-        return 1
-    end
-  end
     return 0
 end
 
