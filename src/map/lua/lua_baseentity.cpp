@@ -2085,33 +2085,31 @@ inline int32 CLuaBaseEntity::atPoint(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
-    float posX = 0;
-    float posY = 0;
-    float posZ = 0;
+    position_t dest;
 
     if (lua_isnumber(L, 1))
     {
-        posX = (float)lua_tonumber(L, 1);
-        posY = (float)lua_tonumber(L, 2);
-        posZ = (float)lua_tonumber(L, 3);
+        dest.x = (float)lua_tonumber(L, 1);
+        dest.y = (float)lua_tonumber(L, 2);
+        dest.z = (float)lua_tonumber(L, 3);
     }
     else
     {
         // It's a table
         lua_rawgeti(L, 1, 1);
-        posX = (float)lua_tonumber(L, -1);
+        dest.x = (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_rawgeti(L, 1, 2);
-        posY = (float)lua_tonumber(L, -1);
+        dest.y = (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
 
         lua_rawgeti(L, 1, 3);
-        posZ = (float)lua_tonumber(L, -1);
+        dest.z = (float)lua_tonumber(L, -1);
         lua_pop(L, 1);
     }
 
-    lua_pushboolean(L, m_PBaseEntity->loc.p.x == posX && m_PBaseEntity->loc.p.y == posY && m_PBaseEntity->loc.p.z == posZ);
+    lua_pushboolean(L, distanceWithin(m_PBaseEntity->loc.p, dest, 0.1f));
 
     return 1;
 }
