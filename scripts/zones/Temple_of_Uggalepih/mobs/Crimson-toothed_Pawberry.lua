@@ -19,4 +19,6 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 18000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 28000)
+    -- ensure astral flow pet is not spawned stuck somewhere
+    DespawnMob(mob:getID() + 2)
 end

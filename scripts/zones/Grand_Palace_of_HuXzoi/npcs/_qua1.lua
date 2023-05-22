@@ -1,8 +1,8 @@
 -----------------------------------
--- Area: Garden
+-- Area: Grand Palace
 --  NPC: Quasilumin
 -- Type: Standard NPC
--- !pos -27.443 -1 -636.850 33
+-- !pos -260 -1.5 423.5 34
 -----------------------------------
 local ID = require("scripts/zones/Grand_Palace_of_HuXzoi/IDs")
 require("scripts/globals/pathfind")
@@ -27,7 +27,8 @@ function onSpawn(npc)
     npc:setPos(-260, -1.5, 423.5)
     npc:speed(18)
     npc:hideNPC(5000)
-    GetNPCByID(16916928):setLocalVar("quasiStatus", 0)
+    local qmNPC = GetNPCByID(16916927)
+    qmNPC:setLocalVar("quasiStatus", 0)
     local started = npc:setLocalVar("started", 1)
     npc:pathTo(-260.0403, -1, 496.08862)
 end
@@ -59,16 +60,17 @@ function onEventFinish(player, csid, option)
 end
 
 function onPath(npc, player)
+    local qmNPC = GetNPCByID(16916927)
 
-    local quasiStatus = GetNPCByID(16916927):getLocalVar("quasiStatus")
+    local quasiStatus = qmNPC:getLocalVar("quasiStatus")
 
-    if npc:checkDistance(-260.0403, -1, 496.08862) == 0 then
+    if npc:checkDistance(-260.0403, -1, 496.08862) < .1 then
 
         if quasiStatus == 1 then
             npc:showText(npc, 7358)
             npc:showText(npc, 7361)
             GetNPCByID(16916869):openDoor(25)
-            GetNPCByID(16916927):setLocalVar("quasiStatus", 0) 
+            qmNPC:setLocalVar("quasiStatus", 0)
         end
         npc:hideNPC(7000)
         npc:setPos(-260, -1.5, 423.5)
