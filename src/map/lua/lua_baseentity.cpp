@@ -15385,11 +15385,14 @@ inline int32 CLuaBaseEntity::getSystem(lua_State* L)
 inline int32 CLuaBaseEntity::getFamily(lua_State* L)
 {
     auto entity = dynamic_cast<CMobEntity*>(m_PBaseEntity);
-    TPZ_DEBUG_BREAK_IF(!entity);
-
-    uint16 family = entity->m_Family;
-
-    lua_pushinteger(L, family);
+    if(!entity)
+    {
+        lua_pushinteger(L, 0);
+    }
+    else
+    {
+        lua_pushinteger(L, entity->m_Family);
+    }
     return 1;
 }
 

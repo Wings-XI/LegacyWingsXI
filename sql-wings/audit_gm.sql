@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `audit_gm`;
 CREATE TABLE `audit_gm` (
   `date_time` datetime NOT NULL,
-  `zoneId` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `zoneId` smallint(3) UNSIGNED NOT NULL DEFAULT 0,
   `gm_name` varchar(16) NOT NULL,
   `command` varchar(40) NOT NULL,
   `full_string` varchar(200) NOT NULL
