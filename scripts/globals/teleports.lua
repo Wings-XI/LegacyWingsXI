@@ -320,16 +320,27 @@ end
 -----------------------------------
 
 tpz.teleport.toExplorerMoogle = function(player, zone)
-    if zone == 231 then
+    -- WINGSCUSTOM explorer moogle warps only if rank is high enough in respective nation(s)
+    if EXPLORER_MOOGLE_RANK == nil then EXPLORER_MOOGLE_RANK = 0 end
+    local sandy = player:getRank(0) >= EXPLORER_MOOGLE_RANK and true or false
+    local bastok = player:getRank(1) >= EXPLORER_MOOGLE_RANK and true or false
+    local windy = player:getRank(2) >= EXPLORER_MOOGLE_RANK and true or false
+    if zone == 231 and sandy then
         player:setPos(39.4, -0.2, 25, 253, zone)       -- Northern_San_d'Oria
-    elseif zone == 234 then
+    elseif zone == 234 and bastok then
         player:setPos(76.82, 0, -66.12, 232, zone)     -- Bastok_Mines
-    elseif zone == 240 then
+    elseif zone == 240 and windy then
         player:setPos(185.6, -12, 223.5, 96, zone)     -- Port_Windurst
-    elseif zone == 248 then
+    elseif zone == 248 and sandy and bastok and windy then
         player:setPos(14.67, -14.56, 66.69, 96, zone)  -- Selbina
-    elseif zone == 249 then
+    elseif zone == 249 and sandy and bastok and windy then
         player:setPos(2.87, -4, 71.95, 0, zone)        -- Mhaura
+    else
+        -- Didn't meet rank requirements. setPos required as the cutscene blacks out the screen
+        player:PrintToPlayer(string.format("Explorer Moogle : Warps require rank %u in their respective cities (all three for non-nations)", EXPLORER_MOOGLE_RANK), 0x0D)
+        player:queue(1000, function(player)
+            player:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+        end)
     end
 end
 
