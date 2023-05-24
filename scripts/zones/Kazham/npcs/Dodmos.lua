@@ -20,7 +20,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local TrialSizeFire = player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_FIRE)
+    local questRegion = OUTLANDS
+    local questID = tpz.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_FIRE
+    local TrialSizeFire = player:getQuestStatus(questRegion, questID)
 
     if (player:getMainLvl() >= 20 and player:getMainJob() == tpz.job.SMN and TrialSizeFire == QUEST_AVAILABLE and player:getFameLevel(KAZHAM) >= 2) then --Requires player to be Summoner at least lvl 20
         player:startEvent(286, 0, 1544, 0, 20)     --mini tuning fork, zone, level
@@ -33,6 +35,8 @@ function onTrigger(player, npc)
             player:startEvent(290, 0, 1544, 0, 20) --Need another mini tuning fork
         end
     elseif (TrialSizeFire == QUEST_COMPLETED) then
+        -- WINGSCUSTOM re-add quest if completed mama mia
+        tpz.quest.resetTrialSize(player, npc, questRegion, questID)
         player:startEvent(289) --Defeated Avatar
     else
         player:startEvent(275) --Standard dialogue

@@ -1214,3 +1214,17 @@ tpz.quest.id =
         BOOST_KAMIHR_DRIFTS             = 95,
     }
 }
+
+tpz.quest.resetTrialSize = function(player, npc, questRegion, questID)
+    -- WINGSCUSTOM re-add quest if completed mama mia
+    local playerMessage = ""
+    if player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.MAMA_MIA) == QUEST_COMPLETED then
+        playerMessage = "Quest progress reset to allow mini-fork warping."
+        player:delQuest(questRegion, questID)
+        player:addQuest(questRegion, questID)
+    else
+        -- Haiku credit goes to player "Concepcion"
+        playerMessage = "You made a mistake//gimping character for life//should not be a thing. Complete Mama Mia to unlock again."
+    end
+    player:PrintToPlayer(string.format("%s : %s", npc:getName(), playerMessage), 0x0D)
+end

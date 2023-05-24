@@ -20,8 +20,10 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    local questRegion = OUTLANDS
+    local questID = tpz.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_WATER
+    local TrialSizeWater = player:getQuestStatus(questRegion, questID)
 
-    local TrialSizeWater = player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_WATER)
     if (player:getMainLvl() >= 20 and player:getMainJob() == tpz.job.SMN and TrialSizeWater == QUEST_AVAILABLE and player:getFameLevel(NORG) >= 2) then --Requires player to be Summoner at least lvl 20
         player:startEvent(199, 0, 1549, 2, 20)     --mini tuning fork of water, zone, level
     elseif (TrialSizeWater == QUEST_ACCEPTED) then
@@ -33,6 +35,8 @@ function onTrigger(player, npc)
             player:startEvent(203, 0, 1549, 2, 20) --Need another mini tuning fork
         end
     elseif (TrialSizeWater == QUEST_COMPLETED) then
+        -- WINGSCUSTOM re-add quest if completed mama mia
+        tpz.quest.resetTrialSize(player, npc, questRegion, questID)
         player:startEvent(202) --Defeated Avatar
     else
         player:startEvent(114) --Standard dialogue
