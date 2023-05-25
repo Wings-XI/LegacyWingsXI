@@ -35,6 +35,13 @@ function onMobEngaged(mob, target)
                 [798] = function (x) abilityID = 918 end, -- Ramuh
         }
         if abilityID > 0 then
+            -- for astral flow to scale better with mdef. Resets on mob spawn.
+            mob:setMod(tpz.mod.MATT, 0)
+            -- for astral flow to scale dmg/acc for sane player INT values
+            mob:setMod(tpz.mod.INT, -30)
+            -- for astral flow to partial resist better when compared to player meva/resistances
+            mob:setMod(tpz.mod.MACC, -50)
+
             mob:useMobAbility(abilityID)
 
             mob:timer(2000, function(mobArg)

@@ -11,11 +11,6 @@ mixins =
 }
 -----------------------------------
 
-function onMobDeath(mob, player, isKiller)
-    tpz.hunts.checkHunt(mob, player, 392)
-end
-
-
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.GIL_MIN, 18000)
     mob:setMobMod(tpz.mobMod.GIL_MAX, 28000)
@@ -28,6 +23,19 @@ function onMobSpawn(mob)
             {id = tpz.jsa.ASTRAL_FLOW, hpp = 20},
         },
     })
+end
+
+function onMobFight(mob, player)
+    if
+        mob:actionQueueEmpty() and
+        (not GetMobByID(mob:getID() + 1):isSpawned())
+    then
+        mob:castSpell()
+    end
+end
+
+function onMobDeath(mob, player, isKiller)
+    tpz.hunts.checkHunt(mob, player, 392)
 end
 
 function onMobDespawn(mob)
