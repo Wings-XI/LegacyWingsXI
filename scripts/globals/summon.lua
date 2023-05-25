@@ -356,11 +356,11 @@ function AvatarFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadow
     end
 
     if skilltype == tpz.attackType.MAGICAL or skilltype == tpz.attackType.SPECIAL or skilltype == tpz.attackType.BREATH then
-        dmg = target:magicDmgTaken(dmg)
+        dmg = target:magicDmgTaken(dmg, skillparam)
     elseif skilltype == tpz.attackType.RANGED then
         dmg = target:rangedDmgTaken(mob, dmg)
     elseif skilltype == tpz.attackType.PHYSICAL then
-        dmg = target:physicalDmgTaken(mob, dmg, tpz.damageType.SLASHING)
+        dmg = target:physicalDmgTaken(mob, dmg, skillparam)
     end
 
     --TODO: Handle anything else (e.g. if you have Magic Shield and its a Magic skill, then do 0 damage.

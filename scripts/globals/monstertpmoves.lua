@@ -279,7 +279,7 @@ function MobMagicalMove(mob, target, skill, damage, element, dmgmod, tpeffect, t
     local magicDefense = getElementalDamageReduction(target, element)
 
     finaldmg = finaldmg * resist * magicDefense
-    
+
     local ramSS = target:getMod(tpz.mod.RAMPART_STONESKIN)
     if ramSS > 0 then
         if finaldmg >= ramSS then
@@ -382,18 +382,10 @@ function mobAddBonuses(caster, spell, target, dmg, ele)
 
     dmg = math.floor(dmg * burst)
 
-    local mdefBarBonus = 0
-    if
-        ele >= tpz.magic.element.FIRE and
-        ele <= tpz.magic.element.WATER and
-        target:hasStatusEffect(tpz.magic.barSpell[ele])
-    then -- bar- spell magic defense bonus
-        mdefBarBonus = target:getStatusEffect(tpz.magic.barSpell[ele]):getSubPower()
-    end
-
-    magicDmgMod = (256 + target:getMod(tpz.mod.DMGMAGIC)) / 256
-
-    dmg = math.floor(dmg * magicDmgMod)
+    -- mdef is considered in MobMagicalMove
+    -- DMGMAGIC is considered in magicDmgTaken
+    -- magicDmgMod = (100 + target:getMod(tpz.mod.DMGMAGIC)) / 100
+    -- dmg = math.floor(dmg * magicDmgMod)
 
     -- print(affinityBonus)
     -- print(speciesReduction)
@@ -588,7 +580,7 @@ function MobFinalAdjustments(dmg, mob, skill, target, attackType, damageType, sh
 
     elseif attackType == tpz.attackType.MAGICAL then
 
-        dmg = target:magicDmgTaken(dmg)
+        dmg = target:magicDmgTaken(dmg, damageType)
 
     elseif attackType == tpz.attackType.BREATH then
 
