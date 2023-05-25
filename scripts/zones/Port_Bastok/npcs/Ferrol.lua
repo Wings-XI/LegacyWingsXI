@@ -19,8 +19,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    local TrialSizeEarth = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.TRIAL_SIZE_TRIAL_BY_EARTH)
+    local questRegion = BASTOK
+    local questID = tpz.quest.id.bastok.TRIAL_SIZE_TRIAL_BY_EARTH
+    local TrialSizeEarth = player:getQuestStatus(questRegion, questID)
 
     if (player:getMainLvl() >= 20 and player:getMainJob() == tpz.job.SMN and TrialSizeEarth == QUEST_AVAILABLE and player:getFameLevel(BASTOK) >= 2) then -- Requires player to be Summoner at least lvl 20
         player:startEvent(297, 0, 1547, 1, 20)     --mini tuning fork, zone, level
@@ -35,6 +36,8 @@ function onTrigger(player, npc)
             player:startEvent(303) -- Standard dialog when you loose, and you don't wait 1 real day
         end
     elseif (TrialSizeEarth == QUEST_COMPLETED) then
+        -- WINGSCUSTOM re-add quest if completed mama mia
+        tpz.quest.resetTrialSize(player, npc, questRegion, questID)
         player:startEvent(300) -- Defeated Avatar
     else
         player:startEvent(254) -- Standard dialog

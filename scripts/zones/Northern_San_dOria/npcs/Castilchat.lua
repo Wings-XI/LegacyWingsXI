@@ -18,8 +18,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    local TrialSizeByIce = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.TRIAL_SIZE_TRIAL_BY_ICE)
+    local questRegion = SANDORIA
+    local questID = tpz.quest.id.sandoria.TRIAL_SIZE_TRIAL_BY_ICE
+    local TrialSizeByIce = player:getQuestStatus(questRegion, questID)
 
     if (player:getMainLvl() >= 20 and player:getMainJob() == tpz.job.SMN and TrialSizeByIce == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) >= 2) then -- Requires player to be Summoner at least lvl 20
         player:startEvent(733, 0, 1545, 4, 20)     --mini tuning fork of ice, zone, level
@@ -34,6 +35,8 @@ function onTrigger(player, npc)
             player:startEvent(758) -- Standard dialog when you loose, and you don't wait 1 real day
         end
     elseif (TrialSizeByIce == QUEST_COMPLETED) then
+        -- WINGSCUSTOM re-add quest if completed mama mia
+        tpz.quest.resetTrialSize(player, npc, questRegion, questID)
         player:startEvent(736) -- Defeated Avatar
     else
         player:startEvent(711) -- Standard dialog

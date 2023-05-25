@@ -18,8 +18,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    local TrialSizeLightning = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.TRIAL_SIZE_TRIAL_BY_LIGHTNING)
+    local questRegion = OTHER_AREAS_LOG
+    local questID = tpz.quest.id.otherAreas.TRIAL_SIZE_TRIAL_BY_LIGHTNING
+    local TrialSizeLightning = player:getQuestStatus(questRegion, questID)
 
     if (player:getMainLvl() >= 20 and player:getMainJob() == tpz.job.SMN and TrialSizeLightning == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 2) then --Requires player to be Summoner at least lvl 20
         player:startEvent(10025, 0, 1548, 5, 20)     --mini tuning fork of lightning, zone, level
@@ -32,6 +33,8 @@ function onTrigger(player, npc)
             player:startEvent(10029, 0, 1548, 5, 20) --Need another mini tuning fork
         end
     elseif (TrialSizeLightning == QUEST_COMPLETED) then
+        -- WINGSCUSTOM re-add quest if completed mama mia
+        tpz.quest.resetTrialSize(player, npc, questRegion, questID)
         player:startEvent(10028) --Defeated Ramuh
     else
         player:startEvent(10021) --Standard dialogue

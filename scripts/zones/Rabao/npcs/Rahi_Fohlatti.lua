@@ -18,7 +18,9 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local TrialSizeWind = player:getQuestStatus(OUTLANDS, tpz.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_WIND)
+    local questRegion = OUTLANDS
+    local questID = tpz.quest.id.outlands.TRIAL_SIZE_TRIAL_BY_WIND
+    local TrialSizeWind = player:getQuestStatus(questRegion, questID)
 
     if (player:getMainLvl() >= 20 and player:getMainJob() == tpz.job.SMN and TrialSizeWind == QUEST_AVAILABLE and player:getFameLevel(RABAO) >= 2) then --Requires player to be Summoner at least lvl 20
         player:startEvent(108, 0, 1546, 3, 20)     --mini tuning fork, zone, level
@@ -33,6 +35,8 @@ function onTrigger(player, npc)
             player:startEvent(114) -- Standard dialog when you loose, and you don't wait 1 real day
         end
     elseif (TrialSizeWind == QUEST_COMPLETED) then
+        -- WINGSCUSTOM re-add quest if completed mama mia
+        tpz.quest.resetTrialSize(player, npc, questRegion, questID)
         player:startEvent(111) -- Defeated Avatar
     else
         player:startEvent(71) -- Standard dialogue
