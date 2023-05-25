@@ -8,15 +8,6 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    -- if mob is a Pandemonium Lamp
-    if mob:getID() >= 17056169 and mob:getID() <= 17056185 then
-        -- only bomb form is allowed to use
-        local mobSkin = mob:getModelId()
-        if (mobSkin ~= 281) then
-            return 1
-        end
-    end
-
     return 0
 end
 

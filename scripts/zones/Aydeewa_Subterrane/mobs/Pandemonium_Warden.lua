@@ -82,7 +82,7 @@ local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688
 local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
 -- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
 local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1682,   1841,   1746,   1841,    421,   1841,    281,   1839}
-local petSkillID = {     91,   150,     91,   150,     91,   150,     91,    150,     91,    176,     91,    171,     91,    246,     91,    198,     91,   5009,     91,     56,    316}
+local petSkillID = {     91,   150,     91,   150,     91,   150,     91,    150,     91,    176,     91,    171,     91,    246,     91,    198,     91,   5009,     91,    300,    316}
 local petSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      2,      0,      3,      0,      1,      0,      0,      0,      0,      0,      0,      2}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:

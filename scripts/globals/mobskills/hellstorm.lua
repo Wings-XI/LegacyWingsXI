@@ -12,16 +12,6 @@ function onMobSkillCheck(target, mob, skill)
     -- if mob is Reacton, he is not allowed to use this skill before phase 3
     if mobID == 17031599 and mob:AnimationSub() < 2 then
         return 1
-
-    -- if mob is a Pandemonium Lamp
-    elseif mobID >= 17056169 and mobID <= 17056185 then
-        -- only bomb form is allowed to use
-        local mobSkin = mob:getModelId()
-        if (mobSkin ~= 281) then
-            return 1
-        end
-    end
-
     return 0
 end
 
