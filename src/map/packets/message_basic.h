@@ -44,6 +44,8 @@ enum MSGBASIC_ID : uint16
     MSGBASIC_CANNOT_ATTACK_TARGET       = 446, /* You cannot attack that target */
     /* Status */ 
     MSGBASIC_IS_PARALYZED               =  29, /* The <player> is paralyzed. */
+    MSGBASIC_IS_STATUS                  = 203, /* <target> is <status>. */
+    MSGBASIC_STATUS_GAIN                = 421, /* <target> receives the effect of .. */
     /* Weaponskills */
     MSGBASIC_UNABLE_TO_USE_WS           =  89, /* Unable to use weaponskill. */
     MSGBASIC_CANNOT_USE_WS              = 190, /* The <player> cannot use that weapon ability. */
