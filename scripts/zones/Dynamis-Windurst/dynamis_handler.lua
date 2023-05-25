@@ -38,7 +38,7 @@ function onDynamisNewInstance()
         if mobList[zone][i] ~= nil then
             local mob = GetMobByID(i)
             mob:setNM(true)
-            -- mob:setCarefulPathing()
+            mob:setCarefulPathing()
             mob:resetLocalVars()
             if mobList[zone][i].pos ~= nil then
                 mob:setSpawn(mobList[zone][i].pos[1],mobList[zone][i].pos[2],mobList[zone][i].pos[3],mobList[zone][i].pos[4])
