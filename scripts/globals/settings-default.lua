@@ -161,6 +161,7 @@ FISHING_NEW_PLAYER_MIN_LV = 20 -- What's the minimum level a character need to n
 
 -- CELEBRATIONS
 EXPLORER_MOOGLE_LV = 0 -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
+EXPLORER_MOOGLE_RANK = 0 -- If above is non-zero, this is checked to further restrict usage of the explorer moogles based on nation rank
 HALLOWEEN_2005 = 0 -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
 HALLOWEEN_YEAR_ROUND = 0 -- Set to 1 to have Harvest Festival initialize outside of normal times.
 TRICK_ALWAYS_ACTIVE = 0 -- Trick staff effect works even if Harvest Festival are disabled.
