@@ -12,6 +12,7 @@ Author: Caelic
 #include "spirit_controller.h"
 #include "../states/magic_state.h"
 #include "../ai_container.h"
+#include "../../packets/action.h"
 #include "../../utils/battleutils.h"
 #include "../../lua/luautils.h"
 #include "../../../common/utils.h"
@@ -31,8 +32,10 @@ CSpiritController::CSpiritController(CPetEntity* PPet) : CPetController(PPet),
 {;
     PCastTarget = nullptr;
     m_LastActionTime = m_Tick - 30ms * tpzrand::GetRandomNumber(0,100);
+    // set last magic way in the future so first server tick after pet is out, it recalcs with initial == true.
+    //This allows for gearswap immediately after summon to affect timer
+    m_LastMagicTime = m_Tick + 100s;
     LoadSpiritSpellList();
-    setMagicCooldowns(true);
 }
 
 void CSpiritController::setMagicCooldowns(bool initial)
@@ -50,7 +53,10 @@ void CSpiritController::setMagicCooldowns(bool initial)
     m_magicCooldown = 45000ms - 333ms * skill - 1000ms * mod - 3000ms * day - 2000ms * weather - 5000ms * AF;
     m_actionCooldown = 3000ms - 25ms * skill;
     if (initial)
+    {
         m_LastMagicTime = m_Tick - m_magicCooldown / 2;
+        // m_LastActionTime = m_Tick - m_actionCooldown / 2; // reset last action time as well?
+    }
     // All elementals when freshly summoned, have their spirit timer already counting down from half.
 }
 
@@ -58,7 +64,18 @@ void CSpiritController::DoRoamTick(time_point tick)
 {
     // if it is interrupted, casting delay starts 1 second after it becomes interrupted.
     if (m_LastMagicTime - 1s > m_Tick)
-        m_LastMagicTime = m_Tick + 1s;
+    {
+        if (m_LastMagicTime > m_Tick + 15s)
+        { // first cast interval (no spell has 15s casting time)
+            ShowDebug("first spirit cast interval\n");
+            setMagicCooldowns(true);
+        }
+        else
+        {
+            ShowDebug("resetting spirit cast timer from spell interruption\n");
+            m_LastMagicTime = m_Tick + 1s;
+        }
+    }
 
     if (TryAction() && TryIdleSpellcast())
     {
@@ -75,7 +92,18 @@ void CSpiritController::DoCombatTick(time_point tick)
 {
     // if it is interrupted, casting delay starts 1 second after it becomes interrupted.
     if (m_LastMagicTime - 1s > m_Tick)
-        m_LastMagicTime = m_Tick + 1s;
+    {
+        if (m_LastMagicTime > m_Tick + 15s)
+        { // first cast interval (no spell has 15s casting time)
+            ShowDebug("first spirit cast interval\n");
+            setMagicCooldowns(true);
+        }
+        else
+        {
+            ShowDebug("resetting spirit cast timer from spell interruption\n");
+            m_LastMagicTime = m_Tick + 1s;
+        }
+    }
 
     if ((PSpirit->PMaster == nullptr || PSpirit->PMaster->isDead()) && PSpirit->isAlive()) {
         PSpirit->Die();
@@ -85,7 +113,7 @@ void CSpiritController::DoCombatTick(time_point tick)
     if (PTarget == nullptr && PSpirit->PMaster != nullptr && // PTarget is set by this function, so being null implies it's the first combat tick
         static_cast<CBattleEntity*>(PSpirit->GetEntity(PSpirit->GetBattleTargetID()))->GetBattleTarget() != PSpirit->PMaster)  // if spirit's target isn't currently targetting the smn, then assault was used
     {
-        ShowDebug("resetting spirit cast timer\n");
+        ShowDebug("resetting spirit cast timer from assault\n");
         m_LastMagicTime = m_Tick + 1s; // The pet commands "Assault" and "Retreat" reset the spirit timer.
     }
     // else
@@ -129,6 +157,9 @@ bool CSpiritController::TryAction()
 
 bool CSpiritController::TrySpellcast()
 {
+    // ensure accession is removed before next spell
+    PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
+
     if (!PSpirit->PMaster || m_Tick <= m_LastMagicTime + m_magicCooldown || !CanCastSpells())
         return false;
 
@@ -158,7 +189,7 @@ bool CSpiritController::TrySpellcast()
         break;
     case PETID_LIGHTSPIRIT:
     // TODO determine if it should be able to cure in combat and curaga on other alliance parties
-        if (TryIdleSpellcast()                                                                                           ) {  } // spell set in TryIdleSpellCast function. Light spirit can buff and heal in combat
+        if (TryIdleSpellcast()                                                                                           ) { return true; } // spell set in TryIdleSpellCast function. Light spirit can buff and heal in combat
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.50f                       - AF * 1.0f) { spell = GetDOT(petid); } // dia,dia2
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.17f - 0.002f * skillbonus - AF * 1.0f) { spell = GetEnfeeble(petid); } // flash
         if (spell == SpellID::NULLSPELL && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.30f - 0.002f * skillbonus + AF * 1.0f) { spell = GetAM(petid); } // holy
@@ -182,6 +213,9 @@ bool CSpiritController::TrySpellcast()
 
 bool CSpiritController::TryIdleSpellcast()
 {
+    // ensure accession is removed before next spell
+    PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
+
     if (PSpirit->m_PetID != PETID_LIGHTSPIRIT || !PSpirit->PMaster || m_Tick <= m_LastMagicTime + m_magicCooldown || !CanCastSpells())
         return false;
 
@@ -211,7 +245,22 @@ bool CSpiritController::TryIdleSpellcast()
         }
 
         if (aoeSpell)
-            PSpirit->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_ACCESSION, EFFECT_ACCESSION, 1, 0, 15));
+        { // give notification that accession is gained, if possible
+            if (PSpirit->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_ACCESSION, EFFECT_ACCESSION, 1, 0, 15)))
+            {
+                action_t action;
+                action.id              = PSpirit->id;
+                action.actiontype      = ACTION_JOBABILITY_FINISH;
+                auto& list             = action.getNewActionList();
+                list.ActionTargetID    = PSpirit->id;
+                auto& actionTarget     = list.getNewActionTarget();
+                actionTarget.reaction  = REACTION_NONE;
+                actionTarget.animation = 175;
+                actionTarget.messageID = MSGBASIC_IS_STATUS;
+                actionTarget.param     = EFFECT_ACCESSION;
+                PSpirit->loc.zone->PushPacket(PSpirit, CHAR_INRANGE_SELF, new CActionPacket(action));
+            }
+        }
 
         return true;
     }
@@ -607,7 +656,7 @@ bool CSpiritController::Disengage()
 {
     if (PTarget != nullptr && PSpirit->PMaster != nullptr && !PTarget->isDead())  // if target of spirit isn't dead, retreat was used
     {
-        ShowDebug("resetting spirit cast timer\n");
+        ShowDebug("resetting spirit cast timer from retreat\n");
         m_LastMagicTime = m_Tick + 1s; // The pet commands "Assault" and "Retreat" reset the spirit timer.
     }
     // else
