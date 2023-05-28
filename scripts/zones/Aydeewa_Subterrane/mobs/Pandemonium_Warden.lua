@@ -137,6 +137,7 @@ function onMobSpawn(mob)
 end
 
 function onMobDisengage(mob)
+    mob:delStatusEffectSilent(tpz.effect.GEO_POISON) -- WINGSCUSTOM DoT first half of each even-numbered phase
     despawnPets()
     mob:SetMagicCastingEnabled(false)
 end
@@ -246,6 +247,7 @@ function onMobFight(mob, target)
             if phaseSpecialID > 0 then
                 local halfHP = mobPhaseHP[phase] / 2
                 if mobHP < halfHP then
+                    mob:delStatusEffectSilent(tpz.effect.GEO_POISON) -- WINGSCUSTOM DoT first half of each even-numbered phase
                     mob:useMobAbility(phaseSpecialID)
                     mob:setLocalVar("usedSpecial", 1)
                 end
@@ -344,6 +346,13 @@ function phaseChange(mob)
 
         -- disappear for a bit, then come back with the new mob model
         mob:timer(4000, function(mob)
+            -- WINGSCUSTOM DoT first half of each even-numbered phase
+            if mob:getLocalVar("QoL-DoT") == 1 then
+                local power = 300
+                mob:addStatusEffect(tpz.effect.GEO_POISON, power, 3, 600)
+            else
+                mob:delStatusEffectSilent(tpz.effect.GEO_POISON)
+            end
             mob:setStatus(tpz.status.UPDATE)
             mob:SetAutoAttackEnabled(true)
             mob:SetMagicCastingEnabled(true)
@@ -362,6 +371,7 @@ function phaseChange(mob)
         mob:setLocalVar("CritToTheFace", math.random(10, 30))
         mob:setLocalVar("crits", 0)
         -- dverger phases
+        mob:setLocalVar("QoL-DoT", 0)
         if phase % 2 == 1 then
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
             -- takes no damage during intermediate dverger phases
@@ -376,6 +386,7 @@ function phaseChange(mob)
                 mob:setTP(3000)  -- Cackle unless final phase (some other skill will be chosen)
             end)
         else
+            mob:setLocalVar("QoL-DoT", 1)
             if phase == 16 or phase == 18 or phase == 20 then
                 mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
             else
