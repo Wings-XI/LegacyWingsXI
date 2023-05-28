@@ -157,9 +157,6 @@ bool CSpiritController::TryAction()
 
 bool CSpiritController::TrySpellcast()
 {
-    // ensure accession is removed before next spell
-    PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
-
     if (!PSpirit->PMaster || m_Tick <= m_LastMagicTime + m_magicCooldown || !CanCastSpells())
         return false;
 
@@ -197,6 +194,9 @@ bool CSpiritController::TrySpellcast()
         break;
     }
 
+    // ensure accession is removed before next spell if not AoE
+    PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
+
     if (spell > SpellID::Raise) // not a cure
         PCastTarget = PTarget; // target the battle target
 
@@ -213,9 +213,6 @@ bool CSpiritController::TrySpellcast()
 
 bool CSpiritController::TryIdleSpellcast()
 {
-    // ensure accession is removed before next spell
-    PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
-
     if (PSpirit->m_PetID != PETID_LIGHTSPIRIT || !PSpirit->PMaster || m_Tick <= m_LastMagicTime + m_magicCooldown || !CanCastSpells())
         return false;
 
@@ -245,8 +242,8 @@ bool CSpiritController::TryIdleSpellcast()
         }
 
         if (aoeSpell)
-        { // give notification that accession is gained, if possible
-            if (PSpirit->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_ACCESSION, EFFECT_ACCESSION, 1, 0, 15)))
+        { // give notification that accession is gained, if possible. Long duration to avoid seeing the "accession wears off" message
+            if (PSpirit->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_ACCESSION, EFFECT_ACCESSION, 1, 0, 100)))
             {
                 action_t action;
                 action.id              = PSpirit->id;
@@ -260,6 +257,11 @@ bool CSpiritController::TryIdleSpellcast()
                 actionTarget.param     = EFFECT_ACCESSION;
                 PSpirit->loc.zone->PushPacket(PSpirit, CHAR_INRANGE_SELF, new CActionPacket(action));
             }
+        }
+        else
+        {
+            // ensure accession is removed before next spell if not AoE
+            PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
         }
 
         return true;
