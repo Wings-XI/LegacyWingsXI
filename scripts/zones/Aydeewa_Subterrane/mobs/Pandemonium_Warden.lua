@@ -82,7 +82,7 @@ local mobSpecID  = {      0,   688,      0,   688,      0,   688,      0,    688
 local mobSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      7,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      2}
 -- pets          corpslight, gears, clight, gears, clight, gears, clight,  gears, clight,MamoolJ, clight, Lamiae, clight, Trolls, clight,   Puks, clight, Dahaks, clight,  Bombs,MiniDverg
 local petModelID = {   1841,  1820,   1841,  1820,   1841,  1820,   1841,   1820,   1841,   1639,   1841,   1643,   1841,   1682,   1841,   1746,   1841,    421,   1841,    281,   1839}
-local petSkillID = {     91,   150,     91,   150,     91,   150,     91,    150,     91,    176,     91,    171,     91,    246,     91,    198,     91,   5009,     91,    300,    316}
+local petSkillID = {      0,   150,      0,   150,      0,   150,      0,    150,      0,    176,      0,    171,      0,    246,      0,    198,      0,   5009,      0,    300,    316}
 local petSpellID = {      0,     0,      0,     0,      0,     0,      0,      0,      0,      2,      0,      3,      0,      1,      0,      0,      0,      0,      0,      0,      2}
 --[[
     Their (pet's) form varies depending on what mob the Warden is currently mimicking:
@@ -106,6 +106,8 @@ local petSpellID = {      0,     0,      0,     0,      0,     0,      0,      0
 ]]
 
 function onMobSpawn(mob)
+    mob:setMod(tpz.mod.STATUSRES, 50)
+
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
     mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.DEF, 450)
@@ -135,6 +137,7 @@ function onMobSpawn(mob)
 end
 
 function onMobDisengage(mob)
+    mob:delStatusEffectSilent(tpz.effect.GEO_POISON) -- WINGSCUSTOM DoT first half of each even-numbered phase
     despawnPets()
     mob:SetMagicCastingEnabled(false)
 end
@@ -244,6 +247,7 @@ function onMobFight(mob, target)
             if phaseSpecialID > 0 then
                 local halfHP = mobPhaseHP[phase] / 2
                 if mobHP < halfHP then
+                    mob:delStatusEffectSilent(tpz.effect.GEO_POISON) -- WINGSCUSTOM DoT first half of each even-numbered phase
                     mob:useMobAbility(phaseSpecialID)
                     mob:setLocalVar("usedSpecial", 1)
                 end
@@ -342,6 +346,13 @@ function phaseChange(mob)
 
         -- disappear for a bit, then come back with the new mob model
         mob:timer(4000, function(mob)
+            -- WINGSCUSTOM DoT first half of each even-numbered phase
+            if mob:getLocalVar("QoL-DoT") == 1 then
+                local power = 300
+                mob:addStatusEffect(tpz.effect.GEO_POISON, power, 3, 600)
+            else
+                mob:delStatusEffectSilent(tpz.effect.GEO_POISON)
+            end
             mob:setStatus(tpz.status.UPDATE)
             mob:SetAutoAttackEnabled(true)
             mob:SetMagicCastingEnabled(true)
@@ -360,6 +371,7 @@ function phaseChange(mob)
         mob:setLocalVar("CritToTheFace", math.random(10, 30))
         mob:setLocalVar("crits", 0)
         -- dverger phases
+        mob:setLocalVar("QoL-DoT", 0)
         if phase % 2 == 1 then
             mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(tpz.behavior.NO_TURN)))
             -- takes no damage during intermediate dverger phases
@@ -374,6 +386,7 @@ function phaseChange(mob)
                 mob:setTP(3000)  -- Cackle unless final phase (some other skill will be chosen)
             end)
         else
+            mob:setLocalVar("QoL-DoT", 1)
             if phase == 16 or phase == 18 or phase == 20 then
                 mob:setBehaviour(bit.bor(mob:getBehaviour(), tpz.behavior.NO_TURN))
             else
@@ -437,11 +450,13 @@ function handlePet(mob, newPet, oldPet, target, modelId, phase)
         newPet:setMobMod(tpz.mobMod.SKILL_LIST, petSkills)
         newPet:setSkillList(petSkills)
 
-        newPet:SetAutoAttackEnabled(true)
+        -- Don't autoattack if no mobskills (corpselights don't auto or cast)
         if petSkills > 0 then
             newPet:SetMobAbilityEnabled(true)
+            newPet:SetAutoAttackEnabled(true)
         else
             newPet:SetMobAbilityEnabled(false)
+            newPet:SetAutoAttackEnabled(false)
         end
         -- before final phase, not all lamps in a wave use spells
         if petSpells > 0 and (phase == 21 or math.random(1,2) == 1) then
