@@ -109,6 +109,7 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.STATUSRES, 50)
 
     mob:setMobMod(tpz.mobMod.ALLI_HATE, 30)
+    mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
     mob:setMobMod(tpz.mobMod.HP_STANDBACK, 0)
     mob:setMod(tpz.mod.DEF, 450)
     mob:setMod(tpz.mod.MEVA, 300)
@@ -208,7 +209,7 @@ function onMobFight(mob, target)
     local phaseSpecialID = mob:getLocalVar("usedSpecial") ~= 1 and mobSpecID[phase] or 0 -- "special" refers to 2-hour ability
 
     -- Check for phase change
-    if (phase < 21 and mobHP < 2000) and mob:getLocalVar("phaseChange") ~= 1 then
+    if (phase < 21 and mobHP < 1000) and mob:getLocalVar("phaseChange") ~= 1 then
         mob:setLocalVar("phaseChange", 1)
     end
 

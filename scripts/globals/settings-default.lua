@@ -24,7 +24,7 @@ ENABLE_TOAU    = 1
 ENABLE_WOTG    = 1
 ENABLE_ACP     = 1
 ENABLE_AMK     = 0
-ENABLE_ASA     = 0
+ENABLE_ASA     = 1
 ENABLE_ABYSSEA = 0
 ENABLE_SOA     = 0
 ENABLE_ROV     = 0
@@ -32,7 +32,7 @@ ENABLE_VOIDWATCH = 0 -- Not an expansion, but has its own storyline.
 
 -- FIELDS OF VALOR/Grounds of Valor settings
 ENABLE_FIELD_MANUALS  = 1 -- Enables Fields of Valor
-ENABLE_GROUNDS_TOMES  = 0 -- Enables Grounds of Valor
+ENABLE_GROUNDS_TOMES  = 1 -- Enables Grounds of Valor
 ENABLE_PROWESS = 0        -- Enabes Prowess buffs from GoV completions
 ENABLE_SURVIVAL_GUIDE = 0 -- Enables Survival Guides
 REGIME_WAIT = 1 -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
@@ -205,13 +205,13 @@ UNSTUCK_WAIT = 1200 -- How long should the player be frozen before being telepor
 
 -- ASSAULTS | ZNMs
 IS_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take assault and door to let you enter in assault area
-IS_NYZUL_ISLE_ASSAULT_ACTIVATED = 0 -- Npcs allow you to take Nyzul Isle assault orders and runic seal lets you enter the assault area
+IS_NYZUL_ISLE_ASSAULT_ACTIVATED = 1 -- Npcs allow you to take Nyzul Isle assault orders and runic seal lets you enter the assault area
 MAX_ASSAULT_PROMOTION_ALLOWED = 1 -- Maximum assault rank you can get from assault's NPCs (1 = PSC, 2 = PFC, 3 = SP, ...)
-ZNM_Enabled = 0 -- Enables/Disables ZNM NPC Behavior and Tier 1 ZNMs
-ZNM_Tier2 = 0 -- Enables/Disables ZNM T2
-ZNM_Tier3 = 0 -- Enables/Disables ZNM T3
-ZNM_Tier4 = 0 -- Enables/Disables ZNM T4
-ZNM_Tier5 = 0 -- Enables/Disables ZNM T5
+ZNM_Enabled = 1 -- Enables/Disables ZNM NPC Behavior and Tier 1 ZNMs
+ZNM_Tier2 = 1 -- Enables/Disables ZNM T2
+ZNM_Tier3 = 1 -- Enables/Disables ZNM T3
+ZNM_Tier4 = 1 -- Enables/Disables ZNM T4
+ZNM_Tier5 = 1 -- Enables/Disables ZNM T5
 
 -- HOOKS
 HOOK_FILE_NAME = "" -- Create a file named "hook-<name>.lua" and set the value to "<name>" to enable
