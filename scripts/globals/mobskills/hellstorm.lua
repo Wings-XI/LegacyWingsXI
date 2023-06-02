@@ -12,6 +12,7 @@ function onMobSkillCheck(target, mob, skill)
     -- if mob is Reacton, he is not allowed to use this skill before phase 3
     if mobID == 17031599 and mob:AnimationSub() < 2 then
         return 1
+    end
     return 0
 end
 
