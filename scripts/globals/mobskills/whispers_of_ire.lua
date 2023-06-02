@@ -22,7 +22,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    if -- Blighting Brand, remove all debuffs
+    if -- Blighting Brand: "can also use this on himself to remove all enfeebles"
         mob:getPool() == 5730 and
         math.random(2) == 1
     then
