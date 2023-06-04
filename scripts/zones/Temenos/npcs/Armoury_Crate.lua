@@ -889,17 +889,24 @@ local loot =
                 {itemid = 1956, droprate = 100}, -- DRG
                 {itemid = 2658, droprate = 100}, -- COR
                 {itemid = 1946, droprate = 100}, -- BST
-                {itemid = 2714, droprate = 100}, -- DNC
+                {itemid = 1938, droprate = 100}, -- RDM
+                {itemid = 1952, droprate = 100}, -- SAM
+                {itemid = 2658, droprate = 100}, -- COR
+                {itemid = 1950, droprate = 100}, -- DNC
             },
             {
-                {itemid =    0, droprate = 700},
+                {itemid =    0, droprate = 1100},
+                {itemid = 1942, droprate = 100}, -- PLD
                 {itemid = 1948, droprate = 100}, -- BRD
                 {itemid = 1936, droprate = 100}, -- BLM
                 {itemid = 1940, droprate = 100}, -- THF
                 {itemid = 1956, droprate = 100}, -- DRG
                 {itemid = 2658, droprate = 100}, -- COR
                 {itemid = 1946, droprate = 100}, -- BST
-                {itemid = 2714, droprate = 100}, -- DNC
+                {itemid = 1938, droprate = 100}, -- RDM
+                {itemid = 1952, droprate = 100}, -- SAM
+                {itemid = 2658, droprate = 100}, -- COR
+                {itemid = 1950, droprate = 100}, -- DNC
             },
         },
     -- eastern tower floor 7
