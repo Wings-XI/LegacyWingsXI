@@ -24,11 +24,6 @@ darkixion = {}
   -- TODO figure out how to make TAKE_DAMAGE listener not crash zone <.<
 
 
-  -- for charge, idk, maybe add roam flag 512 or 256
-        -- what dodoes the flag do? it works pretty good now
-        -- i think you wrote this then responded to yourself? -- mowford
-
-
 darkixion.zoneinfo =
 {
     [tpz.zone.JUGNER_FOREST_S] =
@@ -281,7 +276,8 @@ darkixion.itsStompinTime = function(mob)
    for _, player in pairs(nearbyPlayers) do -- find eligible players to curb stomp
         local posP = player:getPos()
         local posM = mob:getPos()
-        if math.abs(posP.y-posM.y) <= 7 and player:isAlive() and mob:checkDistance(posP) > 5 then -- no cliff jumping, may need to tune
+        -- no cliff jumping?, may need to tune
+        if math.abs(posP.y-posM.y) <= 15 and player:isAlive() and mob:checkDistance(posP) > 5 then
             table.insert(targets, player)
         end
    end
@@ -486,7 +482,7 @@ end
 darkixion.onMobWeaponSkillPrepare = function(mob, target)
     -- skill unknown, tp still there
     -- preserve tp from melee swings, from SetMobSkillAttack
-    mob:setLocalVar("skill_tp", mob:getTP() + 64) -- give tp for the auto attack (confirmed by not replacing autos with mobskilllist)
+    mob:setLocalVar("skill_tp", mob:getTP() + 64) -- give tp for the auto attack (amount confirmed by not replacing autos with mobskill list)
 end
 
 darkixion.onMobWeaponSkill = function(target, mob, skill)
@@ -595,7 +591,7 @@ darkixion.onMobRoam = function(mob)
 end
 
 darkixion.onMobEngaged = function(mob, target)
-    mob:setMod(tpz.mod.REGAIN, 200) -- "has tp regen": https://www.bluegartr.com/threads/59044-Ixion-discussion-thread/page8
+    mob:setMod(tpz.mod.REGAIN, 20) -- "has tp regen": https://www.bluegartr.com/threads/59044-Ixion-discussion-thread/page8
     darkixion.roamingMods(mob)
     -- if stygian ash missed or aggro via any other means, immediately disengage (even if hearing aggro "If you get too close, DI runs away")
     if mob:getLocalVar("StygianLanded") ~= 1 then
@@ -639,6 +635,8 @@ darkixion.onMobFight = function(mob, target)
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
        (mob:getTP() >= 900 and mob:getHPP() > 0)) and
        mob:getLocalVar("timeSinceWS") < os.time() - 3 and
+       mob:checkDistance(target) < 15 and
+       mob:getLocalVar("charging") == 0 and
        mob:actionQueueEmpty() then
         mob:setLocalVar("timeToWS", 1)
         mob:setLocalVar("Hits", 0)
@@ -733,7 +731,9 @@ darkixion.onMobFight = function(mob, target)
         if not target:isInfront(mob, 100) then
             table.insert(hitList, target)
         end
-        if mob:checkDistance(pos) >= 2 and os.time() < mob:getLocalVar("runPathTime") then
+        -- cleanly exit trample when reaching the point (verified via checking for following a scripted path)
+        -- timestamp hard exit in case of navmesh abuse
+        if mob:isFollowingPath(1) and os.time() < mob:getLocalVar("runPathTime") then
             local nearbyPlayers = mob:getPlayersInRange(8)
             if nearbyPlayers ~= nil then
                 for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he tramples, hit the ones in front
@@ -758,7 +758,7 @@ darkixion.onMobFight = function(mob, target)
                                 mob:setLocalVar("stomp", 0)
                             end
                         end
-                        if dork:isInfront(mob, 20) and mob:getLocalVar("stomp") ~= 0 then
+                        if dork:isInfront(mob, 30) and mob:getLocalVar("stomp") ~= 0 then
                             mob:useMobAbility(2339, dork) -- trample
                         end
                     end
