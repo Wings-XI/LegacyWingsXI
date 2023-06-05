@@ -55,6 +55,7 @@ void CSpiritController::setMagicCooldowns(bool initial)
     if (initial)
     {
         m_LastMagicTime = m_Tick - m_magicCooldown / 2;
+        PSpirit->SetLocalVar("curagaChanceReduction", 40);  // reduce first heal spell chance of being AoE
         // m_LastActionTime = m_Tick - m_actionCooldown / 2; // reset last action time as well?
     }
     // All elementals when freshly summoned, have their spirit timer already counting down from half.
@@ -194,6 +195,8 @@ bool CSpiritController::TrySpellcast()
         break;
     }
 
+    // reset aoe heal chance on any other spell
+    PSpirit->SetLocalVar("curagaChanceReduction", 0);
     // ensure accession is removed before next spell if not AoE
     PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
 
@@ -229,6 +232,8 @@ bool CSpiritController::TryIdleSpellcast()
         bool aoeSpell = false;
         if (spell > SpellID::Curaga_V)
         {
+            // reset aoe heal chance on any other spell
+            PSpirit->SetLocalVar("curagaChanceReduction", 0);
             // AoE all buff spells except this list
             if ((std::set<SpellID> {SpellID::Regen, SpellID::Haste}).count(spell) == 0)
             {
@@ -236,9 +241,15 @@ bool CSpiritController::TryIdleSpellcast()
             }
             m_LastMagicTime = m_LastMagicTime - m_magicCooldown / 2; // for buffs put the timer into the past, to reduce magic cooldown in "buff mode"
         }
-        else if (PSpirit->GetMLevel() > 15 && tpzrand::GetRandomNumber(0.0f, 1.0f) < 0.6f) // make heals AoE 60% of the time
+        else if (PSpirit->GetMLevel() > 15 &&
+            PSpirit->GetLocalVar("curagaChanceReduction") < 100 &&
+            tpzrand::GetRandomNumber(0,100) < 66 - PSpirit->GetLocalVar("curagaChanceReduction") + GetSummoningSkillOverCap() / 5) // make heals AoE 2/3 of the time plus additional chance for smn skill
         {
             aoeSpell = true;
+            if (PSpirit->GetLocalVar("curagaChanceReduction") > 50)
+                PSpirit->SetLocalVar("curagaChanceReduction", 100); // ensure even with smn skill we get no aoe heal next spell after 3 aoe heals in a row
+            else
+                PSpirit->SetLocalVar("curagaChanceReduction", PSpirit->GetLocalVar("curagaChanceReduction") + 22); // less chance for aoe heal each AoE heal in a row
         }
 
         if (aoeSpell)
@@ -262,6 +273,7 @@ bool CSpiritController::TryIdleSpellcast()
         {
             // ensure accession is removed before next spell if not AoE
             PSpirit->StatusEffectContainer->DelStatusEffectSilent(EFFECT_ACCESSION);
+            PSpirit->SetLocalVar("curagaChanceReduction", 0);
         }
 
         return true;
@@ -523,6 +535,7 @@ SpellID CSpiritController::GetHighestCure()
     CBattleEntity* PSummoner = PSpirit->PMaster;
     CBattleEntity* PSummon = PSpirit;
     uint8 level = PSpirit->GetMLevel();
+    int rngMaxForCure = 100 - GetSummoningSkillOverCap() / 5; // low max rng means higher chance to be below rng threshold
     if (level > 60)
         cure = SpellID::Cure_V;
     else if (level > 40)
@@ -537,14 +550,28 @@ SpellID CSpiritController::GetHighestCure()
     if (cure != SpellID::NULLSPELL)
     {
         uint8 i = 0;
-        PSummoner->ForAlliance([PSummon, &party, cure, &i](CBattleEntity* PMember)
+        PSummoner->ForAlliance([PSummon, &party, cure, &i, rngMaxForCure](CBattleEntity* PMember)
             {
-                if (PMember->isAlive() && !PMember->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE) && PMember->GetHPP() < 75 && PMember->getZone() == PSummon->getZone() && distance(PSummon->loc.p, PMember->loc.p) < (spell::GetSpell(cure))->getRange())
+                // Healing target is chosen randomly from a list of players
+                // that list consists of alliance members in range of a heal and random chance involved:
+                // 100% chance of being in list if below 30% hp
+                // 66% chance of being in list if below 60% hp
+                // 33% chance of being in list if below 75% hp
+                // This means that the more players in yellow hp, the higher chance of _someone_ being healed
+                // SMN skill over cap increases the chance slightly by changing the range for rng past 100
+                auto memberHPP = PMember->GetHPP();
+                auto memberRNG = tpzrand::GetRandomNumber(0, rngMaxForCure);
+                if (PMember->isAlive() && !PMember->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE) &&
+                    (memberHPP < 30 || (memberHPP < 60 && memberRNG < 66) || (memberHPP < 75 && memberRNG < 33)) &&
+                    PMember->getZone() == PSummon->getZone() && distance(PSummon->loc.p, PMember->loc.p) < (spell::GetSpell(cure))->getRange())
                 {
                     party[i] = PMember;
                     i++;
                 }
             });
+
+        // WINGSTODO: don't randomize target, make it choose the target based on positioning as in retail
+        // the target selection should probably be a separate function given a list of potential targets so it could be used in the buffing logic as well
         if (i > 0)
         {
             if (i == 1)
