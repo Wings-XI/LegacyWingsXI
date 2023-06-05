@@ -300,6 +300,7 @@ darkixion.itsStompinTime = function(mob)
             local Ux = Dx/RSS
             local Uz = Dz/RSS
             pos = {x = Tx + (Ux * 7), y = Ty, z = Tz + (Uz * 7)}
+            mob:setLocalVar("trampleTargID", target:getShortID())
         elseif mob:checkDistance(pos) < 5 then
             mob:lookAt(pos)
             pos = mob:getPos()
@@ -734,7 +735,7 @@ darkixion.onMobFight = function(mob, target)
         -- cleanly exit trample when reaching the point (verified via checking for following a scripted path)
         -- timestamp hard exit in case of navmesh abuse
         if mob:isFollowingPath(1) and os.time() < mob:getLocalVar("runPathTime") then
-            local nearbyPlayers = mob:getPlayersInRange(8)
+            local nearbyPlayers = mob:getPlayersInRange(5)
             if nearbyPlayers ~= nil then
                 for  aa = 1, (#nearbyPlayers) do -- look for players that are too close to ixion while he tramples, hit the ones in front
                     mob:setLocalVar("stomp", 0)
@@ -758,8 +759,12 @@ darkixion.onMobFight = function(mob, target)
                                 mob:setLocalVar("stomp", 0)
                             end
                         end
-                        if dork:isInfront(mob, 30) and mob:getLocalVar("stomp") ~= 0 then
-                            mob:useMobAbility(2339, dork) -- trample
+                        -- if dork hasn't been trampled yet in this path
+                        -- or if dork is the original target of the trample (you better run away)
+                        if mob:getLocalVar("stomp") ~= 0 and
+                           (dork:isInfront(mob, 30) or dork:getShortID() == mob:getLocalVar("trampleTargID"))
+                           then
+                              mob:useMobAbility(2339, dork) -- trample
                         end
                     end
                 end
