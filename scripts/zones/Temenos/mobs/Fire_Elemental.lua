@@ -8,7 +8,8 @@ require("scripts/globals/battlefield")
 
 function onMobInitialize(mob)
     mob:addMod(tpz.mod.DMGMAGIC, -25)
-    mob:addMod(tpz.mod.DMGPHYS, 15)
+    -- double phys dmg as the mob family has -75% of each phys dmg type, effectively making them take -50% pdt instead of normal -75%
+    mob:setMod(tpz.mod.DMGPHYS, 100)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
