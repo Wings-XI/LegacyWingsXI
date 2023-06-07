@@ -5,6 +5,10 @@
 mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Temenos/IDs")
 
+function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.NO_LINK, 1) -- allows carby pulls due to NMs not having a neutral timer
+end
+
 function onMobEngaged(mob, target)
     GetMobByID(ID.mob.TEMENOS_N_MOB[7]):updateEnmity(target)
     GetMobByID(ID.mob.TEMENOS_N_MOB[7]+1):updateEnmity(target)

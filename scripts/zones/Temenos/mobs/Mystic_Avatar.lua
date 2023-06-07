@@ -9,6 +9,7 @@ local ID = require("scripts/zones/Temenos/IDs")
 function onMobSpawn(mob)
     local mobID = mob:getID()
     if mobID == ID.mob.TEMENOS_C_MOB[2] then --Carbuncle (Central Temenos 2nd Floor)
+        mob:setMobMod(tpz.mobMod.NO_LINK, 1) -- You can Carbuncle pull the light elementals, make sure your target is not casting when your carbuncle dies or is released.
         mob:setMod(tpz.mod.FIREDEF, 256)
         mob:setMod(tpz.mod.ICEDEF, 256)
         mob:setMod(tpz.mod.WINDDEF, 256)
