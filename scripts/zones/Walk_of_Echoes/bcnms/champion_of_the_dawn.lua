@@ -26,6 +26,7 @@ function onBattlefieldEnter(player, battlefield)
     player:delKeyItem(tpz.ki.BREATH_OF_DAWN2)
     player:delKeyItem(tpz.ki.BREATH_OF_DAWN3)
     player:messageSpecial(ID.text.KEYITEM_OBTAINED + 1, tpz.ki.BREATH_OF_DAWN1)
+    player:setCharVar("TrialByCaitSeenCS", 0) -- reset fight availability until after jst midnight
 end
 
 function onBattlefieldLeave(player, battlefield, leavecode)
@@ -43,7 +44,6 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    player:setCharVar("TrialByCaitSeenCS", 0) -- reset fight availability until after jst midnight
     if csid == 32001 then
         if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.THE_DAWN_ALSO_RISES) > QUEST_ACCEPTED or
             player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) > QUEST_AVAILABLE then
