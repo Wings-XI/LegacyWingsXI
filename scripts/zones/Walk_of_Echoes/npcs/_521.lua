@@ -8,10 +8,27 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    local realday = tonumber(os.date("%j")) -- %M for next minute, %j for next day
+
+    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) > QUEST_AVAILABLE and player:getCharVar("ChampOfDawnSeenCS") == 0 and
+       (player:hasKeyItem(tpz.ki.BREATH_OF_DAWN1) and player:hasKeyItem(tpz.ki.BREATH_OF_DAWN2) and player:hasKeyItem(tpz.ki.BREATH_OF_DAWN3)) then
+            player:setCharVar("ChampOfDawnSeenCS", 1)
+    elseif (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.THE_DAWN_ALSO_RISES) > QUEST_AVAILABLE or
+       player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) > QUEST_AVAILABLE) and player:getCharVar("TrialByCaitSeenCS") == 0 and
+       realday ~= player:getCharVar("TrialByCait_date") and
+       (player:hasKeyItem(tpz.ki.BREATH_OF_DAWN1) or player:hasKeyItem(tpz.ki.BREATH_OF_DAWN2) or player:hasKeyItem(tpz.ki.BREATH_OF_DAWN3)) then
+            player:setCharVar("TrialByCait_date", tonumber(os.date("%j")))
+            player:setCharVar("TrialByCaitSeenCS", 1) -- Must wait 1 real life day before you can trigger the necessary cutscene.
+            player:startEvent(17)
+    else
+        EventTriggerBCNM(player, npc)
+    end
 end
 
-function onEventUpdate(player, csid, option)
+function onEventUpdate(player, csid, option, extras)
+    EventUpdateBCNM(player, csid, option, extras)
 end
 
 function onEventFinish(player, csid, option)
+    EventFinishBCNM(player, csid, option)
 end
