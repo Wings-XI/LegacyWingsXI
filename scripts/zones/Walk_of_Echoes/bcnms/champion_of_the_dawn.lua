@@ -31,7 +31,8 @@ end
 function onBattlefieldLeave(player, battlefield, leavecode)
     if leavecode == tpz.battlefield.leaveCode.WON then
         local name, clearTime, partySize = battlefield:getRecord()
-        local arg8 = (player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) == QUEST_COMPLETED) and 1 or 0
+        -- cutscene is triggered after setPos and it's tied to the reward, not possible to skip
+        local arg8 = 0 --(player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) == QUEST_COMPLETED) and 1 or 0
         player:startEvent(32001, battlefield:getArea(), clearTime, partySize, battlefield:getTimeInside(), 7, battlefield:getLocalVar("[cs]bit"), arg8)
     elseif leavecode == tpz.battlefield.leaveCode.LOST then
         player:startEvent(32002)
