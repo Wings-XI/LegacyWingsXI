@@ -126,7 +126,7 @@ INSERT INTO `mob_family_system` VALUES(56, 'Bomb', 3, 'Arcana', 0, 40, 97, 140, 
 INSERT INTO `mob_family_system` VALUES(57, 'Buffalo', 6, 'Beast', 2, 40, 130, 120, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.15, 0.7, 1.15, 1.15, 1.15, 1.3, 1.15, 1.15, 2, 1, 0);
 INSERT INTO `mob_family_system` VALUES(58, 'Bugard', 14, 'Lizard', 1, 40, 115, 110, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 1.3, 1.15, 1.15, 1.15, 1.15, 0.7, 1.15, 1, 2, 0);
 INSERT INTO `mob_family_system` VALUES(59, 'Bugbear', 7, 'Beastmen', 1, 40, 125, 90, 3, 2, 5, 2, 6, 4, 5, 3, 2, 3, 2, 1, 1, 1, 1, 1.15, 1.15, 1.15, 1, 1.15, 1.15, 1.5, 0.7, 5, 1, 0);
-INSERT INTO `mob_family_system` VALUES(60, 'CaitSith', 18, 'Unclassified', 0, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0);
+INSERT INTO `mob_family_system` VALUES(60, 'CaitSith', 5, 'Avatar', 1, 40, 100, 120, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 1, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 0.875, 1.125, 0, 41, 0);
 INSERT INTO `mob_family_system` VALUES(61, 'Cardian', 3, 'Arcana', 0, 40, 109, 140, 4, 3, 4, 5, 1, 3, 4, 3, 3, 3, 3, 1, 1, 1, 1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 4, 34, 0); -- of Batons
 INSERT INTO `mob_family_system` VALUES(62, 'Cerberus', 6, 'Beast', 3, 80, 100, 90, 1, 1, 2, 1, 1, 1, 2, 3, 1, 3, 3, 1, 1, 1, 1, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 1, 2, 0);
 INSERT INTO `mob_family_system` VALUES(63, 'Chariot', 4, 'ArchaicMachine', 3, 40, 90, 90, 1, 3, 4, 3, 6, 6, 5, 3, 3, 3, 3, 1, 1, 1, 1, 0.7, 0.6, 0.6, 0.6, 0.25, 1, 0.4, 0.6, 0, 34, 0);

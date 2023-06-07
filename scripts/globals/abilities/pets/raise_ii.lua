@@ -8,6 +8,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
+    -- no restrition on being in party
     if target:isAlive() then
         return 87,0
     end

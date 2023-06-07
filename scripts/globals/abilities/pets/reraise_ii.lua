@@ -8,6 +8,9 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
+    -- player:setLocalVar("anim", player:getLocalVar("anim") + 1)
+    -- ability:setAnimation(player:getLocalVar("anim"))
+    -- must be in party
     if not target:isAlive() then
         return 87,0
     end

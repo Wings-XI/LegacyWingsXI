@@ -970,7 +970,11 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         {
             if(static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PETTYPE_WYVERN)
             {
-                target.animation = PSkill->getPetAnimationID();
+                if (PSkill->getID() < 2452 || PSkill->getID() > 2457)
+                    target.animation = PSkill->getPetAnimationID();
+                else
+                    target.animation = PSkill->getPetAnimationID() - 1; // cait sith level ? holy pet animations shifted by 1 from mob animations
+
             }
             target.param = luautils::OnPetAbility(PTarget, this, PSkill, PMaster, &action);
         }

@@ -14,21 +14,26 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onPetAbility(target, pet, skill)
+    local returnEffect = tpz.effect.NONE
+    local duration = 30
     local mpCost = 134
+    local ele = tpz.magic.ele.LIGHT
     local bonus = pet:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR) - 10
     if pet:getMaster() ~= nil and (pet:getMaster()):isPC() then
-        bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + getSummoningSkillOverCap(pet)
+        bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + math.floor((getSummoningSkillOverCap(pet)/2))
     end
     
-    local resist = applyResistanceAbility(pet,target,7,tpz.skill.ENFEEBLING_MAGIC,bonus)
+    local resist = applyResistanceAbility(pet,target,ele,tpz.skill.ENFEEBLING_MAGIC,bonus)
     
-    if resist >= 0.5 and math.random() < 0.9 then --Do it!
-        if target:addStatusEffect(tpz.effect.SILENCE, 1, 0, 30) then
+    if resist >= 0.5 then --Do it!
+        if target:addStatusEffect(tpz.effect.SILENCE, 1, 0, duration * resist) then
             skill:setMsg(tpz.msg.basic.SKILL_ENFEEB_IS)
-            if resist == 1 and math.random() < 0.8 and target:addStatusEffect(tpz.effect.AMNESIA, 1, 0, 30) then
-                return tpz.effect.AMNESIA
+            local resist2 = applyResistanceAbility(pet,target,ele,tpz.skill.ENFEEBLING_MAGIC,bonus)
+            -- WINGSCUSTOM require 2 successful resistance checks (and actual application of SILENCE)
+            if resist * resist2 >= 1 and target:addStatusEffect(tpz.effect.AMNESIA, 1, 0, duration * resist2 / 2) then
+                returnEffect = tpz.effect.AMNESIA
             else
-                return tpz.effect.SILENCE
+                returnEffect = tpz.effect.SILENCE
             end
         else
             skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)
@@ -38,5 +43,5 @@ function onPetAbility(target, pet, skill)
     end
     
     pet:getMaster():addMP(-mpCost)
-    return tpz.effect.SILENCE
+    return returnEffect
 end
