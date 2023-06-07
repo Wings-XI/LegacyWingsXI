@@ -118,7 +118,7 @@ function onMobFight(mob, target)
                 local levelupsum = mob:getLocalVar("TotalLevelUp")
                 -- Level Up
                 if levelupsum <= 25 then
-                    mob:useMobAbility(2460)
+                    mob:useMobAbility(3395)
                     mob:setLocalVar("TotalLevelUp", levelupsum + 1)
                 end
                 -- Clear Vars
@@ -130,7 +130,7 @@ function onMobFight(mob, target)
                 local levelupsum = mob:getLocalVar("TotalLevelUp")
                 -- Level Up
                 if levelupsum <= 25 then
-                    mob:useMobAbility(2460)
+                    mob:useMobAbility(3395)
                     mob:setLocalVar("TotalLevelUp", levelupsum + 1)
                 end
                 -- Clear Vars
