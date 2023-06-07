@@ -3,6 +3,8 @@
 --  NPC: Ornate Door
 -- !pos -700 -17.6 -327 182
 -----------------------------------
+local ID = require("scripts/zones/Walk_of_Echoes/IDs")
+require("scripts/globals/quests")
 
 function onTrade(player, npc, trade)
 end
@@ -21,7 +23,9 @@ function onTrigger(player, npc)
             player:setCharVar("TrialByCaitSeenCS", 1) -- Must wait 1 real life day before you can trigger the necessary cutscene.
             player:startEvent(17)
     else
-        EventTriggerBCNM(player, npc)
+        if not EventTriggerBCNM(player, npc) then
+            player:messageSpecial(ID.text.DOOR_SHUT)
+        end
     end
 end
 

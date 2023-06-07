@@ -18,6 +18,7 @@ zones[tpz.zone.WALK_OF_ECHOES] =
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         CONQUEST_BASE           = 7049, -- Tallying conquest results...
+        DOOR_SHUT               = 7311, -- The door is sealed shut with an evil curse.
         CAIT_ENGAGE             = 7766, -- Don't hold back
         CAIT_DEAD               = 7771, -- Well...done
     },

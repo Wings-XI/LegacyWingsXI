@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Walk_of_Echoes/IDs")
 -----------------------------------
 
 function onMobSpawn(mob)
+    mob:setModelId(28) -- copied modelid from cait sith pet since db value has bunk animations
 end
 
 function onMobEngaged(mob, player)
