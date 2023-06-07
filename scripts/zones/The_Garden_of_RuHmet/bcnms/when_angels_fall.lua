@@ -31,8 +31,13 @@ end
 
 function onEventFinish(player, csid, option)
     if csid== 32001 then
+        local realday = tonumber(os.date("%j")) -- %M for next minute, %j for next day
         if player:getCurrentMission(COP) == tpz.mission.id.cop.WHEN_ANGELS_FALL and player:getCharVar("PromathiaStatus") == 4 then
             player:setCharVar("PromathiaStatus", 5)
+        end
+        if realday ~= player:getCharVar("WhenAngelsFall_date") then
+            player:addExp(1000)
+            player:setCharVar("WhenAngelsFall_date", realDay)
         end
         player:setPos(420, 0, 445, 192)
     end
