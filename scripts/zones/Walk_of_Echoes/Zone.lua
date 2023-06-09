@@ -26,16 +26,15 @@ function onZoneIn(player, prevZone)
         player:setPos(-420, 10, 0, 69)
     end
 
-    if prevZone == 89 and -- coming from Grauberg_S
-        player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) == QUEST_AVAILABLE then
-            if caitSithAvailable then
-                cs = 15
-            else
-                -- give message once fully loaded in
-                player:timer(3000, function(player)
-                    player:PrintToPlayer(string.format("Please complete the highest implemented WotG mission (%s) to flag Champion of the Dawn",string.gsub(string.lower(highestMission[2]),"_"," ")))
-                end)
-            end
+    if player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) == QUEST_AVAILABLE then
+        if caitSithAvailable then
+            cs = 15
+        else
+            -- give message once fully loaded in
+            player:timer(3000, function(player)
+                player:PrintToPlayer(string.format("Please complete the highest implemented WotG mission (%s) to flag Champion of the Dawn",string.gsub(string.lower(highestMission[2]),"_"," ")))
+            end)
+        end
     else
         if player:getCharVar("TrialByCait_Won") == 1 then
             cs = 18
