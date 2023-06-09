@@ -88,6 +88,10 @@ function onMonsterMagicPrepare(mob, target)
         201, -- waterga_iii
     }
 
+    if math.random(1,100) <= 10 then
+        return 4 -- cure_iv
+    end
+
     -- cycle spell types so parties don't get murdered during chainspell (which is not confirmed to be used by cait, she just happens to be rdm)
     if mob:getLocalVar("spell") == 0 then
         mob:setLocalVar("spell", 1)
