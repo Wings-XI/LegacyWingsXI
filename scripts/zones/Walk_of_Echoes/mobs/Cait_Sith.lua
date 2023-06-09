@@ -36,6 +36,7 @@ function onMobSpawn(mob)
 
     -- videos show her magic is very potent
     mob:setMod(tpz.mod.INT, 20)
+    mob:setMod(tpz.mod.REGAIN, 50)
 
     tpz.mix.jobSpecial.config(mob, {
         chance = 100,
