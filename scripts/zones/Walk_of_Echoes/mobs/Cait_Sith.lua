@@ -48,7 +48,6 @@ end
 
 -- mob pool sets hasSpellScript to 1
 function onMonsterMagicPrepare(mob, target)
-    print("spell?")
     -- used pick and choose from this list
     -- SELECT CONCAT(spellid,', -- ',NAME) FROM mob_spell_lists LEFT JOIN spell_list ON spellid = spell_id WHERE spell_list_id IN (2,3) AND min_level <= 75 AND skill = 35
     local enfeebs = {
