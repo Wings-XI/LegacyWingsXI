@@ -34,6 +34,9 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLEEPRES, 100)
     mob:setMod(tpz.mod.SILENCERES, 50)
 
+    -- videos show her magic is very potent
+    mob:setMod(tpz.mod.INT, 20)
+
     tpz.mix.jobSpecial.config(mob, {
         chance = 100,
         specials =
@@ -42,8 +45,9 @@ function onMobSpawn(mob)
         },
     })
 
-    -- mob:recalculateStats()
-    -- mob:setHP(mob:getMaxHP())
+    -- buff at spawn or dillute casting pool during fight?
+    -- mob:cast(46) -- protect_iv
+    -- mob:cast(51) -- shell_iv)
 end
 
 -- mob pool sets hasSpellScript to 1
@@ -83,13 +87,27 @@ function onMonsterMagicPrepare(mob, target)
         201, -- waterga_iii
     }
 
-    if not mob:hasStatusEffect(tpz.effect.ENLIGHT) then
-        return 310
-    elseif mob:getLocalVar("nuked") == 0 then
-        mob:setLocalVar("nuked", 1)
+    -- cycle spell types so parties don't get murdered during chainspell (which is not confirmed to be used by cait, she just happens to be rdm)
+    if mob:getLocalVar("spell") == 0 then
+        mob:setLocalVar("spell", 1)
+        if not mob:hasStatusEffect(tpz.effect.ENLIGHT) then
+            return 310 -- enlight
+        elseif not mob:hasStatusEffect(tpz.effect.ICE_SPIKES) then
+            return 250 -- ice_spikes
+        elseif not mob:hasStatusEffect(tpz.effect.SHELL) then
+            return 51 -- shell_iv
+        elseif not mob:hasStatusEffect(tpz.effect.PROTECT) then
+            return 46 -- protect_iv
+        elseif not mob:hasStatusEffect(tpz.effect.HASTE) then
+            return 57 -- haste
+        else
+            return 5 -- cure v
+        end
+    elseif mob:getLocalVar("spell") == 1 then
+        mob:setLocalVar("spell", 2)
         return nukes[math.random(1, #nukes)]
     else
-        mob:setLocalVar("nuked", 0)
+        mob:setLocalVar("spell", 0)
         return enfeebs[math.random(1, #enfeebs)]
     end
 end
