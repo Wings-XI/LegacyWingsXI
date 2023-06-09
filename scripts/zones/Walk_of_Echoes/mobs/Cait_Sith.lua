@@ -2,9 +2,16 @@
 -- Area: Walk of Echoes
 --  Mob: Cait Sith
 -----------------------------------
-mixins = {require("scripts/mixins/families/avatar_prime")}
+mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Walk_of_Echoes/IDs")
 -----------------------------------
+
+function onMobInitialize(mob)
+    -- flag nm stats
+    mob:setMod(tpz.mod.HPP, 100)
+    mob:setMobType(MOBTYPE_NOTORIOUS)
+    mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
+end
 
 function onMobSpawn(mob)
     mob:setModelId(28) -- copied modelid from cait sith pet since db value has bunk animations
@@ -25,7 +32,67 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.STUNRES, -10)
     mob:setMod(tpz.mod.LULLABYRES, 100)
     mob:setMod(tpz.mod.SLEEPRES, 100)
-    mob:setMod(tpz.mod.SILENCERES, 100)
+    mob:setMod(tpz.mod.SILENCERES, 50)
+
+    tpz.mix.jobSpecial.config(mob, {
+        chance = 100,
+        specials =
+        {
+            { id = tpz.jsa.CHAINSPELL, hpp = 50 },
+        },
+    })
+
+    -- mob:recalculateStats()
+    -- mob:setHP(mob:getMaxHP())
+end
+
+-- mob pool sets hasSpellScript to 1
+function onMonsterMagicPrepare(mob, target)
+    print("spell?")
+    -- used pick and choose from this list
+    -- SELECT CONCAT(spellid,', -- ',NAME) FROM mob_spell_lists LEFT JOIN spell_list ON spellid = spell_id WHERE spell_list_id IN (2,3) AND min_level <= 75 AND skill = 35
+    local enfeebs = {
+        254, -- blind
+        258, -- bind
+        259, -- sleep_ii
+        56, -- slow
+        58, -- paralyze
+        59, -- silence
+        216, -- gravity
+        260, -- dispel
+    }
+
+    -- SELECT CONCAT(spellid,', -- ',NAME) FROM mob_spell_lists LEFT JOIN spell_list ON spellid = spell_id WHERE spell_list_id IN (2,3) AND min_level <= 75 AND (NAME LIKE "%iii" OR NAME LIKE "%iv")
+    local nukes = {
+        146, -- fire_iii
+        147, -- fire_iv
+        151, -- blizzard_iii
+        152, -- blizzard_iv
+        156, -- aero_iii
+        157, -- aero_iv
+        161, -- stone_iii
+        162, -- stone_iv
+        166, -- thunder_iii
+        167, -- thunder_iv
+        171, -- water_iii
+        172, -- water_iv
+        176, -- firaga_iii
+        181, -- blizzaga_iii
+        186, -- aeroga_iii
+        191, -- stonega_iii
+        196, -- thundaga_iii
+        201, -- waterga_iii
+    }
+
+    if not mob:hasStatusEffect(tpz.effect.ENLIGHT) then
+        return 310
+    elseif mob:getLocalVar("nuked") == 0 then
+        mob:setLocalVar("nuked", 1)
+        return nukes[math.random(1, #nukes)]
+    else
+        mob:setLocalVar("nuked", 0)
+        return enfeebs[math.random(1, #enfeebs)]
+    end
 end
 
 function onMobEngaged(mob, player)
