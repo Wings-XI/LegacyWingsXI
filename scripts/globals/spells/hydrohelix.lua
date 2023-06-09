@@ -9,6 +9,11 @@ require("scripts/globals/magic")
 --------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
+    -- WINGSCUSTOM no helix as subjob
+    if caster:getObjType() == tpz.objType.PC and caster:getMainJob() ~= tpz.job.SCH then
+        caster:PrintToPlayer("Helix spells not usable as a subjob to preserve era balance.")
+        return 1
+    end
     return 0
 end
 
