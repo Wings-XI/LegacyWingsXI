@@ -20,7 +20,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = 0
 
     local dmgmod = 1
-    local basedmg = mob:getWeaponDmg() * power + (dMND * 1.5)
+    local basedmg = power * (mob:getMainLvl() + (dMND * 1.5))
     if target:getMainLvl() % power == 0 then
         local info = MobMagicalMove(mob, target, skill, basedmg, ele - 5, dmgmod, TP_NO_EFFECT) -- shift ele to match tpz.magic.ele.<>
         dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.MAGICAL, ele, MOBPARAM_IGNORE_SHADOWS)

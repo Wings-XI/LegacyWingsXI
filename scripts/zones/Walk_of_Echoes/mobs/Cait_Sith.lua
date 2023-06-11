@@ -8,7 +8,7 @@ local ID = require("scripts/zones/Walk_of_Echoes/IDs")
 
 function onMobInitialize(mob)
     -- flag nm stats
-    mob:setMod(tpz.mod.HPP, 100)
+    mob:setMod(tpz.mod.HPP, 120)
     mob:setMobType(MOBTYPE_NOTORIOUS)
     mob:setMobMod(tpz.mobMod.CHECK_AS_NM, 2)
 end
@@ -68,17 +68,17 @@ function onMonsterMagicPrepare(mob, target)
 
     -- SELECT CONCAT(spellid,', -- ',NAME) FROM mob_spell_lists LEFT JOIN spell_list ON spellid = spell_id WHERE spell_list_id IN (2,3) AND min_level <= 75 AND (NAME LIKE "%iii" OR NAME LIKE "%iv")
     local nukes = {
-        146, -- fire_iii
+        -- 146, -- fire_iii
         147, -- fire_iv
-        151, -- blizzard_iii
+        -- 151, -- blizzard_iii
         152, -- blizzard_iv
-        156, -- aero_iii
+        -- 156, -- aero_iii
         157, -- aero_iv
-        161, -- stone_iii
+        -- 161, -- stone_iii
         162, -- stone_iv
-        166, -- thunder_iii
+        -- 166, -- thunder_iii
         167, -- thunder_iv
-        171, -- water_iii
+        -- 171, -- water_iii
         172, -- water_iv
         176, -- firaga_iii
         181, -- blizzaga_iii
