@@ -3146,8 +3146,6 @@ INSERT INTO `mob_skill_lists` VALUES('Blizzard_Wyvern', 1140, 816);
 INSERT INTO `mob_skill_lists` VALUES('Blizzard_Wyvern', 1140, 817);
 INSERT INTO `mob_skill_lists` VALUES('Blizzard_Wyvern', 1140, 818);
 INSERT INTO `mob_skill_lists` VALUES('Blizzard_Wyvern', 1140, 819);
-INSERT INTO `mob_skill_lists` VALUES('CaitSith', 60, 2458);
-INSERT INTO `mob_skill_lists` VALUES('CaitSith', 60, 2459);
 INSERT INTO `mob_skill_lists` VALUES('Frogamander', 1141, 486);
 INSERT INTO `mob_skill_lists` VALUES('Lycopodium', 1146, 300);
 INSERT INTO `mob_skill_lists` VALUES('Lycopodium', 1146, 302);

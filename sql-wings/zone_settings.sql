@@ -231,7 +231,7 @@ INSERT INTO `zone_settings` VALUES(178, 3, '127.0.0.1', 54230, 'The_Shrine_of_Ru
 INSERT INTO `zone_settings` VALUES(179, 4, '127.0.0.1', 54230, 'Stellar_Fulcrum', 0, 0, 193, 193, 0, 0.00, 1169, 6);
 INSERT INTO `zone_settings` VALUES(180, 4, '127.0.0.1', 54230, 'LaLoff_Amphitheater', 0, 0, 196, 196, 0, 0.00, 1169, 6);
 INSERT INTO `zone_settings` VALUES(181, 4, '127.0.0.1', 54230, 'The_Celestial_Nexus', 0, 0, 198, 198, 0, 0.00, 1169, 6);
-INSERT INTO `zone_settings` VALUES(182, 4, '127.0.0.1', 54230, 'Walk_of_Echoes', 0, 0, 215, 215, 0, 0.00, 1024, 6);
+INSERT INTO `zone_settings` VALUES(182, 4, '127.0.0.1', 54230, 'Walk_of_Echoes', 0, 0, 215, 215, 0, 0.00, 1182, 6);
 INSERT INTO `zone_settings` VALUES(183, 6, '0.0.0.0', 0, 'Maquette_Abdhaljs-Legion_A', 0, 0, 143, 143, 0, 0.00, 1178, 6);
 INSERT INTO `zone_settings` VALUES(184, 3, '127.0.0.1', 54230, 'Lower_Delkfutts_Tower', 0, 0, 115, 102, 0, 0.00, 1171, 6);
 INSERT INTO `zone_settings` VALUES(185, 5, '127.0.0.1', 54230, 'Dynamis-San_dOria', 121, 121, 121, 121, 0, 0.00, 1424, 6);

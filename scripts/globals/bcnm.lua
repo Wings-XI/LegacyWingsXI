@@ -432,7 +432,7 @@ local battlefields = {
     {
      -- { 0,    ?,    0},   -- When Wills Collide (WOTG46)
      -- { 1,  385,    0},   -- Maiden of the Dusk (WOTG51)
-     -- { 2,    ?,    0},   -- Champion of the Dawn (Quest)
+        { 2,  388,    0},   -- Champion of the Dawn (Quest)
      -- { 3,    ?,    0},   -- A Forbidden Reunion (Quest)
     },
 
@@ -611,6 +611,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 292] = function() return ( roz == mi.zilart.ARK_ANGELS and rozStat == 1 and npcid == getEntranceOffset(4) and not player:hasKeyItem(tpz.ki.SHARD_OF_RAGE)         ) end, -- ZM14: Ark Angels (Galka)
         [ 293] = function() return ( dm1 == QUEST_ACCEPTED or dm2 == QUEST_ACCEPTED                                                                                         ) end, -- ZM14 Divine Might
         [ 320] = function() return ( roz == mi.zilart.THE_CELESTIAL_NEXUS                                                                                                   ) end, -- ZM16: The Celestial Nexus
+        [ 388] = function() return ( player:getCharVar("TrialByCaitSeenCS") == 1                                                                                         ) end, -- Quest: Chamption of the Dawn and The Dawn Also Rises
         [ 416] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_WIND)                                                                                          ) end, -- Quest: Trial by Wind
         [ 417] = function() return ( player:getCharVar("CarbuncleDebacleProgress") == 6                                                                                     ) end, -- Quest: Carbuncle Debacle
         [ 418] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Wind
@@ -727,6 +728,7 @@ function checkReqs(player, npc, bfid, registrant)
                                      player:hasKeyItem(tpz.ki.WIND_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.LIGHTNING_SAP_CRYSTAL) or
                                      player:hasKeyItem(tpz.ki.FIRE_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.LIGHT_SAP_CRYSTAL) or
                                      player:hasKeyItem(tpz.ki.DARK_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.ICE_SAP_CRYSTAL)                                ) end, -- ASA10: Battaru Royale
+        [ 388] = function() return ( player:getCharVar("TrialByCaitSeenCS") == 1                                                                         ) end, -- Quest: Chamption of the Dawn and The Dawn Also Rises
         [ 641] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Follow the White Rabbit
         [ 642] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: When Hell Freezes Over
         [ 643] = function() return ( player:hasKeyItem(tpz.ki.ZEPHYR_FAN)                                                                                   ) end, -- ENM: Brothers
@@ -851,6 +853,7 @@ function checkSkip(player, bfid)
         [ 291] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.ARK_ANGELS)                                                                                                        ) end, -- ZM14: Ark Angels (Elvaan)
         [ 292] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.ARK_ANGELS)                                                                                                        ) end, -- ZM14: Ark Angels (Galka)
         [ 320] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.THE_CELESTIAL_NEXUS)                                                                                               ) end, -- ZM16: The Celestial Nexus
+--        [ 388] = function() return ( player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.CHAMPION_OF_THE_DAWN) == QUEST_COMPLETED                                                             ) end, -- Quest: Chamption of the Dawn and The Dawn Also Rises
         [ 416] = function() return ( player:hasCompletedQuest(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_WIND) or player:hasKeyItem(tpz.ki.WHISPER_OF_GALES)                                           ) end, -- Quest: Trial by Wind
         [ 448] = function() return ( player:hasCompletedQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.TRIAL_BY_LIGHTNING) or player:hasKeyItem(tpz.ki.WHISPER_OF_STORMS)                            ) end, -- Quest: Trial by Lightning
         [ 480] = function() return ( player:hasCompletedQuest(SANDORIA, tpz.quest.id.sandoria.TRIAL_BY_ICE) or player:hasKeyItem(tpz.ki.WHISPER_OF_FROST)                                            ) end, -- Quest: Trial by Ice

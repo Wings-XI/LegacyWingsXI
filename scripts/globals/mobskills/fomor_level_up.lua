@@ -13,6 +13,7 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
+    skill:setMsg(0)
     return 0
 end
 
@@ -30,5 +31,6 @@ function onMobWeaponSkill(target, mob, skill)
     mob:addMod(tpz.mod.RACC, 10)
     mob:addMod(tpz.mod.MACC, 10)
     mob:addMod(tpz.mod.FASTCAST, 1)
-
+    skill:setMsg(0)
+    return 0
 end

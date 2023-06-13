@@ -26,7 +26,8 @@ function onPetAbility(target, pet, skill)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
     
     if target:isDead() then
-        target:sendRaise(4)
+        target:sendRaise(3) -- WINGSCUSTOM Arise too strong, raise only
+        target:PrintToPlayer("Arise was deemed too strong for 75-cap era. Raise only.")
         skill:setMsg(tpz.msg.basic.NONE)
     elseif not target:addStatusEffect(tpz.effect.RERAISE, 3, 0, 0) then -- Infinite duration http://wiki.ffo.jp/html/30976.html
         skill:setMsg(tpz.msg.basic.SKILL_NO_EFFECT)

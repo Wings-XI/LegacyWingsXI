@@ -669,7 +669,7 @@ INSERT INTO `mob_pools` VALUES(605, 'Caedarva_Pondscum', 'Caedarva_Pondscum', 22
 INSERT INTO `mob_pools` VALUES(606, 'Caedarva_Toad', 'Caedarva_Toad', 86, _binary 0x0000400100000000000000000000000000000000, 1, 1, 2, 270, 100, 0, 1, 1, 0, 2, 0, 0, 8161, 129, 0, 0, 0, 0, 0, 86);
 INSERT INTO `mob_pools` VALUES(607, 'Cailleach_Bheur', 'Cailleach_Bheur', 227, _binary 0x0000340200000000000000000000000000000000, 4, 4, 10, 240, 100, 0, 1, 0, 0, 0, 0, 0, 7, 131, 0, 0, 28, 0, 0, 227);
 INSERT INTO `mob_pools` VALUES(608, 'Caithleann', 'Caithleann', 359, _binary 0x0500090400000000000000000000000000000000, 5, 13, 3, 240, 100, 0, 1, 0, 0, 2, 16, 32, 2922, 541, 0, 0, 3, 0, 0, 359);
-INSERT INTO `mob_pools` VALUES(609, 'Cait_Sith_Ceithir', 'Cait_Sith_Ceithir', 60, _binary 0x0000cf0800000000000000000000000000000000, 5, 3, 2, 240, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 3, 0, 0, 60);
+INSERT INTO `mob_pools` VALUES(609, 'Cait_Sith_Ceithir', 'Cait_Sith_Ceithir', 60, _binary 0x0000cf0800000000000000000000000000000000, 5, 3, 2, 240, 100, 0, 1, 1, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 60);
 INSERT INTO `mob_pools` VALUES(610, 'Caldera_Crab', 'Caldera_Crab', 77, _binary 0x0000660100000000000000000000000000000000, 7, 7, 4, 240, 100, 0, 1, 1, 0, 2, 0, 0, 1, 135, 0, 0, 0, 0, 0, 77);
 INSERT INTO `mob_pools` VALUES(611, 'Calf_[Herd1]', 'Calf_[Herd1]', 226, _binary 0x0000540100000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 226);
 INSERT INTO `mob_pools` VALUES(612, 'Calf_[Herd2]', 'Calf_[Herd2]', 226, _binary 0x0000540100000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 226);

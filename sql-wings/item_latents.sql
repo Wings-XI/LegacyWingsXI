@@ -1588,6 +1588,12 @@ INSERT INTO `item_latents` VALUES(27367, 399, 16, 52, 7);
 INSERT INTO `item_latents` VALUES(27367, 399, 16, 52, 8);
 INSERT INTO `item_latents` VALUES(28235, 169, 25, 26, 2);
 INSERT INTO `item_latents` VALUES(28256, 169, 25, 26, 2);
+INSERT INTO `item_latents` VALUES(28567, 368, 10, 13, 2);     -- Nesanica ring: sleeping +10 regain
+INSERT INTO `item_latents` VALUES(28567, 368, 10, 13, 19);    -- Nesanica ring: sleeping +10 regain
+INSERT INTO `item_latents` VALUES(28567, 368, 10, 13, 193);   -- Nesanica ring: sleeping +10 regain
+INSERT INTO `item_latents` VALUES(28567, 370, 1, 13, 2);      -- Nesanica ring: sleeping +1 regen
+INSERT INTO `item_latents` VALUES(28567, 370, 1, 13, 19);     -- Nesanica ring: sleeping +1 regen
+INSERT INTO `item_latents` VALUES(28567, 370, 1, 13, 193);    -- Nesanica ring: sleeping +1 regen
 INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 1);
 INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 2);
 INSERT INTO `item_latents` VALUES(18453, 8, 1, 16, 3);

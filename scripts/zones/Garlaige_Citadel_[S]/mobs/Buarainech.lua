@@ -84,7 +84,7 @@ function onMobFight(mob, target)
                 mob:AnimationSub(0)
             -- Uses Level Up Ability
             elseif levelup > 0 then
-                mob:useMobAbility(2460)
+                mob:useMobAbility(3395)
                 mob:setLocalVar("LevelUp", 0)
                 mob:AnimationSub(0)
             -- Resets States And Mods

@@ -838,6 +838,7 @@ INSERT INTO `bcnm_battlefield` VALUES(320, 2, 17518602, 2);
 INSERT INTO `bcnm_battlefield` VALUES(320, 3, 17518605, 3);
 INSERT INTO `bcnm_battlefield` VALUES(320, 3, 17518606, 3);
 INSERT INTO `bcnm_battlefield` VALUES(320, 3, 17518607, 2);
+INSERT INTO `bcnm_battlefield` VALUES(388, 1, 17523197, 3);
 INSERT INTO `bcnm_battlefield` VALUES(416, 1, 17600513, 3);
 INSERT INTO `bcnm_battlefield` VALUES(416, 2, 17600514, 3);
 INSERT INTO `bcnm_battlefield` VALUES(416, 3, 17600515, 3);
