@@ -175,7 +175,7 @@ INSERT INTO `item_weapon` VALUES(16515, 'colichemarde', 3, 0, 0, 0, 0, 2, 1, 226
 INSERT INTO `item_weapon` VALUES(16516, 'jr.msk._tuck', 3, 0, 0, 0, 0, 2, 1, 226, 21, 0, 0);
 INSERT INTO `item_weapon` VALUES(16517, 'degen', 3, 0, 0, 0, 0, 1, 1, 224, 14, 0, 0);
 INSERT INTO `item_weapon` VALUES(16518, 'mythril_degen', 3, 0, 0, 0, 0, 1, 1, 224, 20, 0, 0);
-INSERT INTO `item_weapon` VALUES(16519, 'schlaeger', 3, 0, 0, 0, 0, 2, 1, 247, 32, 0, 0);
+INSERT INTO `item_weapon` VALUES(16519, 'schlaeger', 3, 0, 0, 0, 0, 1, 1, 247, 32, 0, 0);
 INSERT INTO `item_weapon` VALUES(16520, 'verdun', 3, 0, 0, 0, 0, 1, 1, 224, 36, 0, 0);
 INSERT INTO `item_weapon` VALUES(16521, 'rapier', 3, 0, 0, 0, 0, 1, 1, 224, 33, 0, 0);
 INSERT INTO `item_weapon` VALUES(16522, 'flame_degen', 3, 0, 0, 0, 0, 1, 1, 224, 22, 0, 0);
@@ -464,7 +464,7 @@ INSERT INTO `item_weapon` VALUES(16809, 'wis.wiz._anelace', 3, 0, 0, 0, 0, 2, 1,
 INSERT INTO `item_weapon` VALUES(16810, 'tct.mag._espadon', 3, 0, 0, 0, 0, 2, 1, 257, 38, 0, 0);
 INSERT INTO `item_weapon` VALUES(16811, 'dst._sword_+1', 3, 0, 0, 0, 0, 2, 1, 242, 32, 0, 0);
 INSERT INTO `item_weapon` VALUES(16812, 'war_sword', 3, 0, 0, 0, 0, 2, 1, 257, 28, 0, 0);
-INSERT INTO `item_weapon` VALUES(16813, 'schlaeger_+1', 3, 0, 0, 0, 0, 2, 1, 235, 33, 0, 0);
+INSERT INTO `item_weapon` VALUES(16813, 'schlaeger_+1', 3, 0, 0, 0, 0, 1, 1, 235, 33, 0, 0);
 INSERT INTO `item_weapon` VALUES(16814, 'crescent_sword', 3, 0, 0, 0, 0, 2, 1, 248, 37, 0, 0);
 INSERT INTO `item_weapon` VALUES(16815, 'mythril_degen_+1', 3, 0, 0, 0, 0, 1, 1, 218, 21, 0, 0);
 INSERT INTO `item_weapon` VALUES(16816, 'holy_sword_+1', 3, 0, 0, 0, 0, 2, 1, 219, 23, 0, 0);
