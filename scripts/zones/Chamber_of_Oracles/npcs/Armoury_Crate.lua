@@ -11,30 +11,36 @@ local loot =
      -- BCNM Legion XI Comitatensis
     [193] =
     {
-        {   -- following Jungle Boogeymen as an example
-            {itemid = 13149, droprate =  250}, -- parrying_torque -- (only source in the game)
-            {itemid = 13148, droprate =  250}, -- evasion_torque -- (wiki strat page)
-            {itemid = 13159, droprate =  250}, -- ninjutsu_torque -- (only source in the game)
-            {itemid = 13156, droprate =  250}, -- elemental_torque -- (somepage)
+        {
+            { itemid =     0, droprate = 100 }, -- nothing
+            { itemid = 13148, droprate = 150 }, -- evasion_torque
+            { itemid = 13149, droprate = 150 }, -- parrying_torque
+            { itemid = 13151, droprate = 150 }, -- guarding_torque
+            { itemid = 13159, droprate = 150 }, -- ninjutsu_torque
+            { itemid = 13161, droprate = 150 }, -- wind_torque
+            { itemid = 13158, droprate = 150 }, -- summoning_torque
         },
         {
-            {itemid = 13154, droprate =  250}, -- enhancing_torque -- (wiki talk page)
-            {itemid = 13155, droprate =  250}, -- enfeebling_torque -- (wiki talk page)
-            {itemid = 13152, droprate =  250}, -- divine_torque -- (wiki strat page)
-            {itemid = 13158, droprate =  250}, -- summoning_torque -- (wiki strat page)
+            { itemid =     0, droprate = 100 }, -- nothing
+            { itemid = 13152, droprate = 150 }, -- divine_torque
+            { itemid = 13153, droprate = 150 }, -- dark_torque
+            { itemid = 13154, droprate = 150 }, -- enhancing_torque
+            { itemid = 13155, droprate = 150 }, -- enfeebling_torque
+            { itemid = 13156, droprate = 150 }, -- elemental_torque
+            { itemid = 13157, droprate = 150 }, -- healing_torque
         },
         {
-            {itemid =   803, droprate =  100}, -- sunstone 
-            {itemid =   737, droprate =  100}, -- chunk_of_gold_ore
+            { itemid = 803, droprate = 100 }, -- sunstone
+            { itemid = 737, droprate = 100 }, -- chunk_of_gold_ore
             {itemid =   644, droprate =  100}, -- chunk_of_mythril_ore -- missing item via somepage
-            {itemid =   784, droprate =  100}, -- jadeite
-            {itemid =   810, droprate =  100}, -- fluorite
-            {itemid =   805, droprate =  100}, -- zircon
-            {itemid =   801, droprate =  100}, -- chrysoberyl 
-            {itemid =   802, droprate =  100}, -- moonstone
-            {itemid =   797, droprate =  100}, -- painite
-            {itemid =   771, droprate =   50}, -- yellow_rock
-            {itemid =   776, droprate =   50}, -- white_rock
+            { itemid = 784, droprate = 100 }, -- jadeite
+            { itemid = 810, droprate = 100 }, -- fluorite
+            { itemid = 654, droprate = 100 }, -- darksteel_ingot
+            { itemid = 805, droprate = 100 }, -- zircon
+            { itemid = 801, droprate = 100 }, -- chrysoberyl
+            { itemid = 802, droprate = 100 }, -- moonstone
+            { itemid = 797, droprate = 100 }, -- painite
+            { itemid = 652, droprate = 100 }, -- steel_ingot
         },
         {
             {itemid =     0, droprate =  500}, -- nothing
@@ -50,7 +56,7 @@ local loot =
         },
         {
             {itemid =   702, droprate =  235}, -- ebony_log
-            {itemid =   654, droprate =  235}, -- darksteel_ingot 
+            {itemid =   654, droprate =  235}, -- darksteel_ingot
             {itemid =   652, droprate =  240}, -- steel_ingot
             {itemid =   653, droprate =  240}, -- mythril_ingot -- missing item via somepage
             {itemid =   836, droprate =   50}, -- Square Of Damascene Cloth https://ffxiclopedia.fandom.com/wiki/Damascene_Cloth?oldid=1032161 and somepage
