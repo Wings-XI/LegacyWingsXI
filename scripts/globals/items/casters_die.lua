@@ -3,6 +3,7 @@
 -- Casters Die
 -- Teaches the job ability Casters Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.CASTERS_ROLL)

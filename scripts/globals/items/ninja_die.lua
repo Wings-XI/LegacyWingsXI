@@ -3,6 +3,7 @@
 -- Ninja Die
 -- Teaches the job ability Ninja Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.NINJA_ROLL)

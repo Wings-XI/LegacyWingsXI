@@ -3,6 +3,7 @@
 -- Companions Die
 -- Teaches the job ability Companions Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.COMPANIONS_ROLL)

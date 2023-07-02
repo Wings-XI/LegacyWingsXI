@@ -3,6 +3,7 @@
 -- Miser's Die
 -- Teaches the job ability Miser's Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.MISERS_ROLL)

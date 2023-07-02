@@ -3,6 +3,7 @@
 -- Samurai Die
 -- Teaches the job ability Samurai Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.SAMURAI_ROLL)
