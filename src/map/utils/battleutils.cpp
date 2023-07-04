@@ -1337,7 +1337,7 @@ namespace battleutils
                 }
                 else if (daze == EFFECT_ASPIR_DAZE)
                 {
-                    uint8 multiplier = 2 + power - 1;
+                    uint8 multiplier = 1 + (2 * power - 1);
                     uint16 sambaMax = (uint16)floor(delay * multiplier / 100.0f);
                     uint16 sambaMin = (uint16)ceil(sambaMax / 2.0f);
                     int8 Samba = tpzrand::GetRandomNumber(sambaMin, (uint16)(sambaMax + 1));
