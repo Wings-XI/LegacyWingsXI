@@ -3,6 +3,7 @@
 -- Scholar Die
 -- Teaches the job ability Scholars Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.SCHOLARS_ROLL)

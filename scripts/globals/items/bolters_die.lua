@@ -3,6 +3,7 @@
 -- Bolter's Die
 -- Teaches the job ability Bolters Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.BOLTERS_ROLL)

@@ -3,6 +3,7 @@
 -- Courser's Die
 -- Teaches the job ability Coursers Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.COURSERS_ROLL)

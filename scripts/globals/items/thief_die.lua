@@ -3,6 +3,7 @@
 -- Thief Die
 -- Teaches the job ability Rogue's Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.ROGUES_ROLL)

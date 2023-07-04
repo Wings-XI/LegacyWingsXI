@@ -3,6 +3,7 @@
 -- Paladin Die
 -- Teaches the job ability Gallant's Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.GALLANTS_ROLL)

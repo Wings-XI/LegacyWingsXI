@@ -3,6 +3,7 @@
 -- Dancer Die
 -- Teaches the job ability Dancer's Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.DANCERS_ROLL)

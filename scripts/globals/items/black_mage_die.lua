@@ -3,6 +3,7 @@
 -- Black Mage Die
 -- Teaches the job ability Wizard's Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.WIZARDS_ROLL)

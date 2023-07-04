@@ -3,6 +3,7 @@
 -- Allies' Die
 -- Teaches the job ability Allies Roll
 -----------------------------------------
+require("scripts/globals/ability")
 
 function onItemCheck(target)
     return target:canLearnAbility(tpz.jobAbility.ALLIES_ROLL)
