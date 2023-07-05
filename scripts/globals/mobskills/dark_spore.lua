@@ -10,9 +10,6 @@ require("scripts/globals/monstertpmoves")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if mob:getPool() == 1281 then -- Fairy Ring (Dynamis-Valkurm)
-        skill:setAoE(1)
-    end
     return 0
 end
 

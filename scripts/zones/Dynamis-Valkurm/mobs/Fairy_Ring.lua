@@ -11,7 +11,7 @@ function onMobSpawn(mob)
     dynamis.setNMStats(mob)
 
     -- Set Mods
-    mob:speed(140)
+    mob:speed(80) -- flee speed
     mob:setMod(tpz.mod.MDEF, 30)
     mob:setMod(tpz.mod.MEVA, 30)
 end
