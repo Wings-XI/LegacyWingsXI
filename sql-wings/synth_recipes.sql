@@ -4051,6 +4051,8 @@ INSERT INTO `synth_recipes` VALUES(4617, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 4096, 42
 INSERT INTO `synth_recipes` VALUES(4618, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5699, 8740, 0, 0, 0, 0, 0, 0, 6217, 6217, 6217, 6217, 6, 6, 6, 6, 'Anchovy Slice');
 INSERT INTO `synth_recipes` VALUES(4619, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4096, 4238, 5700, 8740, 0, 0, 0, 0, 0, 0, 6218, 6218, 6218, 6218, 4, 4, 4, 4, 'Anchovy Slice+1');
 
+INSERT INTO `synth_recipes` VALUES(4620, 1, 0, 0, 0, 0, 0, 0, 86, 0, 0, 4100, 4242, 16265, 0, 0, 0, 0, 0, 0, 0, 879, 879, 2426, 2426, 1, 1, 1, 1, 'Wivre_Gorget_Desynth');
+
 -- -----------
 -- RECIPES END
 
