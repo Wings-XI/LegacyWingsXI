@@ -73,11 +73,14 @@ zones[tpz.zone.DYNAMIS_BUBURIMU] =
         Stollenwurm = 16941671,
         Tarasca = 16941669,
         Vishap = 16941673,
-        Dragons_Wyvern_1 = 16941701,
-        Dragons_Wyvern_2 = 16941702,
-        Dragons_Wyvern_3 = 16941703,
-        Dragons_Wyvern_4 = 16941704,
-        Dragons_Wyvern_5 = 16941705,
+        Dragons_Wyverns =
+        {
+            16941701,
+            16941702,
+            16941703,
+            16941704,
+            16941705,
+        },
         Apocalyptic_Beast = 16941057,
     },
 }
