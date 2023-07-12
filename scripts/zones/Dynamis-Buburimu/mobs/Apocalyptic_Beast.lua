@@ -118,7 +118,7 @@ function onMobEngaged(mob, target)
     mob:setLocalVar("next2hrtime", os.time() + 5) -- 5s after aggro
 end
 
-function onMobFight(mob)
+function onMobFight(mob, target)
     -- https://ffxiclopedia.fandom.com/wiki/Apocalyptic_Beast?oldid=1064856
     local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
 
@@ -242,7 +242,8 @@ function onMobFight(mob)
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
        (mob:getTP() >= 900 and mob:getHPP() > 0)) and
        mob:getLocalVar("timeSinceWS") < os.time() - 5 and
-       mob:actionQueueEmpty() then
+       mob:actionQueueEmpty() and
+       (target and mob:checkDistance(target) < 15) then
         mob:setLocalVar("timeToWS", 1)
     end
 
