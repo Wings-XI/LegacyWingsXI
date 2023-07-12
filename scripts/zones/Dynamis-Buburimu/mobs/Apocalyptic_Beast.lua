@@ -57,6 +57,8 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.MATT, 100)
     mob:setMod(tpz.mod.MACC, 150)
 
+    -- for songs (lullaby) to land more reliably
+    mob:setMod(tpz.mod.SINGING, 200)
 
     -- Set Vars
     mob:setLocalVar("next2hr", 1) -- 2hr rotation not reset by a wipe
