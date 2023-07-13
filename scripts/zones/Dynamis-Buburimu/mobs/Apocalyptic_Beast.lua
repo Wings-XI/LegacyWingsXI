@@ -57,6 +57,8 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.MATT, 100)
     mob:setMod(tpz.mod.MACC, 150)
 
+    -- for songs (lullaby) to land more reliably
+    mob:setMod(tpz.mod.SINGING, 200)
 
     -- Set Vars
     mob:setLocalVar("next2hr", 1) -- 2hr rotation not reset by a wipe
@@ -116,7 +118,7 @@ function onMobEngaged(mob, target)
     mob:setLocalVar("next2hrtime", os.time() + 5) -- 5s after aggro
 end
 
-function onMobFight(mob)
+function onMobFight(mob, target)
     -- https://ffxiclopedia.fandom.com/wiki/Apocalyptic_Beast?oldid=1064856
     local ID = require("scripts/zones/Dynamis-Buburimu/IDs")
 
@@ -240,7 +242,8 @@ function onMobFight(mob)
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
        (mob:getTP() >= 900 and mob:getHPP() > 0)) and
        mob:getLocalVar("timeSinceWS") < os.time() - 5 and
-       mob:actionQueueEmpty() then
+       mob:actionQueueEmpty() and
+       (target and mob:checkDistance(target) < 15) then
         mob:setLocalVar("timeToWS", 1)
     end
 
@@ -280,21 +283,14 @@ function onMobWeaponSkill(target, mob, skill)
         local mobY = mob:getYPos()
         local mobZ = mob:getZPos()
         -- Summon 5 Dragon's Wyverns
-        GetMobByID(ID.mob.Dragons_Wyvern_1):setSpawn(mobX, mobY, mobZ)
-        GetMobByID(ID.mob.Dragons_Wyvern_1):setPos(mobX, mobY, mobZ)
-        SpawnMob(ID.mob.Dragons_Wyvern_1):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
-        GetMobByID(ID.mob.Dragons_Wyvern_2):setSpawn(mobX, mobY, mobZ)
-        GetMobByID(ID.mob.Dragons_Wyvern_2):setPos(mobX, mobY, mobZ)
-        SpawnMob(ID.mob.Dragons_Wyvern_2):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
-        GetMobByID(ID.mob.Dragons_Wyvern_3):setSpawn(mobX, mobY, mobZ)
-        GetMobByID(ID.mob.Dragons_Wyvern_3):setPos(mobX, mobY, mobZ)
-        SpawnMob(ID.mob.Dragons_Wyvern_3):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
-        GetMobByID(ID.mob.Dragons_Wyvern_4):setSpawn(mobX, mobY, mobZ)
-        GetMobByID(ID.mob.Dragons_Wyvern_4):setPos(mobX, mobY, mobZ)
-        SpawnMob(ID.mob.Dragons_Wyvern_4):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
-        GetMobByID(ID.mob.Dragons_Wyvern_5):setSpawn(mobX, mobY, mobZ)
-        GetMobByID(ID.mob.Dragons_Wyvern_5):setPos(mobX, mobY, mobZ)
-        SpawnMob(ID.mob.Dragons_Wyvern_5):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+        for i, v in pairs(ID.mob.Dragons_Wyverns) do
+            local wyvern = GetMobByID(v)
+            local x = mobX + math.random(-2,2)
+            local z = mobZ + math.random(-2,2)
+            wyvern:setSpawn(x, mobY, z)
+            wyvern:setPos(x, mobY, z)
+            SpawnMob(wyvern:getID()):setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
+        end
         skill:setMsg(tpz.msg.basic.NONE)
     end
 end
