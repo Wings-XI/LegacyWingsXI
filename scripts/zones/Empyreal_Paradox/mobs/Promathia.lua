@@ -65,9 +65,9 @@ end
 
 function onMobDeath(mob, player, isKiller)
     local battlefield = mob:getBattlefield()
-    if player then
-        player:startEvent(32004, battlefield:getArea())
-    else
+    -- trigger cutscene for all players only once
+    if mob:getLocalVar("cs-started") == 0 then
+        mob:setLocalVar("cs-started", 1)
         for _, member in pairs(battlefield:getPlayers()) do
             member:startEvent(32004, battlefield:getArea())
         end
@@ -87,6 +87,8 @@ function onEventFinish(player, csid, option, target)
         local bcnmAllies = mob:getBattlefield():getAllies()
         for i, v in pairs(bcnmAllies) do
             v:resetLocalVars()
+            v:disengage()
+            v:clearPath()
             local spawn = v:getSpawnPos()
             v:setPos(spawn.x, spawn.y, spawn.z, spawn.rot)
         end

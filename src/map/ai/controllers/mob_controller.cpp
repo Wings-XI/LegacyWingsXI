@@ -755,10 +755,13 @@ void CMobController::Move()
             {
                 if ((!PMob->PAI->PathFind->IsFollowingPath() ||
                     distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10 * 10) // recalculate path only if player moves more than X yalms
-                    && currentDistance > closureDistance)
+                    && currentDistance >= closureDistance)
                 {
                     //path to the target if we don't have a path already
-                    PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                    if (!PMob->PAI->PathFind->PathAround(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN))
+                    {
+                        PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closureDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                    }
                 }
                 PMob->PAI->PathFind->FollowPath();
                 if (!PMob->PAI->PathFind->IsFollowingPath())

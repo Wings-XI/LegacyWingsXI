@@ -8,7 +8,9 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    return 1
+    if mob:getLocalVar("rejuv") ~= 1 then return 1 end
+    mob:setLocalVar("rejuv", 2)
+    return 0
 end
 
 function onMobWeaponSkill(target, mob, skill)

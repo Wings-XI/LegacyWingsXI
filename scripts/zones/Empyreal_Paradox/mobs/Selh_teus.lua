@@ -16,22 +16,26 @@ function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGAIN, 100)
     mob:addMod(tpz.mod.UDMGMAGIC, -40)
     mob:addMod(tpz.mod.UDMGPHYS, -70)
-    mob:untargetable(true)
+    -- so he can hit promathia with lance and evade a bit more
+    mob:setMod(tpz.mod.RACC, 150)
+    mob:setMod(tpz.mod.AGI, 150)
+    mob:addMod(tpz.mod.CURE_POTENCY_RCVD, -100)
 end
 
 function onMobFight(mob, target)
-    -- if target:getTarget():getID() ~= mob:getID() then
-    --     local targetPos = target:getPos()
-    --     local radians = (256 - targetPos.rot) * (math.pi / 128)
-    --     mob:pathTo(targetPos.x + math.cos(radians) * 16, targetPos.y, targetPos.z + math.sin(radians) * 16)
-    -- end
+    -- flies around to same relative spot to promathia's position/rotation
+    if target:getHPP() > 5 and target:getTarget() and target:getTarget():getID() ~= mob:getID() then
+        local targetPos = target:getPos()
+        local radians = (256 - targetPos.rot) * (math.pi / 128)
+        mob:pathTo(targetPos.x + math.cos(radians) * 16, targetPos.y, targetPos.z + math.sin(radians) * 16)
+    end
     local lanceTime = mob:getLocalVar("lanceTime")
     local lanceOut = mob:getLocalVar("lanceOut")
     local rejuv = mob:getLocalVar("rejuv")
-    if mob:getHPP() < 30 and rejuv == 0 and target:getFamily() == 478 then
+    if mob:getHPP() < 30 and rejuv == 0 then
         mob:messageText(mob, ID.text.SELHTEUS_TEXT + 2)
-        mob:useMobAbility(1509)
         mob:setLocalVar("rejuv", 1)
+        mob:useMobAbility(1509)
     elseif lanceTime + 35 < mob:getBattleTime() and lanceOut == 0 then
         mob:entityAnimationPacket("sp00")
         mob:setLocalVar("lanceOut", 1)
