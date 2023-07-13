@@ -12,6 +12,7 @@ end
 
 function onMobSpawn(mob)
     mob:addMod(tpz.mod.REGAIN, 100)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 25)
     mob:addMod(tpz.mod.UDMGMAGIC, -40)
     mob:addMod(tpz.mod.UDMGPHYS, -70)
     mob:addMod(tpz.mod.ACC, 100)
@@ -35,6 +36,7 @@ function onMobRoam(mob)
         mob:setLocalVar("wait", 0)
     elseif ready > 0 then
         mob:addEnmity(GetMobByID(ready), 0, 1)
+        mob:engage(ready)
     else
         mob:setLocalVar("wait", wait + 3)
     end
@@ -42,7 +44,7 @@ end
 
 function onMobEngaged(mob, target)
     mob:useMobAbility(1487)
-    mob:addStatusEffectEx(tpz.effect.SILENCE, 0, 0, 0, 5)
+    mob:addStatusEffectEx(tpz.effect.SILENCE, 0, 0, 0, 10)
 end
 
 function onMobFight(mob, target)
