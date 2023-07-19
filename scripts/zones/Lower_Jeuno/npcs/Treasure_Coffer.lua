@@ -560,7 +560,10 @@ local function givePrize(player, ki)
                 local pAug = prize.augments
                 local alreadyRolled = {}
                 for i = 1, 4 do
-                    roll = math.random(0, #pAug)
+                     -- since lua arrays start at index 1 and math.random is non-inclusive on the endpoint
+                     -- alternatively, we could set the start to 1 only if #addAug > 0
+                     -- to ensure you can't get zero augments but don't bump all rates of augments?
+                    roll = math.random(1, #pAug)
                     local a = pAug[roll]
                     if a ~= nil and alreadyRolled[a[1]] == nil then
                         alreadyRolled[a[1]] = true
