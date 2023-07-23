@@ -560,7 +560,13 @@ local function givePrize(player, ki)
                 local pAug = prize.augments
                 local alreadyRolled = {}
                 for i = 1, 4 do
-                    roll = math.random(0, #pAug)
+                    -- static 50% chance to get any augment at all each loop
+                    if #addAug == 0 or math.random(1,2) == 1 then
+                        -- since lua arrays start at index 1, set start at 1 to guarantee at least one augment
+                        roll = math.random(1, #pAug)
+                    else
+                        roll = 0
+                    end
                     local a = pAug[roll]
                     if a ~= nil and alreadyRolled[a[1]] == nil then
                         alreadyRolled[a[1]] = true
