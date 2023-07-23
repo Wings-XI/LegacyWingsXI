@@ -10,6 +10,7 @@ require("scripts/globals/zone")
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
 require("scripts/globals/events/exp_fest")
+require("scripts/globals/events/login_points")
 -----------------------------------
 
 local startingRaceInfo =
@@ -223,8 +224,8 @@ function onGameIn(player, firstLogin, zoning)
         player:setGMSuperpowers(true)
     end
 	
-	-- Exp fest event
-	ExpFestOnZoneIn(player, not zoning)
+	-- Login points
+    login_points.dailyLoginPoints(player)
     
     if hookOnGameIn ~= nil then
         hookOnGameIn(player, firstLogin, zoning)
