@@ -1,4 +1,5 @@
 ---------------------------------------------------------------
+-- WINGSCUSTOM
 -- framework for handling "login points" which are generic bonus points
 -- used for receiving time-gated repeatable rewards  slightly more frequently
 --(C) 2022 Wings Project. Coded by MowFord.                 --

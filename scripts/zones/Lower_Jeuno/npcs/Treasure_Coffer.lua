@@ -741,6 +741,7 @@ function onTrigger(player, npc)
         ((ENABLE_ACP * ENABLE_AMK * ENABLE_ASA == 0 or receivedNexusCape == 1) and 16 or 0) +
         ((ENABLE_ACP * ENABLE_AMK * ENABLE_ASA == 0 or receivedNexusCape == 0) and 32 or 0)
 
+    -- WINGSCUSTOM
     if not hasAnyKeyItems(player) and login_points.delPoints(player, 5) then
         local newKeyItem = repeatableKeyItems[math.random(1, #repeatableKeyItems)]
         player:addKeyItem(newKeyItem)

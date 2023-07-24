@@ -224,6 +224,7 @@ function onGameIn(player, firstLogin, zoning)
         player:setGMSuperpowers(true)
     end
 	
+    -- WINGSCUSTOM
 	-- Login points
     login_points.dailyLoginPoints(player)
     
