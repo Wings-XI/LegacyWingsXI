@@ -1,7 +1,7 @@
 ---------------------------------------------------------------
--- Zeni fest - bonus zeni and ISP for soul plates!          --
+-- framework for handling "login points" which are generic bonus points
+-- used for receiving time-gated repeatable rewards  slightly more frequently
 --(C) 2022 Wings Project. Coded by MowFord.                 --
--- !enablefest or events/fests.lua for details
 ---------------------------------------------------------------
 require("scripts/globals/events/fests")
 require("scripts/globals/settings")
