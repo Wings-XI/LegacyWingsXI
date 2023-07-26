@@ -126,6 +126,103 @@ tpz.appraisalUtil.questionMarkItems =
     BOX       = 2286,
 }
 
+tpz.appraisalUtil.appraisalMappings = {
+    [17092824] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_BAT_EYE},
+    [17092825] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_SHADOW_EYE},
+    [17092826] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_BOMB_KING},
+    [17092827] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_JUGGLER_HECATOMB},
+    [17092828] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_SMOTHERING_SCHMIDT},
+    [17092829] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_HELLION},
+    [17092830] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.FOOTWEAR, appraisal = tpz.appraisalUtil.Origin.NYZUL_LEAPING_LIZZY},
+    [17092831] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_TOM_TIT_TAT},
+    [17092832] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_JAGGEDY_EARED_JACK},
+    [17092833] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.FOOTWEAR, appraisal = tpz.appraisalUtil.Origin.NYZUL_CACTUAR_CANTAUTOR},
+    [17092834] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_GARGANTUA},
+    [17092835] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.BOW, appraisal = tpz.appraisalUtil.Origin.NYZUL_GYRE_CARLIN},
+    [17092836] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_ASPHYXIATED_AMSEL},
+    [17092837] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_FROSTMANE},
+    [17092838] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.GLOVES, appraisal = tpz.appraisalUtil.Origin.NYZUL_PEALLAIDH},
+    [17092839] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_CARNERO},
+    [17092840] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_FALCATUS_ARANEI},
+    [17092841] = {floor = 20, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_EMERGENT_ELM},
+
+    [17092842] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.CAPE, appraisal = tpz.appraisalUtil.Origin.NYZUL_OLD_TWO_WINGS},
+    [17092843] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_AIATAR},
+    [17092844] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_INTULO},
+    [17092845] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_ORCTRAP},
+    [17092846] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_VALKURM_EMPEROR},
+    [17092847] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_CRUSHED_KRAUSE},
+    [17092848] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_STINGING_SOPHIE},
+    [17092849] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_SERPOPARD_ISHTAR},
+    [17092850] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_WESTERN_SHADOW},
+    [17092851] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.SHIELD, appraisal = tpz.appraisalUtil.Origin.NYZUL_BLOODTEAR_BALDURF},
+    [17092852] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_ZIZZY_ZILLAH},
+    [17092853] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_ELLYLLON},
+    [17092854] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_MISCHIEVOUS_MICHOLAS},
+    [17092855] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.EARRING, appraisal = tpz.appraisalUtil.Origin.NYZUL_LEECH_KING},
+    [17092856] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.BOW, appraisal = tpz.appraisalUtil.Origin.NYZUL_EASTERN_SHADOW},
+    [17092857] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_NUNYENUNC},
+    [17092858] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.BOW, appraisal = tpz.appraisalUtil.Origin.NYZUL_HELLDIVER},
+    [17092859] = {floor = 40, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TAISAIJIN},
+
+    [17092860] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.SHIELD, appraisal = tpz.appraisalUtil.Origin.NYZUL_FUNGUS_BEETLE},
+    [17092861] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_FRIAR_RUSH},
+    [17092862] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_PULVERIZED_PFEFFER},
+    [17092863] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_ARGUS},
+    [17092864] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_BLOODPOOL_VORAX},
+    [17092865] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_NIGHTMARE_VASE},
+    [17092866] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_DAGGERCLAW_DRACOS},
+    [17092867] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_NORTHERN_SHADOW},
+    [17092868] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.CAPE, appraisal = tpz.appraisalUtil.Origin.NYZUL_FRAELISSA},
+    [17092869] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_ROC},
+    [17092870] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_SABOTENDER_BAILARIN},
+    [17092871] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_AQUARIUS},
+    [17092872] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.GLOVES, appraisal = tpz.appraisalUtil.Origin.NYZUL_ENERGETIC_ERUCA},
+    [17092873] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.CAPE, appraisal = tpz.appraisalUtil.Origin.NYZUL_SPINY_SPIPI},
+    [17092874] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TRICKSTER_KINETIX},
+    [17092875] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_DROOLING_DAISY},
+    [17092876] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.FOOTWEAR, appraisal = tpz.appraisalUtil.Origin.NYZUL_BONNACON},
+    [17092877] = {floor = 60, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TAISAIJIN},
+
+    [17092878] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.CAPE, appraisal = tpz.appraisalUtil.Origin.NYZUL_GOLDEN_BAT},
+    [17092879] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.SHIELD, appraisal = tpz.appraisalUtil.Origin.NYZUL_STEELFLEECE_BALDARICH},
+    [17092880] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_SABOTENDER_MARIACHI},
+    [17092881] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.BOW, appraisal = tpz.appraisalUtil.Origin.NYZUL_UNGUR},
+    [17092882] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_SWAMFISK},
+    [17092883] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_BUBURIMBOO},
+    [17092884] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_KEEPER_OF_HALIDOM},
+    [17092885] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_SERKET},
+    [17092886] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.NECKLACE, appraisal = tpz.appraisalUtil.Origin.NYZUL_DUNE_WIDOW},
+    [17092887] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_ODQAN},
+    [17092888] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_BURNED_BERGMANN},
+    [17092889] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_TOM_TIT_TAT},
+    [17092890] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TYRANNIC_TUNNOK},
+    [17092891] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_BLOODSUCKER},
+    [17092892] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.FOOTWEAR, appraisal = tpz.appraisalUtil.Origin.NYZUL_TOTTERING_TOBY},
+    [17092893] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.SHIELD, appraisal = tpz.appraisalUtil.Origin.NYZUL_SOUTHERN_SHADOW},
+    [17092894] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_SHARP_EARED_ROPIPI},
+    [17092895] = {floor = 80, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TAISAIJIN},
+
+    [17092896] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_PANZER_PERCIVAL},
+    [17092897] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.POLEARM, appraisal = tpz.appraisalUtil.Origin.NYZUL_VOUIVRE},
+    [17092898] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.SASH, appraisal = tpz.appraisalUtil.Origin.NYZUL_JOLLY_GREEN},
+    [17092899] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TUMBLING_TRUFFLE},
+    [17092900] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.EARRING, appraisal = tpz.appraisalUtil.Origin.NYZUL_CAPRICIOUS_CASSIE},
+    [17092901] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_AMIKIRI},
+    [17092902] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_STRAY_MARY},
+    [17092903] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_SEWER_SYRUP},
+    [17092904] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_UNUT},
+    [17092905] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.FOOTWEAR, appraisal = tpz.appraisalUtil.Origin.NYZUL_SIMURGH},
+    [17092906] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.SHIELD, appraisal = tpz.appraisalUtil.Origin.NYZUL_PELICAN},
+    [17092907] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.SWORD, appraisal = tpz.appraisalUtil.Origin.NYZUL_CARGO_CRAB_COLIN},
+    [17092908] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.RING, appraisal = tpz.appraisalUtil.Origin.NYZUL_WOUNDED_WURFEL},
+    [17092909] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.AXE, appraisal = tpz.appraisalUtil.Origin.NYZUL_PEG_POWLER},
+    [17092910] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.DAGGER, appraisal = tpz.appraisalUtil.Origin.NYZUL_TOM_TIT_TAT},
+    [17092911] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.BOX, appraisal = tpz.appraisalUtil.Origin.NYZUL_JADED_JODY},
+    [17092912] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.EARRING, appraisal = tpz.appraisalUtil.Origin.NYZUL_MAIGHDEAN_UAINE},
+    [17092913] = {floor = 100, id = tpz.appraisalUtil.questionMarkItems.HEADPIECE, appraisal = tpz.appraisalUtil.Origin.NYZUL_TAISAIJIN},
+}
+
 tpz.appraisalUtil.appraisalItems =
 {
     [tpz.appraisalUtil.questionMarkItems.SWORD] =
@@ -1361,6 +1458,23 @@ tpz.appraisalUtil.appraisalOnEventFinish = function(player, csid, option, gil, a
         player:addTreasure(itemId, nil)
         player:delGil(gil)
         player:setLocalVar("Appraisal", 0)
+    else
+        -- WINGSCUSTOM
+        -- talked to appraisal npc instead of traded QM item
+        local nyzulFloorProgress = player:getCharVar("NyzulClimbNumber")
+        if nyzulFloorProgress >= 20 and player:getFreeSlotsCount() > 0 and login_points.delPoints(player, 3) then
+            local possibleItems = {}
+            for i,v in pairs(tpz.appraisalUtil.appraisalMappings) do
+                if v.floor <= nyzulFloorProgress then
+                    table.insert(possibleItems, v)
+                end
+            end
+            local newItem = possibleItems[math.random(1, #possibleItems)]
+            if newItem ~= nil then
+                player:addItem(newItem)
+                player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, newItem.id)
+            end
+        end
     end
 end
 

@@ -538,6 +538,30 @@ local prizes =
     },
 }
 
+local repeatableKeyItems = {
+    tpz.keyItem.MOOGLE_KEY,
+    tpz.keyItem.BIRD_KEY,
+    tpz.keyItem.CACTUAR_KEY,
+    tpz.keyItem.BOMB_KEY,
+    tpz.keyItem.CHOCOBO_KEY,
+    tpz.keyItem.TONBERRY_KEY,
+    tpz.keyItem.CRIMSON_KEY,
+    tpz.keyItem.VIRIDIAN_KEY,
+    tpz.keyItem.AMBER_KEY,
+    tpz.keyItem.AZURE_KEY,
+    tpz.keyItem.IVORY_KEY,
+    tpz.keyItem.EBON_KEY,
+}
+
+local function hasAnyKeyItems(player)
+    for i,v in pairs(repeatableKeyItems) do
+        if player:hasKeyItem(v) then
+            return true
+        end
+    end
+    return false
+end
+
 local function givePrize(player, ki)
     if not player:hasKeyItem(ki) then
         player:showText(player, ID.text.NO_KEY)
@@ -717,7 +741,14 @@ function onTrigger(player, npc)
         ((ENABLE_ACP * ENABLE_AMK * ENABLE_ASA == 0 or receivedNexusCape == 1) and 16 or 0) +
         ((ENABLE_ACP * ENABLE_AMK * ENABLE_ASA == 0 or receivedNexusCape == 0) and 32 or 0)
 
-    player:startEvent(10099, arg1, arg2, arg3, arg4, 0, 0, 0, 0)
+    -- WINGSCUSTOM
+    if not hasAnyKeyItems(player) and login_points.delPoints(player, 5) then
+        local newKeyItem = repeatableKeyItems[math.random(1, #repeatableKeyItems)]
+        player:addKeyItem(newKeyItem)
+        player:messageSpecial(zones[player:getZoneID()].text.KEYITEM_OBTAINED, newKeyItem)
+    else
+        player:startEvent(10099, arg1, arg2, arg3, arg4, 0, 0, 0, 0)
+    end
 end
 
 function onEventUpdate(player, csid, option)
