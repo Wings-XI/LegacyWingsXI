@@ -18,7 +18,6 @@ login_points.params = {
 login_points.dailyLoginPoints = function(player)
     if player then
         local realDay = tonumber(os.date("%j")) -- %M for next minute, %j for next day
-printf("%u", realDay)
         if realDay ~= player:getCharVar("[LOGIN_POINTS]lastReward") then
             local addPoints = login_points.params.perDay
             player:setCharVar("[LOGIN_POINTS]lastReward", realDay)
@@ -29,7 +28,7 @@ end
 
 login_points.addPoints = function(player, points)
     player:addCharVar("[LOGIN_POINTS]totalPoints", points)
-    player:timer(5 * 1000, function(player)
+    player:timer(8 * 1000, function(player)
         player:PrintToPlayer(string.format("SYSTEM : You gained %u login points. You now have %u", points, player:getCharVar("[LOGIN_POINTS]totalPoints")), 0xD)
     end)
 end
