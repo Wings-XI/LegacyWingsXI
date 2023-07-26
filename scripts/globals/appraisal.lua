@@ -1461,7 +1461,7 @@ tpz.appraisalUtil.appraisalOnEventFinish = function(player, csid, option, gil, a
     else
         -- WINGSCUSTOM
         -- talked to appraisal npc instead of traded QM item
-        local nyzulFloorProgress = player:getCharVar("NyzulClimbNumber")
+        local nyzulFloorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
         if nyzulFloorProgress >= 20 and player:getFreeSlotsCount() > 0 and login_points.delPoints(player, 3) then
             local possibleItems = {}
             for i,v in pairs(tpz.appraisalUtil.appraisalMappings) do
