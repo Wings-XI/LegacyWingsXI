@@ -1462,18 +1462,22 @@ tpz.appraisalUtil.appraisalOnEventFinish = function(player, csid, option, gil, a
         -- WINGSCUSTOM
         -- talked to appraisal npc instead of traded QM item
         local nyzulFloorProgress = player:getCharVar("Nyzul_RunicDiscProgress")
-        if nyzulFloorProgress >= 20 and player:getFreeSlotsCount() > 0 and login_points.delPoints(player, 3) then
-            local possibleItems = {}
-            for i,v in pairs(tpz.appraisalUtil.appraisalMappings) do
-                if v.floor <= nyzulFloorProgress then
-                    table.insert(possibleItems, v)
+        if nyzulFloorProgress >= 20 and player:getFreeSlotsCount() > 0 then
+            if login_points.delPoints(player, 3) then
+                local possibleItems = {}
+                for i,v in pairs(tpz.appraisalUtil.appraisalMappings) do
+                    if v.floor <= nyzulFloorProgress then
+                        table.insert(possibleItems, v)
+                    end
+                end
+                local newItem = possibleItems[math.random(1, #possibleItems)]
+                if newItem ~= nil then
+                    player:addItem(newItem)
+                    player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, newItem.id)
                 end
             end
-            local newItem = possibleItems[math.random(1, #possibleItems)]
-            if newItem ~= nil then
-                player:addItem(newItem)
-                player:messageSpecial(zones[player:getZoneID()].text.ITEM_OBTAINED, newItem.id)
-            end
+        else
+            player:PrintToPlayer(string.format("SYSTEM : You must have climbed to at least floor 20 and a free inventory slot"), 0xD)
         end
     end
 end
