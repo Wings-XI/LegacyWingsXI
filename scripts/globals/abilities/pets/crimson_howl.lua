@@ -15,12 +15,11 @@ end
 
 function onPetAbility(target, pet, skill, summoner)
     local mpCost = 84
-    local bonus = getSummoningSkillOverCap(pet)
-    if bonus > 90 then
-        bonus = 90
-    end
+    local duration = 30
+    local bonus = math.floor(getSummoningSkillOverCap(pet) * duration / 30)
+    duration = utils.clamp(duration + bonus, duration, 180)
 
-    target:addStatusEffect(tpz.effect.WARCRY, 9, 0,30+bonus)
+    target:addStatusEffect(tpz.effect.WARCRY, 9, 0, duration)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
     pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))

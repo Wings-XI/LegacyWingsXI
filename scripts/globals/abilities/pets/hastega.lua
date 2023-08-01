@@ -15,12 +15,11 @@ end
 
 function onPetAbility(target, pet, skill, summoner)
     local mpCost = 129
-    local bonus = getSummoningSkillOverCap(pet) * 3
-    if bonus > 90 then
-        bonus = 90
-    end
+    local duration = 90
+    local bonus = math.floor(getSummoningSkillOverCap(pet) * duration / 30)
+    duration = utils.clamp(duration + bonus, duration, 180)
+
     local power = 1494 -- 153/1024 ~14.94%
-    local duration = 90 + bonus
 
     -- Garuda's Hastega is a weird exception and uses 153/1024 instead of 150/1024 like Haste spell
     -- That's why it overwrites some things regular haste won't.
