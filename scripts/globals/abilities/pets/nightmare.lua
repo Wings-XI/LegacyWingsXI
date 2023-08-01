@@ -37,7 +37,7 @@ function onPetAbility(target, pet, skill, summoner)
 
     if summoner ~= nil then
         summoningskill = summoner:getSkillLevel(tpz.skill.SUMMONING_MAGIC)
-        accuracy = accuracy + math.floor((getSummoningSkillOverCap(pet)/2)) -- No real source for this, please confirm.
+        accuracy = accuracy + getSummoningSkillOverCap(pet)
     end
     
     -- don't reach 10, as this (being >= 10) signals it's from diabolos NM and makes wakeUp much more difficult

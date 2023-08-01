@@ -19,7 +19,7 @@ function onPetAbility(target, pet, skill)
     local duration = 35
     local bonus = pet:getStat(tpz.mod.CHR) - target:getStat(tpz.mod.CHR) - 10
     if pet:getMaster() ~= nil and (pet:getMaster()):isPC() then
-        bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + getSummoningSkillOverCap(pet)
+        bonus = bonus + getSummoningSkillOverCap(pet)
     end
 
     local resist = applyResistanceAbility(pet,target,tpz.magic.element.LIGHT,tpz.skill.ENFEEBLING_MAGIC,bonus)
