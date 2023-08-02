@@ -33,7 +33,8 @@ function onTrigger(player, npc)
     local needToZone = player:needToZone()
     local brokenWand = player:hasKeyItem(tpz.ki.BROKEN_WAND)
 
-    if player:getCurrentMission(ASA) == tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD then
+    if player:getCurrentMission(ASA) == tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD and player:getLocalVar("asa-seen") == 0 then
+        player:setLocalVar("asa-seen", 1)
         local kit = player:getCharVar("ASA_kit")
         local potion = 0
 
@@ -79,6 +80,7 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option)
+    if csid ~= 858 then player:setLocalVar("asa-seen", 0) end -- "You will need to talk to Kuroido-Moido twice if the mission That Which Curdles Blood is active."
     if (csid == 280) then
         player:addQuest(WINDURST, tpz.quest.id.windurst.MAKING_AMENS)
     elseif (csid == 284) then
