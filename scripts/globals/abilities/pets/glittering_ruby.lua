@@ -32,11 +32,11 @@ function onPetAbility(target, pet, skill)
     else --CHR
         effectid = tpz.effect.CHR_BOOST
     end
-    local bonus = getSummoningSkillOverCap(pet) * 3
-    if bonus > 90 then
-        bonus = 90
-    end
-    target:addStatusEffect(effectid, math.random(12, 14), 0, 90+bonus)
+    local duration = 90
+    local bonus = math.floor(getSummoningSkillOverCap(pet) * duration / 30)
+    duration = utils.clamp(duration + bonus, duration, 180)
+
+    target:addStatusEffect(effectid, math.random(12, 14), 0, duration)
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)
 
     pet:getMaster():addMP(math.floor(-mpCost/skill:getTotalTargets()))

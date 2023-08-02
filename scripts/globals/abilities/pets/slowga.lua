@@ -31,7 +31,7 @@ function onPetAbility(target, pet, skill, summoner)
     
     local bonus = dMND
     if pet:getMaster() ~= nil and (pet:getMaster()):isPC() then
-        bonus = bonus + (pet:getMaster()):getMerit(1284) * 2 + getSummoningSkillOverCap(pet)
+        bonus = bonus + getSummoningSkillOverCap(pet)
     end
     
     local resist = applyResistanceAbility(pet,target,2,tpz.skill.ENFEEBLING_MAGIC,bonus) * tryBuildResistance(tpz.mod.RESBUILD_SLOW, target)
