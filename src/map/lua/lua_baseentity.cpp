@@ -1051,14 +1051,7 @@ inline int32 CLuaBaseEntity::injectActionPacket(lua_State* L)
             target.animation = castAnim;
         }
         target.param = message;
-        if (m_PBaseEntity->objtype == TYPE_MOB)
-        {
-            target.messageID = 3; // starts casting
-        }
-        else
-        {
-            target.messageID = 327; // starts casting on <target>
-        }
+        target.messageID = 327; // starts casting on <target>
         return 0;
     }
 
