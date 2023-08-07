@@ -705,6 +705,11 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
+    -- WINGSCUSTOM
+    local acpFin  = player:getCurrentMission(ACP) >= tpz.mission.id.acp.A_CRYSTALLINE_PROPHECY_FIN
+    local amkFin  = player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT_FIN
+    local asaFin  = player:getCurrentMission(ASA) >= tpz.mission.id.asa.A_SHANTOTTO_ASCENSION_FIN
+    local eligableNexusCape = asaFin and amkFin and acpFin
     local receivedNexusCape = player:getCharVar("receivedNexusCape")
 
     local arg1 =
@@ -738,8 +743,8 @@ function onTrigger(player, npc)
         ((ENABLE_ACP == 0 or arg1 == 254) and 2 or 0) +
         ((ENABLE_AMK == 0 or arg2 == 254) and 4 or 0) +
         ((ENABLE_ASA == 0 or arg3 == 254) and 8 or 0) +
-        ((ENABLE_ACP * ENABLE_AMK * ENABLE_ASA == 0 or receivedNexusCape == 1) and 16 or 0) +
-        ((ENABLE_ACP * ENABLE_AMK * ENABLE_ASA == 0 or receivedNexusCape == 0) and 32 or 0)
+        ((not eligableNexusCape or receivedNexusCape == 1) and 16 or 0) +   -- give fresh item
+        ((not eligableNexusCape or receivedNexusCape == 0) and 32 or 0)     -- give used item
 
     -- WINGSCUSTOM
     if not hasAnyKeyItems(player) and login_points.delPoints(player, 5) then
