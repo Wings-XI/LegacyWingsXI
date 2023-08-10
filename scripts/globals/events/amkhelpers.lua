@@ -116,7 +116,9 @@ confrontationTimer = function(npc)
                 end_member:delStatusEffect(tpz.effect.LEVEL_RESTRICTION)
                 if winResult == true then
                     if end_member:getLocalVar("[AMK]5_deservesWin") == 1 then
-                        npcUtil.giveKeyItem(end_member, tpz.ki.RIPE_STARFRUIT)
+                        if player:getCurrentMission(AMK) == tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE then
+                            npcUtil.giveKeyItem(end_member, tpz.ki.RIPE_STARFRUIT)
+                        end
                         npcUtil.giveKeyItem(end_member, tpz.ki.PEACH_CORAL_KEY)
                     end
                     end_member:addExp(500)
