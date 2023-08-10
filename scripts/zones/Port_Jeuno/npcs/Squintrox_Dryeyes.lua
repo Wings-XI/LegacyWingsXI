@@ -30,6 +30,9 @@ function onTrade(player, npc, trade)
     local uggalepihWhistle = trade:hasItemQty(1184, 1)
     local kit = player:getCharVar("ASA_kit")
     local enfeebKit = trade:hasItemQty(kit, 1)
+    local whiteCoralKeyItems =  trade:hasItemQty(2757,1) and
+                                trade:hasItemQty(2758,1) and
+                                trade:hasItemQty(2759,1)
 
     if ENABLE_ACP == 0 and ENABLE_AMK == 0 and ENABLE_ASA == 0 then
         player:showText(npc, ID.text.GET_LOST)
@@ -38,10 +41,21 @@ function onTrade(player, npc, trade)
             player:tradeComplete()
             player:addKeyItem(tpz.ki.MOOGLE_KEY)
             player:setCharVar("LastMoogleKey", os.date("%j"))
+            player:setCharVar("ASA_kit", 0)
             player:messageSpecial(ID.text.DRYEYES_2)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.MOOGLE_KEY)
         else
             player:messageSpecial(ID.text.DRYEYES_3, tpz.ki.MOOGLE_KEY)
+        end
+    elseif whiteCoralKeyItems and count == 3 and player:getCurrentMission(AMK) > tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE then -- Moogle Key
+        if not player:hasKeyItem(tpz.ki.WHITE_CORAL_KEY) and now ~= player:getCharVar("LastWhiteCoralKey") then
+            player:tradeComplete()
+            player:addKeyItem(tpz.ki.WHITE_CORAL_KEY)
+            player:setCharVar("LastWhiteCoralKey", os.date("%j"))
+            player:messageSpecial(ID.text.DRYEYES_2)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.WHITE_CORAL_KEY)
+        else
+            player:messageSpecial(ID.text.DRYEYES_3, tpz.ki.WHITE_CORAL_KEY)
         end
     elseif sLux and sLuna and sAstrum and count == 3 and player:getCurrentMission(ACP) >= tpz.mission.id.acp.GATHERER_OF_LIGHT_I then -- Crimson Key
         if not player:hasKeyItem(tpz.ki.CRIMSON_KEY)  and now ~= player:getCharVar("LastCrimsonKey") then
@@ -69,9 +83,9 @@ function onTrigger(player, npc)
         local arg1 =
             ((ACPm < tpz.mission.id.acp.GATHERER_OF_LIGHT_I or player:hasKeyItem(tpz.ki.CRIMSON_KEY))      and   2 or 0) +
             ((ACPm < tpz.mission.id.acp.GATHERER_OF_LIGHT_I or player:hasKeyItem(tpz.ki.VIRIDIAN_KEY))     and   4 or 0) +
-            ((ENABLE_AMK == 0 or player:hasKeyItem(tpz.ki.WHITE_CORAL_KEY))                                and   8 or 0) +
-            ((ENABLE_AMK == 0 or player:hasKeyItem(tpz.ki.BLUE_CORAL_KEY))                                 and  16 or 0) +
-            ((ENABLE_AMK == 0 or player:hasKeyItem(tpz.ki.BLACK_CORAL_KEY))                                and  32 or 0) +
+            ((AMKm < tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT_FIN or player:hasKeyItem(tpz.ki.WHITE_CORAL_KEY))                                and   8 or 0) +
+            ((AMKm < tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT_FIN or player:hasKeyItem(tpz.ki.BLUE_CORAL_KEY))                                 and  16 or 0) +
+            ((AMKm < tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT_FIN or player:hasKeyItem(tpz.ki.BLACK_CORAL_KEY))                                and  32 or 0) +
             ((ASAm < tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION or player:hasKeyItem(tpz.ki.MOOGLE_KEY) and now ~= player:getCharVar("LastMoogleKey")) and  64 or 0) +
             ((ASAm < tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION or player:hasKeyItem(tpz.ki.BIRD_KEY) and now ~= player:getCharVar("LastBirdKey") )    and 128 or 0) +
             ((ASAm < tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION or player:hasKeyItem(tpz.ki.BOMB_KEY) and now ~= player:getCharVar("LastBombKey") )    and 256 or 0)
@@ -81,10 +95,27 @@ function onTrigger(player, npc)
 end
 
 function onEventUpdate(player, csid, option)
+    -- printf("update csid = %d, option = %d", csid, option)
     if csid == 323 then
         if option == 100 then -- Viridian Key
             if player:hasKeyItem(tpz.ki.BOWL_OF_BLAND_GOBLIN_SALAD) and player:hasKeyItem(tpz.ki.JUG_OF_GREASY_GOBLIN_JUICE) and player:hasKeyItem(tpz.ki.CHUNK_OF_SMOKED_GOBLIN_GRUB) then
                 player:updateEvent(1)
+            else
+                player:updateEvent(0)
+            end
+        elseif option == 101 then -- blue coral Key
+            if
+                player:hasKeyItem(tpz.ki.STURDY_METAL_STRIP) and
+                player:hasKeyItem(tpz.ki.PIECE_OF_RUGGED_TREE_BARK) and
+                player:hasKeyItem(tpz.ki.SAVORY_LAMB_ROAST)
+            then
+                player:updateEvent(3)
+            else
+                player:updateEvent(0)
+            end
+        elseif option == 102 then -- black coral Key
+            if player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
+                player:updateEvent(tpz.ki.MOLDY_WORMEATEN_CHEST)
             else
                 player:updateEvent(0)
             end
@@ -202,6 +233,7 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    -- printf("finish csid = %d, option = %d", csid, option)
     local now = tonumber(os.date("%j"))
 
     if (csid == 323) then
@@ -218,6 +250,30 @@ function onEventFinish(player, csid, option)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.VIRIDIAN_KEY)
             else
                 player:messageSpecial(ID.text.DRYEYES_3, tpz.ki.VIRIDIAN_KEY)
+            end
+        elseif option == 101 then -- blue coral Key
+            local keyItem = tpz.ki.BLUE_CORAL_KEY
+            if not player:hasKeyItem(keyItem) and now ~= player:getCharVar("LastBlueCoralKey") then
+                player:addKeyItem(keyItem)
+                player:delKeyItem(tpz.ki.STURDY_METAL_STRIP)
+                player:delKeyItem(tpz.ki.PIECE_OF_RUGGED_TREE_BARK)
+                player:delKeyItem(tpz.ki.SAVORY_LAMB_ROAST)
+                player:setCharVar("LastBlueCoralKey", os.date("%j"))
+                player:showText(player, ID.text.DRYEYES_2)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
+            else
+                player:messageSpecial(ID.text.DRYEYES_3, keyItem)
+            end
+        elseif option == 102 then -- black coral Key
+            local keyItem = tpz.ki.BLACK_CORAL_KEY
+            if not player:hasKeyItem(keyItem) and now ~= player:getCharVar("LastBlackCoralKey") then
+                player:addKeyItem(keyItem)
+                player:delKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST)
+                player:setCharVar("LastBlackCoralKey", os.date("%j"))
+                player:showText(player, ID.text.DRYEYES_2)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
+            else
+                player:messageSpecial(ID.text.DRYEYES_3, keyItem)
             end
         elseif option == 103 then -- Bird Key
             npcUtil.giveKeyItem(player, {

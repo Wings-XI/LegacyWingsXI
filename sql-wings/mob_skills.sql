@@ -1618,6 +1618,9 @@ INSERT INTO `mob_skills` VALUES(2455, 1693, 'level-4-holy', 1, 7.0, 2000, 1000, 
 INSERT INTO `mob_skills` VALUES(2456, 1694, 'level-5-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2457, 1695, 'level-6-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3395, 1696, 'fomor_level_up', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2468, 1508, 'king_cobra_clamp', 4, 15, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2469, 1506, 'wasp_sting', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2470, 1507, 'dancing_edge', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2486, 259, 'salvation_scythe', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 14, 9, 0);
 INSERT INTO `mob_skills` VALUES(2487, 259, 'salvation_scythe', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 13, 11, 0);
 INSERT INTO `mob_skills` VALUES(2488, 258, 'divine_malison', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 13, 11, 0);

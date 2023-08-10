@@ -37,7 +37,7 @@ CREATE TABLE `accounts` (
   `email` varchar(64) DEFAULT NULL,
   `timecreated` datetime NOT NULL DEFAULT current_timestamp(),
   `timemodified` datetime NOT NULL DEFAULT current_timestamp(),
-  `expansions` int(11) NOT NULL DEFAULT 190,
+  `expansions` int(11) NOT NULL DEFAULT 254,
   `features` int(10) UNSIGNED NOT NULL DEFAULT 12,
   `status` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
   `privileges` int(10) UNSIGNED NOT NULL DEFAULT 1,

@@ -3294,6 +3294,17 @@ INSERT INTO `mob_skill_lists` VALUES('Renfred', 1194, 147);
 INSERT INTO `mob_skill_lists` VALUES('Scylla', 1211, 2435);
 INSERT INTO `mob_skill_lists` VALUES('Scylla', 1211, 2436);
 INSERT INTO `mob_skill_lists` VALUES('Scylla', 1211, 2437);
+
+-- AMK10 Roar! A Cat Burglar Bares Her Fangs
+INSERT INTO `mob_skill_lists` VALUES('NanaaMihgo', 1212, 2468); -- King Cobra Clamp
+INSERT INTO `mob_skill_lists` VALUES('NanaaMihgo', 1212, 2469); -- Wasp Sting
+INSERT INTO `mob_skill_lists` VALUES('NanaaMihgo', 1212, 2470); -- Dancing Edge
+INSERT INTO `mob_skill_lists` VALUES('ChaLebagta', 1213, 16); -- Wasp Sting
+INSERT INTO `mob_skill_lists` VALUES('ChaLebagta', 1213, 18); -- Shadowstitch
+INSERT INTO `mob_skill_lists` VALUES('ChaLebagta', 1213, 25); -- Evisceration
+INSERT INTO `mob_skill_lists` VALUES('BopaGreso', 1214, 24); -- Shark Bite
+INSERT INTO `mob_skill_lists` VALUES('BopaGreso', 1214, 25); -- Evisceration
+
 INSERT INTO `mob_skill_lists` VALUES('HAND_TO_HAND', 2001, 1034); -- Asuran Fists
 INSERT INTO `mob_skill_lists` VALUES('DAGGER', 2002, 23); -- Dancing Edge
 INSERT INTO `mob_skill_lists` VALUES('SWORD', 2003, 40); -- Vorpal Blade

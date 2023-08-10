@@ -11,6 +11,7 @@ require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
 require("scripts/globals/events/starlight_festivals")
+require("scripts/globals/events/amkhelpers")
 ------------------------------------
 -- Mog Locker constants
 ------------------------------------
@@ -58,27 +59,40 @@ function moogleTrade(player, npc, trade)
                 player:messageSpecial(zones[player:getZoneID()].text.MOG_LOCKER_OFFSET + 2, getMogLockerExpiryTimestamp(player))
             end
         end
-        
+
         -- A Moogle Kupo d'Etat Mission 2
-        if ENABLE_AMK == 1 and isInMogHouseInHomeNation(player) and player:getCurrentMission(AMK) == tpz.mission.id.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP and 
-        npcUtil.tradeHas(trade, {2757, 2758, 2759}) then
+        if
+            isInMogHouseInHomeNation(player) and
+            player:getCurrentMission(AMK) == tpz.mission.id.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP and
+            npcUtil.tradeHasExactly(trade, {2757, 2758, 2759})
+        then
+            player:confirmTrade()
             player:startEvent(30024)
         end
 
         local giveMoogleABreak = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.GIVE_A_MOOGLE_A_BREAK)
         local theMooglePicnic = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_MOOGLE_PICNIC)
         local moogleInTheWild = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.MOOGLES_IN_THE_WILD)
-        
+
         -- Mog Safe Expansion Quest 1 - Give a Moogle a Break - Trading Power Bow and Beetle Ring
-        if giveMoogleABreak == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {17161, 13457}) then
+        if
+            giveMoogleABreak == QUEST_ACCEPTED and
+            npcUtil.tradeHas(trade, {17161, 13457})
+        then
             player:startEvent(30007)
             player:setCharVar("MogSafe_waitJPMidnight", JstMidnight())
         -- Mog Safe Expansion Quest 2 - The Moogle's Picnic! - Trading Selbina Butter and Shrimp Lure 
-        elseif theMooglePicnic == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {17402, 615}) then
+        elseif
+            theMooglePicnic == QUEST_ACCEPTED and
+            npcUtil.tradeHas(trade, {17402, 615})
+        then
             player:startEvent(30011)
             player:setCharVar("MogSafe_waitJPMidnight", JstMidnight())
         -- Mog Safe Expansion Quest 3 - Moogles in the Wild - Trading Raptor Mantle and Wool Hat 
-        elseif moogleInTheWild == QUEST_ACCEPTED and npcUtil.tradeHas(trade, {13593, 12474}) then
+        elseif
+            moogleInTheWild == QUEST_ACCEPTED and
+            npcUtil.tradeHas(trade, {13593, 12474})
+        then
             player:startEvent(30015)
             player:setCharVar("MogSafe_waitJPMidnight", JstMidnight())
         end
@@ -98,20 +112,23 @@ function moogleTrigger(player, npc)
                 player:messageSpecial(zones[player:getZoneID()].text.MOG_LOCKER_OFFSET, lockerTs)
             end
         end
-        
+
         local homeNationFameLevel = player:getFameLevel(player:getNation())
         local pNation = player:getNation()
         local giveMoogleABreak = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.GIVE_A_MOOGLE_A_BREAK)
         local theMooglePicnic = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_MOOGLE_PICNIC)
         local moogleInTheWild = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.MOOGLES_IN_THE_WILD)
         local unexpectedTreasure = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.UNEXPECTED_TREASURE)
-        
         -- Moghouse Tutorial
         if player:getCharVar("MoghouseExplication") == 1 then
             player:startEvent(30000)
         -- A Moogle Kupo d'Etat Mission 1
-        elseif ENABLE_AMK == 1 and isInMogHouseInHomeNation(player) and player:getMainLvl() >= 10 and 
-        player:getCurrentMission(AMK) == tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT then
+        elseif
+            ENABLE_AMK == 1 and
+            isInMogHouseInHomeNation(player) and
+            player:getMainLvl() >= 10 and
+            player:getCurrentMission(AMK) == tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT
+        then
             player:startEvent(30023)
         -- Mog Safe Expansion Quest 1 - Give a Moogle a Break | Requirement: Fame Level 3 in Home Nation | Reward: +10 Mog Safe space
         elseif player:getLocalVar("QuestSeen") == 0 and giveMoogleABreak == QUEST_AVAILABLE and homeNationFameLevel >= 3 and 
@@ -128,7 +145,7 @@ function moogleTrigger(player, npc)
             player:startEvent(30009, 0, 0, 0, 4, 0, 17402, 615)
         elseif player:getLocalVar("QuestSeen") == 0 and theMooglePicnic == QUEST_ACCEPTED and player:getCharVar("MogSafeProgress") == 1 then
             player:startEvent(30010, 0, 0, 0, 0, 0, 17402, 615)
-        elseif player:getLocalVar("QuestSeen") == 0 and theMooglePicnic == QUEST_ACCEPTED and player:getCharVar("MogSafeProgress") == 2 and 
+        elseif player:getLocalVar("QuestSeen") == 0 and theMooglePicnic == QUEST_ACCEPTED and player:getCharVar("MogSafeProgress") == 2 and
         player:getCharVar("MogSafe_waitJPMidnight") < os.time() then
             player:startEvent(30012)
         -- Mog Safe Expansion Quest 3 - Moogles in the Wild | Requirement: Fame Level 7 in Home Nation | Reward: +10 Mog Safe space
@@ -192,7 +209,7 @@ function moogleTrigger(player, npc)
         else
             player:sendMenu(1)
         end
-        
+
         -- Starlight Celebration Furniture Quests
         if isStarlightEnabled() ~= 0 then
             local HolidayTree = player:getCharVar("HolidayTree")
@@ -249,6 +266,8 @@ function moogleEventFinish(player, csid, option)
             player:addMission(AMK, tpz.mission.id.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP)
         -- A Moogle Kupo d'Etat Mission 2
         elseif csid == 30024 then
+            player:tradeComplete()
+            npcUtil.giveKeyItem(player, tpz.ki.WHITE_CORAL_KEY)
             player:completeMission(AMK, tpz.mission.id.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP)
             player:addMission(AMK, tpz.mission.id.amk.HASTEN_IN_A_JAM_IN_JEUNO)
         -- Mog Safe Expansion Quest 1 - Give a Moogle a Break

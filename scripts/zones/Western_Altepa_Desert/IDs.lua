@@ -25,6 +25,7 @@ zones[tpz.zone.WESTERN_ALTEPA_DESERT] =
         FISHING_MESSAGE_OFFSET     = 7208,  -- You can't fish here.
         DIG_THROW_AWAY             = 7221,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING               = 7223,  -- You dig and you dig, but find nothing.
+        AMK_DIGGING_OFFSET         = 7289,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
         THE_DOOR_IS_LOCKED         = 7328,  -- The door is locked.
         DOES_NOT_RESPOND           = 7329,  -- It does not respond.
         CANNOT_REMOVE_FRAG         = 7345,  -- It is an oddly shaped stone monument. A shining stone is embedded in it, but cannot be removed...

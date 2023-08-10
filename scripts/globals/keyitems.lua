@@ -1132,6 +1132,7 @@ tpz.keyItem =
     ORB_OF_COINS                             = 1142,
     RIPE_STARFRUIT                           = 1143,
     MOLDY_WORMEATEN_CHEST                    = 1144,
+    STONE_OFFSET                             = 1144,
     STONE_OF_SURYA                           = 1145,
     STONE_OF_CHANDRA                         = 1146,
     STONE_OF_MANGALA                         = 1147,

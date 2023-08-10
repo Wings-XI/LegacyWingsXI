@@ -7,6 +7,7 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/zone")
+require("scripts/globals/events/amkhelpers")
 -----------------------------------
 
 tpz = tpz or {}
@@ -925,11 +926,15 @@ local function getChocoboDiggingItem(player)
 end
 
 tpz.chocoboDig.start = function(player)
-    local zoneId = player:getZoneID()
-    local text = zones[zoneId].text
+    local zoneID = player:getZoneID()
+    local text = zones[zoneID].text
     local skillRank = player:getSkillRank(tpz.skill.DIG)
     local roll = math.random(0, 100)
     local moon = VanadielMoonPhase()/100
+
+    -- AMK Mission 7
+    -- returns false if not on the digging mission at all
+    if amkHelpers.chocoboDig(player, zoneID, text) then return end
     if moon < 0.5 then moon = 1 - moon end -- new moon to full moon linear V-shaped progression: 100%/90%/80%/70%/60%/50%/60%/70%/80%/90%/100%
     local skillmodifier = 0.5 + (skillRank / 20) -- 50% at amateur, 55% at recruit, 60% at initiate, and so on, to 100% at expert
 
