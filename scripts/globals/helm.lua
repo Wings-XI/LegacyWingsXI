@@ -12,6 +12,7 @@ require("scripts/globals/quests")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/zone")
+require("scripts/globals/events/amkhelpers")
 -----------------------------------
 
 tpz = tpz or {}
@@ -1403,7 +1404,6 @@ end
 tpz.helm.onTrade = function(player, npc, trade, helmType, csid)
     local info = helmInfo[helmType]
     local zoneId = player:getZoneID()
-    local regionId = player:getCurrentRegion()
 
     if trade:hasItemQty(info.tool, 1) and trade:getItemCount() == 1 then
         -- start event
@@ -1435,31 +1435,14 @@ tpz.helm.onTrade = function(player, npc, trade, helmType, csid)
             npcUtil.giveKeyItem(player, tpz.ki.RAINBOW_BERRY)
         end
 
-        local amkChance = 20
-        if
-            player:getCurrentMission(AMK) == tpz.mission.id.amk.WELCOME_TO_MY_DECREPIT_DOMICILE and
-            broke ~= 1
-        then
-            if
-                helmType == tpz.helm.type.MINING and
-                not player:hasKeyItem(tpz.ki.STURDY_METAL_STRIP) and
-                tpz.expansionRegion.ORIGINAL_ROTZ[regionId] and math.random(100) <= amkChance
-            then
-                npcUtil.giveKeyItem(player, tpz.ki.STURDY_METAL_STRIP)
-            elseif
-                helmType == tpz.helm.type.LOGGING and
-                not player:hasKeyItem(tpz.ki.PIECE_OF_RUGGED_TREE_BARK) and
-                tpz.expansionRegion.ORIGINAL_ROTZ[regionId] and math.random(100) <= amkChance
-            then
-                npcUtil.giveKeyItem(player, tpz.ki.PIECE_OF_RUGGED_TREE_BARK)
-            elseif
-                helmType == tpz.helm.type.HARVESTING and
-                not player:hasKeyItem(tpz.ki.SAVORY_LAMB_ROAST) and
-                tpz.expansionRegion.ORIGINAL_ROTZ[regionId] and math.random(100) <= amkChance
-            then
-                npcUtil.giveKeyItem(player, tpz.ki.SAVORY_LAMB_ROAST)
-            end
-        end
+        -- AMK04
+        --[[
+            It's to your advantage to have a full inventory since the point will not despawn and you can keep trying to get the key item from the same point.
+            You can obtain the Key Item on a failed HELM or on a tool break.
+            You can obtain the Key Item even if your inventory is full, though you will still break tools.
+        ]]
+        amkHelpers.helmTrade(player, helmType)
+
     else
         player:messageSpecial(zones[zoneId].text[info.message], info.tool)
     end

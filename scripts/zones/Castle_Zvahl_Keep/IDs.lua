@@ -15,6 +15,7 @@ zones[tpz.zone.CASTLE_ZVAHL_KEEP] =
         ITEM_OBTAINED           = 6547, -- Obtained: <item>.
         GIL_OBTAINED            = 6548, -- Obtained <number> gil.
         KEYITEM_OBTAINED        = 6550, -- Obtained key item: <keyitem>.
+        KEYITEM_LOST            = 6551, -- Lost key item: <keyitem>.
         NOTHING_OUT_OF_ORDINARY = 6561, -- There is nothing out of the ordinary here.
         FELLOW_MESSAGE_OFFSET   = 6576, -- I'm ready. I suppose.
         CARRIED_OVER_POINTS     = 7158, -- You have carried over <number> login point[/s].
@@ -49,6 +50,7 @@ zones[tpz.zone.CASTLE_ZVAHL_KEEP] =
     npc =
     {
         TREASURE_CHEST = 17441088,
+        COHORT_OFFSET  = 17441092,
     },
 }
 

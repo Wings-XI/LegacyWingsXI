@@ -24,6 +24,7 @@ zones[tpz.zone.KONSCHTAT_HIGHLANDS] =
         ALREADY_OBTAINED_TELE        = 7208,  -- You already possess the gate crystal for this telepoint.
         DIG_THROW_AWAY               = 7225,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                 = 7227,  -- You dig and you dig, but find nothing.
+        AMK_DIGGING_OFFSET           = 7293,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
         SIGNPOST3                    = 7383,  -- North: Valkurm Dunes South: North Gustaberg East: Gusgen Mines, Pashhow Marshlands
         SIGNPOST2                    = 7384,  -- North: Pashhow Marshlands West: Valkurm Dunes, North Gustaberg Southeast: Gusgen Mines
         SIGNPOST_DIALOG_1            = 7385,  -- North: Valkurm Dunes South: To Gustaberg

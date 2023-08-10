@@ -739,6 +739,11 @@ function onTrigger(player, npc)
         (not player:hasKeyItem(tpz.ki.TONBERRY_KEY) and  64 or 0) +
         (not player:hasKeyItem(tpz.ki.BEHEMOTH_KEY) and 128 or 0)
 
+    if arg2 ~= 254 then
+        arg2 = 254
+        player:PrintToPlayer("SYSTEM : Hold onto these keys, KUPO! When AMK coding is complete, you will be able to use them!", 0xD)
+    end
+
     local arg4 =
         ((ENABLE_ACP == 0 or arg1 == 254) and 2 or 0) +
         ((ENABLE_AMK == 0 or arg2 == 254) and 4 or 0) +

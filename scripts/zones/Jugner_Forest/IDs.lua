@@ -25,6 +25,7 @@ zones[tpz.zone.JUGNER_FOREST] =
         FISHING_MESSAGE_OFFSET   = 7704,  -- You can't fish here.
         DIG_THROW_AWAY           = 7717,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING             = 7719,  -- You dig and you dig, but find nothing.
+        AMK_DIGGING_OFFSET       = 7785,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
         LOGGING_IS_POSSIBLE_HERE = 7897,  -- Logging is possible here if you have <item>.
         CONQUEST                 = 8048,  -- You've earned conquest points!
         PLAYER_OBTAINS_ITEM      = 8639,  -- <name> obtains <item>!

@@ -25,6 +25,7 @@ zones[tpz.zone.MERIPHATAUD_MOUNTAINS] =
         FISHING_MESSAGE_OFFSET   = 7230,  -- You can't fish here.
         DIG_THROW_AWAY           = 7243,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING             = 7245,  -- You dig and you dig, but find nothing.
+        AMK_DIGGING_OFFSET       = 7311,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
         NOTHING_FOUND            = 7488,  -- You find nothing.
         CONQUEST                 = 7900,  -- You've earned conquest points!
         ITEMS_ITEMS_LA_LA        = 8274,  -- You can hear a strange voice... Items, items, la la la la la

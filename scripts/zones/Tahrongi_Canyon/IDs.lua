@@ -23,6 +23,7 @@ zones[tpz.zone.TAHRONGI_CANYON] =
         FISHING_MESSAGE_OFFSET       = 7230,  -- You can't fish here.
         DIG_THROW_AWAY               = 7243,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                 = 7245,  -- You dig and you dig, but find nothing.
+        AMK_DIGGING_OFFSET           = 7311,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
         ALREADY_OBTAINED_TELE        = 7330,  -- You already possess the gate crystal for this telepoint.
         TELEPOINT_DISAPPEARED        = 7331,  -- The telepoint has disappeared...
         SIGN_1                       = 7405,  -- North: Meriphataud Mountains Northeast: Crag of Mea South: East Sarutabaruta

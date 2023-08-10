@@ -26,6 +26,7 @@ zones[tpz.zone.PASHHOW_MARSHLANDS] =
         FISHING_MESSAGE_OFFSET   = 7230,  -- You can't fish here.
         DIG_THROW_AWAY           = 7243,  -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING             = 7245,  -- You dig and you dig, but find nothing.
+        AMK_DIGGING_OFFSET       = 7311,  -- You spot some familiar footprints. You are convinced that your moogle friend has been digging in the immediate vicinity.
         PLAYER_OBTAINS_ITEM      = 8457,  -- <name> obtains <item>!
         UNABLE_TO_OBTAIN_ITEM    = 8458,  -- You were unable to obtain the item.
         PLAYER_OBTAINS_TEMP_ITEM = 8459,  -- <name> obtains the temporary item: <item>!

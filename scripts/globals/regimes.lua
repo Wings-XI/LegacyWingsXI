@@ -15,6 +15,7 @@ require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
 require("scripts/globals/keyitems")
+require("scripts/globals/events/amkhelpers")
 ------------------------------------
 
 tpz = tpz or {}
@@ -763,7 +764,7 @@ local regimeInfo = {
                 event = 110,
                 page =
                 {
-                    { 1, 1, 1, 1, 10, 14, 420, 663}, -- four cpus/batons/swords/coins
+                    { 1, 1, 1, 1, 10, 14, 420, 663}, -- four cups/batons/swords/coins
                     { 1, 1, 1, 1, 15, 19, 475, 664}, -- five cups/batons/swords/coins
                     { 1, 1, 1, 1, 20, 24, 573, 665}, -- six cups/batons/swords/coins
                     { 1, 1, 1, 1, 25, 29, 693, 666}, -- seven cups/batons/swords/coins

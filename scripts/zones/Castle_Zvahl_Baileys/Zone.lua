@@ -43,6 +43,9 @@ function onZoneIn(player, prevZone)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(-181.969, -35.542, 19.995, 254)
     end
+    if player:getCurrentMission(AMK) == tpz.mission.id.amk.JOY_SUMMONED_TO_A_FABULOUS_FETE then
+        cs = 88
+    end
     return cs
 end
 
@@ -88,4 +91,8 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
+    if csid == 88 then
+        player:completeMission(AMK, tpz.mission.id.amk.JOY_SUMMONED_TO_A_FABULOUS_FETE)
+        player:addMission(AMK, tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER)
+    end
 end

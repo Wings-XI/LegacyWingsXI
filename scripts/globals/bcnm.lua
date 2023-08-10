@@ -377,7 +377,7 @@ local battlefields = {
      -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
         { 6,  198, 1178},   -- Eye of the Storm (KS30)
      -- { 7,  199, 1180},   -- The Scarlet King (KS30)
-     -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
+        { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (AMK10)
      -- { 9,  201, 3352},   -- Dragon Scales (KC50)
      -- {10,    ?, 4063},   -- *Legion XI Comitatensis (SKC20)
     },
@@ -543,6 +543,7 @@ function checkReqs(player, npc, bfid, registrant)
     local cop     = player:getCurrentMission(COP)
     local toau    = player:getCurrentMission(TOAU)
     local asa     = player:getCurrentMission(ASA)
+    local amk     = player:getCurrentMission(AMK)
     local natStat  = player:getCharVar("MissionStatus")
     local rozStat  = player:getCharVar("ZilartStatus")
     local copStat  = player:getCharVar("PromathiaStatus")
@@ -596,6 +597,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 194] = function() return ( mjob == tpz.job.SAM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SAM LB5)
         [ 195] = function() return ( mjob == tpz.job.NIN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (NIN LB5)
         [ 196] = function() return ( mjob == tpz.job.DRG and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRG LB5)
+        [ 200] = function() return ( player:hasKeyItem(tpz.ki.NAVARATNA_TALISMAN)                                                                                           ) end, -- AMK10: Roar! A Cat Burglar Bares Her Fangs
         [ 224] = function() return ( player:hasKeyItem(tpz.ki.MOON_BAUBLE)                                                                                                  ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( windy == mi.windurst.MOON_READING and natStat == 2                                                                                     ) end, -- Windy 9-2: Moon Reading
         [ 227] = function() return ( player:hasKeyItem(tpz.ki.WATER_SAP_CRYSTAL) or player:hasKeyItem(tpz.ki.EARTH_SAP_CRYSTAL)
@@ -797,6 +799,7 @@ function checkSkip(player, bfid)
     local cop       = player:getCurrentMission(COP)
     local toau      = player:getCurrentMission(TOAU)
     local asa       = player:getCurrentMission(ASA)
+    local amk       = player:getCurrentMission(AMK)
     local natStat   = player:getCharVar("MissionStatus")
     local rozStat   = player:getCharVar("ZilartStatus")
     local copStat   = player:getCharVar("PromathiaStatus")
@@ -843,6 +846,7 @@ function checkSkip(player, bfid)
         [ 160] = function() return ( player:hasCompletedMission(player:getNation(), mi.nation.SHADOW_LORD) or (nat == mi.nation.SHADOW_LORD and natStat > 3)                                         ) end, -- Mission 5-2
         [ 161] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.WHERE_TWO_PATHS_CONVERGE) or (basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat > 4)                         ) end, -- Basty 9-2: Where Two Paths Converge
         [ 192] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.THROUGH_THE_QUICKSAND_CAVES)                                                                                       ) end, -- ZM6: Through the Quicksand Caves
+        [ 200] = function() return ( player:hasCompletedMission(AMK, mi.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS)                                                                                      ) end, -- AMK10: Roar! A Cat Burglar Bares Her Fangs
         [ 224] = function() return ( player:hasCompletedQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH) or player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)                                     ) end, -- Quest: The Moonlit Path
         [ 225] = function() return ( player:hasCompletedMission(WINDURST, mi.windurst.MOON_READING) or (windy == mi.windurst.MOON_READING and natStat > 4)                                           ) end, -- Windy 9-2: Moon Reading
         [ 227] = function() return ( player:hasCompletedMission(ASA, mi.asa.BATTARU_ROYALE)                                                                                                          ) end, -- ASA10: Battaru Royale
@@ -943,7 +947,7 @@ function getBattlefieldMaskById(player, bfid)
 end
 
 -----------------------------------------------
--- get battlefield bit for a given zone and id
+-- get battlefield item for a given zone and id
 -----------------------------------------------
 
 function getItemById(player, bfid)
@@ -1080,7 +1084,7 @@ function EventTriggerBCNM(player, npc)
         end
 
     end
-    
+
     return false
 end
 
@@ -1100,15 +1104,12 @@ function EventUpdateBCNM(player, csid, option, extras)
             -- todo: check if battlefields full, check party member requirements
             return 0
         end
-        local area = player:getLocalVar("[battlefield]area")
-        area = area + 1
+        local area = player:getLocalVar("[battlefield]area") + 1
 
         local battlefieldIndex = bit.rshift(option, 4)
         local battlefieldId = getBattlefieldIdByBit(player, battlefieldIndex)
-        local effect = player:getStatusEffect(tpz.effect.BATTLEFIELD)
         local id = battlefieldId or player:getBattlefieldID()
         local skip = checkSkip(player, id)
-
         local clearTime = 1
         local name = "Meme"
         local partySize = 1

@@ -33,8 +33,12 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-
-    if (player:getCurrentMission(player:getNation()) == tpz.mission.id.nation.SHADOW_LORD and player:getCharVar("MissionStatus") == 2) then
+    if
+        player:getCurrentMission(AMK) == tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER and
+        player:hasKeyItem(tpz.ki.MEGA_BONANZA_KUPON)
+    then
+        player:startEvent(4, 165)
+    elseif (player:getCurrentMission(player:getNation()) == tpz.mission.id.nation.SHADOW_LORD and player:getCharVar("MissionStatus") == 2) then
         player:startEvent(6)
     elseif (EventTriggerBCNM(player, npc)) then
         return 1
@@ -53,10 +57,12 @@ end
 function onEventFinish(player, csid, option)
     -- printf("onFinish CSID: %u", csid)
     -- printf("onFinish RESULT: %u", option)
-
-    if (csid == 6) then
+    if csid == 4 then
+        player:completeMission(AMK, tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER)
+        player:addMission(AMK, tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE)
+    elseif csid == 6 then
         player:setCharVar("MissionStatus", 3)
-    elseif (EventFinishBCNM(player, csid, option)) then
+    elseif EventFinishBCNM(player, csid, option) then
         return
     end
 

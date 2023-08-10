@@ -14,6 +14,7 @@ zones[tpz.zone.CHAMBER_OF_ORACLES] =
         ITEM_OBTAINED                    = 6388, -- Obtained: <item>.
         GIL_OBTAINED                     = 6389, -- Obtained <number> gil.
         KEYITEM_OBTAINED                 = 6391, -- Obtained key item: <keyitem>.
+        KEYITEM_LOST                     = 6392, -- Lost key item: <keyitem>.
         CARRIED_OVER_POINTS              = 6999, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY          = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER                     = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
@@ -32,6 +33,18 @@ zones[tpz.zone.CHAMBER_OF_ORACLES] =
         TAKE_THAT_YOU_WHIPPERSNAPPER     = 7644, -- Take that, you whippersnapper!
         NOW_THAT_IM_WARMED_UP            = 7645, -- Now that I'm warmed up...
         THAT_LL_HURT_IN_THE_MORNING      = 7646, -- Ungh... That'll hurt in the morning...
+        CAT_BURGLAR                      = 7669, -- Time for the Cat Burglar to barrre her claws...
+        SHOW_EM_WHAT_YOU_GOT             = 7670, -- Cha! Show 'em what ya've got.
+        A_LITTLE_HELP                    = 7671, -- Bopa! A little help here!?
+        EARNED_MY_PAY                    = 7672, -- Grrr... Bah, I've earrrned my pay. I'm outta here!
+        YA_RANG_BOSS                     = 7673, -- [Cha] Ya rrrang, boss?
+        BOPA_SCRATCHING_POST             = 7674, -- [Bopa] Bopa's gonna use you for a scrratchin' post!
+        THIS_WONT_HURT_MUCH              = 7675, -- Sit still, will ya? This won't hurrrt...much!
+        CHECK_THIS_OUT                   = 7676, -- Hey boss, check this out!
+        DINNERTIME                       = 7677, -- It's almost dinnerrrtime. Let's turn this one into mithkabob meat!
+        MAKE_SAUSAGE                     = 7678, -- We're gonna make sausage out of your entrrrails!
+        LOOK_WHAT_I_CAN_DO               = 7679, -- Hey boss! Look what I've been prrracticing!
+        YOU_THINK_YOU_CAN_TAKE_US        = 7680, -- Hah! You rrreally think you can take us?
     },
     mob =
     {

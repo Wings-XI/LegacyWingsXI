@@ -109,29 +109,53 @@ function onTrigger(player, npc)
     local FoiledAGolem = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_A_GOLEM)
     local golemdelivery = player:getCharVar("foiledagolemdeliverycomplete")
     local WildcatWindurst = player:getCharVar("WildcatWindurst")
-
-    if wsQuestEvent ~= nil then
-        player:startEvent(wsQuestEvent)
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING and
-        player:getCharVar("MissionStatus") == 7) then
-        player:startEvent(397, 0, 0, 0, 282)
-    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(WildcatWindurst, 6)) then
-        player:startEvent(498)
-    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CLASS_REUNION) == QUEST_ACCEPTED and
-        player:getCharVar("ClassReunionProgress") == 3) then
-        player:startEvent(409) -- she mentions that Sunny-Pabonny left for San d'Oria
+    local currentMission_AMK = player:getCurrentMission(AMK)
 
         -- AMK
-    elseif player:getCurrentMission(AMK) == tpz.mission.id.amk.CURSES_A_HORRIFICALLY_HARROWING_HEX then
+    if currentMission_AMK == tpz.mission.id.amk.CURSES_A_HORRIFICALLY_HARROWING_HEX then
         player:startEvent(506)
+    elseif
+        currentMission_AMK == tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE and
+        player:needToZone() ~= true and
+        player:getCharVar("[AMK]5_errandProgress") ~= 1 and
+        player:getCharVar("[AMK]5_stillDawdling") == 0
+    then
+        if player:hasKeyItem(tpz.ki.RIPE_STARFRUIT) then
+            local hasGil = player:getGil() >= 5000 and 0 or 1
+            player:startEvent(507, 0, player:getGil(), hasGil)
+        else
+            player:startEvent(508)
+            player:setCharVar("[AMK]5_stillDawdling", 1)
+        end
+    elseif
+        player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING and
+        player:getCharVar("MissionStatus") == 7
+    then
+        player:startEvent(397, 0, 0, 0, 282)
+    elseif
+        player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and
+        not utils.mask.getBit(WildcatWindurst, 6)
+    then
+        player:startEvent(498)
+    elseif
+        player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CLASS_REUNION) == QUEST_ACCEPTED and
+        player:getCharVar("ClassReunionProgress") == 3
+    then
+        player:startEvent(409) -- she mentions that Sunny-Pabonny left for San d'Oria
+    elseif wsQuestEvent ~= nil then
+        player:startEvent(wsQuestEvent)
 
         -------------------------------------------------------
         -- Curses Foiled Again!
-    elseif (foiledAgain == QUEST_AVAILABLE) then
+    elseif foiledAgain == QUEST_AVAILABLE then
         player:startEvent(171, 0, 0, 0, 0, 0, 0, 928, 880)
-    elseif (foiledAgain == QUEST_ACCEPTED) then
+    elseif foiledAgain == QUEST_ACCEPTED then
         player:startEvent(172, 0, 0, 0, 0, 0, 0, 928, 880)
-    elseif (foiledAgain == QUEST_COMPLETED and CFA2 == QUEST_AVAILABLE and CFAtimer == 0) then
+    elseif
+        foiledAgain == QUEST_COMPLETED and
+        CFA2 == QUEST_AVAILABLE and
+        CFAtimer == 0
+    then
         local cDay = VanadielDayOfTheYear()
         local cYear = VanadielYear()
         local dFinished = player:getCharVar("CursesFoiledAgainDay")
@@ -140,11 +164,17 @@ function onTrigger(player, npc)
         -- player:PrintToPlayer("Vana Day and year:  "..cDay..", "..cYear)
         -- player:PrintToPlayer("Database Day and year:  "..dFinished..", "..yFinished)
 
-        if (cDay == dFinished and cYear == yFinished) then
+        if
+            cDay == dFinished and
+            cYear == yFinished
+        then
             player:startEvent(174)
-        elseif (cDay == dFinished + 1 and cYear == yFinished) then
+        elseif cDay == dFinished + 1 and cYear == yFinished then
             player:startEvent(178)
-        elseif ((cDay >= dFinished + 2 and cYear == yFinished) or (cYear > yFinished)) then
+        elseif
+            (cDay >= dFinished + 2 and cYear == yFinished) or
+            cYear > yFinished
+        then
             player:startEvent(179)
         end
 
@@ -166,22 +196,25 @@ function onTrigger(player, npc)
 
         -- Trust
         -- TODO: Wiki's aren't clear on the exact conditions for this event, assuming it's the final nation "extreme" trust
-    elseif player:hasSpell(898) and -- Kupipi
-    player:hasSpell(901) and -- Nanaa Mihgo
-    player:hasSpell(903) and -- Volker
-    player:hasSpell(904) and -- Ajido-Marujido
-    player:hasSpell(905) and -- Trion
-    not player:hasSpell(896) -- NOT Shantotto
+    elseif
+        player:hasSpell(898) and -- Kupipi
+        player:hasSpell(901) and -- Nanaa Mihgo
+        player:hasSpell(903) and -- Volker
+        player:hasSpell(904) and -- Ajido-Marujido
+        player:hasSpell(905) and -- Trion
+        not player:hasSpell(896) -- NOT Shantotto
     then
         player:startEvent(529, 0, 0, 0, TrustMemory(player), 0, 0, 0, FoiledAGolem == QUEST_COMPLETED and 1 or 0)
 
         -- Standard dialog
-    elseif (player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING) and
-        player:getCharVar("ShantottoCS") == 1) then
+    elseif
+        player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING) and
+        player:getCharVar("ShantottoCS") == 1
+    then
         player:startEvent(399, 0, 0, 0, tpz.ki.GLOVE_OF_PERPETUAL_TWILIGHT)
-    elseif (FoiledAGolem == QUEST_COMPLETED) then
+    elseif FoiledAGolem == QUEST_COMPLETED then
         player:startEvent(343) -- new standard dialog after Curses, Foiled A-Golem!?        
-    elseif (CFA2 == QUEST_COMPLETED) then
+    elseif CFA2 == QUEST_COMPLETED then
         player:startEvent(184) -- New standard dialog after CFA2
     else
         player:startEvent(164)
@@ -189,8 +222,9 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option)
-    if (csid == 173) then
-        if (player:getFreeSlotsCount() == 0) then
+    if csid ~= 508 then player:setCharVar("[AMK]5_stillDawdling", 0) end
+    if csid == 173 then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17081)
         else
             player:tradeComplete()
@@ -201,10 +235,13 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17081)
             player:completeQuest(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_AGAIN_1)
         end
-    elseif (csid == 171 and option ~= 1) then
+    elseif
+        csid == 171 and
+        option == 3
+    then
         player:addQuest(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_AGAIN_1)
 
-    elseif (csid == 179) then
+    elseif csid == 179 then
         player:setCharVar("CursesFoiledAgainDayFinished", 0)
         player:setCharVar("CursesFoiledAgainYearFinished", 0)
         player:setCharVar("CursesFoiledAgainDay", 0)
@@ -212,13 +249,16 @@ function onEventFinish(player, csid, option)
         player:setCharVar("CursesFoiledAgain", 1) -- Used to acknowledge that the two days have passed, Use this to initiate next quest
         player:needToZone(true)
 
-    elseif (csid == 180 and option == 3) then
+    elseif
+        csid == 180 and
+        option == 3
+    then
         player:setCharVar("CursesFoiledAgain", 0)
         player:addQuest(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_AGAIN_2)
         player:setTitle(tpz.title.TARUTARU_MURDER_SUSPECT)
 
-    elseif (csid == 183) then
-        if (player:getFreeSlotsCount() == 0) then
+    elseif csid == 183 then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17116)
         else
             player:tradeComplete()
@@ -230,14 +270,14 @@ function onEventFinish(player, csid, option)
             player:addFame(WINDURST, 90)
         end
 
-    elseif (csid == 340) then
-        if (option == 1) then
+    elseif csid == 340 then
+        if option == 1 then
             player:addQuest(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_A_GOLEM)
         else
             player:setTitle(tpz.title.TOTAL_LOSER)
         end
 
-    elseif (csid == 342) then
+    elseif csid == 342 then
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4870)
         else
@@ -248,19 +288,33 @@ function onEventFinish(player, csid, option)
             player:setTitle(tpz.title.DOCTOR_SHANTOTTOS_FLAVOR_OF_THE_MONTH)
             player:addFame(WINDURST, 120)
         end
-    elseif (csid == 409) then
+    elseif csid == 409 then
         player:setCharVar("ClassReunionProgress", 4)
-    elseif (csid == 498) then
+    elseif csid == 498 then
         player:setCharVar("WildcatWindurst", utils.mask.setBit(player:getCharVar("WildcatWindurst"), 6, true))
-    elseif (csid == 397) then
+    elseif csid == 397 then
         player:addKeyItem(tpz.ki.GLOVE_OF_PERPETUAL_TWILIGHT)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.GLOVE_OF_PERPETUAL_TWILIGHT)
         player:setCharVar("MissionStatus", 8)
-    elseif (csid == 399) then
+    elseif csid == 399 then
         player:setCharVar("ShantottoCS", 0)
+
+        -- AMK
     elseif csid == 506 then
         player:completeMission(AMK, tpz.mission.id.amk.CURSES_A_HORRIFICALLY_HARROWING_HEX)
         player:addMission(AMK, tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE)
+    elseif csid == 507 then
+        if
+            option == 0 -- Got blasted, need to zone
+        then
+            player:needToZone(true)
+            player:setHP(1)
+        elseif option == 1 then
+            player:delGil(5000)
+            player:delKeyItem(tpz.ki.RIPE_STARFRUIT)
+            player:setCharVar("[AMK]5_errandProgress", 1)
+            player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.RIPE_STARFRUIT)
+        end
 
         -- TRUST
     elseif csid == 529 and option == 2 then
