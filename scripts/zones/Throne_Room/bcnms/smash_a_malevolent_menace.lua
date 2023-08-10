@@ -14,7 +14,6 @@ function onBattlefieldTick(battlefield, tick)
 end
 
 function onBattlefieldInitialise(battlefield)
-    battlefield:setLocalVar("phaseChange", 1)
 end
 
 function onBattlefieldRegister(player, battlefield)
@@ -39,7 +38,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
 
         if player:getCharVar("AMK_BCNM") == 1 then
             player:setCharVar("AMK_BCNM", 0)
-            if player:getCurrentMission(ACP) >= tpz.mission.id.acp.SMASH_A_MALEVOLENT_MENACE then
+            if player:getCurrentMission(AMK) >= tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE then
                 if not player:hasKeyItem(tpz.ki.ANGEL_SKIN_KEY) and now ~= lastKey then
                     player:setCharVar("LastAngelSkinKey", os.date("%j"))
                     npcUtil.giveKeyItem(player,tpz.ki.ANGEL_SKIN_KEY)
@@ -52,9 +51,8 @@ function onBattlefieldLeave(player, battlefield, leavecode)
                     end
                 end
 
-                if not hasArmor and not player:hasKeyItem(tpz.ki.OXBLOOD_KEY) then
-                    player:addKeyItem(tpz.ki.OXBLOOD_KEY)
-                    player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.OXBLOOD_KEY)
+                if not hasArmor then
+                    npcUtil.giveKeyItem(player, tpz.ki.OXBLOOD_KEY)
                 end
             end
         end
