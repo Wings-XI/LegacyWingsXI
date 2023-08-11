@@ -111,7 +111,7 @@ function onEventFinish(player, csid, option)
     elseif csid == 10183 then
         player:delKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST)
         player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.MOLDY_WORMEATEN_CHEST)
-        npcUtil.giveKeyItem(end_member, tpz.ki.BLACK_CORAL_KEY)
+        npcUtil.giveKeyItem(player, tpz.ki.BLACK_CORAL_KEY)
         player:completeMission(AMK, tpz.mission.id.amk.SHOCK_ARRANT_ABUSE_OF_AUTHORITY)
         player:addMission(AMK, tpz.mission.id.amk.LENDER_BEWARE_READ_THE_FINE_PRINT)
     elseif csid == 10184 then

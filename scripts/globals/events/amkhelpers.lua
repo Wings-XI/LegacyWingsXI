@@ -464,7 +464,7 @@ amkHelpers.chocoboDig = function(player, zoneID, text)
     elseif distance > 10 then
         player:messageSpecial(text.AMK_DIGGING_OFFSET + 1, direction)
     -- You are convinced that your moogle friend has been digging in the immediate vicinity. (Less than 5' from target)
-    elseif distance > 4 then
+    elseif distance > 6 then
         player:messageSpecial(text.AMK_DIGGING_OFFSET, direction)
     end
 
