@@ -116,7 +116,9 @@ confrontationTimer = function(npc)
                 end_member:delStatusEffect(tpz.effect.LEVEL_RESTRICTION)
                 if winResult == true then
                     if end_member:getLocalVar("[AMK]5_deservesWin") == 1 then
-                        npcUtil.giveKeyItem(end_member, tpz.ki.RIPE_STARFRUIT)
+                        if end_member:getCurrentMission(AMK) == tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE then
+                            npcUtil.giveKeyItem(end_member, tpz.ki.RIPE_STARFRUIT)
+                        end
                         npcUtil.giveKeyItem(end_member, tpz.ki.PEACH_CORAL_KEY)
                     end
                     end_member:addExp(500)
@@ -462,7 +464,7 @@ amkHelpers.chocoboDig = function(player, zoneID, text)
     elseif distance > 10 then
         player:messageSpecial(text.AMK_DIGGING_OFFSET + 1, direction)
     -- You are convinced that your moogle friend has been digging in the immediate vicinity. (Less than 5' from target)
-    elseif distance > 4 then
+    elseif distance > 6 then
         player:messageSpecial(text.AMK_DIGGING_OFFSET, direction)
     end
 
