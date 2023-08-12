@@ -538,28 +538,52 @@ local prizes =
     },
 }
 
+-- WINGSCUSTOM login system reward mappings. Only available if mission is complete and doesn't have key item
 local repeatableKeyItems = {
-    tpz.keyItem.MOOGLE_KEY,
-    tpz.keyItem.BIRD_KEY,
-    tpz.keyItem.CACTUAR_KEY,
-    tpz.keyItem.BOMB_KEY,
-    tpz.keyItem.CHOCOBO_KEY,
-    tpz.keyItem.TONBERRY_KEY,
-    tpz.keyItem.CRIMSON_KEY,
-    tpz.keyItem.VIRIDIAN_KEY,
-    tpz.keyItem.AMBER_KEY,
-    tpz.keyItem.AZURE_KEY,
-    tpz.keyItem.IVORY_KEY,
-    tpz.keyItem.EBON_KEY,
+    {ki = tpz.keyItem.MOOGLE_KEY, expansion = ASA, mission = tpz.mi.asa.THAT_WHICH_CURDLES_BLOOD},
+    {ki = tpz.keyItem.BIRD_KEY, expansion = ASA, mission = tpz.mi.asa.SUGAR_COATED_DIRECTIVE},
+    {ki = tpz.keyItem.CACTUAR_KEY, expansion = ASA, mission = tpz.mi.asa.ENEMY_OF_THE_EMPIRE_II},
+    {ki = tpz.keyItem.BOMB_KEY, expansion = ASA, mission = tpz.mi.asa.SHANTOTTO_IN_CHAINS},
+    {ki = tpz.keyItem.CHOCOBO_KEY, expansion = ASA, mission = tpz.mi.asa.BATTARU_ROYALE},
+    {ki = tpz.keyItem.TONBERRY_KEY, expansion = ASA, mission = tpz.mi.asa.PROJECT_SHANTOTTOFICATION},
+    {ki = tpz.keyItem.WHITE_CORAL_KEY, expansion = AMK, mission = tpz.mi.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP},
+    {ki = tpz.keyItem.BLUE_CORAL_KEY, expansion = AMK, mission = tpz.mi.amk.WELCOME_TO_MY_DECREPIT_DOMICILE},
+    {ki = tpz.keyItem.PEACH_CORAL_KEY, expansion = AMK, mission = tpz.mi.amk.AN_ERRAND_THE_PROFESSORS_PRICE},
+    {ki = tpz.keyItem.BLACK_CORAL_KEY, expansion = AMK, mission = tpz.mi.amk.SHOCK_ARRANT_ABUSE_OF_AUTHORITY},
+    {ki = tpz.keyItem.RED_CORAL_KEY, expansion = AMK, mission = tpz.mi.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS},
+    {ki = tpz.keyItem.CRIMSON_KEY, expansion = ACP, mission = tpz.mi.acp.THE_ECHO_AWAKENS},
+    {ki = tpz.keyItem.VIRIDIAN_KEY, expansion = ACP, mission = tpz.mi.acp.GATHERER_OF_LIGHT_I},
+    {ki = tpz.keyItem.AMBER_KEY, expansion = ACP, mission = tpz.mi.acp.GATHERER_OF_LIGHT_II},
+    {ki = tpz.keyItem.AZURE_KEY, expansion = ACP, mission = tpz.mi.acp.THOSE_WHO_LURK_IN_SHADOWS_II},
+    {ki = tpz.keyItem.IVORY_KEY, expansion = ACP, mission = tpz.mi.acp.THOSE_WHO_LURK_IN_SHADOWS_III},
+    {ki = tpz.keyItem.EBON_KEY, expansion = ACP, mission = tpz.mi.acp.ODE_OF_LIFE_BESTOWING},
 }
 
+-- determines if any login reward should be given (only given if none of the key items are owned)
+-- returns true if any key iten is owned OR if ineligable for all key items
 local function hasAnyKeyItems(player)
+    local count = 0
     for i,v in pairs(repeatableKeyItems) do
-        if player:hasKeyItem(v) then
+        if player:hasCompletedMission(v.expansion, v.mission) then
+            count = count + 1
+        end
+        if player:hasKeyItem(v.ki) then
             return true
         end
     end
+    if count == 0 then return true end
     return false
+end
+
+-- pulls a random key item from repeatableKeyItems for which player meets the requirements
+local function getEligableKeyItem(player)
+    local keyItems = {}
+    for i,v in pairs(repeatableKeyItems) do
+        if player:hasCompletedMission(v.expansion, v.mission) and not player:hasKeyItem(v.ki) then
+            table.insert(keyItems, v.ki)
+        end
+    end
+    return keyItems[math.random(#keyItems)] or 0
 end
 
 local function givePrize(player, ki)
@@ -753,9 +777,15 @@ function onTrigger(player, npc)
 
     -- WINGSCUSTOM
     if not hasAnyKeyItems(player) and login_points.delPoints(player, 5) then
-        local newKeyItem = repeatableKeyItems[math.random(1, #repeatableKeyItems)]
-        player:addKeyItem(newKeyItem)
-        player:messageSpecial(zones[player:getZoneID()].text.KEYITEM_OBTAINED, newKeyItem)
+        local newKeyItem = getEligableKeyItem(player)
+        if newKeyItem > 0 then
+            player:addKeyItem(newKeyItem)
+            player:messageSpecial(zones[player:getZoneID()].text.KEYITEM_OBTAINED, newKeyItem)
+        else
+            local rndNum = math.random(1000)
+            player:PrintToPlayer(string.format("Your login points were taken, but no key item was found that you are eligable for, please open a GM ticket: (%u)", rndNum), 0x0D)
+            player:setCharVar("TenshodoCofferErrors", rndNum)
+        end
     else
         player:startEvent(10099, arg1, arg2, arg3, arg4, 0, 0, 0, 0)
     end

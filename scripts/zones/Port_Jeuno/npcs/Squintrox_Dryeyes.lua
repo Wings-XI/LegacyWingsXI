@@ -3,6 +3,7 @@
 --   NPC: Squintrox Dryeyes
 -- Type: Addon Mission Merchant
 -- !pos -100.071 -1 11.869 246
+-- wiki has good info on his behavior: https://ffxiclopedia.fandom.com/wiki/Squintrox_Dryeyes
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
