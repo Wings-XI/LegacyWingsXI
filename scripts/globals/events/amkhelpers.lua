@@ -280,102 +280,138 @@ end
 amkHelpers.digSites = {
     [tpz.zone.VALKURM_DUNES] =
     {
-        { x = -518.039, z = 133.930 },
-        { x = 237.421, z = -153.886 },
-        { x = 912.032, z = -324.621 },
+        eventID = 1,
+        spots = {
+            { x = -518.039, z = 133.930 },
+            { x = 237.421, z = -153.886 },
+            { x = 912.032, z = -324.621 },
+        },
     },
     [tpz.zone.JUGNER_FOREST] =
     {
-        { x = -359.881, z = 27.948 },
-        { x = -73.022, z = 349.066 },
-        { x = 212.000, z = -91.000 },
+        eventID = 2,
+        spots = {
+            { x = -359.881, z = 27.948 },
+            { x = -73.022, z = 349.066 },
+            { x = 212.000, z = -91.000 },
+        },
     },
     [tpz.zone.KONSCHTAT_HIGHLANDS] =
     {
-        { x = 558.450, z = 458.885 },
-        { x = -352.037, z = 27.853 },
-        { x = -319.470, z = -350.070 },
-        { x = -150.686, z = -709.612 },
+        eventID = 3,
+        spots = {
+            { x = 558.450, z = 458.885 },
+            { x = -352.037, z = 27.853 },
+            { x = -319.470, z = -350.070 },
+            { x = -150.686, z = -709.612 },
+        },
     },
     [tpz.zone.PASHHOW_MARSHLANDS] =
     {
-        { x = 275.196, z = 413.774 },
-        { x = -64.840, z = 121.987 },
-        { x = 214.593, z = -264.132 },
+        eventID = 4,
+        spots = {
+            { x = 275.196, z = 413.774 },
+            { x = -64.840, z = 121.987 },
+            { x = 214.593, z = -264.132 },
+        },
     },
     [tpz.zone.TAHRONGI_CANYON] =
     {
-        { x = 209.773, z = 401.845 },
-        { x = -359.840, z = 158.644 },
-        { x = 80.678, z = -434.589 },
+        eventID = 5,
+        spots = {
+            { x = 209.773, z = 401.845 },
+            { x = -359.840, z = 158.644 },
+            { x = 80.678, z = -434.589 },
+        },
     },
     [tpz.zone.BUBURIMU_PENINSULA] =
     {
-        { x = -8.216, z = -272.361 },
-        { x = 194.909, z = 79.212 },
-        { x = -16.117, z = 247.111 },
+        eventID = 6,
+        spots = {
+            { x = -8.216, z = -272.361 },
+            { x = 194.909, z = 79.212 },
+            { x = -16.117, z = 247.111 },
+        },
     },
     [tpz.zone.MERIPHATAUD_MOUNTAINS] =
     {
-        { x = 534.076, z = 612.650 },
-        { x = 608.206, z = -512.886 },
-        { x = 169.780, z = 169.583 },
+        eventID = 7,
+        spots = {
+            { x = 534.076, z = 612.650 },
+            { x = 608.206, z = -512.886 },
+            { x = 169.780, z = 169.583 },
+        },
     },
     [tpz.zone.THE_SANCTUARY_OF_ZITAH] =
     {
-        { x = -439.047, z = 122.349 }, -- (E-8)
-        { x = -343.491, z = 133.725 }, -- (F-8) test this one
-        { x = -177.383, z = -279.362 }, -- (G-10)
-        { x = 13.719, z = 88.664 }, -- (H-8)
-        { x = 20.483, z = -146.541 }, -- (H-9)
-        { x = 236.046, z = -273.312 }, -- (I-10)
-        { x = 275.428, z = 159.460 },-- (J-7)
+        eventID = 8,
+        spots = {
+            { x = -439.047, z = 122.349 }, -- (E-8)
+            { x = -343.491, z = 133.725 }, -- (F-8) test this one
+            { x = -177.383, z = -279.362 }, -- (G-10)
+            { x = 13.719, z = 88.664 }, -- (H-8)
+            { x = 20.483, z = -146.541 }, -- (H-9)
+            { x = 236.046, z = -273.312 }, -- (I-10)
+            { x = 275.428, z = 159.460 },-- (J-7)
+        },
     },
     [tpz.zone.YUHTUNGA_JUNGLE] =
     {
-        { x = -555.544, z = -80.067 }, -- (E-9)
-        { x = -438.777, z = -388.825 }, -- (F-11)
-        { x = -402.770, z = -259.826 }, -- (F-10)
-        { x = -201.421, z = -438.868 }, -- (G-11)
-        { x = 294.342, z = 211.039 }, -- (J-7)
-        { x = 122.505, z = 432.139 }, -- (I-6)
-        { x = -122.441, z = 444.200 }, -- (H-6)
-        { x = -130.948, z = 203.126 }, -- (H-7)
+        eventID = 9,
+        spots = {
+            { x = -555.544, z = -80.067 }, -- (E-9)
+            { x = -438.777, z = -388.825 }, -- (F-11)
+            { x = -402.770, z = -259.826 }, -- (F-10)
+            { x = -201.421, z = -438.868 }, -- (G-11)
+            { x = 294.342, z = 211.039 }, -- (J-7)
+            { x = 122.505, z = 432.139 }, -- (I-6)
+            { x = -122.441, z = 444.200 }, -- (H-6)
+            { x = -130.948, z = 203.126 }, -- (H-7)
+        },
     },
     [tpz.zone.YHOATOR_JUNGLE] =
     {
-        { x = -2.428, z = -359.037 }, -- (H-10)
-        { x = -397.683, z = -260.857 }, -- (F-9)
-        { x = -385.761, z = -383.388 }, -- (F-10)
-        { x = 93.417, z = -96.931 }, -- (I-8)
-        { x = -83.513, z = 224.256 }, -- (H-6)
-        { x = -231.969, z = -144.198 }, -- (G-9)
+        eventID = 10,
+        spots = {
+            { x = -2.428, z = -359.037 }, -- (H-10)
+            { x = -397.683, z = -260.857 }, -- (F-9)
+            { x = -385.761, z = -383.388 }, -- (F-10)
+            { x = 93.417, z = -96.931 }, -- (I-8)
+            { x = -83.513, z = 224.256 }, -- (H-6)
+            { x = -231.969, z = -144.198 }, -- (G-9)
+        },
     },
     [tpz.zone.WESTERN_ALTEPA_DESERT] =
     {
-        { x = -400.274, z = 71.055 }, -- (F-7)
-        { x = -559.809, z = -357.840 },
-        { x = -460.332, z = -725.726 },
-        { x = -811.215, z = -643.663 },
-        { x = -220.780, z = -674.947 },
-        { x = -261.211, z = 13.288 },
-        { x = -197.272, z = 372.010 },
-        { x = 674.245, z = 46.084 }, -- (M-7)
-        { x = -0.805, z = 354.229 }, -- (I-5)
-        { x = 334.699, z = 105.761 }, -- (K-7)
+        eventID = 11,
+        spots = {
+            { x = -400.274, z = 71.055 }, -- (F-7)
+            { x = -559.809, z = -357.840 },
+            { x = -460.332, z = -725.726 },
+            { x = -811.215, z = -643.663 },
+            { x = -220.780, z = -674.947 },
+            { x = -261.211, z = 13.288 },
+            { x = -197.272, z = 372.010 },
+            { x = 674.245, z = 46.084 }, -- (M-7)
+            { x = -0.805, z = 354.229 }, -- (I-5)
+            { x = 334.699, z = 105.761 }, -- (K-7)
+        },
     },
     [tpz.zone.EASTERN_ALTEPA_DESERT] =
     {
-        { x = -309.358, z = 49.217 }, -- (F-8)
-        { x = 419.165, z = 38.675 }, -- (J-8)
-        { x = 368.639, z = -208.379 }, -- (J-9)
-        { x = 29.012, z = -401.275 }, -- (H-10)
-        { x = -209.142, z = 290.642 }, -- (F-6)
-        { x = 20.214, z = 73.494 }, -- (H-8)
-        { x = -218.196, z = 4.195 }, -- (F-8)
-        { x = 85.507, z = 313.316}, -- (H-6)
-        { x = 469.810, z = 222.405 }, -- (J-7)
-        { x = -214.823, z = -185.996 }, -- (F-9)
+        eventID = 12,
+        spots = {
+            { x = -309.358, z = 49.217 }, -- (F-8)
+            { x = 419.165, z = 38.675 }, -- (J-8)
+            { x = 368.639, z = -208.379 }, -- (J-9)
+            { x = 29.012, z = -401.275 }, -- (H-10)
+            { x = -209.142, z = 290.642 }, -- (F-6)
+            { x = 20.214, z = 73.494 }, -- (H-8)
+            { x = -218.196, z = 4.195 }, -- (F-8)
+            { x = 85.507, z = 313.316}, -- (H-6)
+            { x = 469.810, z = 222.405 }, -- (J-7)
+            { x = -214.823, z = -185.996 }, -- (F-9)
+        },
     },
 }
 
@@ -416,21 +452,21 @@ amkHelpers.chocoboDig = function(player, zoneID, text)
     elseif digSpot == 0 then
         -- printf("shock: %s, needed to zone: %s", shockProgress, player:needToZone())
         player:needToZone(true)
-        player:setLocalVar("[AMK]6_diggingSpot", math.random(#amkHelpers.digSites[digZoneID]))
+        player:setLocalVar("[AMK]6_diggingSpot", math.random(#amkHelpers.digSites[digZoneID].spots))
         digSpot = player:getLocalVar("[AMK]6_diggingSpot")
     end
 
     -- Distance between points
     local playerX = playerPos.x
     local playerZ = playerPos.z
-    local targetX = amkHelpers.digSites[digZoneID][digSpot].x
-    local targetZ = amkHelpers.digSites[digZoneID][digSpot].z
+    local targetX = amkHelpers.digSites[digZoneID].spots[digSpot].x
+    local targetZ = amkHelpers.digSites[digZoneID].spots[digSpot].z
     local dx = playerX - targetX
     local dy = targetZ - playerZ
     local distance = math.sqrt(math.pow(targetX - playerX, 2) + math.pow(targetZ - playerZ, 2))
 
     -- Success!
-    if distance <= 4 then
+    if distance <= 6 then
         npcUtil.giveKeyItem(player, tpz.ki.MOLDY_WORMEATEN_CHEST)
         player:setCharVar("[AMK]6_diggingZone", 0)
         return true
