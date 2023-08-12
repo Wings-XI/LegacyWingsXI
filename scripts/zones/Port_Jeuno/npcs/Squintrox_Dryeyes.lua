@@ -115,8 +115,14 @@ function onEventUpdate(player, csid, option)
                 player:updateEvent(0)
             end
         elseif option == 102 then -- black coral Key
-            if player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
-                player:updateEvent(tpz.ki.MOLDY_WORMEATEN_CHEST)
+            if not player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
+                local diggingZone = amkHelpers.getDiggingZone(player)
+                print(diggingZone)
+                if diggingZone ~= 0 then
+                    player:updateEvent(0, 1, amkHelpers.digSites[diggingZone].eventID)
+                else
+                    player:messageSpecial(ID.text.GET_LOST)
+                end
             else
                 player:updateEvent(0)
             end
@@ -266,15 +272,18 @@ function onEventFinish(player, csid, option)
                 player:messageSpecial(ID.text.DRYEYES_3, keyItem)
             end
         elseif option == 102 then -- black coral Key
-            local keyItem = tpz.ki.BLACK_CORAL_KEY
-            if not player:hasKeyItem(keyItem) and now ~= player:getCharVar("LastBlackCoralKey") then
-                player:addKeyItem(keyItem)
-                player:delKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST)
-                player:setCharVar("LastBlackCoralKey", os.date("%j"))
-                player:showText(player, ID.text.DRYEYES_2)
-                player:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
-            else
-                player:messageSpecial(ID.text.DRYEYES_3, keyItem)
+            -- shouldn't trigger without the key, but just in case
+            if player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
+                local keyItem = tpz.ki.BLACK_CORAL_KEY
+                if not player:hasKeyItem(keyItem) and now ~= player:getCharVar("LastBlackCoralKey") then
+                    player:addKeyItem(keyItem)
+                    player:delKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST)
+                    player:setCharVar("LastBlackCoralKey", os.date("%j"))
+                    player:showText(player, ID.text.DRYEYES_2)
+                    player:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
+                else
+                    player:messageSpecial(ID.text.DRYEYES_3, keyItem)
+                end
             end
         elseif option == 103 then -- Bird Key
             npcUtil.giveKeyItem(player, {
