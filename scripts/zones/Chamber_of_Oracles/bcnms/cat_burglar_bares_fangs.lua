@@ -44,6 +44,7 @@ function onBattlefieldLeave(player, battlefield, leavecode)
             player:setCharVar("lastRedCoralKey", now)
             npcUtil.giveKeyItem(player, tpz.ki.RED_CORAL_KEY)
         end
+        player:addExp(700)
 
         local name, clearTime, partySize = battlefield:getRecord()
         local arg8 = player:hasCompletedMission(AMK, tpz.mission.id.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS) and 1 or 0
