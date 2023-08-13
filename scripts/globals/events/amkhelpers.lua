@@ -511,7 +511,7 @@ end
 amkHelpers.getMarkerSet = function(player)
     local markerSet = player:getCharVar('[AMK]8_rescueMarkerSet')
     if markerSet == 0 then
-        markerSet = math.random(10)
+        markerSet = math.random(#amkHelpers.markerSets)
         player:setCharVar('[AMK]8_rescueMarkerSet', markerSet)
     end
     return markerSet
@@ -546,7 +546,7 @@ amkHelpers.markerSets = {
     {9, 10, 12, 15, 17, 19, 22, 23, 24},
     {8, 12, 13, 14, 16, 18, 21, 26, 27},
     {1, 9, 10, 11, 14, 15, 16, 23, 24},
-    {8, 10, 13, 14, 17, 18, 19, 21, 27},
+    {8, 10, 13, 17, 18, 19, 21, 22, 27},
     {1, 9, 11, 12, 14, 15, 20, 24, 26},
     {8, 11, 13, 16, 17, 18, 21, 22, 23},
     {1, 9, 10, 12, 14, 19, 20, 23, 27},
