@@ -141,6 +141,7 @@ local optionToAugment =
 }
 
 -- No good data on augments.  Just pulled from each key on: https://ffxiclopedia.fandom.com/wiki/Treasure_Coffer_(Tenshodo)
+-- and cross referenced the individual item's page to find discrepancies, also assuming groupings of similar stats with similar ranges
 local prizes =
 {
     [tpz.ki.CRIMSON_KEY] =
@@ -308,11 +309,49 @@ local prizes =
     },
     [tpz.ki.WHITE_CORAL_KEY] =
     {
-        {cutoff =   31, itemId = 12433}, -- Brass Mask
-        {cutoff =  109, itemId = 12986}, -- Chestnut Sabots
-        {cutoff =  218, itemId = 12721}, -- Cotton Gloves
-        {cutoff =  296, itemId = 12826}, -- Studded Trousers
-        {cutoff =  437, itemId = 12602}, -- Wool Robe
+        {cutoff =   31, itemId = 12433, augments = { -- Brass Mask
+                {1,0,1}, -- HP +1-2
+                {9,0,2}, -- MP +1-3
+                {514,0,0}, -- VIT +1
+                {24,0,2}, -- Accuracy -1-3
+                {142,0,0}, -- Store TP +1
+                {177,0,0}, -- Resist Poison +1
+            },
+        },
+        {cutoff =  109, itemId = 12986, augments = { -- Chestnut Sabots
+                {13,5,5}, -- MP -6
+                {517,0,1}, -- MND +1-2
+                {100,1,1}, -- Pet: Magic Accuracy +2
+                {40,1,1}, -- Enmity -2
+                {773,1,2}, -- Water Resist +2-3
+                {53,2,2}, -- Spell Interruption Rate down 3%
+            },
+        },
+        {cutoff =  218, itemId = 12721, augments = { -- Cotton Gloves
+                {23,0,1}, -- Accuracy +1-2
+                {768,0,1}, -- Fire resist +1-2
+                {769,0,0}, -- Ice resist +1
+                {513,0,0}, -- DEX +1
+                {515,0,0}, -- AGI +1
+            },
+        },
+        {cutoff =  296, itemId = 12826, augments = { -- Studded Trousers
+                {29,0,1}, -- Ranged Attack +1-2
+                {25,0,2}, -- Attack +1-3
+                {195,1,1}, -- Subtle Blow +2
+                {99,0,1}, -- Pet: Defense +1-2
+                {179,0,3}, -- Resist Blind +1-4
+            },
+        },
+        {cutoff =  437, itemId = 12602, augments = { -- Wool Robe
+                {771,0,4}, -- Earth resist +1-5
+                {515,0,1}, -- AGI +1-2
+                {29,0,0}, -- Ranged Attack +1
+                {27,0,3}, -- Ranged Accuracy +1-4
+                {40,0,0}, -- Enmity -1
+                {519,0,1}, -- STR -1-2
+            },
+        },
         {cutoff =  468, itemId =   694}, -- Chestnut Log
         {cutoff =  499, itemId =   645}, -- Darksteel Ore
         {cutoff =  624, itemId =  4145}, -- Elixir
@@ -331,11 +370,45 @@ local prizes =
     },
     [tpz.ki.BLUE_CORAL_KEY] =
     {
-        {cutoff =   42, itemId = 12571}, -- Cuir Bouilli
-        {cutoff =  250, itemId = 14118}, -- Iron Greaves
-        {cutoff =  292, itemId = 12866}, -- Linen Slacks
-        {cutoff =  375, itemId = 12450}, -- Padded Cap
-        {cutoff =  458, itemId = 12731}, -- Velvet Cuffs
+        {cutoff =   42, itemId = 12571, augments = { -- Cuir Bouilli
+                {1,3,3}, -- HP+4
+                {291,1,1}, -- Enfeebling Magic+2
+                {52,1,1}, -- MP Recovered While Healing+2
+                {187,0,2}, -- Resist Stun+1-3
+                {322,0,0}, -- Song Spellcasting Time-1%
+                {39,0,0}, -- Enmity+1
+            },
+        },
+        {cutoff =  250, itemId = 14118, augments = { -- Iron Greaves
+                {1,1,1}, -- HP +2
+                {512,0,0}, -- STR +1
+                {518,0,1}, -- CHR +1-2
+                {133,0,1}, -- Magic Attack Bonus +1-2
+                {774,0,5}, -- Light resist +1-6
+            },
+        },
+        {cutoff =  292, itemId = 12866, augments = { -- Linen Slacks
+                {9,6,6}, -- MP +7
+                {524,1,1}, -- MND -2
+                {144,1,1}, -- Conserve MP +2
+                {53,0,3}, -- Spell Interruption Rate -1-4%
+                {35,0,1}, -- Magic Accuracy +1-2
+            },
+        },
+        {cutoff =  375, itemId = 12450, augments = { -- Padded Cap
+                {513,1,1}, -- DEX +2
+                {515,0,0}, -- AGI +1
+                {25,0,1}, -- Attack +1-2
+                {772,0,0}, -- Lightning resist +1
+            },
+        },
+        {cutoff =  458, itemId = 12731, augments = { -- Velvet Cuffs
+                {5,0,0}, -- HP -1
+                {96,0,0}, -- Pet: Accuracy +1 Ranged Accuracy +1
+                {176,0,1}, -- Resist Sleep +1-2
+                {31,2,2}, -- Evasion +3
+            },
+        },
         {cutoff =  500, itemId =   793}, -- Black Pearl
         {cutoff =  583, itemId =  4145}, -- Elixir
         {cutoff =  625, itemId =  4129}, -- Ether +1
@@ -349,11 +422,45 @@ local prizes =
     },
     [tpz.ki.PEACH_CORAL_KEY] =
     {
-        {cutoff =   66, itemId = 13712}, -- Carapace Harness
-        {cutoff =  198, itemId = 12956}, -- Raptor Ledelsens
-        {cutoff =  303, itemId = 12476}, -- Silk Hat
-        {cutoff =  395, itemId = 14003}, -- Steel Finger Gauntlets
-        {cutoff =  487, itemId = 12867}, -- White Slacks
+        {cutoff =   66, itemId = 13712, augments = { -- Carapace Harness
+                {23,0,5}, -- Accuracy +1-6
+                {25,0,3}, -- Attack +1-4
+                {31,0,5}, -- Evasion +1-6
+                {195,0,3}, -- Subtle Blow +1-4
+                {178,0,2}, -- Resist Paralyze +1-3
+                {50,0,1}, -- Slow +1-2
+            },
+        },
+        {cutoff =  198, itemId = 12956, augments = { -- Raptor Ledelsens
+                {1,0,5}, -- HP +1-6
+                {9,3,11}, -- MP +4-12
+                {514,0,2}, -- VIT +1-3
+                {99,0,3}, -- Pet: DEF +1-4
+                {36,0,1}, -- Magic Accuracy -1-2
+            },
+        },
+        {cutoff =  303, itemId = 12476, augments = { -- Silk Hat
+                {13,1,1}, -- MP-2
+                {289,0,2}, -- Healing Magic Skill +1-3
+                {291,0,2}, -- Enfeebling Magic Skill +1-3
+                {100,0,1}, -- Pet: Magic Accuracy +1-2
+                {293,0,2}, -- Dark Magic Skill +1-3
+            },
+        },
+        {cutoff =  395, itemId = 14003, augments = { -- Steel Finger Gauntlets
+                {68,0,2}, -- Accuracy +1-3 Attack +1-3
+                {49,0,0}, -- Haste +1
+                {186,0,2}, -- Resist Slow +1-3
+                {770,0,2}, -- Wind resist +1-3
+            },
+        },
+        {cutoff =  487, itemId = 12867, augments = { -- White Slacks
+                {556,0,3}, -- INT+1-4 MND+1-4 CHR+1-4
+                {320,0,3}, -- Blood Pact Ability Delay -1-3
+                {53,0,3}, -- Spell Interruption Rate down 1-4%
+                {39,0,2}, -- Enmity +1-3
+            },
+        },
         {cutoff =  500, itemId =   645}, -- Darksteel Ore
         {cutoff =  526, itemId =   902}, -- Demon Horn
         {cutoff =  565, itemId =   702}, -- Ebony Log
@@ -375,11 +482,48 @@ local prizes =
     },
     [tpz.ki.BLACK_CORAL_KEY] =
     {
-        {cutoff =   90, itemId = 13698}, -- Beak Helm
-        {cutoff =  194, itemId = 12988}, -- Pigaches
-        {cutoff =  224, itemId = 12811}, -- Darksteel Breeches
-        {cutoff =  433, itemId = 12707}, -- Scorpion Mitts
-        {cutoff =  552, itemId = 12604}, -- Silk Coat
+        {cutoff =   90, itemId = 13698, augments = { -- Beak Helm
+                {9,0,5}, -- MP +1-6
+                {25,0,3}, -- Attack +1-4
+                {23,0,1}, -- Accuracy +1-6
+                {31,0,4}, -- Evasion +1-5
+                {27,0,5}, -- Ranged Accuracy +1-6
+            },
+        },
+        {cutoff =  194, itemId = 12988, augments = { -- Pigaches
+                {1,1,11}, -- HP +2-12
+                {29,0,2}, -- Ranged Attack +1-3
+                {27,0,1}, -- Ranged Accuracy +1-2
+                {51,0,1}, -- HP Recovered While Healing +1-2
+                {513,0,1}, -- DEX +1-2
+                {522,0,1}, -- AGI -1-2
+            },
+        },
+        {cutoff =  224, itemId = 12811, augments = { -- Darksteel Breeches
+                {770,1,4}, -- Wind resist +2-5
+                {515,1,2}, -- Agility +2-3
+                {31,2,2}, -- Evasion +3
+                {180,0,2}, -- Resist Silence +1-3
+            },
+        },
+        {cutoff =  433, itemId = 12707, augments = { -- Scorpion Mitts
+                {512,0,3}, -- STR +1-4
+                {514,0,1}, -- VIT +1-2
+                {518,0,2}, -- CHR +1-3
+                {97,0,2}, -- Pet: Attack and Ranged Attack +1-3
+                {1,4,11}, -- MP +5-12
+                {26,0,3}, -- Attack -1--4
+            },
+        },
+        {cutoff =  552, itemId = 12604, augments = { -- Silk Coat
+                {556,0,3}, -- INT +1-4 CHR +1-3? MND +1-4
+                {52,0,3}, -- MP Recovered While Healing +1-4
+                {13,1,12}, -- MP -2--13
+                {36,1,2}, -- Magic Accuracy -1--3 (split into two augments)
+                {35,0,0}, -- Magic Accuracy +1 (split into two augments)
+                {293,0,4}, -- Dark +1-5
+            },
+        },
         {cutoff =  597, itemId =   645}, -- Darksteel Ore
         {cutoff =  612, itemId =   654}, -- Darksteel Ingot
         {cutoff =  642, itemId =   745}, -- Gold Ingot
@@ -394,11 +538,48 @@ local prizes =
     },
     [tpz.ki.RED_CORAL_KEY] =
     {
-        {cutoff =  109, itemId = 16289}, -- Alloy Torque
-        {cutoff =  200, itemId = 16288}, -- Aureate Necklace
-        {cutoff =  273, itemId = 16290}, -- Burly Gorget
-        {cutoff =  382, itemId = 16286}, -- Nitid Choker
-        {cutoff =  473, itemId = 16287}, -- Pneuma Collar
+        {cutoff =  109, itemId = 16289, augments = { -- Alloy Torque
+                {51,0,1}, -- HP Recovered while Healing +1-2
+                {35,0,2}, -- Magic Accuracy +1-3
+                {298,0,4}, -- Wind Instrument Skill +1-5
+                {291,0,4}, -- Enfeebling Magic Skill +1-5
+                {292,0,4}, -- Elemental Magic Skill +1-5
+            },
+        },
+        {cutoff =  200, itemId = 16288, augments = { -- Aureate Necklace
+                {768,2,3}, -- Fire resist +3-4
+                {512,0,1}, -- STR +1-2
+                {513,0,4}, -- DEX +1-5
+                {142,0,2}, -- Store TP +1-3
+                {102,0,2}, -- Pet: Critical Hit Rate +1-3
+                {24,0,3}, -- Accuracy -1--4
+            },
+        },
+        {cutoff =  273, itemId = 16290, augments = { -- Burly Gorget
+                {556,0,2}, -- INT +1-3 CHR +1-3 MND +1-3
+                {40,0,0}, -- Enmity -1
+                {53,0,3}, -- Spell Interruption Rate down 1-4%
+                {36,1,1}, -- Magic Accuracy -2
+            },
+        },
+        {cutoff =  382, itemId = 16286, augments = { -- Nitid Choker
+                {5,0,8}, -- HP -1-9
+                {513,0,1}, -- DEX +1-2
+                {23,0,7}, -- Accuracy +1-8
+                {25,0,3}, -- Attack +1-4
+                {96,0,3}, -- Pet: Accuracy and Ranged Accuracy +1-4
+                {772,0,2}, -- Lightning resist +1-3
+            },
+        },
+        {cutoff =  473, itemId = 16287, augments = { -- Pneuma Collar
+                {34,2,2}, -- Defense -3
+                {512,0,1}, -- STR +1-2
+                {27,0,1}, -- Ranged Accuracy +1-2
+                {29,0,6}, -- Ranged Attack +1-7
+                {185,0,1}, -- Resist Gravity +1-2
+                {98,0,2}, -- Pet: Evasion +1-3
+            },
+        },
         {cutoff =  528, itemId =  1110}, -- Beetle Blood
         {cutoff =  619, itemId =   823}, -- Gold Thread
         {cutoff =  692, itemId =  1465}, -- Granite
@@ -413,11 +594,50 @@ local prizes =
     },
     [tpz.ki.ANGEL_SKIN_KEY] =
     {
-        {cutoff =   65, itemId = 16254}, -- Altius Mantle
-        {cutoff =  162, itemId = 16253}, -- Chiffon Cape
-        {cutoff =  243, itemId = 16255}, -- Cortege Cape
-        {cutoff =  356, itemId = 16252}, -- Resilient Mantle
-        {cutoff =  437, itemId = 16256}, -- Rugged Mantle
+        {cutoff =   65, itemId = 16254, augments = { -- Altius Mantle
+                {774,0,19}, -- Light resist -1--20
+                {180,0,1}, -- Resist Silence +1-2
+                {101,0,1}, -- Pet: Magic Attack Bonus +1-2
+                {518,0,3}, -- CHR +1-4
+                {320,0,1}, -- Blood Pact Ability Delay -1--2
+                {5,0,4}, -- HP -1-5
+            },
+        },
+        {cutoff =  162, itemId = 16253, augments = { -- Chiffon Cape
+                {1,17,29}, -- HP +18-30
+                {9,16,28}, -- MP +17-29
+                {54,1,2}, -- Physical Damage Taken -2--3%
+                {50,0,0}, -- Slow +1
+                {51,0,1}, -- HP Recovered While Healing +1-2
+                {769,14,22}, -- Ice resist -15--23
+            },
+        },
+        {cutoff =  243, itemId = 16255, augments = { -- Cortege Cape
+                {52,0,1}, -- MP Recovered While Healing +1-2
+                {178,0,2}, -- Resist Paralyze +1-3
+                {517,0,3}, -- MND +1-4
+                {53,0,3}, -- Spell Interruption Rate Down 1-4%
+                {36,1,1}, -- Magic Accuracy -2
+                {292,0,3}, -- Elemental Magic Skill +1-4
+            },
+        },
+        {cutoff =  356, itemId = 16252, augments = { -- Resilient Mantle
+                {23,0,2}, -- Accuracy +1-3 (from item page, assumed typo in key item page since not colored red)
+                {25,0,17}, -- Attack +1-18
+                {512,0,2}, -- STR +1-3
+                {195,0,2}, -- Subtle Blow +1-3
+                {32,0,2}, -- Evasion -1-3
+            },
+        },
+        {cutoff =  437, itemId = 16256, augments = { -- Rugged Mantle
+                {13,1,3}, -- MP -2-4
+                {141,0,2}, -- Conserve MP +1-3
+                {40,0,1}, -- Enmity -1-2
+                {516,0,3}, -- INT +1-4
+                {107,0,2}, -- Pet:Attack and Ranged Attack +1-3
+                {323,0,3}, -- Cure casting time -1--4%
+            },
+        },
         {cutoff =  469, itemId =   646}, -- Adaman Ore
         {cutoff =  501, itemId =   813}, -- Angelstone
         {cutoff =  517, itemId =   645}, -- Darksteel Ore
@@ -733,7 +953,8 @@ function onTrigger(player, npc)
     local acpFin  = player:getCurrentMission(ACP) >= tpz.mission.id.acp.A_CRYSTALLINE_PROPHECY_FIN
     local amkFin  = player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_MOOGLE_KUPO_DETAT_FIN
     local asaFin  = player:getCurrentMission(ASA) >= tpz.mission.id.asa.A_SHANTOTTO_ASCENSION_FIN
-    local eligableNexusCape = asaFin and amkFin and acpFin
+    -- WINGSCUSTOM completed all 3 mini expansions and doesn't have the item
+    local eligableNexusCape = asaFin and amkFin and acpFin and not player:hasItem(11538)
     local receivedNexusCape = player:getCharVar("receivedNexusCape")
 
     local arg1 =
@@ -762,11 +983,6 @@ function onTrigger(player, npc)
         (not player:hasKeyItem(tpz.ki.CHOCOBO_KEY)  and  32 or 0) +
         (not player:hasKeyItem(tpz.ki.TONBERRY_KEY) and  64 or 0) +
         (not player:hasKeyItem(tpz.ki.BEHEMOTH_KEY) and 128 or 0)
-
-    if arg2 ~= 254 then
-        arg2 = 254
-        player:PrintToPlayer("SYSTEM : Hold onto these keys, KUPO! When AMK coding is complete, you will be able to use them!", 0xD)
-    end
 
     local arg4 =
         ((ENABLE_ACP == 0 or arg1 == 254) and 2 or 0) +
