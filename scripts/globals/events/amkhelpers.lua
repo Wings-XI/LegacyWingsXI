@@ -731,7 +731,7 @@ amkHelpers.triviaQuestions = {
     [2] = function(player)
         local craft_total = 0
         for i = tpz.skill.WOODWORKING, tpz.skill.COOKING do
-            craft_total = craft_total + player:getCharSkillLevel(i) / 10
+            craft_total = craft_total + math.floor(player:getCharSkillLevel(i) / 10)
         end
         local right = craft_total
         local wrong = right + (sign() * math.random(1, 10))
@@ -791,7 +791,6 @@ amkHelpers.puzzleTwoOnEventTrigger = function(player, npc)
     --                                     progress,     timeLimit,   currentQuestion, correctStooge,   previousOption))
 
     if
-        ENABLE_AMK == 1 and
         player:getCharVar("[AMK]12_puzzle") == 2
     then
         if
