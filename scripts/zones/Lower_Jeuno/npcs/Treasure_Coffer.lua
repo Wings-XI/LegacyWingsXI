@@ -825,8 +825,11 @@ local function givePrize(player, ki)
             -- determine augments
             local addAug = {}
             if prize.augments ~= nil then
-                local pAug = prize.augments
-                local alreadyRolled = {}
+                local pAug = {}
+                -- deep copy augments for prize
+                for k,v in pairs(prize.augments) do
+                    table.insert(pAug, v)
+                end
                 for i = 1, 4 do
                     -- static 50% chance to get any augment at all each loop
                     if #addAug == 0 or math.random(1,2) == 1 then
@@ -836,8 +839,9 @@ local function givePrize(player, ki)
                         roll = 0
                     end
                     local a = pAug[roll]
-                    if a ~= nil and alreadyRolled[a[1]] == nil then
-                        alreadyRolled[a[1]] = true
+                    if a ~= nil then
+                        -- if augment chosen, remove from cloned list to preserve chance of remaining augments
+                        table.remove(pAug, roll)
                         table.insert(addAug, a[1])
                         table.insert(addAug, math.random(a[2], a[3]))
                     end
