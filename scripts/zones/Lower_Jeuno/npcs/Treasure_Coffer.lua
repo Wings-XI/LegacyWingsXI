@@ -141,16 +141,18 @@ local optionToAugment =
 }
 
 -- No good data on augments.  Just pulled from each key on: https://ffxiclopedia.fandom.com/wiki/Treasure_Coffer_(Tenshodo)
--- and cross referenced the individual item's page to find discrepancies, also assuming groupings of similar stats with similar ranges
+-- and cross referenced the individual item's page to find discrepancies
+-- Order of augments is kept the same as the wiki, for ease of checking
+-- augments that span negative and positive range are grouped into a single array of augments (not to pollute the pool of augments)
 local prizes =
 {
     [tpz.ki.CRIMSON_KEY] =
     {
         {cutoff =   70, itemId = 13206, augments = { -- Gold Obi
-                {  9, 0, 5}, -- INT+1-2
-                {516, 0, 1}, -- MND+1-2
-                {517, 0, 1}, -- CHR+1-2
-                {518, 0, 1}, -- MP+1-6
+                {516, 0, 1}, -- INT+1-2
+                {517, 0, 1}, -- MND+1-2
+                {518, 0, 1}, -- CHR+1-2
+                {  9, 0, 5}, -- MP+1-6
                 { 32, 0, 1}, -- Evasion-1--2
                 { 96, 0, 1}, -- Pet: Accuracy and Ranged Accuracy+1-2
             }
@@ -186,13 +188,13 @@ local prizes =
                 {  1, 0, 5}, -- HP+0-6
                 { 23, 0, 1}, -- Accuracy+0-2
                 { 27, 0, 1}, -- Ranged Accuracy+0-2
-                {512, 0, 1}, -- AGI+0-2
-                {520, 0, 1}, -- STR+0-2
-                {515, 0, 1}, -- DEX-0-2
+                {515, 0, 1}, -- AGI+0-2
+                {512, 0, 1}, -- STR+0-2
+                {520, 0, 1}, -- DEX-0-2
             }
         },
         {cutoff =  460, itemId = 13571, augments = { -- Wolf Mantle
-                {1, 0,  5}, -- HP+0-6
+                {  1, 0, 5}, -- HP+0-6
                 { 25, 0, 3}, -- Attack+0-4
                 { 29, 0, 3}, -- Ranged Attack+0-4
                 {512, 0, 0}, -- STR+0-1
@@ -235,40 +237,40 @@ local prizes =
             }
         },
         {cutoff =  142, itemId = 13271, augments = { -- Corsette
-                {23, 0,  2}, -- Accuracy+0-3
+                { 23, 0,  2}, -- Accuracy+0-3
                 { 31, 0,  1}, -- Evasion+0-2
                 {  9, 0, 13}, -- MP+0-14
-                { 26, 0, 1}, -- Attack-0-2
+                { 26, 0,  1}, -- Attack-0-2
                 {  1, 0, 12}, -- HP+0-13
-                { 49, 0, 2}, -- Haste+0-3
+                { 49, 0,  2}, -- Haste+0-3
             }
         },
         {cutoff =  237, itemId = 12364, augments = { -- Nymph Shield
-                { 9, 0,  9}, -- MP+0-10
-                {517, 0,  0}, -- MND+0-1
-                {516, 0,  0}, -- INT+0-1
+                {  9, 0, 9}, -- MP+0-10
+                {517, 0, 0}, -- MND+0-1
+                {516, 0, 0}, -- INT+0-1
                 {512, 0, 0}, -- STR+0-1
-                {518, 0,  0}, -- CHR+0-1
+                {518, 0, 0}, -- CHR+0-1
                 { 35, 0, 1}, -- Magic Accuracy+0-2
             }
         },
         {cutoff =  356, itemId = 13570, augments = { -- Ram Mantle
-                { 5, 0,  5}, -- HP-0-6
+                {  5, 0,  5}, -- HP-0-6
                 { 13, 0, 10}, -- MP-0-11
                 {515, 0,  0}, -- AGI+0-1
-                {513, 0, 0}, -- DEX+0-1
+                {513, 0,  0}, -- DEX+0-1
                 { 23, 0,  3}, -- Accuracy+0-4
-                { 27, 0, 3}, -- Ranged Accuracy+0-4
+                { 27, 0,  3}, -- Ranged Accuracy+0-4
             }
         },
         {cutoff =  457, itemId = 13198, augments = { -- Swordbelt
-                { 1, 0,  4}, -- HP+0-5
-                {512, 0,  1}, -- STR+0-2
-                {513, 0,  1}, -- DEX+0-2
+                {  1, 0, 4}, -- HP+0-5
+                {512, 0, 1}, -- STR+0-2
+                {513, 0, 1}, -- DEX+0-2
                 {514, 0, 0}, -- VIT+0-1
-                { 24, 0,  2}, -- Accuracy-0-3
+                { 24, 0, 2}, -- Accuracy-0-3
                 { 29, 0, 3}, -- Ranged Attack+0-4
-                -- MP Recovered While Healing
+                { 52, 1, 1},-- MP Recovered While Healing
             }
         },
         {cutoff =  469, itemId =   793}, -- Black Pearl
@@ -298,49 +300,48 @@ local prizes =
         {cutoff = 111, itemId = 16263, augments = { -- Beak Necklace
                 {  9, 0, 12}, -- MP+0-13
                 { 35, 0,  1}, -- Magic Accuracy+0-2
-                {516, 0, 1}, -- INT+0-2
-                {518, 0, 1}, -- CHR+0-2
-                {517, 0, 1}, -- MND+0-2
-                { 97, 0, 4}, -- Pet: Attack and Ranged Attack+0-5
-                { 39, 0, 1}, -- Enmity+0-2
+                {516, 0,  1}, -- INT+0-2
+                {518, 0,  1}, -- CHR+0-2
+                {517, 0,  1}, -- MND+0-2
+                { 97, 0,  4}, -- Pet: Attack and Ranged Attack+0-5
+                { 39, 0,  1}, -- Enmity+0-2
             }
         },
         {cutoff = 219, itemId = 13207, augments = { -- Brocade Obi
                 {  1, 0, 11}, -- HP+0-12
                 {  9, 0, 11}, -- MP+0-12
-                { 35, 0, 2}, -- Magic Accuracy+0-3
-                {290, 0, 2}, -- Enhancing Magic Skill+0-3
-                { 50, 0, 0}, -- Slow+0-1
-                {100, 0, 2}, -- Pet: Magic Accuracy+0-3
+                { 35, 0,  2}, -- Magic Accuracy+0-3
+                {290, 0,  2}, -- Enhancing Magic Skill+0-3
+                { 50, 0,  0}, -- Slow+0-1
+                {100, 0,  2}, -- Pet: Magic Accuracy+0-3
             }
         },
         {cutoff = 334, itemId = 13091, augments = { -- Carapace Gorget
                 {513, 0,  0}, -- DEX+0-1
                 {512, 0,  2}, -- STR+0-3
-                { 25, 0, 6}, -- Attack+0-7
-                { 29, 0, 6}, -- Ranged Attack+0-7
-                {142, 0, 1}, -- Store TP+0-2
-                { 24, 0, 3}, -- Accuracy-0-4
-                {773, 0, 5}, -- Water+0-6
+                { 25, 0,  6}, -- Attack+0-7
+                { 29, 0,  6}, -- Ranged Attack+0-7
+                {142, 0,  1}, -- Store TP+0-2
+                { 24, 0,  3}, -- Accuracy-0-4
+                {773, 0,  5}, -- Water+0-6
             }
         },
         {cutoff = 436, itemId = 13445, augments = { -- Gold Ring
                 {  9, 0, 13}, -- MP+0-14
-                {517, 0,  1}, -- INT+0-2
-                { 35, 0, 2}, -- MND+0-2
-                { 39, 0, 1}, -- CHR+0-2
-                {516, 0, 1}, -- Enmity+0-2
-                {518, 0, 1}, -- Magic Accuracy+0-3
+                {516, 0,  1}, -- INT+0-2
+                {517, 0,  1}, -- MND+0-2
+                {518, 0,  1}, -- CHR+0-2
+                { 39, 0,  1}, -- Enmity+0-2
+                { 35, 0,  2}, -- Magic Accuracy+0-3
             }
         },
         {cutoff = 561, itemId = 13593, augments = { -- Raptor Mantle
                 {  1, 0, 29}, -- HP+0-30
-                {513, 0,  1}, -- DEX-2-+2 (split into two augments)
-                {520, 0, 1}, -- DEX-2-+2 (split into two augments)
-                {515, 0, 2}, -- AGI+0-3
-                {514, 0, 2}, -- VIT+0-3
-                { 39, 0, 1}, -- Enmity+0-2
-                {772, 0, 5}, -- Light+0-6
+               {{520, 0,  1}, {513, 0, 1},}, -- DEX-2-+2 (split into two augments)
+                {515, 0,  2}, -- AGI+0-3
+                {514, 0,  2}, -- VIT+0-3
+                { 39, 0,  1}, -- Enmity+0-2
+                {774, 0,  5}, -- Light resist +0-6
             }
         },
         {cutoff = 564, itemId =   887}, -- Coral Fragment
@@ -368,46 +369,46 @@ local prizes =
         {cutoff = 106, itemId = 13597, augments = { -- Beak Mantle
                 {512, 0,  1}, -- STR+0-2
                 {513, 0,  1}, -- DEX+0-2
-                { 26, 0, 5}, -- Attack-0-6
-                { 23, 0, 6}, -- Accuracy+0-7
-                { 31, 0, 6}, -- Evasion+0-7
-                {195, 0, 1}, -- Subtle Blow+0-2
+                { 26, 0,  5}, -- Attack-0-6
+                { 23, 0,  6}, -- Accuracy+0-7
+                { 31, 0,  6}, -- Evasion+0-7
+                {195, 0,  1}, -- Subtle Blow+0-2
             }
         },
         {cutoff = 203, itemId = 13092, augments = { -- Coeurl Gorget
                 {515, 0,  3}, -- AGI+0-4
                 { 23, 0,  7}, -- Accuracy+0-8
-                { 27, 0, 7}, -- Ranged Accuracy+0-8
-                { 30, 0, 3}, -- Ranged Attack-0-4
-                {195, 0, 1}, -- Subtle Blow+0-2
-                {771, 0, 3}, -- Earth+0-4
+                { 27, 0,  7}, -- Ranged Accuracy+0-8
+                { 30, 0,  3}, -- Ranged Attack-0-4
+                {195, 0,  1}, -- Subtle Blow+0-2
+                {771, 0,  3}, -- Earth+0-4
             }
         },
         {cutoff = 305, itemId = 13447, augments = { -- Platinum Ring
                 {  1, 0,  9}, -- HP+0-10
                 {512, 0,  1}, -- STR+0-2
-                {513, 0, 1}, -- DEX+0-2
-                {514, 0, 1}, -- VIT+0-2
-                { 26, 0, 2}, -- Attack-0-3
-                { 23, 0, 2}, -- Accuracy+0-3
+                {513, 0,  1}, -- DEX+0-2
+                {514, 0,  1}, -- VIT+0-2
+                { 26, 0,  2}, -- Attack-0-3
+                { 23, 0,  2}, -- Accuracy+0-3
             }
         },
         {cutoff = 386, itemId = 13208, augments = { -- Rainbow Obi
                 {  9, 0, 19}, -- MP+0-20
                 {516, 0,  4}, -- INT+0-5
-                {517, 0, 4}, -- MND+0-5
-                {518, 0, 4}, -- CHR+0-5
-                { 36, 0, 2}, -- Magic Accuracy-0-3
-                { 52, 0, 2}, -- MP Recovered While Healing+1-3
+                {517, 0,  4}, -- MND+0-5
+                {518, 0,  4}, -- CHR+0-5
+                { 36, 0,  2}, -- Magic Accuracy-0-3
+                { 52, 0,  2}, -- MP Recovered While Healing+1-3
             }
         },
         {cutoff = 490, itemId = 13125, augments = { -- Torque
                 {  5, 0, 13}, -- HP-0-14
                 {  9, 0, 12}, -- MP+0-13
-                {515, 0, 2}, -- AGI+0-3
-                {516, 0, 1}, -- INT+0-2
-                {517, 0, 1}, -- MND+0-2
-                {518, 0, 1}, -- CHR+0-2
+                {515, 0,  2}, -- AGI+0-3
+                {516, 0,  1}, -- INT+0-2
+                {517, 0,  1}, -- MND+0-2
+                {518, 0,  1}, -- CHR+0-2
             }
         },
         {cutoff = 498, itemId =   791}, -- Aquamarine
@@ -433,17 +434,17 @@ local prizes =
         {cutoff =   62, itemId = 13357, augments = { -- Angels Earring
                 {518, 0, 1}, -- CHR+1-2
                 { 40, 0, 1}, -- Enmity-2--1
-                {  1, 0,  9}, -- HP+1-10
+                {  1, 0, 9}, -- HP+1-10
                 {  9, 0, 9}, -- MP+1-10
                 {105, 0, 1}, -- Pet: Enmity-2--1
                 {106, 0, 0}, -- Pet: Accuracy and Ranged Accuracy+0-1
-                {34, 0, 3}, -- Def-4--1
+                {34, 0,  3}, -- Def-4--1
             }
         },
         {cutoff =   70, itemId = 13356, augments = { -- Death Earring
                 { 33, 0, 3}, -- Defense+1-4
                 { 39, 0, 1}, -- Enmity+1-2
-                {  1, 0,  9}, -- HP+1-10
+                {  1, 0, 9}, -- HP+1-10
                 {  9, 0, 9}, -- MP+1-10
                 {104, 0, 1}, -- Pet: Enmity+1-2
                 {521, 0, 1}, -- VIT-2--1
@@ -452,7 +453,7 @@ local prizes =
         {cutoff =  113, itemId = 13353, augments = { -- Diamond Earring
                 {516, 0, 1}, -- INT+1-2
                 {515, 0, 0}, -- AGI+1
-                {133, 0,  1}, -- Magic Attack Bonus+1-2
+                {133, 0, 1}, -- Magic Attack Bonus+1-2
                 {  9, 0, 5}, -- MP+1-6
                 { 36, 0, 0}, -- Magic Accuracy-1
                 {101, 0, 1}, -- Pet: Magic Attack Bonus+1-2
@@ -461,7 +462,7 @@ local prizes =
         {cutoff =  196, itemId = 13351, augments = { -- Emerald Earring
                 {515, 0, 1}, -- AGI+1-2
                 { 31, 0, 4}, -- Evasion+1-5
-                { 98, 0,  4}, -- Pet: Evasion+1-5
+                { 98, 0, 4}, -- Pet: Evasion+1-5
                 { 27, 0, 2}, -- Ranged Accuracy+1-3
                 {514, 0, 0}, -- VIT+1
                 { 30, 0, 1}, -- Ranged Attack-2--1
@@ -469,8 +470,8 @@ local prizes =
         },
         {cutoff =  301, itemId = 13352, augments = { -- Ruby Earring
                 { 25, 0, 4}, -- Attack+1-5
-                {516, 0, 0}, -- INT+1-2
-                { 97, 0,  4}, -- Pet: Attack and Ranged Attack+1-5
+                {516, 0, 1}, -- INT+1-2
+                { 97, 0, 4}, -- Pet: Attack and Ranged Attack+1-5
                 { 29, 0, 4}, -- Ranged Attack+1-5
                 {512, 0, 1}, -- STR+1-2
                 { 24, 0, 2}, -- Accuracy-3--1
@@ -479,29 +480,29 @@ local prizes =
         {cutoff =  392, itemId = 13355, augments = { -- Sapphire Earring
                 { 35, 0, 1}, -- Magic Accuracy+1-2
                 {517, 0, 1}, -- MND+1-2
-                {  9, 0,  5}, -- MP+1-6
+                {  9, 0, 5}, -- MP+1-6
                 {100, 0, 1}, -- Pet: Magic Accuracy+1-2
-                {512, 0, 0}, -- STR+1-2
+                {512, 0, 1}, -- STR+1-2
                 {  5, 0, 6}, -- HP-7--1
             }
         },
         {cutoff =  478, itemId = 13354, augments = { -- Spinel Earring
                 { 23, 0, 2}, -- Accuracy+1-3
                 {513, 0, 1}, -- DEX+1-2
-                {517, 0,  0}, -- MND+1
+                {517, 0, 0}, -- MND+1
                 { 96, 0, 2}, -- Pet: Accuracy and Ranged Accuracy+1-3
                 {142, 0, 0}, -- Store TP+1
                 {195, 0, 1}, -- Subtle Blow+1-2
-                {26, 0, 4}, -- Attack-5--1
+                { 26, 0, 4}, -- Attack-5--1
             }
         },
         {cutoff =  497, itemId = 13318, augments = { -- Topaz Earring
-                { 33, 0, 4}, -- DEF+1-5
-                {513, 0, 0}, -- DEX+1-2
+                { 33, 0,  4}, -- DEF+1-5
+                {513, 0,  1}, -- DEX+1-2
                 {  1, 0, 19}, -- HP+1-20
-                { 99, 0, 4}, -- PET: DEF+1-5
-                {514, 0, 1}, -- VIT+1-2
-                { 32, 0, 2}, -- Evasion-3--1
+                { 99, 0,  4}, -- PET: DEF+1-5
+                {514, 0,  1}, -- VIT+1-2
+                { 32, 0,  2}, -- Evasion-3--1
             }
         },
         {cutoff =  546, itemId =  1110}, -- Beetle Blood
@@ -518,77 +519,78 @@ local prizes =
     },
     [tpz.ki.EBON_KEY] =
     {
-        {cutoff =  31, itemId = 13463, augments = { -- Angels Ring
-                {783, 0, 29}, -- Enmity-0-2
-                { 40, 0, 1}, -- HP+0-20
-                {  1, 0, 19}, -- CHR+1
-                {518, 0, 0}, -- Accuracy+2-6
-                { 23, 1, 5}, -- Pet: Accuracy and Ranged Accuracy+1-4
-                { 96, 0, 3}, -- Accuracy-4, Defense-13
+        {cutoff =  31, itemId = 13463, augments = { -- Angels Ring:
+        -- https://ffxiclopedia.fandom.com/wiki/Ebon_Key?oldid=934097 doesn't list -acc and -def, but this had -dark resist before the restructure
+        -- and that seems to fit the theme of the other rewards
+                { 40, 0,  1}, -- Enmity-0-2
+                {  1, 0, 19}, -- HP+0-20
+                {518, 0,  0}, -- CHR+1
+                { 23, 1,  5}, -- Accuracy+2-6
+                { 96, 0,  3}, -- Pet: Accuracy and Ranged Accuracy+1-4
+                {783, 0, 29},-- dark resist -0-30
             }
         },
         {cutoff =  82, itemId = 13462, augments = { -- Death Ring
                 {782, 0, 29}, -- Light-0-30
-                {525, 0, 2}, -- CHR-0-3
+                {525, 0,  2}, -- CHR-0-3
                 {  9, 0, 19}, -- MP+0-20
-                { 33, 0, 6}, -- Defense+0-7
-                { 31, 0, 4}, -- Evasion+0-5
-                { 39, 0, 0}, -- Enmity+1
+                { 33, 0,  6}, -- Defense+0-7
+                { 31, 0,  4}, -- Evasion+0-5
+                { 39, 0,  0}, -- Enmity+1
             }
         },
         {cutoff = 174, itemId = 13450, augments = { -- Diamond Ring
                 {776, 0, 29}, -- Fire-0-30
-                {519, 0, 4}, -- STR-0-5
+                {519, 0,  4}, -- STR-0-5
                 {  9, 0,  9}, -- MP+0-10
-                {515, 0, 2}, -- AGI+0-3
-                {516, 0, 0}, -- INT+1
-                {517, 0, 1}, -- MND+0-2
+                {515, 0,  2}, -- AGI+0-3
+                {516, 0,  0}, -- INT+1
+                {517, 0,  1}, -- MND+0-2
             }
         },
         {cutoff = 225, itemId = 13448, augments = { -- Emerald Ring
                 {777, 0, 29}, -- ice -0-30 (wiki is conflicting, might be water?)
-                {523, 0, 4}, -- INT-0-5
+                {523, 0,  4}, -- INT-0-5
                 {  1, 0,  8}, -- HP+0-9
-                {512, 0, 1}, -- STR+0-2
-                {514, 0, 2}, -- VIT+0-3
-                {515, 0, 0}, -- AGI+1
+                {512, 0,  1}, -- STR+0-2
+                {514, 0,  2}, -- VIT+0-3
+                {515, 0,  0}, -- AGI+1
             }
         },
         {cutoff = 296, itemId = 13449, augments = { -- Ruby Ring
                 {781, 0, 29}, -- Water-0-30
-                {524, 0, 1}, -- MND-0-2
+                {524, 0,  1}, -- MND-0-2
                 {  1, 0,  9}, -- HP+0-10
-                {512, 0, 0}, -- STR+1
-                {513, 0, 1}, -- DEX+0-2
-                {516, 0, 2}, -- INT+0-3
+                {512, 0,  0}, -- STR+1
+                {513, 0,  1}, -- DEX+0-2
+                {516, 0,  2}, -- INT+0-3
             }
         },
         {cutoff = 357, itemId = 13452, augments = { -- Sapphire Ring
                 {780, 0, 29}, -- Lightning-0-30
-                {  9, 0, 9}, -- MP+0-10
-                {519, 0,  0}, -- STR-1-+3 (split into two augments)
-                {512, 0, 2}, -- STR-1-+3 (split into two augments)
-                {520, 0, 3}, -- DEX-1-4
-                {517, 0, 0}, -- MND+1
-                {518, 0, 2}, -- CHR+0-3
+                {  9, 0,  9}, -- MP+0-10
+               {{519, 0,  0}, {512, 0, 2},}, -- STR-1-+3 (split into two augments)
+                {520, 0,  3}, -- DEX-1-4
+                {517, 0,  0}, -- MND+1
+                {518, 0,  2}, -- CHR+0-3
             }
         },
         {cutoff = 459, itemId = 13451, augments = { -- Spinel Ring
                 {779, 0, 29}, -- Earth-0-30
-                {  1, 0, 9}, -- HP+0-10
+                {  1, 0,  9}, -- HP+0-10
                 {513, 0,  0}, -- DEX+1
-                {521, 0, 0}, -- VIT-0-1
-                {515, 0, 1}, -- AGI+0-2
-                {517, 0, 2}, -- MND+0-3
-                { 23, 0, 0}, -- Accuracy+1
-                {195, 0, 1}, -- Subtle Blow+0-2
-                {96, 0, 1}, -- Pet: Accuracy and Ranged Accuracy+0-2
+                {521, 0,  0}, -- VIT-0-1
+                {515, 0,  1}, -- AGI+0-2
+                {517, 0,  2}, -- MND+0-3
+                { 23, 0,  0}, -- Accuracy+1
+                {195, 0,  1}, -- Subtle Blow+0-2
+                { 96, 0,  1}, -- Pet: Accuracy and Ranged Accuracy+0-2
             }
         },
         {cutoff = 500, itemId = 13453, augments = { -- Topaz Ring
                 {778, 0, 29}, -- Wind-0-30
                 {522, 0, 5}, -- AGI-0-6
-                {771, 0,  8}, -- Earth+0-9
+                {771, 0, 8}, -- Earth+0-9
                 {  1, 0, 9}, -- HP+0-10
                 {513, 0, 1}, -- DEX+0-2
                 {514, 0, 0}, -- VIT+1
@@ -616,46 +618,46 @@ local prizes =
     [tpz.ki.WHITE_CORAL_KEY] =
     {
         {cutoff =   31, itemId = 12433, augments = { -- Brass Mask
-                {1,0,1}, -- HP +1-2
-                {9,0,2}, -- MP +1-3
-                {514,0,0}, -- VIT +1
-                {24,0,2}, -- Accuracy -1-3
-                {142,0,0}, -- Store TP +1
-                {177,0,0}, -- Resist Poison +1
+                {  1, 0, 1}, -- HP +1-2
+                {  9, 0, 2}, -- MP +1-3
+                {514, 0, 0}, -- VIT +1
+                { 24, 0, 2}, -- Accuracy -1-3
+                {142, 0, 0}, -- Store TP +1
+                {177, 0, 0}, -- Resist Poison +1
             },
         },
         {cutoff =  109, itemId = 12986, augments = { -- Chestnut Sabots
-                {13,5,5}, -- MP -6
-                {517,0,1}, -- MND +1-2
-                {100,1,1}, -- Pet: Magic Accuracy +2
-                {40,1,1}, -- Enmity -2
-                {773,1,2}, -- Water Resist +2-3
-                {53,2,2}, -- Spell Interruption Rate down 3%
+                { 13, 5, 5}, -- MP -6
+                {517, 0, 1}, -- MND +1-2
+                {100, 1, 1}, -- Pet: Magic Accuracy +2
+                { 40, 1, 1}, -- Enmity -2
+                {773, 1, 2}, -- Water Resist +2-3
+                { 53, 2, 2}, -- Spell Interruption Rate down 3%
             },
         },
         {cutoff =  218, itemId = 12721, augments = { -- Cotton Gloves
-                {23,0,1}, -- Accuracy +1-2
-                {768,0,1}, -- Fire resist +1-2
-                {769,0,0}, -- Ice resist +1
-                {513,0,0}, -- DEX +1
-                {515,0,0}, -- AGI +1
+                { 23, 0, 1}, -- Accuracy +1-2
+                {768, 0, 1}, -- Fire resist +1-2
+                {769, 0, 0}, -- Ice resist +1
+                {513, 0, 0}, -- DEX +1
+                {515, 0, 0}, -- AGI +1
             },
         },
         {cutoff =  296, itemId = 12826, augments = { -- Studded Trousers
-                {29,0,1}, -- Ranged Attack +1-2
-                {25,0,2}, -- Attack +1-3
-                {195,1,1}, -- Subtle Blow +2
-                {99,0,1}, -- Pet: Defense +1-2
-                {179,0,3}, -- Resist Blind +1-4
+                { 29, 0, 1}, -- Ranged Attack +1-2
+                { 25, 0, 2}, -- Attack +1-3
+                {195, 1, 1}, -- Subtle Blow +2
+                { 99, 0, 1}, -- Pet: Defense +1-2
+                {179, 0, 3}, -- Resist Blind +1-4
             },
         },
         {cutoff =  437, itemId = 12602, augments = { -- Wool Robe
-                {771,0,4}, -- Earth resist +1-5
-                {515,0,1}, -- AGI +1-2
-                {29,0,0}, -- Ranged Attack +1
-                {27,0,3}, -- Ranged Accuracy +1-4
-                {40,0,0}, -- Enmity -1
-                {519,0,1}, -- STR -1-2
+                {771, 0, 4}, -- Earth resist +1-5
+                {515, 0, 1}, -- AGI +1-2
+                { 29, 0, 0}, -- Ranged Attack +1
+                { 27, 0, 3}, -- Ranged Accuracy +1-4
+                { 40, 0, 0}, -- Enmity -1
+                {519, 0, 1}, -- STR -1-2
             },
         },
         {cutoff =  468, itemId =   694}, -- Chestnut Log
@@ -677,42 +679,42 @@ local prizes =
     [tpz.ki.BLUE_CORAL_KEY] =
     {
         {cutoff =   42, itemId = 12571, augments = { -- Cuir Bouilli
-                {1,3,3}, -- HP+4
-                {291,1,1}, -- Enfeebling Magic+2
-                {52,1,1}, -- MP Recovered While Healing+2
-                {187,0,2}, -- Resist Stun+1-3
-                {322,0,0}, -- Song Spellcasting Time-1%
-                {39,0,0}, -- Enmity+1
+                {  1, 3, 3}, -- HP+4
+                {291, 1, 1}, -- Enfeebling Magic+2
+                { 52, 1, 1}, -- MP Recovered While Healing+2
+                {187, 0, 2}, -- Resist Stun+1-3
+                {322, 0, 0}, -- Song Spellcasting Time-1%
+                { 39, 0, 0}, -- Enmity+1
             },
         },
         {cutoff =  250, itemId = 14118, augments = { -- Iron Greaves
-                {1,1,1}, -- HP +2
-                {512,0,0}, -- STR +1
-                {518,0,1}, -- CHR +1-2
-                {133,0,1}, -- Magic Attack Bonus +1-2
-                {774,0,5}, -- Light resist +1-6
+                {  1, 1, 1}, -- HP +2
+                {512, 0, 0}, -- STR +1
+                {518, 0, 1}, -- CHR +1-2
+                {133, 0, 1}, -- Magic Attack Bonus +1-2
+                {774, 0, 5}, -- Light resist +1-6
             },
         },
         {cutoff =  292, itemId = 12866, augments = { -- Linen Slacks
-                {9,6,6}, -- MP +7
-                {524,1,1}, -- MND -2
-                {141,1,1}, -- Conserve MP +2
-                {53,0,3}, -- Spell Interruption Rate -1-4%
-                {35,0,1}, -- Magic Accuracy +1-2
+                {  9, 6, 6}, -- MP +7
+                {524, 1, 1}, -- MND -2
+                {141, 1, 1}, -- Conserve MP +2
+                { 53, 0, 3}, -- Spell Interruption Rate -1-4%
+                { 35, 0, 1}, -- Magic Accuracy +1-2
             },
         },
         {cutoff =  375, itemId = 12450, augments = { -- Padded Cap
-                {513,1,1}, -- DEX +2
-                {515,0,0}, -- AGI +1
-                {25,0,1}, -- Attack +1-2
-                {772,0,0}, -- Lightning resist +1
+                {513, 1, 1}, -- DEX +2
+                {515, 0, 0}, -- AGI +1
+                { 25, 0, 1}, -- Attack +1-2
+                {772, 0, 0}, -- Lightning resist +1
             },
         },
         {cutoff =  458, itemId = 12731, augments = { -- Velvet Cuffs
-                {5,0,0}, -- HP -1
-                {96,0,0}, -- Pet: Accuracy +1 Ranged Accuracy +1
-                {176,0,1}, -- Resist Sleep +1-2
-                {31,2,2}, -- Evasion +3
+                {  5, 0, 0}, -- HP -1
+                { 96, 0, 0}, -- Pet: Accuracy +1 Ranged Accuracy +1
+                {176, 0, 1}, -- Resist Sleep +1-2
+                { 31, 2, 2}, -- Evasion +3
             },
         },
         {cutoff =  500, itemId =   793}, -- Black Pearl
@@ -729,42 +731,44 @@ local prizes =
     [tpz.ki.PEACH_CORAL_KEY] =
     {
         {cutoff =   66, itemId = 13712, augments = { -- Carapace Harness
-                {23,0,5}, -- Accuracy +1-6
-                {25,0,3}, -- Attack +1-4
-                {31,0,5}, -- Evasion +1-6
-                {195,0,3}, -- Subtle Blow +1-4
-                {178,0,2}, -- Resist Paralyze +1-3
-                {50,0,1}, -- Slow +1-2
+                { 23, 0, 5}, -- Accuracy +1-6
+                { 25, 0, 3}, -- Attack +1-4
+                { 31, 0, 5}, -- Evasion +1-6
+                {195, 0, 3}, -- Subtle Blow +1-4
+                {178, 0, 2}, -- Resist Paralyze +1-3
+                { 50, 0, 1}, -- Slow +1-2
             },
         },
         {cutoff =  198, itemId = 12956, augments = { -- Raptor Ledelsens
-                {1,0,5}, -- HP +1-6
-                {9,3,11}, -- MP +4-12
-                {514,0,2}, -- VIT +1-3
-                {99,0,3}, -- Pet: DEF +1-4
-                {36,0,1}, -- Magic Accuracy -1-2
+                {  1, 0,  5}, -- HP +1-6
+                {  9, 3, 11}, -- MP +4-12
+                {514, 0,  2}, -- VIT +1-3
+                { 99, 0,  3}, -- Pet: DEF +1-4
+                { 36, 0,  1}, -- Magic Accuracy -1-2
             },
         },
         {cutoff =  303, itemId = 12476, augments = { -- Silk Hat
-                {13,1,1}, -- MP-2
-                {289,0,2}, -- Healing Magic Skill +1-3
-                {291,0,2}, -- Enfeebling Magic Skill +1-3
-                {100,0,1}, -- Pet: Magic Accuracy +1-2
-                {293,0,2}, -- Dark Magic Skill +1-3
+                { 13, 1, 1}, -- MP-2
+                {289, 0, 2}, -- Healing Magic Skill +1-3
+                {291, 0, 2}, -- Enfeebling Magic Skill +1-3
+                {100, 0, 1}, -- Pet: Magic Accuracy +1-2
+                {293, 0, 2}, -- Dark Magic Skill +1-3
             },
         },
         {cutoff =  395, itemId = 14003, augments = { -- Steel Finger Gauntlets
-                {68,0,2}, -- Accuracy +1-3 Attack +1-3
-                {49,0,0}, -- Haste +1
-                {186,0,2}, -- Resist Slow +1-3
-                {770,0,2}, -- Wind resist +1-3
+                { 68, 0, 2}, -- Accuracy +1-3 Attack +1-3
+                { 49, 0, 0}, -- Haste +1
+                {186, 0, 2}, -- Resist Slow +1-3
+                {770, 0, 2}, -- Wind resist +1-3
             },
         },
         {cutoff =  487, itemId = 12867, augments = { -- White Slacks
-                {556,0,3}, -- INT+1-4 MND+1-4 CHR+1-4
-                {320,0,2}, -- Blood Pact Ability Delay -1-3
-                {53,0,3}, -- Spell Interruption Rate down 1-4%
-                {39,0,2}, -- Enmity +1-3
+                {516, 0, 3}, -- INT+1-4
+                {517, 0, 3},-- MND+1-4
+                {518, 0, 3},-- CHR+1-4
+                {320, 0, 2}, -- Blood Pact Ability Delay -1-3
+                { 53, 0, 3}, -- Spell Interruption Rate down 1-4%
+                { 39, 0, 2}, -- Enmity +1-3
             },
         },
         {cutoff =  500, itemId =   645}, -- Darksteel Ore
@@ -789,45 +793,46 @@ local prizes =
     [tpz.ki.BLACK_CORAL_KEY] =
     {
         {cutoff =   90, itemId = 13698, augments = { -- Beak Helm
-                {9,0,5}, -- MP +1-6
-                {25,0,3}, -- Attack +1-4
-                {23,0,5}, -- Accuracy +1-6
-                {31,0,4}, -- Evasion +1-5
-                {27,0,5}, -- Ranged Accuracy +1-6
+                { 9, 0, 5}, -- MP +1-6
+                {25, 0, 3}, -- Attack +1-4
+                {23, 0, 5}, -- Accuracy +1-6
+                {31, 0, 4}, -- Evasion +1-5
+                {27, 0, 5}, -- Ranged Accuracy +1-6
             },
         },
         {cutoff =  194, itemId = 12988, augments = { -- Pigaches
-                {1,1,11}, -- HP +2-12
-                {29,0,2}, -- Ranged Attack +1-3
-                {27,0,1}, -- Ranged Accuracy +1-2
-                {51,0,1}, -- HP Recovered While Healing +1-2
-                {513,0,1}, -- DEX +1-2
-                {522,0,1}, -- AGI -1-2
+                {  1, 1, 11}, -- HP +2-12
+                { 29, 0,  2}, -- Ranged Attack +1-3
+                { 27, 0,  1}, -- Ranged Accuracy +1-2
+                { 51, 0,  1}, -- HP Recovered While Healing +1-2
+                {513, 0,  1}, -- DEX +1-2
+                {522, 0,  1}, -- AGI -1-2
             },
         },
         {cutoff =  224, itemId = 12811, augments = { -- Darksteel Breeches
-                {770,1,4}, -- Wind resist +2-5
-                {515,1,2}, -- Agility +2-3
-                {31,2,2}, -- Evasion +3
-                {180,0,2}, -- Resist Silence +1-3
+                {770, 1, 4}, -- Wind resist +2-5
+                {515, 1, 2}, -- Agility +2-3
+                { 31, 2, 2}, -- Evasion +3
+                {180, 0, 2}, -- Resist Silence +1-3
             },
         },
         {cutoff =  433, itemId = 12707, augments = { -- Scorpion Mitts
-                {512,0,3}, -- STR +1-4
-                {514,0,1}, -- VIT +1-2
-                {518,0,2}, -- CHR +1-3
-                {97,0,2}, -- Pet: Attack and Ranged Attack +1-3
-                {1,4,11}, -- MP +5-12
-                {26,0,3}, -- Attack -1--4
+                {512, 0,  3}, -- STR +1-4
+                {514, 0,  1}, -- VIT +1-2
+                {518, 0,  2}, -- CHR +1-3
+                { 97, 0,  2}, -- Pet: Attack and Ranged Attack +1-3
+                {  1, 4, 11}, -- MP +5-12
+                { 26, 0,  3}, -- Attack -1--4
             },
         },
         {cutoff =  552, itemId = 12604, augments = { -- Silk Coat
-                {556,0,3}, -- INT +1-4 CHR +1-3? MND +1-4
-                {52,0,3}, -- MP Recovered While Healing +1-4
-                {13,1,12}, -- MP -2--13
-                {36,0,2}, -- Magic Accuracy -1--3 (split into two augments)
-                {35,0,0}, -- Magic Accuracy +1 (split into two augments)
-                {293,0,4}, -- Dark +1-5
+                {516, 0,  3}, -- INT +1-4
+                {517, 0,  2}, -- CHR +1-3
+                {518, 0,  3}, -- MND +1-4
+                { 52, 0,  3}, -- MP Recovered While Healing +1-4
+                { 13, 1, 12}, -- MP -2--13
+               {{ 36, 0,  2}, {35, 0, 0},}, -- Magic Accuracy -3 - +1 (split into two augments)
+                {293, 0,  4}, -- Dark +1-5
             },
         },
         {cutoff =  597, itemId =   645}, -- Darksteel Ore
@@ -845,45 +850,47 @@ local prizes =
     [tpz.ki.RED_CORAL_KEY] =
     {
         {cutoff =  109, itemId = 16289, augments = { -- Alloy Torque
-                {51,0,1}, -- HP Recovered while Healing +1-2
-                {35,0,2}, -- Magic Accuracy +1-3
-                {298,0,4}, -- Wind Instrument Skill +1-5
-                {291,0,4}, -- Enfeebling Magic Skill +1-5
-                {292,0,4}, -- Elemental Magic Skill +1-5
+                { 51, 0, 1}, -- HP Recovered while Healing +1-2
+                { 35, 0, 2}, -- Magic Accuracy +1-3
+                {298, 0, 4}, -- Wind Instrument Skill +1-5
+                {291, 0, 4}, -- Enfeebling Magic Skill +1-5
+                {292, 0, 4}, -- Elemental Magic Skill +1-5
             },
         },
         {cutoff =  200, itemId = 16288, augments = { -- Aureate Necklace
-                {768,2,3}, -- Fire resist +3-4
-                {512,0,1}, -- STR +1-2
-                {513,0,4}, -- DEX +1-5
-                {142,0,2}, -- Store TP +1-3
-                {102,0,2}, -- Pet: Critical Hit Rate +1-3
-                {24,0,3}, -- Accuracy -1--4
+                {768, 2, 3}, -- Fire resist +3-4
+                {512, 0, 1}, -- STR +1-2
+                {513, 0, 4}, -- DEX +1-5
+                {142, 0, 2}, -- Store TP +1-3
+                {102, 0, 2}, -- Pet: Critical Hit Rate +1-3
+                { 24, 0, 3}, -- Accuracy -1--4
             },
         },
         {cutoff =  273, itemId = 16290, augments = { -- Burly Gorget
-                {556,0,2}, -- INT +1-3 CHR +1-3 MND +1-3
-                {40,0,0}, -- Enmity -1
-                {53,0,3}, -- Spell Interruption Rate down 1-4%
-                {36,1,1}, -- Magic Accuracy -2
+                {516, 0, 2}, -- INT +1-3
+                {517, 0, 2}, -- CHR +1-3
+                {518, 0, 2}, -- MND +1-3
+                { 40, 0, 0}, -- Enmity -1
+                { 53, 0, 3}, -- Spell Interruption Rate down 1-4%
+                { 36, 1, 1}, -- Magic Accuracy -2
             },
         },
         {cutoff =  382, itemId = 16286, augments = { -- Nitid Choker
-                {5,0,8}, -- HP -1-9
-                {513,0,1}, -- DEX +1-2
-                {23,0,7}, -- Accuracy +1-8
-                {25,0,3}, -- Attack +1-4
-                {96,0,3}, -- Pet: Accuracy and Ranged Accuracy +1-4
-                {772,0,2}, -- Lightning resist +1-3
+                {  5, 0, 8}, -- HP -1-9
+                {513, 0, 1}, -- DEX +1-2
+                { 23, 0, 7}, -- Accuracy +1-8
+                { 25, 0, 3}, -- Attack +1-4
+                { 96, 0, 3}, -- Pet: Accuracy and Ranged Accuracy +1-4
+                {772, 0, 2}, -- Lightning resist +1-3
             },
         },
         {cutoff =  473, itemId = 16287, augments = { -- Pneuma Collar
-                {34,2,2}, -- Defense -3
-                {512,0,1}, -- STR +1-2
-                {27,0,1}, -- Ranged Accuracy +1-2
-                {29,0,6}, -- Ranged Attack +1-7
-                {185,0,1}, -- Resist Gravity +1-2
-                {98,0,2}, -- Pet: Evasion +1-3
+                { 34, 2, 2}, -- Defense -3
+                {512, 0, 1}, -- STR +1-2
+                { 27, 0, 1}, -- Ranged Accuracy +1-2
+                { 29, 0, 6}, -- Ranged Attack +1-7
+                {185, 0, 1}, -- Resist Gravity +1-2
+                { 98, 0, 2}, -- Pet: Evasion +1-3
             },
         },
         {cutoff =  528, itemId =  1110}, -- Beetle Blood
@@ -901,47 +908,47 @@ local prizes =
     [tpz.ki.ANGEL_SKIN_KEY] =
     {
         {cutoff =   65, itemId = 16254, augments = { -- Altius Mantle
-                {782,0,19}, -- Light resist -1--20
-                {180,0,1}, -- Resist Silence +1-2
-                {101,0,1}, -- Pet: Magic Attack Bonus +1-2
-                {518,0,3}, -- CHR +1-4
-                {320,0,1}, -- Blood Pact Ability Delay -1--2
-                {5,0,4}, -- HP -1-5
+                {782, 0, 19}, -- Light resist -1--20
+                {180, 0,  1}, -- Resist Silence +1-2
+                {101, 0,  1}, -- Pet: Magic Attack Bonus +1-2
+                {518, 0,  3}, -- CHR +1-4
+                {320, 0,  1}, -- Blood Pact Ability Delay -1--2
+                {  5, 0,  4}, -- HP -1-5
             },
         },
         {cutoff =  162, itemId = 16253, augments = { -- Chiffon Cape
-                {1,17,29}, -- HP +18-30
-                {9,16,28}, -- MP +17-29
-                {54,1,2}, -- Physical Damage Taken -2--3%
-                {50,0,0}, -- Slow +1
-                {51,0,1}, -- HP Recovered While Healing +1-2
-                {777,14,22}, -- Ice resist -15--23
+                {  1, 17, 29}, -- HP +18-30
+                {  9, 16, 28}, -- MP +17-29
+                { 54,  1,  2}, -- Physical Damage Taken -2--3%
+                { 50,  0,  0}, -- Slow +1
+                { 51,  0,  1}, -- HP Recovered While Healing +1-2
+                {777, 14, 22}, -- Ice resist -15--23
             },
         },
         {cutoff =  243, itemId = 16255, augments = { -- Cortege Cape
-                {52,0,1}, -- MP Recovered While Healing +1-2
-                {178,0,2}, -- Resist Paralyze +1-3
-                {517,0,3}, -- MND +1-4
-                {53,0,3}, -- Spell Interruption Rate Down 1-4%
-                {36,1,1}, -- Magic Accuracy -2
-                {292,0,3}, -- Elemental Magic Skill +1-4
+                { 52, 0, 1}, -- MP Recovered While Healing +1-2
+                {178, 0, 2}, -- Resist Paralyze +1-3
+                {517, 0, 3}, -- MND +1-4
+                { 53, 0, 3}, -- Spell Interruption Rate Down 1-4%
+                { 36, 1, 1}, -- Magic Accuracy -2
+                {292, 0, 3}, -- Elemental Magic Skill +1-4
             },
         },
         {cutoff =  356, itemId = 16252, augments = { -- Resilient Mantle
-                {23,0,2}, -- Accuracy +1-3 (from item page, assumed typo in key item page since not colored red)
-                {25,0,17}, -- Attack +1-18
-                {512,0,2}, -- STR +1-3
-                {195,0,2}, -- Subtle Blow +1-3
-                {32,0,2}, -- Evasion -1-3
+                { 23, 0,  2}, -- Accuracy +1-3 (from item page, assumed typo in key item page since not colored red)
+                { 25, 0, 17}, -- Attack +1-18
+                {512, 0,  2}, -- STR +1-3
+                {195, 0,  2}, -- Subtle Blow +1-3
+                { 32, 0,  2}, -- Evasion -1-3
             },
         },
         {cutoff =  437, itemId = 16256, augments = { -- Rugged Mantle
-                {13,1,3}, -- MP -2-4
-                {141,0,2}, -- Conserve MP +1-3
-                {40,0,1}, -- Enmity -1-2
-                {516,0,3}, -- INT +1-4
-                {107,0,2}, -- Pet:Attack and Ranged Attack +1-3
-                {323,0,3}, -- Cure casting time -1--4%
+                { 13, 1, 3}, -- MP -2-4
+                {141, 0, 2}, -- Conserve MP +1-3
+                { 40, 0, 1}, -- Enmity -1-2
+                {516, 0, 3}, -- INT +1-4
+                {107, 0, 2}, -- Pet:Attack and Ranged Attack +1-3
+                {323, 0, 3}, -- Cure casting time -1--4%
             },
         },
         {cutoff =  469, itemId =   646}, -- Adaman Ore
@@ -964,21 +971,21 @@ local prizes =
     [tpz.ki.MOOGLE_KEY] =
     {
         {cutoff =  167, itemId = 12442, augments = { -- Studded Bandana
-                {23, 0,  0}, -- Accuracy+1
+                { 23, 0, 0}, -- Accuracy+1
                 {769, 0, 1}, -- Ice+2
             }
         },
         {cutoff =  374, itemId = 13209, augments = { -- Chain Belt
-                { 9, 0,  3}, -- Wind+1
-                {551, 0, 0}, -- VIT+1
-                {770, 0, 0}, -- MP+4
+                {770, 0, 0}, -- Wind+1
+                {514, 0, 0}, -- VIT+1
+                {  9, 0, 3}, -- MP+4
             }
         },
         {cutoff =  707, itemId = 13083, augments = { -- Chain Choker
-                { 9, 0, 11}, -- MP+12
-                {775, 0, 2}, -- Dark+3
-                { 40, 0, 0}, -- Enmity-1
-                {53, 0, 0}, -- Spell Interruption Rate-1%
+                {  9, 0, 11}, -- MP+12
+                {775, 0,  2}, -- Dark+3
+                { 40, 0,  0}, -- Enmity-1
+                { 53, 0,  0}, -- Spell Interruption Rate-1%
             }
         },
         {cutoff =  874, itemId =  4751}, -- Scroll of Erase
@@ -988,11 +995,11 @@ local prizes =
     [tpz.ki.BIRD_KEY] =
     {
         {cutoff = 143, itemId = 12987, augments = { -- Ebony Sabots
-                { 39, 0, 3}, -- Light+0-3
-                {774, 0, 2}, -- Enmity+0-3
+                {774, 0, 2}, -- Light+0-3
+                { 39, 0, 3}, -- Enmity+0-3
                 { 53, 0, 2}, -- Spell Interruption Rate-0-3%
                 { 35, 0, 0}, -- Magic Accuracy+0-1
-                { 9, 0, 1}, -- MP+0-6
+                {  9, 0, 5}, -- MP+0-6
                 {518, 0, 0}, -- CHR+0-1
             }
         },
@@ -1001,16 +1008,16 @@ local prizes =
                 { 51, 0, 2}, -- HP Recovered While Healing+0-3
                 {512, 0, 1}, -- STR+0-2
                 {520, 0, 3}, -- DEX-0-4
-                {25, 0, 5}, -- Attack+0-6
+                { 25, 0, 5}, -- Attack+0-6
                 { 97, 0, 2}, -- Pet: Attack and Ranged Attack+0-3
             }
         },
         {cutoff = 536, itemId = 12293, augments = { -- Oak Shield
-                {  9, 0, 3}, -- Fire+0-4
-                {768, 0, 3}, -- Magic Accuracy+0-1
-                { 35, 0, 0}, -- Cure potency+0-1%
-                {329, 0, 0}, -- MP+0-4
-                {96, 0, 2}, -- Pet: Accuracy and Ranged Accuracy+0-3
+                {768, 0, 3}, -- Fire+0-4
+                { 35, 0, 0}, -- Magic Accuracy+0-1
+                {329, 0, 0}, -- Cure potency+0-1%
+                {  9, 0, 3}, -- MP+0-4
+                { 96, 0, 2}, -- Pet: Accuracy and Ranged Accuracy+0-3
                 {521, 0, 0}, -- VIT-0-1
             }
         },
@@ -1019,7 +1026,7 @@ local prizes =
                 {185, 0, 0}, -- Resist Gravity+0-1
                 {512, 0, 0}, -- STR+0-1
                 { 25, 0, 3}, -- Attack+1-4
-                {32, 0, 5}, -- Evasion-0-6
+                { 32, 0, 5}, -- Evasion-0-6
             }
         },
         {cutoff = 663, itemId =   793}, -- Black Pearl
@@ -1046,14 +1053,14 @@ local prizes =
                 { 50, 0, 3}, -- Slow+4
                 {  1, 0, 4}, -- HP+1-5
                 {115, 0, 1}, -- Store TP+1-2
-                {773, 0, 1}, -- Water+2
+                {773, 1, 1}, -- Water+2
             }
         },
         {cutoff = 196, itemId = 12604, augments = { -- Silk Coat
                 {516, 0, 3}, -- INT+1-4
                 {517, 0, 3}, -- MND+1-4
                 {518, 0, 3}, -- CHR+1-4
-                {110, 0, 0}, -- Regen+1
+                {137, 0, 0}, -- Regen+1
                 {179, 0, 1}, -- Resist Blind+1-2
                 { 36, 0, 2}, -- Magic Accuracy-1--3
             }
@@ -1069,8 +1076,8 @@ local prizes =
         },
         {cutoff = 370, itemId = 13711, augments = { -- Carapace Mask
                 {517, 0, 1}, -- MND+1-2
-                {  1, 0, 5}, -- HP+5-6
-                { 27, 0, 4}, -- Ranged Accuracy-1-+5
+                {  1, 4, 5}, -- HP+5-6
+               {{ 28, 0, 0},{ 27, 0, 4},}, -- Ranged Accuracy-1-+5
                 { 30, 0, 3}, -- Ranged Attack-4
                 {770, 0, 4}, -- Wind+1-5
             }
@@ -1093,32 +1100,32 @@ local prizes =
     [tpz.ki.BOMB_KEY] =
     {
         {cutoff = 308, itemId = 12980, augments = { -- Battle Boots
-                {34, 0, 5}, -- DEF-6--2
-                {  9, 0, 10}, -- MP+6-11
-                {141, 0, 2}, -- Conserve MP+1-3
-                { 40, 0, 1}, -- Enmity-1-2
-                {104, 0, 1}, -- Pet: Enmity+1-2
+                { 34, 1,  5}, -- DEF-6--2
+                {  9, 5, 10}, -- MP+6-11
+                {141, 0,  2}, -- Conserve MP+1-3
+                { 40, 0,  1}, -- Enmity-1-2
+                {104, 0,  1}, -- Pet: Enmity+1-2
             }
         },
         {cutoff = 462, itemId = 12860, augments = { -- Silk Slops
-                { 9, 0, 2}, -- MP+3
-                {515, 0,  0}, -- AGI+1
+                {  9, 2, 2}, -- MP+3
+                {515, 0, 0}, -- AGI+1
                 {517, 0, 1}, -- MND+1-2
                 { 29, 0, 2}, -- Ranged Attack+3
                 { 98, 0, 0}, -- Pet: Evasion+1
             }
         },
         {cutoff = 616, itemId = 13589, augments = { -- Tiger Mantle
-                { 1, 0, 4}, -- HP+2-5
-                {515, 0,  0}, -- AGI+1
+                {  1, 1, 4}, -- HP+2-5
+                {515, 0, 0}, -- AGI+1
                 { 31, 0, 0}, -- Evasion+1
-                {769, 0, 1}, -- Ice+2
+                {769, 1, 1}, -- Ice resist +2
                 { 55, 0, 0}, -- Magic Damage Taken-1%
             }
         },
         {cutoff = 693, itemId = 12427, augments = { -- Bascinet
-                {49, 0, 2}, -- Haste+3
-                { 24, 0,  0}, -- Accuracy-1
+                { 49, 1, 2}, -- Haste+3
+                { 24, 0, 0}, -- Accuracy-1
                 {180, 0, 0}, -- Resist Silence+1
                 {100, 0, 0}, -- Pet: Magic Accuracy+1
             }
@@ -1130,46 +1137,48 @@ local prizes =
     [tpz.ki.CHOCOBO_KEY] =
     {
         {cutoff =  190, itemId = 16008, augments = { -- Aptus Earring
-                {34, 0, 5}, -- Magic Attack Bonus+1-2
-                { 35, 0, 1}, -- Magic Accuracy+1-2
-                {141, 0, 2}, -- Conserve MP+1-3
-                {53, 0, 4}, -- Spell Interruption Rate-1-5%
-                {294, 0, 0}, -- Summoning Magic Skill+1
-                {293, 0, 1}, -- Dark Magic Skill+2
-                {291, 0, 1}, -- Enfeebling Magic Skill+1-2
-                {295, 0, 0}, -- Ninjutsu Skill+1
-                {290, 0, 1}, -- Enhancing Magic Skill+2
-                {299, 0, 1}, -- Blue Magic Skill+1-2
-                {13, 0, 25}, -- MP-7--26
-                {296, 0, 1}, -- Singing Skill+1-2
-                {298, 0, 2}, -- Wind Instrument Skill+3
-                {292, 0, 0}, -- Elemental Magic Skill+1
+        -- assumed magic skill caps are all the same
+                {133, 0,  5}, -- Magic Attack Bonus+1-2
+                { 35, 0,  1}, -- Magic Accuracy+1-2
+                {141, 0,  2}, -- Conserve MP+1-3
+                { 53, 0,  4}, -- Spell Interruption Rate-1-5%
+                {294, 0,  2}, -- Summoning Magic Skill+1
+                {293, 0,  2}, -- Dark Magic Skill+2
+                {291, 0,  2}, -- Enfeebling Magic Skill+1-2
+                {295, 0,  2}, -- Ninjutsu Skill+1
+                {290, 0,  2}, -- Enhancing Magic Skill+2
+                {299, 0,  2}, -- Blue Magic Skill+1-2
+                { 13, 6, 25}, -- MP-7--26
+                {296, 0,  2}, -- Singing Skill+1-2
+                {298, 0,  2}, -- Wind Instrument Skill+3
+                {292, 0,  2}, -- Elemental Magic Skill+1
             }
         },
         {cutoff =  285, itemId = 16372, augments = { -- Stearc Subligar
-                {44, 0, 2}, -- Subtle Blow+1-3
+                { 44, 0, 2}, -- Subtle Blow+1-3
                 {188, 0, 3}, -- Resist Charm+1-4
                 { 51, 0, 0}, -- HP Recovered While Healing+1
-                { 1, 0, 7}, -- HP+8
+                {  1, 7, 7}, -- HP+8
                 {774, 0, 6}, -- Light+1-7
-                {783, 0, 5}, -- Dark-6
+                {783, 5, 5}, -- Dark-6
             }
         },
         {cutoff =  571, itemId = 16295, augments = { -- Varius Torque
-                {23, 0, 4}, -- Accuracy+1-5
-                {25, 0, 4}, -- Attack+1-5
-                { 27, 0, 3}, -- Ranged Accuracy+1-4
-                {29, 0, 3}, -- Ranged Attack+1-4
-                {259, 0, 0}, -- Sword Skill+1
-                {267, 0, 2}, -- Club Skill+3
-                {262, 0, 0}, -- Great Axe Skill+1
-                {260, 0, 0}, -- Great Sword Skill+1
-                {264, 0, 4}, -- Polearm Skill+1-5
-                {266, 0, 0}, -- Great Katana Skill+1
-                {282, 0, 2}, -- Marksmanship Skill+1-3
-                {281, 0, 4}, -- Archery Skill+1-5
-                {257, 0, 4}, -- Hand-to-Hand Skill+1-5
-                {  5, 0,24}, -- HP-16-25
+        -- assumed combat skill caps are all the same
+                { 23,  0,  4}, -- Accuracy+1-5
+                { 25,  0,  4}, -- Attack+1-5
+                { 27,  0,  3}, -- Ranged Accuracy+1-4
+                { 29,  0,  3}, -- Ranged Attack+1-4
+                {259,  0,  4}, -- Sword Skill+1
+                {267,  0,  4}, -- Club Skill+3
+                {262,  0,  4}, -- Great Axe Skill+1
+                {260,  0,  4}, -- Great Sword Skill+1
+                {264,  0,  4}, -- Polearm Skill+1-5
+                {266,  0,  4}, -- Great Katana Skill+1
+                {282,  0,  4}, -- Marksmanship Skill+1-3
+                {281,  0,  4}, -- Archery Skill+1-5
+                {257,  0,  4}, -- Hand-to-Hand Skill+1-5
+                {  5, 15, 24}, -- HP-16-25
             }
         },
         {cutoff =  595, itemId =   823}, -- Gold Thread
@@ -1188,20 +1197,20 @@ local prizes =
     {
         {cutoff =  291, itemId = 15938, augments = { -- Esprit Belt
                 {516, 0, 5}, -- INT+1-6
-                {517, 0,  4}, -- MND+1-5
+                {517, 0, 4}, -- MND+1-5
                 {518, 0, 4}, -- CHR+1-5
-                {35, 0, 3}, -- Magic Accuracy+1-4
-                {39, 0, 2}, -- Enmity+0-3
-                {53, 0, 2}, -- Spell Interruption Rate-1-3%
+                { 35, 0, 3}, -- Magic Accuracy+1-4
+                { 39, 0, 2}, -- Enmity+0-3
+                { 53, 0, 2}, -- Spell Interruption Rate-1-3%
             }
         },
         {cutoff =  600, itemId = 15937, augments = { -- Fettle Belt
                 { 49, 0, 4}, -- Haste+1-5
-                {512, 0,  2}, -- STR+1-3
+                {512, 0, 2}, -- STR+1-3
                 {513, 0, 2}, -- DEX+1-3
                 {195, 0, 4}, -- Subtle Blow+1-5
-                {31, 0, 4}, -- Evasion+1-5
-                {24, 0, 9}, -- Accuracy-10--1
+                { 31, 0, 4}, -- Evasion+1-5
+                { 24, 0, 9}, -- Accuracy-10--1
             }
         },
         {cutoff =  636, itemId =   813}, -- Angelstone
@@ -1304,12 +1313,19 @@ local function givePrize(player, ki)
                     else
                         roll = 0
                     end
-                    local a = pAug[roll]
-                    if a ~= nil then
+                    local aug = pAug[roll]
+                    if aug ~= nil then
+                        if type(aug[1]) ~= "number" then
+                            -- augment is itself a list
+                            -- used for stat ranges that go between negative and positive
+                            -- but, could also be used for groups of stats like int/mnd/chr to avoid having them all show up?
+                            aug = aug[math.random(1,#aug)]
+                        end
                         -- if augment chosen, remove from cloned list to preserve chance of remaining augments
                         table.remove(pAug, roll)
-                        table.insert(addAug, a[1])
-                        table.insert(addAug, math.random(a[2], a[3]))
+
+                        table.insert(addAug, aug[1])
+                        table.insert(addAug, math.random(aug[2], aug[3]))
                     end
                 end
             end
