@@ -108,6 +108,15 @@ INSERT INTO `mob_pool_mods` VALUES(1754, 4, 4, 1);
 INSERT INTO `mob_pool_mods` VALUES(1792, 368, 70, 0);
 INSERT INTO `mob_pool_mods` VALUES(1806, 28, 10, 1);
 INSERT INTO `mob_pool_mods` VALUES(1841, 28, 10, 1);
+ -- Henchman Moogle BLM
+INSERT INTO `mob_pool_mods` VALUES(1931, 368, 100, 0); -- Regain
+ -- Henchman Moogle WHM
+INSERT INTO `mob_pool_mods` VALUES(6938, 368, 200, 0); -- Regain
+INSERT INTO `mob_pool_mods` VALUES(6938, 387, -100, 0); -- UDMGPHYS
+INSERT INTO `mob_pool_mods` VALUES(6938, 388, -100, 0); -- UDMGBREATH
+INSERT INTO `mob_pool_mods` VALUES(6938, 389, -100, 0); -- UDMGMAGIC
+INSERT INTO `mob_pool_mods` VALUES(6938, 390, -100, 0); -- UDMGRANGE
+
 INSERT INTO `mob_pool_mods` VALUES(2032, 244, 15, 0);
 INSERT INTO `mob_pool_mods` VALUES(2032, 34, 20, 1);
 INSERT INTO `mob_pool_mods` VALUES(2032, 35, 0, 1);

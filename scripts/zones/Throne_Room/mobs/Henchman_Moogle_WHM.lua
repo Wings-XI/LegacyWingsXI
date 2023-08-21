@@ -7,6 +7,10 @@ local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/status")
 require("scripts/globals/titles")
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
+end
+
 function onMobSpawn(mob)
 end
 
