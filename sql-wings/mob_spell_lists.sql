@@ -4580,6 +4580,11 @@ INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 210, 1, 255); -- Qua
 INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 54 , 1, 255); -- stoneskin
 INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 238, 1, 255); -- rasp
 
+-- AMk14 Henchman Moogles - BLM
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 6, 61, 255);
+
+-- AMk14 Henchman Moogles - WHM
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_WHM', 566, 5, 61, 255);
 
 --
 -- Indexes for dumped tables

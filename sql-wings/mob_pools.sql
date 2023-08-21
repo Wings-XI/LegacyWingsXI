@@ -1991,7 +1991,7 @@ INSERT INTO `mob_pools` VALUES(1927, 'Helmwige', 'Helmwige', 359, _binary 0x0500
 INSERT INTO `mob_pools` VALUES(1928, 'Helm_Beetle', 'Helm_Beetle', 49, _binary 0x0000980100000000000000000000000000000000, 7, 7, 8, 240, 100, 0, 0, 0, 1, 0, 0, 0, 310, 1157, 0, 0, 0, 0, 0, 49);
 INSERT INTO `mob_pools` VALUES(1929, 'Helter-skelter', 'Helter-skelter', 82, _binary 0x0000c40800000000000000000000000000000000, 1, 1, 11, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82);
 INSERT INTO `mob_pools` VALUES(1930, 'Hematic_Cyst', 'Hematic_Cyst', 66, _binary 0x0000260100000000000000000000000000000000, 1, 1, 6, 240, 100, 0, 1, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 66);
-INSERT INTO `mob_pools` VALUES(1931, 'Henchman_Moogle', 'Henchman_Moogle', 185, _binary 0x00003d0900000000000000000000000000000000, 4, 4, 400, 0, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 185);
+INSERT INTO `mob_pools` VALUES(1931, 'Henchman_Moogle_WHM', 'Henchman_Moogle', 185, _binary 0x00003d0900000000000000000000000000000000, 4, 4, 12, 400, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 565, 0, 0, 185);
 INSERT INTO `mob_pools` VALUES(1932, 'Heqet', 'Heqet', 196, _binary 0x0000150700000000000000000000000000000000, 4, 5, 12, 240, 100, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 233, 0, 0, 893);
 INSERT INTO `mob_pools` VALUES(1933, 'Heraldic_Imp', 'Heraldic_Imp', 165, _binary 0x0000be0600000000000000000000000000000000, 4, 4, 5, 240, 100, 0, 1, 2, 0, 0, 0, 0, 132, 1155, 0, 0, 2, 0, 0, 165);
 INSERT INTO `mob_pools` VALUES(1934, 'Hercules_Beetle', 'Hercules_Beetle', 49, _binary 0x0000980100000000000000000000000000000000, 8, 8, 3, 240, 100, 0, 1, 0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 49);
@@ -6330,6 +6330,7 @@ INSERT INTO `mob_pools` VALUES(6934, 'Nightmare_Antlion', 'Nightmare_Antlion', 3
 INSERT INTO `mob_pools` VALUES(6935, 'Fomor_Bard', 'Fomor_Bard', 359, _binary 0x05000f0400000000000000000000000000000000, 10, 10, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 291, 131, 0, 0, 6, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(6936, 'Fomor_Beastmaster', 'Fomor_Beastmaster', 359, _binary 0x0500130400000000000000000000000000000000, 9, 9, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(6937, 'Fomor_Paladin', 'Fomor_Paladin', 359, _binary 0x0500110400000000000000000000000000000000, 7, 7, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 27, 131, 0, 0, 4, 0, 0, 115);
+INSERT INTO `mob_pools` VALUES(6938, 'Henchman_Moogle_WHM', 'Henchman_Moogle', 185, _binary 0x00003d0900000000000000000000000000000000, 3, 3, 12, 400, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 566, 0, 0, 185);
 
 --
 -- Indexes for dumped tables
