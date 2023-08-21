@@ -20,9 +20,9 @@ end
 function onItemUse(target, effect, player)
     local chance = 85
     local effects = {
-        { effect = tpz.effect.BIND, power = 1, duration = 60, mask = 2 },
-        { effect = tpz.effect.PARALYSIS, power = 20, duration = 120, mask = 4},
-        { effect = tpz.effect.SILENCE, power = 1, duration = 60, mask = 8 },
+        { effect = tpz.effect.BIND, power = 1, duration = 60, mask = 4 },
+        { effect = tpz.effect.PARALYSIS, power = 20, duration = 120, mask = 32},
+        { effect = tpz.effect.SILENCE, power = 1, duration = 60, mask = 16 },
     }
 
     for _, effect in pairs(effects) do
