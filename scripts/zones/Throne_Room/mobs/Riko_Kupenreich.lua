@@ -26,27 +26,24 @@ local function phaseChange(mob)
     local spawned = 0
     for blmID = mob:getID() + 1, mob:getID() + 7 do
         if spawned < 5 then
-            
             local blmStooge = GetMobByID(blmID)
             if not blmStooge:isSpawned() then
-                printf("blmid: %s - got through", blmID)
                 local x = currPos.x + math.random(-2, 2)
                 local z = currPos.z + math.random(-2, 2)
-                printf("%s, %s, %s, %s", x, currPos.y, z, currPos.rot)
-                blmStooge:setPos(x, currPos.y, z, currPos.rot)
+                blmStooge:setSpawn(x, currPos.y, z)
                 blmStooge:spawn()
-                spawned = spawned + 1
             end
+            spawned = spawned + 1
         end
     end
 
     -- -- spawn whms up top
-    -- for whmID = mob:getID() + 8, mob:getID() + 9 do
-    --     local whmStooge = GetMobByID(whmID)
-    --     if not whmStooge:isSpawned() then
-    --         whmStooge:spawn()
-    --     end
-    -- end
+    for whmID = mob:getID() + 8, mob:getID() + 9 do
+        local whmStooge = GetMobByID(whmID)
+        if not whmStooge:isSpawned() then
+            whmStooge:spawn()
+        end
+    end
 end
 
 local function reEngage(mob)
@@ -56,7 +53,7 @@ local function reEngage(mob)
     for i = mob:getID() + 8, mob:getID() + 9 do
         local moogle = GetMobByID(i)
         if moogle:isSpawned() then
-            moogle:despawn()
+            DespawnMob(moogle:getID())
         end
     end
 end
@@ -111,7 +108,7 @@ end
 
 function onMobWeaponSkillPrepare(mob, target)
     if mob:getLocalVar("retreated") == 0 then
-        return 2466
+        return 3148
     end
 end
 
