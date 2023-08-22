@@ -6,31 +6,47 @@
 require("scripts/globals/status")
 -----------------------------------
 
--- all of this is untested
-
 local function phaseChange(mob)
     local bf = mob:getBattlefield()
     local bfArea = bf:getArea()
-    local area_pos = {
+    local bfAreaPos = {
         { x = -488.286, y = -172.000, z = -240.000 },
         { x = -808.666, y = -412.000, z = -479.897 },
         { x = -1126.113, y = -652.000, z = -720.000 },
     }
     mob:setLocalVar("retreated", 1)
-    -- place at top of stairs based on bf instance id
-    mob:pathTo(area_pos[bfArea].x, area_pos[bfArea].y, area_pos[bfArea].z)
+    mob:setLocalVar("used_flare", 0)
+
+    mob:pathTo(bfAreaPos[bfArea].x, bfAreaPos[bfArea].y, bfAreaPos[bfArea].z)
     -- change animation, set to non-violent
     -- just sits there, doens't aggro, but attacks if get near him
-    
+
     -- spawn blms on spot
-    
-    -- spawn whms up top
-    for i = mob:getID() + 8, mob:getID() + 9 do
-        local moogle = GetMobByID(i)
-        if not moogle:isSpawned() then
-            moogle:spawn()
+    local currPos = mob:getPos()
+    local spawned = 0
+    for blmID = mob:getID() + 1, mob:getID() + 7 do
+        if spawned < 5 then
+            
+            local blmStooge = GetMobByID(blmID)
+            if not blmStooge:isSpawned() then
+                printf("blmid: %s - got through", blmID)
+                local x = currPos.x + math.random(-2, 2)
+                local z = currPos.z + math.random(-2, 2)
+                printf("%s, %s, %s, %s", x, currPos.y, z, currPos.rot)
+                blmStooge:setPos(x, currPos.y, z, currPos.rot)
+                blmStooge:spawn()
+                spawned = spawned + 1
+            end
         end
     end
+
+    -- -- spawn whms up top
+    -- for whmID = mob:getID() + 8, mob:getID() + 9 do
+    --     local whmStooge = GetMobByID(whmID)
+    --     if not whmStooge:isSpawned() then
+    --         whmStooge:spawn()
+    --     end
+    -- end
 end
 
 local function reEngage(mob)
@@ -50,20 +66,27 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    mob:setMobMod(tpz.mobMod.ALLI_HATE, 60)
-    mob:setMod(tpz.mod.UDMGPHYS, 2000)
-    mob:setMod(tpz.mod.UDMGBREATH, 2000)
-    mob:setMod(tpz.mod.UDMGMAGIC, 200)
-    mob:setMod(tpz.mod.UDMGRANGE, 2000)
+    -- mob:setMobMod(tpz.mobMod.ALLI_HATE, 60)
+    mob:setMod(tpz.mod.UDMGPHYS, 300)
+    mob:setMod(tpz.mod.UDMGBREATH, 300)
+    mob:setMod(tpz.mod.UDMGMAGIC, 300)
+    mob:setMod(tpz.mod.UDMGRANGE, 300)
     mob:setLocalVar("phase", 1)
+    mob:SetMobSkillAttack(185)
 end
 
 function onMobEngaged(mob, target)
     -- sets/increments phase counters
     reEngage(mob)
+    mob:setMod(tpz.mod.REGAIN, 50)
 end
 
 function onMobFight(mob, target)
+    -------DEBUG-------
+    -- if mob:actionQueueEmpty() then
+    --     mob:useMobAbility(2517)
+    -- end
+    -------DEBUG-------
     local bf = mob:getBattlefield()
     local phase = mob:getLocalVar("phase")
 
@@ -73,9 +96,28 @@ function onMobFight(mob, target)
     elseif mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.5 then
         -- lost 50% hp this phase
         phaseChange(mob)
-    elseif mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 then
+    elseif
+        mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
+        mob:getLocalVar("used_flare") == 0
+    then
         -- lost 25% hp this phase
-        -- draw-in
-        -- crystilline flare
+        mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
+        mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 25)
+        mob:useMobAbility(2467) -- crystilline flare
+        mob:setLocalVar("used_flare", 1)
+
     end
+end
+
+function onMobWeaponSkillPrepare(mob, target)
+    if mob:getLocalVar("retreated") == 0 then
+        return 2466
+    end
+end
+
+function onMobDeath(mob, player, isKiller)
+end
+
+function onMobDespawn(mob)
+    mob:setLocalVar("phase", 1)
 end

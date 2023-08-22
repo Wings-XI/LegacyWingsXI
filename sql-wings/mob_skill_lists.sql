@@ -766,6 +766,10 @@ INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1085);
 INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1086);
 INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1087);
 INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1088);
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 2465); -- Bill toss
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 2466); -- Washtub
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 2467); -- Crystalline Flare
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 3148); -- Bomb toss
 INSERT INTO `mob_skill_lists` VALUES('Morbol', 186, 316);
 INSERT INTO `mob_skill_lists` VALUES('Morbol', 186, 317);
 INSERT INTO `mob_skill_lists` VALUES('Morbol', 186, 319);
