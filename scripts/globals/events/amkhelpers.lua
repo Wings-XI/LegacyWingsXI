@@ -47,8 +47,14 @@ amkHelpers.cardianOrbDrop = function(mob, player)
 
     if mob:getLocalVar("[AMK]5_dropOrb") == 0 then
         local chance = math.random(1000)
-        local reqChance = 10 * 0.5 * mob:getMainLvl() + 4 * (utils.clamp(#player:getAlliance(), 1, 6) - 6)
-        -- printf("reqChance: %d, chance: %d", reqChance, chance)
+        local partySize = 0
+        for _, member in pairs(player:getAlliance()) do
+            if member:getZoneID() == tpz.zone.OUTER_HORUTOTO_RUINS then
+                partySize = partySize + 1
+            end
+        end
+        local reqChance = 5 * mob:getMainLvl() + 4 * utils.clamp(partySize, 1, 6) - 6
+
         if chance < reqChance then
             mob:setLocalVar("[AMK]5_dropOrb", 1)
         else
