@@ -6330,7 +6330,7 @@ INSERT INTO `mob_pools` VALUES(6934, 'Nightmare_Antlion', 'Nightmare_Antlion', 3
 INSERT INTO `mob_pools` VALUES(6935, 'Fomor_Bard', 'Fomor_Bard', 359, _binary 0x05000f0400000000000000000000000000000000, 10, 10, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 291, 131, 0, 0, 6, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(6936, 'Fomor_Beastmaster', 'Fomor_Beastmaster', 359, _binary 0x0500130400000000000000000000000000000000, 9, 9, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 7, 131, 0, 0, 0, 0, 0, 115);
 INSERT INTO `mob_pools` VALUES(6937, 'Fomor_Paladin', 'Fomor_Paladin', 359, _binary 0x0500110400000000000000000000000000000000, 7, 7, 3, 240, 100, 0, 1, 0, 1, 0, 0, 0, 27, 131, 0, 0, 4, 0, 0, 115);
-INSERT INTO `mob_pools` VALUES(6938, 'Henchman_Moogle_WHM', 'Henchman_Moogle', 185, _binary 0x00003d0900000000000000000000000000000000, 3, 3, 12, 400, 100, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 566, 0, 0, 5314);
+INSERT INTO `mob_pools` VALUES(6938, 'Henchman_Moogle_WHM', 'Henchman_Moogle', 185, _binary 0x00003d0900000000000000000000000000000000, 3, 3, 12, 400, 100, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 566, 0, 0, 5314);
 
 --
 -- Indexes for dumped tables

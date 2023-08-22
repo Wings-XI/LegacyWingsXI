@@ -879,3 +879,14 @@ amkHelpers.puzzleTwoOnEventFinish = function(player, csid, option)
         end
     end
 end
+
+amkHelpers.rikoBlmsAlive = function(mob)
+    local id = mob:getID()
+    local mooglesAlive = 0
+    for blmID = id + 1, id + 7 do
+        if GetMobByID(blmID):isAlive() then
+            mooglesAlive = mooglesAlive + 1
+        end
+    end
+    return mooglesAlive
+end

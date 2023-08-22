@@ -12,6 +12,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 end
 
 function onMobFight(mob, target)
