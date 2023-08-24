@@ -32,6 +32,7 @@ zones[tpz.zone.THRONE_ROOM] =
     {
         SHADOW_LORD_STAGE_2_OFFSET = 17453060,
         ZEID_BCNM_OFFSET           = 17453063,
+        RIKO_KUPENREICH_OFFSET     = 17453102,
     },
     npc =
     {

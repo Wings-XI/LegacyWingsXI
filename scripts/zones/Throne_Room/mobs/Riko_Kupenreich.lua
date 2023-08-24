@@ -10,7 +10,8 @@ local function reEngage(mob)
     mob:setLocalVar("retreated", 0)
     mob:setLocalVar("used_flare", 0)
     mob:setLocalVar("phaseStartHP", mob:getHP())
-    print("reengaging")
+    mob:setLocalVar("phase", mob:getLocalVar("phase") + 1)
+
     -- despawn whms
     for i = mob:getID() + 8, mob:getID() + 9 do
         local whmMoogle = GetMobByID(i)
@@ -20,10 +21,16 @@ local function reEngage(mob)
     end
 
     -- Make Riko hurtable again
+    local player = GetPlayerByID(mob:getLocalVar("last_target"))
     mob:setMod(tpz.mod.UDMGPHYS, 250)
     mob:setMod(tpz.mod.UDMGBREATH, 250)
     mob:setMod(tpz.mod.UDMGMAGIC, 250)
     mob:setMod(tpz.mod.UDMGRANGE, 250)
+    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
+    mob:setMobMod(tpz.mobMod.NO_LINK, 0)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:untargetable(false)
+    mob:updateClaim(player)
 end
 
 local healModeTimer
@@ -31,15 +38,12 @@ healModeTimer = function(mob)
     -- Riko rejoins the fight if:
     -- 1) all five blms are dead
     -- 2) he reaches 100%hp
-    print("timer----")
     if
         amkHelpers.rikoBlmsAlive(mob) == 0 or
         mob:getHPP() == 100
     then
-        print("reengaging from timer")
         reEngage(mob)
-    else
-        print("timer else function")
+    elseif mob:isSpawned() then
         mob:timer(3 * 1000, function(mob)
             healModeTimer(mob)
         end)
@@ -50,39 +54,25 @@ local function phaseChange(mob, player)
     local rikoID = mob:getID()
     local bf = mob:getBattlefield()
     local bfArea = bf:getArea()
-    local bfAreaPos = {
-        { x = -488.286, y = -172.000, z = -240.000 },
-        { x = -808.666, y = -412.000, z = -479.897 },
-        { x = -1126.113, y = -652.000, z = -720.000 },
-    }
+    local healSpot = amkHelpers.rikoSpots[bfArea]
     mob:setLocalVar("retreated", 1)
-
-    -- reset enmity
+    mob:setLocalVar("last_target", player:getID())
     mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
     mob:setMobMod(tpz.mobMod.NO_LINK, 1)
-    -- mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
-    -- mob:deaggroAll()
-    for _, member in pairs(player:getAlliance()) do
-        printf("reseting enmity: %s", member:getName())
-        mob:resetEnmity(member)
-        mob:deaggroPlayer(member)
-    end
-    -- Move to top of stairs and go into fetal position while getting healed
-    mob:pathTo(bfAreaPos[bfArea].x, bfAreaPos[bfArea].y, bfAreaPos[bfArea].z)
-    -- Riko moves to top of stairs then immmediately comes back to attack the player
+    mob:untargetable(true)
     mob:setMod(tpz.mod.UDMGPHYS, 0)
     mob:setMod(tpz.mod.UDMGBREATH, 0)
     mob:setMod(tpz.mod.UDMGMAGIC, 0)
     mob:setMod(tpz.mod.UDMGRANGE, 0)
 
-    -- change animation, set to non-violent
-    -- just sits there, doens't aggro, but attacks if get near him
+    -- -- Move to top of stairs and go into fetal position while getting healed
+    mob:pathTo(healSpot.x, healSpot.y, healSpot.z)
 
     -- spawn blms on spot
     local currPos = mob:getPos()
     local spawned = 0
     for blmID = rikoID + 1, rikoID + 7 do
-        if spawned < 5 then
+        if spawned < 1 then
             local blmMoogle = GetMobByID(blmID)
             if not blmMoogle:isSpawned() then
                 local x = currPos.x + math.random(-2, 2)
@@ -121,11 +111,20 @@ function onMobEngaged(mob, target)
 end
 
 function onMobFight(mob, target)
-    -------DEBUG-------
-    -- if mob:actionQueueEmpty() then
-    --     mob:useMobAbility(2517)
-    -- end
-    -------DEBUG-------
+    local bf = mob:getBattlefield()
+    local bfArea = bf:getArea()
+
+    local healSpot = amkHelpers.rikoSpots[bfArea]
+    local retreated = mob:getLocalVar("retreated")
+    if
+        retreated == 1 and
+        mob:atPoint(healSpot.x, healSpot.y, healSpot.z)
+    then
+        mob:deaggroAll()
+        mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+        -- mob:AnimationSub(tpz.anim.HEALING)
+    end
+
     local bf = mob:getBattlefield()
     local phase = mob:getLocalVar("phase")
 
@@ -134,29 +133,41 @@ function onMobFight(mob, target)
         bf:win()
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.5 and
-        mob:getLocalVar("retreated") == 0
+        retreated == 0 and
+        mob:getLocalVar("phase") < 3
     then
         -- lost 50% hp this phase
         phaseChange(mob, target)
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
-        mob:getLocalVar("used_flare") == 0
+        mob:getLocalVar("used_flare") == 0 and
+        mob:getLocalVar("phase") < 3
     then
         -- lost 25% hp this phase
-        mob:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
-        mob:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 25)
-        mob:useMobAbility(2467) -- crystilline flare
+        local drawInTarget = target
+        if drawInTarget ~= nil then
+            if target:isPet() then
+                drawInTarget = drawInTarget:getMaster()
+            end
+            -- mob:triggerDrawIn(true, 1, 60, drawInTarget)
+            for _, member in pairs(drawInTarget:getAlliance()) do
+                if member:hasEnmity(mob) then
+                    mob:triggerDrawIn(false, 1, 60, member)
+                end
+            end
+        end
+        mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
-        print("flaring")
-
     end
 end
 
 function onMobWeaponSkillPrepare(mob, target)
-    if mob:getLocalVar("retreated") == 0 then
-        if math.random(1, 4) ~= 1 then
-            return 3148
+    if mob:getLocalVar("phase") == 3 then
+        if math.random(1,8) == 1 then
+            mob:useMobAbility(2467) -- crystalline flare
         end
+    elseif math.random(1, 4) ~= 1 then
+        return 3148
     end
 end
 
@@ -165,4 +176,7 @@ end
 
 function onMobDespawn(mob)
     mob:setLocalVar("phase", 1)
+    mob:untargetable(false)
+    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
+    mob:setMobMod(tpz.mobMod.NO_LINK, 0)
 end

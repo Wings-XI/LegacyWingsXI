@@ -9868,8 +9868,8 @@ INSERT INTO `mob_groups` VALUES(12, 993, 165, 'Demons_Avatar', 0, 128, 0, 0, 0, 
 INSERT INTO `mob_groups` VALUES(13, 1850, 165, 'Gunther', 0, 128, 0, 0, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(14, 838, 165, 'Crimson_Grimoire', 0, 128, 0, 0, 0, 70, 70, 0);
 INSERT INTO `mob_groups` VALUES(15, 3367, 165, 'Riko_Kupenreich', 0, 128, 0, 85000, 0, 85, 85, 0);
-INSERT INTO `mob_groups` VALUES(16, 1931, 165, 'Henchman_Moogle_BLM', 0, 128, 0, 7500, 0, 72, 74, 0);
-INSERT INTO `mob_groups` VALUES(17, 6938, 165, 'Henchman_Moogle_WHM', 0, 128, 0, 7500, 0, 72, 74, 0);
+INSERT INTO `mob_groups` VALUES(16, 1931, 165, 'Henchman_Moogle_BLM', 0, 128, 0, 7500, 8000, 72, 74, 0);
+INSERT INTO `mob_groups` VALUES(17, 6938, 165, 'Henchman_Moogle_WHM', 0, 128, 0, 7500, 8000, 72, 74, 0);
 INSERT INTO `mob_groups` VALUES(14182, 4249, 165, 'Volker', 0, 128, 0, 0, 0, 75, 75, 1);
 INSERT INTO `mob_groups` VALUES(1, 4349, 166, 'Wind_Bats', 480, 0, 82, 0, 0, 3, 5, 0);
 INSERT INTO `mob_groups` VALUES(2, 443, 166, 'Blade_Bat', 480, 0, 82, 0, 0, 4, 7, 0);
