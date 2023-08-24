@@ -22,7 +22,7 @@ function onMobFight(mob, target)
     local rikoID = ID.mob.RIKO_KUPENREICH_OFFSET + (10 * (bfArea - 1))
     local lastCast = mob:getLocalVar("lastCast")
     if lastCast < os.time() then
-        mob:castSpell(5, GetMobByID(rikoID))
+        mob:castSpell(tpz.magic.spell.CURE_V, GetMobByID(rikoID))
         mob:setLocalVar("lastCast", os.time() + 10)
     end
 end
