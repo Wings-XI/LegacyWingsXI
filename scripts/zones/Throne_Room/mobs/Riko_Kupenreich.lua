@@ -2,9 +2,26 @@
 -- Area: Throne Room
 --  Mob: Smash! A Malevolent Menace
 -- AMK 14 fight
+-- TODO: Make it so Riko does his TP move attack without that "readying #3148" text
+--       Put Riko into healing animation when hes in heal mode
+--       Finish flavor text
 -----------------------------------
+local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/status")
 -----------------------------------
+
+local function resetRiko(mob)
+    -- "During this fight, most sources will inflict roughly threefold damage to all targets"
+    mob:setMod(tpz.mod.UDMGPHYS, 200)
+    mob:setMod(tpz.mod.UDMGBREATH, 200)
+    mob:setMod(tpz.mod.UDMGMAGIC, 200)
+    mob:setMod(tpz.mod.UDMGRANGE, 200)
+    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
+    mob:setMobMod(tpz.mobMod.NO_LINK, 0)
+    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
+    mob:setBehaviour(tpz.behavior.NONE)
+    mob:untargetable(false)
+end
 
 local function reEngage(mob)
     mob:setLocalVar("retreated", 0)
@@ -22,15 +39,9 @@ local function reEngage(mob)
 
     -- Make Riko hurtable again
     local player = GetPlayerByID(mob:getLocalVar("last_target"))
-    mob:setMod(tpz.mod.UDMGPHYS, 250)
-    mob:setMod(tpz.mod.UDMGBREATH, 250)
-    mob:setMod(tpz.mod.UDMGMAGIC, 250)
-    mob:setMod(tpz.mod.UDMGRANGE, 250)
-    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
-    mob:setMobMod(tpz.mobMod.NO_LINK, 0)
-    mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
-    mob:untargetable(false)
+    resetRiko(mob)
     mob:updateClaim(player)
+    mob:addEnmity(player, 1, 0)
 end
 
 local healModeTimer
@@ -51,46 +62,52 @@ healModeTimer = function(mob)
 end
 
 local function phaseChange(mob, player)
-    local rikoID = mob:getID()
+    local rikoId = mob:getID()
     local bf = mob:getBattlefield()
     local bfArea = bf:getArea()
     local healSpot = amkHelpers.rikoSpots[bfArea]
-    mob:setLocalVar("retreated", 1)
+
+    -- Store last target to reaggro upon reengage
     mob:setLocalVar("last_target", player:getID())
+
+    -- Enter retreat mode
+    mob:setLocalVar("retreated", 1)
     mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
     mob:setMobMod(tpz.mobMod.NO_LINK, 1)
+    mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
     mob:untargetable(true)
-    mob:setMod(tpz.mod.UDMGPHYS, 0)
-    mob:setMod(tpz.mod.UDMGBREATH, 0)
-    mob:setMod(tpz.mod.UDMGMAGIC, 0)
-    mob:setMod(tpz.mod.UDMGRANGE, 0)
+    mob:setMod(tpz.mod.UDMGPHYS, -100)
+    mob:setMod(tpz.mod.UDMGBREATH, -100)
+    mob:setMod(tpz.mod.UDMGMAGIC, -100)
+    mob:setMod(tpz.mod.UDMGRANGE, -100)
 
     -- -- Move to top of stairs and go into fetal position while getting healed
     mob:pathTo(healSpot.x, healSpot.y, healSpot.z)
 
-    -- spawn blms on spot
+    -- Spawn 5 blms on spot
     local currPos = mob:getPos()
     local spawned = 0
-    for blmID = rikoID + 1, rikoID + 7 do
-        if spawned < 1 then
-            local blmMoogle = GetMobByID(blmID)
+    for blmId = rikoId + 1, rikoId + 7 do
+        if spawned < 5 then
+            local blmMoogle = GetMobByID(blmId)
             if not blmMoogle:isSpawned() then
                 local x = currPos.x + math.random(-2, 2)
                 local z = currPos.z + math.random(-2, 2)
                 blmMoogle:setSpawn(x, currPos.y, z)
-                SpawnMob(blmID):updateClaim(player)
+                SpawnMob(blmId):updateClaim(player)
                 spawned = spawned + 1
             end
         end
     end
 
-    -- -- spawn whms up top
-    for whmID = rikoID + 8, rikoID + 9 do
-        if not GetMobByID(whmID):isSpawned() then
-            SpawnMob(whmID)
+    -- Spawn whms at top of stairs
+    for whmId = rikoId + 8, rikoId + 9 do
+        if not GetMobByID(whmId):isSpawned() then
+            SpawnMob(whmId)
         end
     end
 
+    -- Begin reoccuring timer to check for reengage parameters
     healModeTimer(mob)
 end
 
@@ -99,6 +116,7 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
+    resetRiko(mob)
     mob:setLocalVar("phase", 1)
     mob:SetMobSkillAttack(185)
     mob:setLocalVar("retreated", 0)
@@ -106,29 +124,33 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    -- sets/increments phase counters
-    mob:setMod(tpz.mod.REGAIN, 50)
+    for _, member in pairs(target:getAlliance()) do
+        member:showText(mob, ID.text.BONANZA_BEGINS)
+    end
 end
 
 function onMobFight(mob, target)
     local bf = mob:getBattlefield()
     local bfArea = bf:getArea()
-
     local healSpot = amkHelpers.rikoSpots[bfArea]
     local retreated = mob:getLocalVar("retreated")
     if
         retreated == 1 and
         mob:atPoint(healSpot.x, healSpot.y, healSpot.z)
     then
-        mob:deaggroAll()
+        -- reset all enmity
+        for _, member in pairs(target:getAlliance()) do
+            mob:resetEnmity(member)
+        end
         mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
+        mob:setLocalVar("retreated", 2)
         -- mob:AnimationSub(tpz.anim.HEALING)
     end
 
     local bf = mob:getBattlefield()
     local phase = mob:getLocalVar("phase")
 
-    -- give up
+    -- Give up @ 25% HP
     if phase == 3 and mob:getHPP() < 25 then
         bf:win()
     elseif
@@ -149,7 +171,6 @@ function onMobFight(mob, target)
             if target:isPet() then
                 drawInTarget = drawInTarget:getMaster()
             end
-            -- mob:triggerDrawIn(true, 1, 60, drawInTarget)
             for _, member in pairs(drawInTarget:getAlliance()) do
                 if member:hasEnmity(mob) then
                     mob:triggerDrawIn(false, 1, 60, member)
@@ -158,6 +179,9 @@ function onMobFight(mob, target)
         end
         mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
+        for _, member in pairs(target:getAlliance()) do
+            member:showText(mob, ID.text.CRYSTAL_PRIZE)
+        end
     end
 end
 
@@ -176,7 +200,5 @@ end
 
 function onMobDespawn(mob)
     mob:setLocalVar("phase", 1)
-    mob:untargetable(false)
-    mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
-    mob:setMobMod(tpz.mobMod.NO_LINK, 0)
+    resetRiko(mob)
 end

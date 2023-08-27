@@ -27,6 +27,12 @@ zones[tpz.zone.THRONE_ROOM] =
         RETURN_TO_THE_DARKNESS        = 7701, -- Return with your soul to the darkness you came from!
         CANT_UNDERSTAND               = 7702, -- You--a man who has never lived bound by the chains of his country--how can you understand my pain!?
         BLADE_ANSWER                  = 7703, -- Let my blade be the answer!
+        BONANZA_BEGINS                = 7777, -- Now for the moment you pathetic fools have been waiting for! The drawing for the Mega Mog Bonanza-Rama-Palooza begins!
+        RANK_2_PRIZE                  = 7778, -- Oh, lucky you! A Rank 2 prize! Here's some gil for ya...!
+        BOOBY_PRIZE                   = 7779, -- OHHHHHH, I'm sorry... Looks like you get the booby prize!
+        CRYSTAL_PRIZE                 = 7780, -- <Ding-ding-ding!> Oh my, ladies and gentlemen! It looks like we have a winner for the Crystal Prize!
+        THIRD_PRIZE_REST_RELAXATION   = 7781, -- Third prize for me...some well-deserved rest and relaxation!
+        THAT_HIT_THE_SPOT             = 7781, -- Ahhhhhh...that hit the spot!
     },
     mob =
     {

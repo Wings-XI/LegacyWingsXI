@@ -6,6 +6,7 @@
 local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+-----------------------------------
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.NO_DROPS, 1)
@@ -14,7 +15,7 @@ end
 function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     mob:setMod(tpz.mod.REFRESH, 10)
-    -- TODO: Buff up cure V to heal for ~ 867 HP
+    mob:setMod(tpz.mod.CURE_POTENCY, 25)
 end
 
 function onMobFight(mob, target)
@@ -23,7 +24,7 @@ function onMobFight(mob, target)
     local lastCast = mob:getLocalVar("lastCast")
     if lastCast < os.time() then
         mob:castSpell(tpz.magic.spell.CURE_V, GetMobByID(rikoID))
-        mob:setLocalVar("lastCast", os.time() + 10)
+        mob:setLocalVar("lastCast", os.time() + 8)
     end
 end
 
