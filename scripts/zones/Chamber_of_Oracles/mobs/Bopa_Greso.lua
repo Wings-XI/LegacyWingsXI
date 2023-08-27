@@ -12,7 +12,7 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    target:showText(mob, ID.text.BOPA_SCRATCHING_POST)
+    mob:showText(mob, ID.text.BOPA_SCRATCHING_POST)
     mob:useMobAbility(math.random(24,25))
 end
 
@@ -20,7 +20,9 @@ function onMobFight(mob, target)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    target:showText(mob, ID.text.THIS_WONT_HURT_MUCH)
+    for _, member in pairs(target:getAlliance()) do
+        member:showText(mob, ID.text.THIS_WONT_HURT_MUCH)
+    end
 end
 
 function onMobDeath(mob, player, isKiller)

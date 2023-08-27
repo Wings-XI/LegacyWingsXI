@@ -12,7 +12,7 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    target:showText(mob, ID.text.YA_RANG_BOSS)
+    mob:showText(mob, ID.text.YA_RANG_BOSS)
     mob:useMobAbility(25)
 end
 
