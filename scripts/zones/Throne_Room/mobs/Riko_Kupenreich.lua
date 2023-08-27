@@ -36,7 +36,7 @@ local function reEngage(mob)
         end
     end
 
-    -- Make Riko hurtable again
+    -- Make Riko hurtable again, and reaggro last target
     local player = GetPlayerByID(mob:getLocalVar("last_target"))
     resetRiko(mob)
     mob:updateClaim(player)
@@ -80,8 +80,6 @@ local function phaseChange(mob, player)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
 
-    -- -- Move to top of stairs and go into fetal position while getting healed
-    mob:pathTo(healSpot.x, healSpot.y, healSpot.z)
 
     -- Spawn 5 blms on spot
     local currPos = mob:getPos()
@@ -105,6 +103,9 @@ local function phaseChange(mob, player)
             SpawnMob(whmId)
         end
     end
+
+    -- Move to top of stairs and go into fetal position while getting healed
+    mob:pathTo(healSpot.x, healSpot.y, healSpot.z)
 
     -- Begin reoccuring timer to check for reengage parameters
     healModeTimer(mob)
@@ -177,9 +178,6 @@ function onMobFight(mob, target)
         end
         mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
-        -- for _, member in pairs(target:getAlliance()) do
-        --     member:showText(mob, ID.text.CRYSTAL_PRIZE)
-        -- end
         mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
