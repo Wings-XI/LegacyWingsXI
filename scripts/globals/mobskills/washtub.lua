@@ -4,6 +4,7 @@
 -- Drops a washtub on foes within area of effect. Additonal Effect: Amnesia and Stun
 -- Utsusemi/Blink absorb: 3 shadows
 ---------------------------------------------
+local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -25,5 +26,6 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 30)
     MobStatusEffectMove(mob, target, tpz.effect.AMNESIA, 1, 0, 120)
 
+    mob:showText(mob, ID.text.BOOBY_PRIZE)
     return dmg
 end

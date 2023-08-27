@@ -4,7 +4,6 @@
 -- AMK 14 fight
 -- TODO: Make it so Riko does his TP move attack without that "readying #3148" text
 --       Put Riko into healing animation when hes in heal mode
---       Finish flavor text
 -----------------------------------
 local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/status")
@@ -47,7 +46,7 @@ end
 local healModeTimer
 healModeTimer = function(mob)
     -- Riko rejoins the fight if:
-    -- 1) all five blms are dead
+    -- 1) all five blms are dead or
     -- 2) he reaches 100%hp
     if
         amkHelpers.rikoBlmsAlive(mob) == 0 or
@@ -124,9 +123,7 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    for _, member in pairs(target:getAlliance()) do
-        member:showText(mob, ID.text.BONANZA_BEGINS)
-    end
+    mob:showText(mob, ID.text.BONANZA_BEGINS)
 end
 
 function onMobFight(mob, target)
@@ -160,6 +157,7 @@ function onMobFight(mob, target)
     then
         -- lost 50% hp this phase
         phaseChange(mob, target)
+        mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
         mob:getLocalVar("used_flare") == 0 and
@@ -179,9 +177,10 @@ function onMobFight(mob, target)
         end
         mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
-        for _, member in pairs(target:getAlliance()) do
-            member:showText(mob, ID.text.CRYSTAL_PRIZE)
-        end
+        -- for _, member in pairs(target:getAlliance()) do
+        --     member:showText(mob, ID.text.CRYSTAL_PRIZE)
+        -- end
+        mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
 
