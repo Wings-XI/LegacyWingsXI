@@ -18,6 +18,19 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.UDMGBREATH, 200)
     mob:setMod(tpz.mod.UDMGMAGIC, 200)
     mob:setMod(tpz.mod.UDMGRANGE, 200)
+
+    -- Set up resistances specific to each moogle
+    local sdt_immune_offset = mob:getID() % 6
+    local sdt_strong_offset = sdt_immune_offset + 1
+    if sdt_strong_offset > 5 then
+        sdt_strong_offset = 0
+    end
+    mob:setMod(tpz.mod.SDT_FIRE + sdt_immune_offset, -100)
+    mob:setMod(tpz.mod.SDT_FIRE + sdt_strong_offset, -75)
+end
+
+function onMobEngaged(mob)
+    mob:setMod(tpz.mod.REGAIN, 400)
 end
 
 function onMobFight(mob, target)

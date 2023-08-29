@@ -18,6 +18,10 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.CURE_POTENCY, 25)
 end
 
+function onMobEngaged(mob)
+    mob:setMod(tpz.mod.REGAIN, 400)
+end
+
 function onMobFight(mob, target)
     local bfArea = mob:getBattlefield():getArea()
     local rikoID = ID.mob.RIKO_KUPENREICH_OFFSET + (10 * (bfArea - 1))

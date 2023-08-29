@@ -36,11 +36,18 @@ local function reEngage(mob)
         end
     end
 
-    -- Make Riko hurtable again, and reaggro last target
-    local player = GetPlayerByID(mob:getLocalVar("last_target"))
+    -- Make Riko hurtable again, and reaggro last target, check phase
     resetRiko(mob)
-    mob:updateClaim(player)
-    mob:addEnmity(player, 1, 0)
+    local player = GetPlayerByID(mob:getLocalVar("last_target"))
+    if player ~= nil and player:isAlive() then
+        mob:updateClaim(player)
+        mob:addEnmity(player, 1, 0)
+    end
+    -- TEST: confirm riko doesn't attack anyone if 'last_target' died since reengaging
+
+    if mob:getLocalVar("phase") == 3 then
+        mob:setUnkillable(false)
+    end
 end
 
 local healModeTimer
@@ -60,7 +67,30 @@ healModeTimer = function(mob)
     end
 end
 
-local function phaseChange(mob, player)
+local function spawnBlms(mob)
+    -- Spawn 5 blms on spot
+    local rikoId = mob:getID()
+    local player = mob:getTarget()
+    local currPos = mob:getPos()
+    local spawned = 0
+    for blmId = rikoId + 1, rikoId + 7 do
+        if spawned < 5 then
+            local blmMoogle = GetMobByID(blmId)
+            if not blmMoogle:isSpawned() then
+                local x = currPos.x + math.random(-2, 2)
+                local z = currPos.z + math.random(-2, 2)
+                blmMoogle:setSpawn(x, currPos.y, z)
+                SpawnMob(blmId)
+                if player ~= nil and player:isAlive() then
+                    GetMobByID(blmId):updateClaim(player)
+                end
+                spawned = spawned + 1
+            end
+        end
+    end
+end
+
+local function retreat(mob, player)
     local rikoId = mob:getID()
     local bf = mob:getBattlefield()
     local bfArea = bf:getArea()
@@ -79,23 +109,6 @@ local function phaseChange(mob, player)
     mob:setMod(tpz.mod.UDMGBREATH, -100)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
-
-
-    -- Spawn 5 blms on spot
-    local currPos = mob:getPos()
-    local spawned = 0
-    for blmId = rikoId + 1, rikoId + 7 do
-        if spawned < 5 then
-            local blmMoogle = GetMobByID(blmId)
-            if not blmMoogle:isSpawned() then
-                local x = currPos.x + math.random(-2, 2)
-                local z = currPos.z + math.random(-2, 2)
-                blmMoogle:setSpawn(x, currPos.y, z)
-                SpawnMob(blmId):updateClaim(player)
-                spawned = spawned + 1
-            end
-        end
-    end
 
     -- Spawn whms at top of stairs
     for whmId = rikoId + 8, rikoId + 9 do
@@ -121,6 +134,7 @@ function onMobSpawn(mob)
     mob:SetMobSkillAttack(185)
     mob:setLocalVar("retreated", 0)
     mob:setLocalVar("phaseStartHP", mob:getHP())
+    mob:setUnkillable(true)
 end
 
 function onMobEngaged(mob, target)
@@ -154,11 +168,13 @@ function onMobFight(mob, target)
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.5 and
         retreated == 0 and
-        mob:getLocalVar("phase") < 3
     then
         -- lost 50% hp this phase
-        phaseChange(mob, target)
-        mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
+        if mob:getLocalVar("phase") < 3
+            retreat(mob, target)
+            mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
+        end
+        spawnBlms(mob)
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
         mob:getLocalVar("used_flare") == 0 and
