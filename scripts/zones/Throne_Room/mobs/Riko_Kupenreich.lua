@@ -167,10 +167,10 @@ function onMobFight(mob, target)
         bf:win()
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.5 and
-        retreated == 0 and
+        retreated == 0
     then
         -- lost 50% hp this phase
-        if mob:getLocalVar("phase") < 3
+        if phase < 3 then
             retreat(mob, target)
             mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
         end
