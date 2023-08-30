@@ -1572,7 +1572,12 @@ void CMobEntity::OnDespawn()
     // this->SetLocalVar("DeathPosY-negative", this->loc.p.y < 0);
     // this->SetLocalVar("DeathPosZ", abs(this->loc.p.z));
     // this->SetLocalVar("DeathPosZ-negative", this->loc.p.z < 0);
-    // this->loc.p = m_SpawnPoint; // push back to spawn point so camps don't get overrun with disappeared/dead mobs
+    CZone* PZone = zoneutils::GetZone(this->getZone());
+    if (!PZone)
+        return;
+
+    if (PZone->GetType() == ZONETYPE_DYNAMIS)
+        this->loc.p = m_SpawnPoint; // push back to spawn point so camps don't get overrun with disappeared/dead mobs
 }
 
 void CMobEntity::Die()
