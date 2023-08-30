@@ -1564,7 +1564,20 @@ void CMobEntity::OnDespawn()
     PAI->ClearActionQueue();
     //#event despawn
     PAI->EventHandler.triggerListener("DESPAWN", this);
-    this->loc.p = m_SpawnPoint; // push back to spawn point so camps don't get overrun with disappeared/dead mobs
+    // Disabled pending verification of performance benefits
+    // store previous death position before resetting back to spawn point
+    // this->SetLocalVar("DeathPosX", abs(this->loc.p.x));
+    // this->SetLocalVar("DeathPosX-negative", this->loc.p.x < 0);
+    // this->SetLocalVar("DeathPosY", abs(this->loc.p.y));
+    // this->SetLocalVar("DeathPosY-negative", this->loc.p.y < 0);
+    // this->SetLocalVar("DeathPosZ", abs(this->loc.p.z));
+    // this->SetLocalVar("DeathPosZ-negative", this->loc.p.z < 0);
+    CZone* PZone = zoneutils::GetZone(this->getZone());
+    if (!PZone)
+        return;
+
+    if (PZone->GetType() == ZONETYPE_DYNAMIS)
+        this->loc.p = m_SpawnPoint; // push back to spawn point so camps don't get overrun with disappeared/dead mobs
 }
 
 void CMobEntity::Die()
