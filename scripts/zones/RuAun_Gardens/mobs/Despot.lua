@@ -5,6 +5,15 @@
 function onMobSpawn(mob)
     local ph = GetMobByID(mob:getLocalVar("ph"))
     if ph then
+        -- phPos = {}
+        -- for i,v in pairs({"X","Y","Z"}) do
+        --     localVar = "DeathPos"..v
+        --     phPos[i] = ph:getLocalVar(localVar)
+        --     if ph:getLocalVar(localVar.."-negative") == 1 then
+        --         phPos[i] = -phPos[i]
+        --     end
+        -- end
+        -- mob:setPos(phPos)
         local pos = ph:getPos()
         mob:setPos(pos.x, pos.y, pos.z, pos.r)
         local killerId = ph:getLocalVar("killer")
