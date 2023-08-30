@@ -118,14 +118,14 @@ function onTrigger(player, npc)
         currentMission_AMK == tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE and
         player:needToZone() ~= true and
         player:getCharVar("[AMK]5_errandProgress") ~= 1 and
-        player:getCharVar("[AMK]5_stillDawdling") == 0
+        player:getLocalVar("[AMK]5_stillDawdling") == 0
     then
         if player:hasKeyItem(tpz.ki.RIPE_STARFRUIT) then
             local hasGil = player:getGil() >= 5000 and 0 or 1
             player:startEvent(507, 0, player:getGil(), hasGil)
         else
             player:startEvent(508)
-            player:setCharVar("[AMK]5_stillDawdling", 1)
+            player:setLocalVar("[AMK]5_stillDawdling", 1)
         end
     elseif
         player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING and
@@ -222,7 +222,7 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option)
-    if csid ~= 508 then player:setCharVar("[AMK]5_stillDawdling", 0) end
+    if csid ~= 508 then player:setLocalVar("[AMK]5_stillDawdling", 0) end
     if csid == 173 then
         if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17081)
