@@ -1619,7 +1619,7 @@ INSERT INTO `mob_skills` VALUES(2456, 1694, 'level-5-holy', 1, 7.0, 2000, 1000, 
 INSERT INTO `mob_skills` VALUES(2457, 1695, 'level-6-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3395, 1696, 'fomor_level_up', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2460, 1684, 'raise_ii', 0, 18.0, 2000, 1000, 34, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(3148, 1503, 'riko_bomb_toss', 2, 15.0, 1000, 1000, 4, 0, 0, 6, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(3148, 1503, 'riko_bomb_toss', 2, 15.0, 1000, 0, 4, 0, 0, 6, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2465, 1502, 'bill_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2466, 1504, 'washtub', 2, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2467, 1505, 'crystalline_flare', 1, 18.0, 1000, 50, 4, 0, 0, 0, 0, 0, 0);

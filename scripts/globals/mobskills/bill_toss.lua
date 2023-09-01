@@ -18,7 +18,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.TERROR
-    local duration = 30
+    local duration = math.random(10, 20)
 
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, duration))
     mob:showText(mob, ID.text.RANK_2_PRIZE)

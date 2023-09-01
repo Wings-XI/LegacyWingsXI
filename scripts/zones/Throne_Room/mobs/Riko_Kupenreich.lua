@@ -55,10 +55,12 @@ healModeTimer = function(mob)
     -- Riko rejoins the fight if:
     -- 1) all five blms are dead or
     -- 2) he reaches 100%hp
+    printf("alive: %s, hpp: %s", amkHelpers.rikoBlmsAlive(mob), mob:getHPP())
     if
         amkHelpers.rikoBlmsAlive(mob) == 0 or
         mob:getHPP() == 100
     then
+        print("reengaging")
         reEngage(mob)
     elseif mob:isSpawned() then
         mob:timer(3 * 1000, function(mob)
@@ -139,6 +141,7 @@ end
 
 function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.BONANZA_BEGINS)
+    mob:setMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobFight(mob, target)
@@ -170,11 +173,11 @@ function onMobFight(mob, target)
         retreated == 0
     then
         -- lost 50% hp this phase
+        spawnBlms(mob)
         if phase < 3 then
             retreat(mob, target)
             mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
         end
-        spawnBlms(mob)
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
         mob:getLocalVar("used_flare") == 0 and
@@ -194,17 +197,29 @@ function onMobFight(mob, target)
         end
         mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
-        mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
 
 function onMobWeaponSkillPrepare(mob, target)
-    if mob:getLocalVar("phase") == 3 then
-        if math.random(1,8) == 1 then
-            mob:useMobAbility(2467) -- crystalline flare
-        end
-    elseif math.random(1, 4) ~= 1 then
+    mob:setLocalVar("skill_tp", mob:getTP())
+    if mob:getTP() < 3000 then
         return 3148
+    elseif mob:getLocalVar("phase") == 3 then
+        if mob:getTP() < 1000 then
+            return 3148
+        else
+            return math.random(2465, 2467)
+        end
+    else
+        return math.random(2465, 2466)
+    end
+end
+
+function onMobWeaponSkill(target, mob, skill)
+    -- logic from hostile herbivores: fighting sheep
+    if skill:getID() == 3148 then
+        mob:addTP(mob:getLocalVar("skill_tp"))
+        mob:setLocalVar("skill_tp", 0)
     end
 end
 
