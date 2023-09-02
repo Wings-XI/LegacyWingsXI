@@ -24,6 +24,7 @@ function onBattlefieldEnter(player, battlefield)
         player:setCharVar("AMK_BCNM", 1)
         player:delKeyItem(tpz.ki.MEGA_BONANZA_KUPON)
         player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.MEGA_BONANZA_KUPON)
+        player:setCharVar("[AMK]12_puzzle", 1)
     else
         player:setCharVar("AMK_BCNM", 0)
     end
