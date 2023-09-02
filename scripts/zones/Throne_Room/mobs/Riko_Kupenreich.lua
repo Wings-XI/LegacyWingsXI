@@ -4,6 +4,10 @@
 -- AMK 14 fight
 -- TODO: Make it so Riko does his TP move attack without that "readying #3148" text
 --       Put Riko into healing animation when hes in heal mode
+-- Testing notes:
+--  Do his attacks seem too weak/strong?
+--  Are the blms so weak that riko doesn't gain hp back fast enough?
+--      fight too easy if you can just burn them down
 -----------------------------------
 local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/status")
@@ -19,7 +23,6 @@ local function resetRiko(mob)
     mob:setMobMod(tpz.mobMod.NO_LINK, 0)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
     mob:setBehaviour(tpz.behavior.NONE)
-    mob:untargetable(false)
 end
 
 local function reEngage(mob)
@@ -27,6 +30,7 @@ local function reEngage(mob)
     mob:setLocalVar("used_flare", 0)
     mob:setLocalVar("phaseStartHP", mob:getHP())
     mob:setLocalVar("phase", mob:getLocalVar("phase") + 1)
+    mob:setMod(tpz.mod.REGAIN, 100)
 
     -- despawn whms
     for i = mob:getID() + 8, mob:getID() + 9 do
@@ -43,11 +47,12 @@ local function reEngage(mob)
         mob:updateClaim(player)
         mob:addEnmity(player, 1, 0)
     end
-    -- TEST: confirm riko doesn't attack anyone if 'last_target' died since reengaging
 
     if mob:getLocalVar("phase") == 3 then
         mob:setUnkillable(false)
     end
+    
+    mob:showText(mob, ID.text.BACK_TO_BUSINESS)
 end
 
 local healModeTimer
@@ -55,12 +60,10 @@ healModeTimer = function(mob)
     -- Riko rejoins the fight if:
     -- 1) all five blms are dead or
     -- 2) he reaches 100%hp
-    printf("alive: %s, hpp: %s", amkHelpers.rikoBlmsAlive(mob), mob:getHPP())
     if
         amkHelpers.rikoBlmsAlive(mob) == 0 or
         mob:getHPP() == 100
     then
-        print("reengaging")
         reEngage(mob)
     elseif mob:isSpawned() then
         mob:timer(3 * 1000, function(mob)
@@ -106,11 +109,11 @@ local function retreat(mob, player)
     mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
     mob:setMobMod(tpz.mobMod.NO_LINK, 1)
     mob:setBehaviour(tpz.behavior.NO_TURN + tpz.behavior.STANDBACK)
-    mob:untargetable(true)
     mob:setMod(tpz.mod.UDMGPHYS, -100)
     mob:setMod(tpz.mod.UDMGBREATH, -100)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
+    mob:setMod(tpz.mod.REGAIN, 0)
 
     -- Spawn whms at top of stairs
     for whmId = rikoId + 8, rikoId + 9 do
@@ -159,7 +162,9 @@ function onMobFight(mob, target)
         end
         mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
         mob:setLocalVar("retreated", 2)
-        -- mob:AnimationSub(tpz.anim.HEALING)
+        mob:timer(2 * 1000, function(mob)
+            mob:showText(mob, ID.text.THAT_HIT_THE_SPOT)
+        end)
     end
 
     local bf = mob:getBattlefield()
@@ -167,6 +172,7 @@ function onMobFight(mob, target)
 
     -- Give up @ 25% HP
     if phase == 3 and mob:getHPP() < 25 then
+        mob:showText(mob, ID.text.CURTAINS_FOR_FESTIVAL)
         bf:win()
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.5 and
@@ -202,16 +208,20 @@ end
 
 function onMobWeaponSkillPrepare(mob, target)
     mob:setLocalVar("skill_tp", mob:getTP())
-    if mob:getTP() < 3000 then
-        return 3148
-    elseif mob:getLocalVar("phase") == 3 then
-        if mob:getTP() < 1000 then
+    if mob:getLocalVar("next_tp_move") < os.time() then
+        if mob:getTP() < 3000 then
+            mob:setLocalVar("next_tp_move", os.time() + 2)
             return 3148
+        elseif mob:getLocalVar("phase") == 3 then
+            if mob:getTP() < 1000 then
+                mob:setLocalVar("next_tp_move", os.time() + 2)
+                return 3148
+            else
+                return math.random(2465, 2467)
+            end
         else
-            return math.random(2465, 2467)
+            return math.random(2465, 2466)
         end
-    else
-        return math.random(2465, 2466)
     end
 end
 

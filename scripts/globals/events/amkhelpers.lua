@@ -881,9 +881,9 @@ amkHelpers.puzzleTwoOnEventFinish = function(player, csid, option)
 end
 
 amkHelpers.rikoSpots = {
-    { x = -488.286, y = -172.000, z = -240.000 },
-    { x = -808.666, y = -412.000, z = -479.897 },
-    { x = -1126.113, y = -652.000, z = -720.000 },
+    { x = -485.000, y = -172.000, z = -240.000 },
+    { x = -804.803, y = -412.000, z = -480.048 },
+    { x = -1124.594, y = -652.000, z = -720.000 },
 }
 
 amkHelpers.rikoBlmsAlive = function(mob)

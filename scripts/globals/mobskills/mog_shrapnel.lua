@@ -10,7 +10,7 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    skill:setAnim(1503)
+
     return 0
 end
 

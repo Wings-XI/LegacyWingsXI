@@ -32,7 +32,10 @@ zones[tpz.zone.THRONE_ROOM] =
         BOOBY_PRIZE                   = 7779, -- OHHHHHH, I'm sorry... Looks like you get the booby prize!
         CRYSTAL_PRIZE                 = 7780, -- <Ding-ding-ding!> Oh my, ladies and gentlemen! It looks like we have a winner for the Crystal Prize!
         THIRD_PRIZE_REST_RELAXATION   = 7781, -- Third prize for me...some well-deserved rest and relaxation!
-        THAT_HIT_THE_SPOT             = 7781, -- Ahhhhhh...that hit the spot!
+        THAT_HIT_THE_SPOT             = 7782, -- Ahhhhhh...that hit the spot!
+        BACK_TO_BUSINESS              = 7783, -- Bah! Time to get back to business!
+        GRAND_PRIZE_DRAWING           = 7784, -- Attention, ladies and gentlemoogles! It's time for...<dum dum dum>...the grand prize drawing!
+        CURTAINS_FOR_FESTIVAL         = 7785, -- Grrrkkk-- \n  L-looks like it's curtains for this year's f...festival, folks...
     },
     mob =
     {
