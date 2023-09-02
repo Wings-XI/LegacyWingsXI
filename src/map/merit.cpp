@@ -412,13 +412,13 @@ uint8 CMeritPoints::GetMeritCategoryMaxUpgrades(uint8 catid)
     if (catid == 0) // hp/mp
         return 10;
     if (catid == 1) // attributes
-        return 15;
+        return 25;
     if (catid == 2) // combat skills
-        return 44;
+        return 60;
     if (catid == 3) // magic skills
-        return 40;
+        return 56;
     if (catid == 4) // others (crit rate, enmity, spell interruption)
-        return 10;
+        return 15;
     if (catid >= 5 && catid <= 24) // job-specific group1
         return 10;
     if (catid == 25) // weapon skills (OOE)
