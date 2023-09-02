@@ -30,10 +30,13 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob)
-    mob:setMod(tpz.mod.REGAIN, 200)
+    mob:setMod(tpz.mod.REGAIN, 100)
 end
 
 function onMobFight(mob, target)
+end
+
+function onMobWeaponSkillPrepare(mob, player)
 end
 
 function onMobDeath(mob, player, isKiller)

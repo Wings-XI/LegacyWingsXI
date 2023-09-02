@@ -28,7 +28,7 @@ function onMobFight(mob, target)
     local lastCast = mob:getLocalVar("lastCast")
     if lastCast < os.time() then
         mob:castSpell(tpz.magic.spell.CURE_V, GetMobByID(rikoID))
-        mob:setLocalVar("lastCast", os.time() + 8)
+        mob:setLocalVar("lastCast", os.time() + 5)
     end
 end
 

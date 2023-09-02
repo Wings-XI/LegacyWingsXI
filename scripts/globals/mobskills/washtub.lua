@@ -11,7 +11,6 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    skill:setAnim(1504)
     return 0
 end
 
@@ -21,7 +20,6 @@ function onMobWeaponSkill(target, mob, skill)
     local dmgmod = 1.9
     local info = MobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, TP_NO_EFFECT)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOB_PARAM_3_SHADOWS)
-    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
 
     if info.hitslanded > 0 then
         MobStatusEffectMove(mob, target, tpz.effect.STUN, 1, 0, 10)
@@ -29,6 +27,7 @@ function onMobWeaponSkill(target, mob, skill)
         MobStatusEffectMove(mob, target, tpz.effect.AMNESIA, 1, 0, 120)
     end
 
+    target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     mob:showText(mob, ID.text.BOOBY_PRIZE)
 
     return dmg
