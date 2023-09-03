@@ -61,7 +61,6 @@ function onTrigger(player, npc)
     local peaceForTheSpirit = player:getQuestStatus(SANDORIA, sandyQuests.PEACE_FOR_THE_SPIRIT)
     local Rank3 = player:getRank() >= 3 and 1 or 0
 
-    
     -- Trust: San d'Oria (Curilla)
     if
         player:hasKeyItem(tpz.ki.SAN_DORIA_TRUST_PERMIT) and
@@ -82,12 +81,14 @@ function onTrigger(player, npc)
     elseif theGeneralSecret == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.CURILLAS_BOTTLE_FULL) then
         player:startEvent(54)
 
-    -- [Blocks everything further down] -- randomized to 50/50 block or pass through
-    elseif theGeneralSecret == QUEST_ACCEPTED and math.random(0, 1) == 1 then
+        -- Alternates between this cutscene and below cutscenes
+    elseif theGeneralSecret == QUEST_ACCEPTED and player:getLocalVar("curilla_secret_seen") == 0 then
         player:startEvent(53)
-        
+        player:setLocalVar("curilla_secret_seen", 1)
+
+        -- Start
     elseif theGeneralSecret == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) > 1 then
-        player:startEvent(55) -- Start
+        player:startEvent(55)
 
     -- "Peace for the Spirit" (RDM AF Body)
     elseif peaceForTheSpirit == QUEST_ACCEPTED then
@@ -202,6 +203,7 @@ function onTrigger(player, npc)
 end
 
 function onEventFinish(player, csid, option)
+    if csid ~= 53 then player:setLocalVar("curilla_secret_seen", 0) end
     if (csid == 55 and option == 1) then
         player:addQuest(SANDORIA, sandyQuests.THE_GENERAL_S_SECRET)
         player:addKeyItem(tpz.ki.CURILLAS_BOTTLE_EMPTY)

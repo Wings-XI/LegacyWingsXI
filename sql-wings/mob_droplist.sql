@@ -406,7 +406,6 @@ INSERT INTO `mob_droplist` VALUES(59, 0, 0, 1000, 12472, 10);
 INSERT INTO `mob_droplist` VALUES(59, 0, 0, 1000, 12728, 20);
 INSERT INTO `mob_droplist` VALUES(59, 0, 0, 1000, 12856, 20);
 INSERT INTO `mob_droplist` VALUES(59, 0, 0, 1000, 12984, 20);
-INSERT INTO `mob_droplist` VALUES(59, 0, 1, 13, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(60, 0, 0, 1000, 501, 20);
 INSERT INTO `mob_droplist` VALUES(60, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(60, 0, 0, 1000, 4862, 60);
@@ -459,7 +458,7 @@ INSERT INTO `mob_droplist` VALUES(69, 0, 0, 1000, 12472, 10);
 INSERT INTO `mob_droplist` VALUES(69, 0, 0, 1000, 12728, 20);
 INSERT INTO `mob_droplist` VALUES(69, 0, 0, 1000, 12856, 10);
 INSERT INTO `mob_droplist` VALUES(69, 0, 0, 1000, 12984, 20);
-INSERT INTO `mob_droplist` VALUES(69, 0, 1, 13, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(69, 0, 0, 1000, 2758, 40); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 655, 20);
 INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 836, 60);
 INSERT INTO `mob_droplist` VALUES(70, 0, 0, 1000, 1300, 40);
@@ -2056,7 +2055,7 @@ INSERT INTO `mob_droplist` VALUES(352, 0, 0, 1000, 12705, 20);
 INSERT INTO `mob_droplist` VALUES(352, 0, 0, 1000, 12833, 50);
 INSERT INTO `mob_droplist` VALUES(352, 0, 0, 1000, 12961, 30);
 INSERT INTO `mob_droplist` VALUES(352, 0, 0, 1000, 17397, 300);
-INSERT INTO `mob_droplist` VALUES(352, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(352, 0, 0, 1000, 2758, 60); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(353, 0, 0, 1000, 501, 20);
 INSERT INTO `mob_droplist` VALUES(353, 0, 0, 1000, 606, 30);
 INSERT INTO `mob_droplist` VALUES(353, 0, 0, 1000, 607, 30);
@@ -2878,7 +2877,7 @@ INSERT INTO `mob_droplist` VALUES(514, 0, 0, 1000, 12449, 30);
 INSERT INTO `mob_droplist` VALUES(514, 0, 0, 1000, 12705, 30);
 INSERT INTO `mob_droplist` VALUES(514, 0, 0, 1000, 12833, 20);
 INSERT INTO `mob_droplist` VALUES(514, 0, 0, 1000, 12961, 30);
-INSERT INTO `mob_droplist` VALUES(514, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(514, 0, 0, 1000, 2758, 60); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(515, 0, 0, 1000, 2839, 182);
 INSERT INTO `mob_droplist` VALUES(516, 0, 0, 1000, 624, 80);
 INSERT INTO `mob_droplist` VALUES(516, 2, 0, 1000, 748, 0);
@@ -5111,6 +5110,7 @@ INSERT INTO `mob_droplist` VALUES(1019, 0, 0, 1000, 12440, 20);
 INSERT INTO `mob_droplist` VALUES(1019, 0, 0, 1000, 12696, 30);
 INSERT INTO `mob_droplist` VALUES(1019, 0, 0, 1000, 12824, 30);
 INSERT INTO `mob_droplist` VALUES(1019, 0, 0, 1000, 12952, 30);
+INSERT INTO `mob_droplist` VALUES(1019, 0, 0, 1000, 2757, 80); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1019, 2, 0, 1000, 17336, 0);
 INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 510, 50);
 INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 511, 70);
@@ -5121,11 +5121,11 @@ INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 12440, 30);
 INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 12696, 40);
 INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 12824, 30);
 INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 12952, 10);
+INSERT INTO `mob_droplist` VALUES(1020, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1020, 2, 0, 1000, 17336, 0);
-INSERT INTO `mob_droplist` VALUES(1020, 0, 1, 20, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(1021, 0, 0, 1000, 937, 100);
+INSERT INTO `mob_droplist` VALUES(1021, 0, 0, 1000, 2759, 80); -- Yagudo Caulk (AMK)
 INSERT INTO `mob_droplist` VALUES(1021, 2, 0, 1000, 17336, 0);
-INSERT INTO `mob_droplist` VALUES(1021, 0, 1, 20, 2759, 100);
 INSERT INTO `mob_droplist` VALUES(1022, 0, 0, 1000, 510, 50);
 INSERT INTO `mob_droplist` VALUES(1022, 0, 0, 1000, 511, 70);
 INSERT INTO `mob_droplist` VALUES(1022, 0, 0, 1000, 748, 100);
@@ -5181,6 +5181,7 @@ INSERT INTO `mob_droplist` VALUES(1033, 0, 0, 1000, 12432, 20);
 INSERT INTO `mob_droplist` VALUES(1033, 0, 0, 1000, 12688, 20);
 INSERT INTO `mob_droplist` VALUES(1033, 0, 0, 1000, 12816, 20);
 INSERT INTO `mob_droplist` VALUES(1033, 0, 0, 1000, 12944, 40);
+INSERT INTO `mob_droplist` VALUES(1033, 0, 0, 1000, 2757, 80); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 507, 20);
 INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 508, 20);
 INSERT INTO `mob_droplist` VALUES(1034, 2, 0, 1000, 656, 0);
@@ -5190,11 +5191,11 @@ INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 12432, 20);
 INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 12688, 20);
 INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 12816, 20);
 INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 12944, 20);
-INSERT INTO `mob_droplist` VALUES(1034, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1034, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1035, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(1035, 0, 0, 1000, 656, 100);
 INSERT INTO `mob_droplist` VALUES(1035, 0, 0, 1000, 12432, 20);
-INSERT INTO `mob_droplist` VALUES(1035, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(1035, 0, 0, 1000, 2759, 80); -- Yagudo Caulk (AMK)
 INSERT INTO `mob_droplist` VALUES(1036, 2, 0, 1000, 751, 0);
 INSERT INTO `mob_droplist` VALUES(1036, 0, 0, 1000, 1631, 50);
 INSERT INTO `mob_droplist` VALUES(1036, 0, 0, 1000, 1638, 160);
@@ -5322,7 +5323,7 @@ INSERT INTO `mob_droplist` VALUES(1055, 0, 0, 1000, 17388, 20);
 INSERT INTO `mob_droplist` VALUES(1055, 0, 0, 1000, 17389, 40);
 INSERT INTO `mob_droplist` VALUES(1055, 0, 0, 1000, 17390, 70);
 INSERT INTO `mob_droplist` VALUES(1055, 2, 0, 1000, 17391, 0);
-INSERT INTO `mob_droplist` VALUES(1055, 0, 1, 13, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1055, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1056, 0, 0, 1000, 510, 50);
 INSERT INTO `mob_droplist` VALUES(1056, 0, 0, 1000, 511, 70);
 INSERT INTO `mob_droplist` VALUES(1056, 2, 0, 1000, 748, 0);
@@ -5470,16 +5471,17 @@ INSERT INTO `mob_droplist` VALUES(1079, 0, 0, 1000, 12857, 30);
 INSERT INTO `mob_droplist` VALUES(1079, 0, 0, 1000, 12985, 30);
 INSERT INTO `mob_droplist` VALUES(1080, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1080, 0, 0, 1000, 952, 50);
+INSERT INTO `mob_droplist` VALUES(1080, 0, 0, 1000, 2757, 80); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1081, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1081, 0, 0, 1000, 952, 50);
 INSERT INTO `mob_droplist` VALUES(1081, 0, 0, 1000, 12473, 20);
 INSERT INTO `mob_droplist` VALUES(1081, 0, 0, 1000, 12985, 30);
-INSERT INTO `mob_droplist` VALUES(1081, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1081, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1082, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1082, 0, 0, 1000, 952, 50);
 INSERT INTO `mob_droplist` VALUES(1082, 0, 0, 1000, 1029, 60);
 INSERT INTO `mob_droplist` VALUES(1082, 0, 0, 1000, 12985, 30);
-INSERT INTO `mob_droplist` VALUES(1082, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(1082, 0, 0, 1000, 2759, 80); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(1083, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1083, 0, 0, 1000, 952, 50);
 INSERT INTO `mob_droplist` VALUES(1083, 0, 0, 1000, 12729, 20);
@@ -5662,7 +5664,7 @@ INSERT INTO `mob_droplist` VALUES(1107, 0, 0, 1000, 12473, 20);
 INSERT INTO `mob_droplist` VALUES(1107, 0, 0, 1000, 12729, 20);
 INSERT INTO `mob_droplist` VALUES(1107, 0, 0, 1000, 12857, 30);
 INSERT INTO `mob_droplist` VALUES(1107, 0, 0, 1000, 12985, 30);
-INSERT INTO `mob_droplist` VALUES(1107, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1107, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1108, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 1029, 60);
 INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 4666, 60);
@@ -5677,7 +5679,7 @@ INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 4746, 30);
 INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 12473, 20);
 INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 12729, 20);
 INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 12857, 30);
-INSERT INTO `mob_droplist` VALUES(1108, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(1108, 0, 0, 1000, 2759, 80); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(1109, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1109, 0, 0, 1000, 4666, 160);
 INSERT INTO `mob_droplist` VALUES(1109, 0, 0, 1000, 4667, 80);
@@ -5747,6 +5749,7 @@ INSERT INTO `mob_droplist` VALUES(1118, 0, 0, 1000, 12449, 30);
 INSERT INTO `mob_droplist` VALUES(1118, 0, 0, 1000, 12705, 20);
 INSERT INTO `mob_droplist` VALUES(1118, 0, 0, 1000, 12833, 20);
 INSERT INTO `mob_droplist` VALUES(1118, 0, 0, 1000, 12961, 30);
+INSERT INTO `mob_droplist` VALUES(1118, 0, 0, 1000, 2757, 80); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 510, 50);
 INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 511, 70);
 INSERT INTO `mob_droplist` VALUES(1119, 2, 0, 1000, 750, 0);
@@ -5755,7 +5758,7 @@ INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 12449, 30);
 INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 12705, 20);
 INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 12833, 20);
 INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 12961, 30);
-INSERT INTO `mob_droplist` VALUES(1119, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1119, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 510, 50);
 INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 511, 70);
 INSERT INTO `mob_droplist` VALUES(1120, 2, 0, 1000, 750, 0);
@@ -5765,7 +5768,7 @@ INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 12449, 30);
 INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 12705, 20);
 INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 12833, 20);
 INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 12961, 30);
-INSERT INTO `mob_droplist` VALUES(1120, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(1120, 0, 0, 1000, 2759, 80); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(1121, 0, 0, 1000, 507, 30);
 INSERT INTO `mob_droplist` VALUES(1121, 0, 0, 1000, 508, 170);
 INSERT INTO `mob_droplist` VALUES(1121, 2, 0, 1000, 749, 0);
@@ -6055,7 +6058,7 @@ INSERT INTO `mob_droplist` VALUES(1175, 0, 0, 1000, 12432, 20);
 INSERT INTO `mob_droplist` VALUES(1175, 0, 0, 1000, 12688, 20);
 INSERT INTO `mob_droplist` VALUES(1175, 0, 0, 1000, 12816, 20);
 INSERT INTO `mob_droplist` VALUES(1175, 0, 0, 1000, 12944, 60);
-INSERT INTO `mob_droplist` VALUES(1175, 0, 1, 20, 2757, 100);
+INSERT INTO `mob_droplist` VALUES(1175, 0, 0, 1000, 2757, 80); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 507, 20);
 INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 508, 20);
 INSERT INTO `mob_droplist` VALUES(1176, 2, 0, 1000, 656, 0);
@@ -6065,7 +6068,7 @@ INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 12432, 20);
 INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 12688, 20);
 INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 12816, 20);
 INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 12944, 40);
-INSERT INTO `mob_droplist` VALUES(1176, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1176, 0, 0, 1000, 2758, 80); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1177, 0, 0, 1000, 510, 50);
 INSERT INTO `mob_droplist` VALUES(1177, 0, 0, 1000, 511, 70);
 INSERT INTO `mob_droplist` VALUES(1177, 2, 0, 1000, 749, 0);
@@ -6363,7 +6366,7 @@ INSERT INTO `mob_droplist` VALUES(1236, 0, 0, 1000, 608, 10);
 INSERT INTO `mob_droplist` VALUES(1236, 0, 0, 1000, 609, 30);
 INSERT INTO `mob_droplist` VALUES(1236, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(1236, 0, 0, 1000, 13116, 120);
-INSERT INTO `mob_droplist` VALUES(1236, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1236, 0, 0, 1000, 2758, 40); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1237, 0, 0, 1000, 1446, 10);
 INSERT INTO `mob_droplist` VALUES(1237, 0, 0, 1000, 2307, 500);
 INSERT INTO `mob_droplist` VALUES(1237, 0, 0, 1000, 2361, 220);
@@ -9776,7 +9779,7 @@ INSERT INTO `mob_droplist` VALUES(1849, 0, 0, 1000, 1984, 50);
 INSERT INTO `mob_droplist` VALUES(1849, 0, 0, 1000, 12449, 10);
 INSERT INTO `mob_droplist` VALUES(1849, 0, 0, 1000, 12705, 40);
 INSERT INTO `mob_droplist` VALUES(1849, 0, 0, 1000, 12961, 20);
-INSERT INTO `mob_droplist` VALUES(1849, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1849, 0, 0, 1000, 2758, 60); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1850, 0, 0, 1000, 501, 370);
 INSERT INTO `mob_droplist` VALUES(1850, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1850, 0, 0, 1000, 12449, 0);
@@ -9862,7 +9865,7 @@ INSERT INTO `mob_droplist` VALUES(1865, 0, 0, 1000, 12729, 30);
 INSERT INTO `mob_droplist` VALUES(1865, 0, 0, 1000, 12857, 20);
 INSERT INTO `mob_droplist` VALUES(1865, 0, 0, 1000, 12985, 30);
 INSERT INTO `mob_droplist` VALUES(1865, 0, 0, 1000, 13116, 90);
-INSERT INTO `mob_droplist` VALUES(1865, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(1865, 0, 0, 1000, 2758, 40); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(1866, 0, 0, 1000, 637, 140);
 INSERT INTO `mob_droplist` VALUES(1866, 0, 0, 1000, 1727, 80);
 INSERT INTO `mob_droplist` VALUES(1867, 0, 0, 1000, 637, 120);
@@ -9962,7 +9965,7 @@ INSERT INTO `mob_droplist` VALUES(1888, 0, 0, 1000, 1024, 90);
 INSERT INTO `mob_droplist` VALUES(1888, 0, 0, 1000, 12737, 0);
 INSERT INTO `mob_droplist` VALUES(1888, 0, 0, 1000, 12865, 0);
 INSERT INTO `mob_droplist` VALUES(1888, 0, 0, 1000, 12993, 10);
-INSERT INTO `mob_droplist` VALUES(1888, 0, 1, 20, 2757, 100); -- Orcish Armor Plate (AMK)
+INSERT INTO `mob_droplist` VALUES(1888, 0, 0, 1000, 2757, 60); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1889, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1889, 0, 0, 1000, 1018, 144);
 INSERT INTO `mob_droplist` VALUES(1889, 0, 0, 1000, 12737, 10);
@@ -10021,7 +10024,7 @@ INSERT INTO `mob_droplist` VALUES(1899, 0, 0, 1000, 12441, 20);
 INSERT INTO `mob_droplist` VALUES(1899, 0, 0, 1000, 12697, 30);
 INSERT INTO `mob_droplist` VALUES(1899, 0, 0, 1000, 12825, 20);
 INSERT INTO `mob_droplist` VALUES(1899, 0, 0, 1000, 12953, 20);
-INSERT INTO `mob_droplist` VALUES(1899, 0, 1, 20, 2757, 100); -- Orcish Armor Plate (AMK)
+INSERT INTO `mob_droplist` VALUES(1899, 0, 0, 1000, 2757, 60); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1900, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1900, 0, 0, 1000, 12441, 20);
 INSERT INTO `mob_droplist` VALUES(1900, 0, 0, 1000, 12697, 20);
@@ -10117,7 +10120,7 @@ INSERT INTO `mob_droplist` VALUES(1919, 0, 0, 1000, 12432, 20);
 INSERT INTO `mob_droplist` VALUES(1919, 0, 0, 1000, 12688, 10);
 INSERT INTO `mob_droplist` VALUES(1919, 0, 0, 1000, 12816, 30);
 INSERT INTO `mob_droplist` VALUES(1919, 0, 0, 1000, 12944, 20);
-INSERT INTO `mob_droplist` VALUES(1919, 0, 1, 20, 2757, 100); -- Orcish Armor Plate (AMK)
+INSERT INTO `mob_droplist` VALUES(1919, 0, 0, 1000, 2757, 40); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1920, 0, 0, 1000, 1429, 350);
 INSERT INTO `mob_droplist` VALUES(1920, 0, 0, 1000, 4769, 150);
 INSERT INTO `mob_droplist` VALUES(1920, 0, 0, 1000, 4770, 20);
@@ -10171,7 +10174,7 @@ INSERT INTO `mob_droplist` VALUES(1929, 0, 0, 1000, 12432, 20);
 INSERT INTO `mob_droplist` VALUES(1929, 0, 0, 1000, 12688, 10);
 INSERT INTO `mob_droplist` VALUES(1929, 0, 0, 1000, 12816, 20);
 INSERT INTO `mob_droplist` VALUES(1929, 0, 0, 1000, 12944, 10);
-INSERT INTO `mob_droplist` VALUES(1929, 0, 1, 20, 2757, 100); -- Orcish Armor Plate (AMK)
+INSERT INTO `mob_droplist` VALUES(1929, 0, 0, 1000, 2757, 40); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1930, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1930, 0, 0, 1000, 1706, 40);
 INSERT INTO `mob_droplist` VALUES(1930, 0, 0, 1000, 12442, 30);
@@ -10208,12 +10211,13 @@ INSERT INTO `mob_droplist` VALUES(1936, 0, 0, 1000, 12697, 20);
 INSERT INTO `mob_droplist` VALUES(1936, 0, 0, 1000, 12825, 20);
 INSERT INTO `mob_droplist` VALUES(1936, 0, 0, 1000, 12953, 20);
 INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 530, 40);
-INSERT INTO `mob_droplist` VALUES(1937, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 1024, 60);
 INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 12441, 20);
 INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 12697, 20);
 INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 12825, 20);
 INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 12953, 20);
+INSERT INTO `mob_droplist` VALUES(1937, 0, 0, 1000, 2757, 60); -- Orcish Armor Plate (AMK)
+INSERT INTO `mob_droplist` VALUES(1937, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1938, 0, 0, 1000, 530, 80);
 INSERT INTO `mob_droplist` VALUES(1938, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(1938, 0, 0, 1000, 12441, 30);
@@ -10235,7 +10239,7 @@ INSERT INTO `mob_droplist` VALUES(1941, 0, 0, 1000, 12440, 10);
 INSERT INTO `mob_droplist` VALUES(1941, 0, 0, 1000, 12696, 20);
 INSERT INTO `mob_droplist` VALUES(1941, 0, 0, 1000, 12824, 20);
 INSERT INTO `mob_droplist` VALUES(1941, 0, 0, 1000, 12952, 20);
-INSERT INTO `mob_droplist` VALUES(1941, 0, 1, 20, 2757, 100); -- Orcish Armor Plate (AMK)
+INSERT INTO `mob_droplist` VALUES(1941, 0, 0, 1000, 2757, 40); -- Orcish Armor Plate (AMK)
 INSERT INTO `mob_droplist` VALUES(1942, 0, 0, 1000, 17292, 120);
 INSERT INTO `mob_droplist` VALUES(1943, 0, 0, 1000, 17255, 30);
 INSERT INTO `mob_droplist` VALUES(1944, 0, 0, 1000, 554, 160);
@@ -11789,7 +11793,6 @@ INSERT INTO `mob_droplist` VALUES(2271, 0, 0, 1000, 5668, 110);
 INSERT INTO `mob_droplist` VALUES(2272, 0, 0, 1000, 724, 10);
 INSERT INTO `mob_droplist` VALUES(2273, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(2273, 0, 0, 1000, 11494, 150);
-INSERT INTO `mob_droplist` VALUES(2273, 0, 1, 20, 2759, 100);
 INSERT INTO `mob_droplist` VALUES(2274, 0, 0, 1000, 891, 140);
 INSERT INTO `mob_droplist` VALUES(2274, 0, 0, 1000, 922, 250);
 INSERT INTO `mob_droplist` VALUES(2274, 0, 0, 1000, 924, 120);
@@ -13756,7 +13759,7 @@ INSERT INTO `mob_droplist` VALUES(2579, 2, 0, 1000, 656, 0);
 INSERT INTO `mob_droplist` VALUES(2579, 0, 0, 1000, 12432, 10);
 INSERT INTO `mob_droplist` VALUES(2579, 0, 0, 1000, 12688, 10);
 INSERT INTO `mob_droplist` VALUES(2579, 0, 0, 1000, 12816, 10);
-INSERT INTO `mob_droplist` VALUES(2579, 0, 1, 20, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(2579, 0, 0, 1000, 2758, 40); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(2580, 0, 0, 1000, 1122, 270);
 INSERT INTO `mob_droplist` VALUES(2581, 0, 0, 1000, 2523, 70);
 INSERT INTO `mob_droplist` VALUES(2581, 0, 0, 1000, 2524, 120);
@@ -14605,7 +14608,7 @@ INSERT INTO `mob_droplist` VALUES(2733, 0, 0, 1000, 750, 140);
 INSERT INTO `mob_droplist` VALUES(2733, 0, 0, 1000, 12736, 20);
 INSERT INTO `mob_droplist` VALUES(2733, 0, 0, 1000, 12864, 10);
 INSERT INTO `mob_droplist` VALUES(2733, 0, 0, 1000, 12992, 10);
-INSERT INTO `mob_droplist` VALUES(2733, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(2733, 0, 0, 1000, 2759, 40); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(2734, 0, 0, 1000, 841, 20);
 INSERT INTO `mob_droplist` VALUES(2735, 2, 0, 1000, 751, 0);
 INSERT INTO `mob_droplist` VALUES(2735, 0, 0, 1000, 2519, 80);
@@ -14647,7 +14650,7 @@ INSERT INTO `mob_droplist` VALUES(2741, 0, 0, 1000, 12456, 20);
 INSERT INTO `mob_droplist` VALUES(2741, 0, 0, 1000, 12712, 20);
 INSERT INTO `mob_droplist` VALUES(2741, 0, 0, 1000, 12840, 20);
 INSERT INTO `mob_droplist` VALUES(2741, 0, 0, 1000, 12968, 20);
-INSERT INTO `mob_droplist` VALUES(2741, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(2741, 0, 0, 1000, 2759, 40); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(2742, 2, 0, 1000, 748, 0);
 INSERT INTO `mob_droplist` VALUES(2742, 0, 0, 1000, 2525, 20);
 INSERT INTO `mob_droplist` VALUES(2742, 0, 0, 1000, 2558, 130);
@@ -14679,7 +14682,7 @@ INSERT INTO `mob_droplist` VALUES(2745, 0, 0, 1000, 12472, 20);
 INSERT INTO `mob_droplist` VALUES(2745, 0, 0, 1000, 12728, 10);
 INSERT INTO `mob_droplist` VALUES(2745, 0, 0, 1000, 12856, 20);
 INSERT INTO `mob_droplist` VALUES(2745, 0, 0, 1000, 12984, 10);
-INSERT INTO `mob_droplist` VALUES(2745, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(2745, 0, 0, 1000, 2759, 40); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(2746, 2, 0, 1000, 751, 0);
 INSERT INTO `mob_droplist` VALUES(2746, 0, 0, 1000, 2525, 20);
 INSERT INTO `mob_droplist` VALUES(2746, 0, 0, 1000, 2567, 100);
@@ -14747,7 +14750,7 @@ INSERT INTO `mob_droplist` VALUES(2751, 0, 0, 1000, 4746, 30);
 INSERT INTO `mob_droplist` VALUES(2751, 0, 0, 1000, 12473, 10);
 INSERT INTO `mob_droplist` VALUES(2751, 0, 0, 1000, 12729, 10);
 INSERT INTO `mob_droplist` VALUES(2751, 0, 0, 1000, 12857, 30);
-INSERT INTO `mob_droplist` VALUES(2751, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(2751, 0, 0, 1000, 2759, 60); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(2752, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(2752, 0, 0, 1000, 841, 20);
 INSERT INTO `mob_droplist` VALUES(2752, 0, 0, 1000, 4667, 20);
@@ -14875,7 +14878,7 @@ INSERT INTO `mob_droplist` VALUES(2772, 0, 0, 1000, 12473, 10);
 INSERT INTO `mob_droplist` VALUES(2772, 0, 0, 1000, 12729, 20);
 INSERT INTO `mob_droplist` VALUES(2772, 0, 0, 1000, 12857, 20);
 INSERT INTO `mob_droplist` VALUES(2772, 0, 0, 1000, 12985, 10);
-INSERT INTO `mob_droplist` VALUES(2772, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(2772, 0, 0, 1000, 2759, 60); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(2773, 2, 0, 1000, 750, 0);
 INSERT INTO `mob_droplist` VALUES(2773, 0, 0, 1000, 841, 20);
 INSERT INTO `mob_droplist` VALUES(2773, 0, 0, 1000, 12473, 20);
@@ -14913,7 +14916,7 @@ INSERT INTO `mob_droplist` VALUES(2776, 0, 0, 1000, 12457, 10);
 INSERT INTO `mob_droplist` VALUES(2776, 0, 0, 1000, 12713, 20);
 INSERT INTO `mob_droplist` VALUES(2776, 0, 0, 1000, 12841, 10);
 INSERT INTO `mob_droplist` VALUES(2776, 0, 0, 1000, 12969, 10);
-INSERT INTO `mob_droplist` VALUES(2776, 0, 1, 20, 2759, 100);
+INSERT INTO `mob_droplist` VALUES(2776, 0, 0, 1000, 2759, 60); -- AMK Yagudo Caulk
 INSERT INTO `mob_droplist` VALUES(2777, 2, 0, 1000, 751, 0);
 INSERT INTO `mob_droplist` VALUES(2777, 0, 0, 1000, 2519, 80);
 INSERT INTO `mob_droplist` VALUES(2777, 0, 0, 1000, 2520, 20);
@@ -14982,7 +14985,7 @@ INSERT INTO `mob_droplist` VALUES(2790, 0, 0, 1000, 12448, 10);
 INSERT INTO `mob_droplist` VALUES(2790, 0, 0, 1000, 12704, 60);
 INSERT INTO `mob_droplist` VALUES(2790, 0, 0, 1000, 12832, 10);
 INSERT INTO `mob_droplist` VALUES(2790, 0, 0, 1000, 12960, 10);
-INSERT INTO `mob_droplist` VALUES(2790, 0, 1, 13, 2758, 100);
+INSERT INTO `mob_droplist` VALUES(2790, 0, 0, 1000, 2758, 40); -- Quadav Backscale (AMK)
 INSERT INTO `mob_droplist` VALUES(2791, 0, 0, 1000, 853, 280);
 INSERT INTO `mob_droplist` VALUES(2791, 0, 0, 1000, 1296, 1000);
 INSERT INTO `mob_droplist` VALUES(2791, 0, 0, 1000, 1296, 500);
@@ -15193,7 +15196,6 @@ INSERT INTO `mob_droplist` VALUES(2824, 0, 0, 1000, 955, 70);
 INSERT INTO `mob_droplist` VALUES(2824, 0, 0, 1000, 1132, 20);
 INSERT INTO `mob_droplist` VALUES(2824, 0, 0, 1000, 2388, 20);
 INSERT INTO `mob_droplist` VALUES(2825, 0, 0, 1000, 1101, 1000);
-INSERT INTO `mob_droplist` VALUES(2825, 0, 1, 83, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(2826, 0, 0, 1000, 1435, 160);
 INSERT INTO `mob_droplist` VALUES(2826, 0, 0, 1000, 4981, 60);
 INSERT INTO `mob_droplist` VALUES(2826, 0, 0, 1000, 5000, 10);
@@ -15273,14 +15275,11 @@ INSERT INTO `mob_droplist` VALUES(2836, 0, 0, 1000, 18610, 250);
 INSERT INTO `mob_droplist` VALUES(2837, 0, 0, 1000, 12340, 100);
 INSERT INTO `mob_droplist` VALUES(2837, 0, 0, 1000, 501, 100);
 INSERT INTO `mob_droplist` VALUES(2837, 0, 0, 1000, 13071, 100);
-INSERT INTO `mob_droplist` VALUES(2837, 0, 1, 14, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(2838, 0, 0, 1000, 16934, 100);
 INSERT INTO `mob_droplist` VALUES(2838, 0, 0, 1000, 12797, 900);
-INSERT INTO `mob_droplist` VALUES(2838, 0, 1, 37, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(2839, 0, 0, 1000, 13837, 930);
 INSERT INTO `mob_droplist` VALUES(2839, 0, 0, 1000, 17414, 70);
 INSERT INTO `mob_droplist` VALUES(2839, 0, 0, 1000, 501, 100);
-INSERT INTO `mob_droplist` VALUES(2839, 0, 1, 48, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(2840, 0, 0, 1000, 825, 430);
 INSERT INTO `mob_droplist` VALUES(2840, 0, 0, 1000, 529, 100);
 INSERT INTO `mob_droplist` VALUES(2840, 0, 0, 1000, 940, 300);
@@ -15688,7 +15687,6 @@ INSERT INTO `mob_droplist` VALUES(2937, 0, 0, 1000, 2853, 260);
 INSERT INTO `mob_droplist` VALUES(2938, 0, 0, 1000, 2842, 222);
 INSERT INTO `mob_droplist` VALUES(2939, 0, 0, 1000, 16296, 268);
 INSERT INTO `mob_droplist` VALUES(2940, 0, 0, 1000, 15052, 257);
-INSERT INTO `mob_droplist` VALUES(2940, 0, 1, 42, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(2941, 0, 0, 1000, 19043, 269);
 INSERT INTO `mob_droplist` VALUES(2942, 0, 0, 1000, 2832, 241);
 INSERT INTO `mob_droplist` VALUES(2943, 0, 0, 1000, 2852, 228);
@@ -15872,7 +15870,6 @@ INSERT INTO `mob_droplist` VALUES(3055, 0, 0, 1000, 16018, 333);
 INSERT INTO `mob_droplist` VALUES(3056, 0, 0, 1000, 17970, 200);
 INSERT INTO `mob_droplist` VALUES(3057, 0, 0, 1000, 16297, 62);
 INSERT INTO `mob_droplist` VALUES(3058, 0, 0, 1000, 2841, 444);
-INSERT INTO `mob_droplist` VALUES(3058, 0, 1, 55, 2758, 100);
 INSERT INTO `mob_droplist` VALUES(3059, 0, 0, 1000, 16023, 185);
 INSERT INTO `mob_droplist` VALUES(3060, 0, 0, 1000, 16300, 333);
 INSERT INTO `mob_droplist` VALUES(3061, 0, 0, 1000, 2838, 321);

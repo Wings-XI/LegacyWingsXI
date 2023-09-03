@@ -747,7 +747,7 @@ void CBattlefield::Cleanup()
         GetZone()->ForEachChar([&gmInZone](CCharEntity* PChar)
         {
             ShowInfo("char %s gmlvl %u", PChar->GetName(), PChar->m_GMlevel);
-            if (PChar->m_GMlevel > 0)
+            if (PChar->m_GMlevel > 1)
             {
                 gmInZone = true;
             }
