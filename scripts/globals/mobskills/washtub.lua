@@ -28,7 +28,6 @@ function onMobWeaponSkill(target, mob, skill)
     end
 
     target:takeDamage(dmg, mob, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
-    mob:showText(mob, ID.text.BOOBY_PRIZE)
 
     return dmg
 end

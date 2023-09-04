@@ -3427,7 +3427,7 @@ INSERT INTO `mob_pools` VALUES(3363, 'Riding_Lizard', 'Riding_Lizard', 174, _bin
 INSERT INTO `mob_pools` VALUES(3364, 'Rift_Dragon', 'Rift_Dragon', 87, _binary 0x0000a40100000000000000000000000000000000, 1, 1, 12, 240, 100, 1024, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 87);
 INSERT INTO `mob_pools` VALUES(3365, 'Rift_Treant', 'Rift_Treant', 245, _binary 0x0000840100000000000000000000000000000000, 1, 1, 8, 240, 100, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 245);
 INSERT INTO `mob_pools` VALUES(3366, 'Rikoh_Wahcondalo', 'Rikoh_Wahcondalo', 151, _binary 0x0500430900000000000000000000000000000000, 1, 1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 151);
-INSERT INTO `mob_pools` VALUES(3367, 'Riko_Kupenreich', 'Riko_Kupenreich', 185, _binary 0x00003e0900000000000000000000000000000000, 1, 1, 1, 250, 100, 0, 1, 1, 1, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 185);
+INSERT INTO `mob_pools` VALUES(3367, 'Riko_Kupenreich', 'Riko_Kupenreich', 185, _binary 0x00003e0900000000000000000000000000000000, 1, 1, 1, 350, 100, 0, 1, 1, 1, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 185);
 INSERT INTO `mob_pools` VALUES(3368, 'Rime_Gigas', 'Rime_Gigas', 126, _binary 0x0000c60200000000000000000000000000000000, 9, 1, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 7533, 131, 0, 0, 0, 0, 0, 126);
 INSERT INTO `mob_pools` VALUES(3369, 'Riparian_Sahagin', 'Riparian_Sahagin', 213, _binary 0x0000390500000000000000000000000000000000, 10, 10, 5, 240, 100, 0, 1, 0, 1, 0, 0, 0, 231, 131, 0, 0, 6, 0, 0, 213);
 INSERT INTO `mob_pools` VALUES(3370, 'Riverne_Vulture', 'Riverne_Vulture', 55, _binary 0x0000bd0100000000000000000000000000000000, 1, 1, 2, 240, 100, 0, 0, 0, 0, 0, 0, 0, 350, 131, 0, 0, 0, 0, 0, 2034);

@@ -21,6 +21,5 @@ function onMobWeaponSkill(target, mob, skill)
     local duration = math.random(10, 20)
 
     skill:setMsg(MobGazeMove(mob, target, typeEffect, 1, 0, duration))
-    mob:showText(mob, ID.text.RANK_2_PRIZE)
     return typeEffect
 end

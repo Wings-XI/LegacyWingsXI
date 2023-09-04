@@ -20,6 +20,5 @@ function onMobWeaponSkill(target, mob, skill)
     MobStatusEffectMove(mob, target, tpz.effect.STUN, 1, 0, math.random(10, 20))
     MobStatusEffectMove(mob, target, tpz.effect.BLINDNESS, 1, 0, 120)
     target:takeDamage(dmg, mob, tpz.attackType.MAGICAL, tpz.damageType.ELEMENTAL)
-    mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     return dmg
 end

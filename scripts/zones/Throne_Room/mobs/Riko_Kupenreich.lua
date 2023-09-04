@@ -203,6 +203,7 @@ function onMobFight(mob, target)
         end
         mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
+        mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
 
@@ -230,6 +231,12 @@ function onMobWeaponSkill(target, mob, skill)
     if skill:getID() == 3148 then
         mob:addTP(mob:getLocalVar("skill_tp"))
         mob:setLocalVar("skill_tp", 0)
+    elseif skill:getID() == 2465 then
+        mob:showText(mob, ID.text.RANK_2_PRIZE)
+    elseif skill:getID() == 2466 then
+        mob:showText(mob, ID.text.BOOBY_PRIZE)
+    elseif Skill:getID() == 2467 then
+        mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
 
