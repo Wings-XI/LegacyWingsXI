@@ -51,7 +51,7 @@ local function reEngage(mob)
     if mob:getLocalVar("phase") == 3 then
         mob:setUnkillable(false)
     end
-    
+
     mob:showText(mob, ID.text.BACK_TO_BUSINESS)
 end
 
@@ -184,17 +184,16 @@ function onMobFight(mob, target)
         retreated == 0
     then
         -- lost 50% hp this phase
+        if phase < 4 then
+            spawnBlms(mob)
+        end
         if phase < 3 then
             mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
             mob:delStatusEffectsByFlag(tpz.effectFlag.WALTZABLE, false)
             mob:delStatusEffectsByFlag(tpz.effectFlag.ERASABLE, false)
             retreat(mob, target)
-        end
-        if phase < 4 then
-            spawnBlms(mob)
-            if phase == 3 then
-                mob:setLocalVar("phase", 4)
-            end
+        elseif phase == 3 then
+            mob:setLocalVar("phase", 4)
         end
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
