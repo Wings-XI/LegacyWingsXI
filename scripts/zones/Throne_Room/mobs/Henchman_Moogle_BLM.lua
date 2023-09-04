@@ -20,12 +20,18 @@ function onMobSpawn(mob)
     mob:setMod(tpz.mod.UDMGRANGE, 200)
 
     -- Set up resistances specific to each moogle
-    local absorb_offset = mob:getID() % 6
-    local sdt_strong_offset = absorb_offset + 1
+    -- To counteract the blms always having the same set of weaknesses which could be gamed
+    -- Add a randomizer set on Riko's spawn
+    local bfArea = mob:getBattlefield():getArea()
+    local riko = GetMobByID(ID.mob.RIKO_KUPENREICH_OFFSET + (10 * (bfArea - 1)))
+    local randomizer = riko:getLocalVar("henchmen_blm_randomizer")
+    local immunity_offset = (mob:getID() + randomizer) % 6
+    local sdt_strong_offset = immunity_offset + 1
     if sdt_strong_offset > 5 then
         sdt_strong_offset = 0
     end
-    mob:setMod(tpz.mod.FIRE_ABSORB + absorb_offset, 100)
+    mob:setMod(tpz.mod.FIRE_ABSORB + immunity_offset, 100)
+    mob:setMod(tpz.mod.SDT_FIRE + immunity_offset, -100)
     mob:setMod(tpz.mod.SDT_FIRE + sdt_strong_offset, -75)
 end
 
@@ -44,4 +50,3 @@ end
 
 function onMobDespawn(mob)
 end
-

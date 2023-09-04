@@ -78,6 +78,7 @@ local function spawnBlms(mob)
     local player = mob:getTarget()
     local currPos = mob:getPos()
     local spawned = 0
+    mob:setLocalVar("henchmen_blm_randomizer", math.random(0,5))
     for blmId = rikoId + 1, rikoId + 7 do
         if spawned < 5 then
             local blmMoogle = GetMobByID(blmId)
@@ -140,6 +141,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("retreated", 0)
     mob:setLocalVar("phaseStartHP", mob:getHP())
     mob:setUnkillable(true)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 0)
 end
 
 function onMobEngaged(mob, target)
@@ -171,7 +173,10 @@ function onMobFight(mob, target)
     local phase = mob:getLocalVar("phase")
 
     -- Give up @ 25% HP
-    if phase == 3 and mob:getHPP() < 25 then
+    if
+        phase == 4 and 
+        (mob:getHP() / mob:getLocalVar("phaseStartHP")) < 0.25
+    then
         mob:showText(mob, ID.text.CURTAINS_FOR_FESTIVAL)
         bf:win()
     elseif
@@ -179,10 +184,17 @@ function onMobFight(mob, target)
         retreated == 0
     then
         -- lost 50% hp this phase
-        spawnBlms(mob)
         if phase < 3 then
-            retreat(mob, target)
             mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
+            mob:delStatusEffectsByFlag(tpz.effectFlag.WALTZABLE, false)
+            mob:delStatusEffectsByFlag(tpz.effectFlag.ERASABLE, false)
+            retreat(mob, target)
+        end
+        if phase < 4 then
+            spawnBlms(mob)
+            if phase == 3 then
+                mob:setLocalVar("phase", 4)
+            end
         end
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.75 and
@@ -203,7 +215,6 @@ function onMobFight(mob, target)
         end
         mob:useMobAbility(2467) -- crystalline flare
         mob:setLocalVar("used_flare", 1)
-        mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
 
@@ -235,7 +246,7 @@ function onMobWeaponSkill(target, mob, skill)
         mob:showText(mob, ID.text.RANK_2_PRIZE)
     elseif skill:getID() == 2466 then
         mob:showText(mob, ID.text.BOOBY_PRIZE)
-    elseif Skill:getID() == 2467 then
+    elseif skill:getID() == 2467 then
         mob:showText(mob, ID.text.CRYSTAL_PRIZE)
     end
 end
