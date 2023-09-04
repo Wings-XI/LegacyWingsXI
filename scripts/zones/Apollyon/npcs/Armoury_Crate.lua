@@ -887,14 +887,14 @@ local loot =
             {
                 {itemid = 1925, droprate = 357}, -- Omega's Eye
                 {itemid = 1927, droprate = 213}, -- Omega's Foreleg
-                {itemid = 1928, droprate = 211}, -- Omega's Hinf Leg
+                {itemid = 1928, droprate = 211}, -- Omega's Hind Leg
                 {itemid = 1929, droprate = 219}, -- Omega's Tail
             },
-            {
-                {itemid = 1925, droprate = 357}, -- Omega's Eye
-                {itemid = 1927, droprate = 213}, -- Omega's Foreleg
-                {itemid = 1928, droprate = 211}, -- Omega's Hinf Leg
+            { -- invert order to avoid "streaky" rng
                 {itemid = 1929, droprate = 219}, -- Omega's Tail
+                {itemid = 1928, droprate = 211}, -- Omega's Hind Leg
+                {itemid = 1927, droprate = 213}, -- Omega's Foreleg
+                {itemid = 1925, droprate = 357}, -- Omega's Eye
             },
             {
                 {itemid =    0, droprate = 735}, -- Nothing
