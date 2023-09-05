@@ -105,7 +105,7 @@ function onMobInitialize(mob)
     mob:addListener("TAKE_DAMAGE", "VALKENG_TAKE_DAMAGE", function(mob, amount, attacker, attackType, damageType)
         if attackType == tpz.attackType.PHYSICAL then
             mob:setLocalVar("PhysicalDamage", mob:getLocalVar("PhysicalDamage") + amount)
-        elseif attackType == tpz.attackType.MAGICAL then
+        elseif attackType == tpz.attackType.MAGICAL or mob:getLocalVar("dmgsourceblumagic") == 1 then
             mob:setLocalVar("MagicalDamage", mob:getLocalVar("MagicalDamage") + amount)
         elseif attackType == tpz.attackType.RANGED then
             mob:setLocalVar("RangedDamage", mob:getLocalVar("RangedDamage") + amount)
