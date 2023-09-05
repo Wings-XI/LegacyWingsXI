@@ -213,7 +213,7 @@ function onEventFinish(player, csid, option)
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 2185)
         else
-            player:addItem(2185, 2)
+            player:addItem(2185, 1)
             player:setCharVar("AhtUrganStatus", 0)
             player:completeMission(TOAU, tpz.mission.id.toau.WESTERLY_WINDS)
             player:addMission(TOAU, tpz.mission.id.toau.A_MERCENARY_LIFE)
