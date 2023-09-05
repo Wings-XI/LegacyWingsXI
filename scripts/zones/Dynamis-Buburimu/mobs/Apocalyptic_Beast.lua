@@ -153,7 +153,7 @@ function onMobFight(mob, target)
         {651, ID.mob.Stollenwurm}, -- Lodesong
         {646, ID.mob.Tarasca}, -- Heavy Stomp
         {643, ID.mob.Vishap}, -- Poison Breath
-        {1337, ID.mob.Woodnix_Shrillwhistle}, -- Charm
+        -- {1337, ID.mob.Woodnix_Shrillwhistle}, -- Charm only during 2hr window
     }
 
     local manafontspells =
@@ -242,12 +242,14 @@ function onMobFight(mob, target)
        (mob:getTP() >= 1900 and mob:getHPP() > 33) or
        (mob:getTP() >= 900 and mob:getHPP() > 0)) and
        mob:getLocalVar("timeSinceWS") < os.time() - 5 and
-       mob:actionQueueEmpty() and
-       (target and mob:checkDistance(target) < 15) then
+       mob:actionQueueEmpty()
+    then
         mob:setLocalVar("timeToWS", 1)
     end
 
-    if mob:getLocalVar("timeToWS") == 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 then -- then if we has enough "tp", we can WS
+    if mob:getLocalVar("timeToWS") == 1 and mob:getLocalVar("timeSinceWS") < os.time() - 1 and
+        (target and mob:checkDistance(target) < 15)
+    then -- then if we has enough "tp", we can WS
         mob:setLocalVar("timeToWS", 0)
         mob:setLocalVar("timeSinceWS", os.time())
         mob:setTP(0)
@@ -260,7 +262,11 @@ function onMobFight(mob, target)
             if GetMobByID(usablemobabilities[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
                 totalchance = totalchance + 10
                 if totalchance >= randomchance then
-                    mob:useMobAbility(usablemobabilities[i][1])
+                    if mob:getLocalVar("next2hr") > 0 and abilities2hr[mob:getLocalVar("next2hr") - 1][1] == tpz.jsa.FAMILIAR and math.random(1,10) < 5 then -- high chance of charm during bst 2hr window
+                        mob:useMobAbility(1337)
+                    else
+                        mob:useMobAbility(usablemobabilities[i][1])
+                    end
                     skippedabilities = #usablemobabilities
                 else
                     skippedabilities = 0
