@@ -22,7 +22,7 @@ function onMobWeaponSkill(target, mob, skill)
     local dmg = MobFinalAdjustments(info.dmg, mob, skill, target, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT, MOB_PARAM_3_SHADOWS)
 
     if info.hitslanded > 0 then
-        MobStatusEffectMove(mob, target, tpz.effect.STUN, 1, 0, 10)
+        MobStatusEffectMove(mob, target, tpz.effect.STUN, 1, 0, 8)
         MobStatusEffectMove(mob, target, tpz.effect.BIND, 1, 0, 30)
         MobStatusEffectMove(mob, target, tpz.effect.AMNESIA, 1, 0, 120)
     end

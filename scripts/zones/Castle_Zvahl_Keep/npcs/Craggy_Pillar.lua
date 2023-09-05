@@ -44,6 +44,7 @@ function onEventFinish(player, csid, option)
     if option == 1 then
         player:setCharVar("[AMK]12_puzzle", 5)
         player:setCharVar("[AMK]12_puzzle_4_cohortIdx", 0)
+        player:delKeyItem(tpz.ki.FESTIVAL_SOUVENIR_KUPON)
         npcUtil.giveKeyItem(player, tpz.ki.MEGA_BONANZA_KUPON)
     end
 end

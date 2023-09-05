@@ -19,6 +19,7 @@ local function resetRiko(mob)
     mob:setMod(tpz.mod.UDMGBREATH, 200)
     mob:setMod(tpz.mod.UDMGMAGIC, 200)
     mob:setMod(tpz.mod.UDMGRANGE, 200)
+    mob:setMod(tpz.mod.REGEN, 0)
     mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
     mob:setMobMod(tpz.mobMod.NO_LINK, 0)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
@@ -31,6 +32,7 @@ local function reEngage(mob)
     mob:setLocalVar("phaseStartHP", mob:getHP())
     mob:setLocalVar("phase", mob:getLocalVar("phase") + 1)
     mob:setMod(tpz.mod.REGAIN, 100)
+    mob:setMod(tpz.mod.REGEN, 0)
 
     -- despawn whms
     for i = mob:getID() + 8, mob:getID() + 9 do
@@ -115,6 +117,7 @@ local function retreat(mob, player)
     mob:setMod(tpz.mod.UDMGMAGIC, -100)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
     mob:setMod(tpz.mod.REGAIN, 0)
+    mob:setMod(tpz.mod.REGEN, 500)
 
     -- Spawn whms at top of stairs
     for whmId = rikoId + 8, rikoId + 9 do
