@@ -15,7 +15,7 @@ end
 
 function onTrigger(player, npc)
     if
-        player:getCurrentMission(AMK) == tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER
+        player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER
     then
         local stoogeArg = player:getCharVar("[AMK]12_puzzle_3_stoogeArg")
         if player:needToZone() == false then stoogeArg = 1 end
