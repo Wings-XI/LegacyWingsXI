@@ -2,12 +2,12 @@
 -- Area: Throne Room
 --  Mob: Smash! A Malevolent Menace
 -- AMK 14 fight
--- TODO: Make it so Riko does his TP move attack without that "readying #3148" text
---       Put Riko into healing animation when hes in heal mode
+-- TODO: Put Riko into healing animation when hes in heal mode
 -- Testing notes:
 --  Do his attacks seem too weak/strong?
 --  Are the blms so weak that riko doesn't gain hp back fast enough?
 --      fight too easy if you can just burn them down
+--      MowFord: imo no, because the time limit is pretty tight
 -----------------------------------
 local ID = require("scripts/zones/Throne_Room/IDs")
 require("scripts/globals/status")
@@ -181,12 +181,10 @@ function onMobFight(mob, target)
         bf:win()
     elseif
         mob:getHP() / mob:getLocalVar("phaseStartHP") < 0.5 and
-        retreated == 0
+        retreated == 0 and phase < 4
     then
-        -- lost 50% hp this phase
-        if phase < 4 then
-            spawnBlms(mob)
-        end
+        -- lost 50% hp this phase, spawn blms (even last phase)
+        spawnBlms(mob)
         if phase < 3 then
             mob:showText(mob, ID.text.THIRD_PRIZE_REST_RELAXATION)
             mob:delStatusEffectsByFlag(tpz.effectFlag.WALTZABLE, false)
