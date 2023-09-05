@@ -48,7 +48,7 @@ function onTrade(player, npc, trade)
         else
             player:messageSpecial(ID.text.DRYEYES_3, tpz.ki.MOOGLE_KEY)
         end
-    elseif whiteCoralKeyItems and count == 3 and player:getCurrentMission(AMK) > tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE then -- Moogle Key
+    elseif whiteCoralKeyItems and count == 3 and player:getCurrentMission(AMK) > tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE then -- White Coral Key
         if not player:hasKeyItem(tpz.ki.WHITE_CORAL_KEY) and now ~= player:getCharVar("LastWhiteCoralKey") then
             player:tradeComplete()
             player:addKeyItem(tpz.ki.WHITE_CORAL_KEY)
@@ -117,7 +117,6 @@ function onEventUpdate(player, csid, option)
         elseif option == 102 then -- black coral Key
             if not player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
                 local diggingZone = amkHelpers.getDiggingZone(player)
-                print(diggingZone)
                 if diggingZone ~= 0 then
                     player:updateEvent(0, 1, amkHelpers.digSites[diggingZone].eventID)
                 else
@@ -362,6 +361,37 @@ function onEventFinish(player, csid, option)
             if not player:hasKeyItem(tpz.ki.OMNIS_STONE) then
                 player:addKeyItem(tpz.ki.OMNIS_STONE)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.OMNIS_STONE)
+            end
+        elseif option == 303 then -- Cardians mana orbs
+            player:delSeals(5, 0)
+            player:delGil(500)
+
+            for i,ki in pairs({tpz.ki.ORB_OF_CUPS,
+                        tpz.ki.ORB_OF_COINS,
+                        tpz.ki.ORB_OF_BATONS,
+                        tpz.ki.ORB_OF_SWORDS}) do
+                if not player:hasKeyItem(ki) then
+                    player:addKeyItem(ki)
+                    player:messageSpecial(ID.text.KEYITEM_OBTAINED, ki)
+                end
+            end
+        elseif option == 304 then -- Navaratna Talisman
+            player:delSeals(15, 0)
+            player:delGil(1500)
+
+            local ki = tpz.ki.NAVARATNA_TALISMAN
+            if not player:hasKeyItem(ki) then
+                player:addKeyItem(ki)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, ki)
+            end
+        elseif option == 305 then -- Mega Bonanza Kupon
+            player:delSeals(20, 0)
+            player:delGil(2000)
+
+            local ki = tpz.ki.MEGA_BONANZA_KUPON
+            if not player:hasKeyItem(ki) then
+                player:addKeyItem(ki)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, ki)
             end
         elseif option == 306 then -- Black Book
             player:delSeals(5, 0)
