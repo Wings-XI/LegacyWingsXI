@@ -16,7 +16,6 @@ function onTrigger(player,npc)
     -- TRANSFORMATIONS
     if transformationsProgress == 4 then
         player:startEvent(4)
-        player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     elseif transformationsProgress == 5 then
         player:startEvent(5)
     else
