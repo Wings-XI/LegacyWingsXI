@@ -12,7 +12,7 @@ end
 
 function onTrigger(player, npc)
     if
-        player:getCurrentMission(AMK) == tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER and
+        player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER and
         player:getCharVar("[AMK]12_puzzle") == 3
     then
         player:delStatusEffect(tpz.effect.LEVEL_RESTRICTION)

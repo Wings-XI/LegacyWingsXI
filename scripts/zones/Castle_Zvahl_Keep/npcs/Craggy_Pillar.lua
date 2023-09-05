@@ -12,7 +12,7 @@ end
 
 function onTrigger(player, npc)
     if
-        player:getCurrentMission(AMK) == tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER and
+        player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER and
         player:getCharVar("[AMK]12_puzzle") == 4 and
         player:getCharVar("[AMK]12_puzzle_4_cohortIdx") > 0 and
         player:hasKeyItem(tpz.ki.FESTIVAL_SOUVENIR_KUPON)
@@ -45,8 +45,5 @@ function onEventFinish(player, csid, option)
         player:setCharVar("[AMK]12_puzzle", 5)
         player:setCharVar("[AMK]12_puzzle_4_cohortIdx", 0)
         npcUtil.giveKeyItem(player, tpz.ki.MEGA_BONANZA_KUPON)
-        player:delKeyItem(tpz.ki.FESTIVAL_SOUVENIR_KUPON)
-        player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.FESTIVAL_SOUVENIR_KUPON)
-        player:PrintToPlayer("Congrats! You won! The final AMK fight will be available soon...")
     end
 end

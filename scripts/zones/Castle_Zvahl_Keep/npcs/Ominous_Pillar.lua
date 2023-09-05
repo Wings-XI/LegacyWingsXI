@@ -13,7 +13,7 @@ end
 
 function onTrigger(player, npc)
     if
-        player:getCurrentMission(AMK) == tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER
+        player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER
     then
         if
             player:getCharVar("[AMK]12_puzzle") == 4 and
