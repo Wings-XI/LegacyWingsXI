@@ -135,7 +135,7 @@ INSERT INTO `blue_spell_list` VALUES(632, 1744, 3, 0, 1, 0, 0, 0, 0);
 INSERT INTO `blue_spell_list` VALUES(633, 1745, 5, 21, 1, 0, 0, 0, 0);
 INSERT INTO `blue_spell_list` VALUES(634, 785, 5, 14, 2, 0, 0, 0, 0);
 INSERT INTO `blue_spell_list` VALUES(636, 1734, 4, 4, 1, 0, 0, 0, 0);
-INSERT INTO `blue_spell_list` VALUES(637, 1733, 5, 17, 1, 0, 0, 0, 0);
+INSERT INTO `blue_spell_list` VALUES(637, 1923, 5, 17, 1, 0, 0, 0, 0);
 INSERT INTO `blue_spell_list` VALUES(638, 617, 3, 9, 1, 1, 0, 0, 0);
 INSERT INTO `blue_spell_list` VALUES(640, 1771, 4, 20, 1, 5, 0, 1, 0);
 INSERT INTO `blue_spell_list` VALUES(641, 1753, 5, 18, 1, 6, 0, 1, 0);
