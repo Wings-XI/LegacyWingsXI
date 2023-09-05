@@ -50,6 +50,7 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15008) -- Trainee Gloves
             player:addFame(SANDORIA, 30)
             player:completeQuest(SANDORIA, tpz.quest.id.sandoria.ATELLOUNE_S_LAMENT)
+            player:tradeComplete()
         end
     end
 
