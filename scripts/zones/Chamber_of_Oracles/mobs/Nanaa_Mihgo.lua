@@ -29,7 +29,7 @@ function onMobSpawn(mob)
 end
 
 function onMobEngaged(mob, target)
-    target:showText(mob, ID.text.CAT_BURGLAR)
+    mob:showText(mob, ID.text.CAT_BURGLAR)
     mob:setMod(tpz.mod.REGEN, 100)
     mob:setLocalVar("hpCheck", 90)
 end

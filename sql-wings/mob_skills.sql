@@ -1618,6 +1618,14 @@ INSERT INTO `mob_skills` VALUES(2455, 1693, 'level-4-holy', 1, 7.0, 2000, 1000, 
 INSERT INTO `mob_skills` VALUES(2456, 1694, 'level-5-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2457, 1695, 'level-6-holy', 1, 7.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3395, 1696, 'fomor_level_up', 0, 7.0, 2000, 0, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2460, 1684, 'raise_ii', 0, 18.0, 2000, 1000, 34, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2461, 1501, 'mog_bomb', 2, 10.0, 2000, 3000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2462, 1500, 'mog_shrapnel', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2463, 1499, 'flowerpot', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2465, 1502, 'bill_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2466, 1504, 'washtub', 2, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(3148, 1503, 'riko_bomb_toss', 2, 15.0, 1000, 0, 4, 0, 0, 6, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2467, 1505, 'crystalline_flare', 1, 18.0, 1000, 50, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2468, 1508, 'king_cobra_clamp', 4, 15, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2469, 1506, 'wasp_sting', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2470, 1507, 'dancing_edge', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
@@ -1625,6 +1633,9 @@ INSERT INTO `mob_skills` VALUES(2486, 259, 'salvation_scythe', 1, 20.0, 2000, 15
 INSERT INTO `mob_skills` VALUES(2487, 259, 'salvation_scythe', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 13, 11, 0);
 INSERT INTO `mob_skills` VALUES(2488, 258, 'divine_malison', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 13, 11, 0);
 INSERT INTO `mob_skills` VALUES(2489, 258, 'divine_malison', 1, 20.0, 2000, 1500, 4, 0, 0, 0, 14, 9, 0);
+INSERT INTO `mob_skills` VALUES(2498, 1695, 'altanas_favor', 1, 12.0, 2000, 1000, 35, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2499, 3326, 'deconstruction', 0, 25.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2500, 3325, 'chronoshift', 1, 12.0, 2000, 1000, 3, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2515, 2072, 'phason_beam', 1, 18.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2519, 1756, 'dexter_wing', 1, 18.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2520, 1757, 'sinister_wing', 1, 18.0, 2000, 1500, 4, 0, 0, 2, 0, 0, 0);
@@ -1875,7 +1886,7 @@ INSERT INTO `mob_skills` VALUES(3139, 2263, 'biting_abrogation', 1, 18.0, 2000, 
 INSERT INTO `mob_skills` VALUES(3140, 2264, 'permafrost_requiem', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3141, 2265, 'glacial_tomb', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3142, 2266, 'glassy_nova', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(3148, 2274, 'noname', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
+-- INSERT INTO `mob_skills` VALUES(3148, 2274, 'noname', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0); -- OOE; Stolen to be used for Riko Kupenreich
 INSERT INTO `mob_skills` VALUES(3149, 2275, 'dazing_discord', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3150, 2276, 'steaming_rage', 1, 18.0, 2000, 1000, 1, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3151, 2277, 'noname', 1, 18.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
@@ -1959,11 +1970,6 @@ INSERT INTO `mob_skills` VALUES(3513, 3257, 'entice', 0, 7.0, 2000, 1500, 4, 0, 
 INSERT INTO `mob_skills` VALUES(3514, 3258, 'hysteric_assault', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3515, 3259, 'clarsach_call', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3867, 3611, 'questionmarks_needles', 1, 10.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2500, 3325, 'chronoshift', 1, 12.0, 2000, 1000, 3, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2499, 3326, 'deconstruction', 0, 25.0, 2000, 1000, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2498, 1695, 'altanas_favor', 1, 12.0, 2000, 1000, 35, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2464, 1685, 'reraise_ii', 0, 18.0, 2000, 1000, 2, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2460, 1684, 'raise_ii', 0, 18.0, 2000, 1000, 34, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3868, 419, 'heavy_strike', 0, 7.0, 2000, 1500, 4, 0, 0, 1, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3917, 913, 'choke_breath', 4, 15.0, 2000, 1800, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3918, 914, 'fantod', 0, 7.0, 2000, 1500, 1, 0, 0, 0, 0, 0, 0);

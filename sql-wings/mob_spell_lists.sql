@@ -4580,6 +4580,22 @@ INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 210, 1, 255); -- Qua
 INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 54 , 1, 255); -- stoneskin
 INSERT INTO `mob_spell_lists` VALUES('Nightmare_Worm', 564, 238, 1, 255); -- rasp
 
+-- AMk14 Henchman Moogles - BLM
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 146, 1, 255); -- Fire 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 151, 1, 255); -- Bliz 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 161, 1, 255); -- Stone 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 166, 1, 255); -- Thun 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 171, 1, 255); -- Water 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 156, 1, 255); -- Aero 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 176, 1, 255); -- Firaga 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 181, 1, 255); -- Blizzaga 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 191, 1, 255); -- Stonega 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 196, 1, 255); -- Thundaga 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 201, 1, 255); -- Waterga 3
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_BLM', 565, 186, 1, 255); -- Aeroga 3
+
+-- AMk14 Henchman Moogles - WHM
+INSERT INTO `mob_spell_lists` VALUES('Henchman_Moogle_WHM', 566, 5, 61, 255); -- Cure V
 
 --
 -- Indexes for dumped tables

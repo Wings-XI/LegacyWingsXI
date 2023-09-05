@@ -3,6 +3,7 @@
 --   NPC: Squintrox Dryeyes
 -- Type: Addon Mission Merchant
 -- !pos -100.071 -1 11.869 246
+-- wiki has good info on his behavior: https://ffxiclopedia.fandom.com/wiki/Squintrox_Dryeyes
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
@@ -47,7 +48,7 @@ function onTrade(player, npc, trade)
         else
             player:messageSpecial(ID.text.DRYEYES_3, tpz.ki.MOOGLE_KEY)
         end
-    elseif whiteCoralKeyItems and count == 3 and player:getCurrentMission(AMK) > tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE then -- Moogle Key
+    elseif whiteCoralKeyItems and count == 3 and player:getCurrentMission(AMK) > tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE then -- White Coral Key
         if not player:hasKeyItem(tpz.ki.WHITE_CORAL_KEY) and now ~= player:getCharVar("LastWhiteCoralKey") then
             player:tradeComplete()
             player:addKeyItem(tpz.ki.WHITE_CORAL_KEY)
@@ -114,8 +115,13 @@ function onEventUpdate(player, csid, option)
                 player:updateEvent(0)
             end
         elseif option == 102 then -- black coral Key
-            if player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
-                player:updateEvent(tpz.ki.MOLDY_WORMEATEN_CHEST)
+            if not player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
+                local diggingZone = amkHelpers.getDiggingZone(player)
+                if diggingZone ~= 0 then
+                    player:updateEvent(0, 1, amkHelpers.digSites[diggingZone].eventID)
+                else
+                    player:messageSpecial(ID.text.GET_LOST)
+                end
             else
                 player:updateEvent(0)
             end
@@ -265,15 +271,18 @@ function onEventFinish(player, csid, option)
                 player:messageSpecial(ID.text.DRYEYES_3, keyItem)
             end
         elseif option == 102 then -- black coral Key
-            local keyItem = tpz.ki.BLACK_CORAL_KEY
-            if not player:hasKeyItem(keyItem) and now ~= player:getCharVar("LastBlackCoralKey") then
-                player:addKeyItem(keyItem)
-                player:delKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST)
-                player:setCharVar("LastBlackCoralKey", os.date("%j"))
-                player:showText(player, ID.text.DRYEYES_2)
-                player:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
-            else
-                player:messageSpecial(ID.text.DRYEYES_3, keyItem)
+            -- shouldn't trigger without the key, but just in case
+            if player:hasKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST) then
+                local keyItem = tpz.ki.BLACK_CORAL_KEY
+                if not player:hasKeyItem(keyItem) and now ~= player:getCharVar("LastBlackCoralKey") then
+                    player:addKeyItem(keyItem)
+                    player:delKeyItem(tpz.ki.MOLDY_WORMEATEN_CHEST)
+                    player:setCharVar("LastBlackCoralKey", os.date("%j"))
+                    player:showText(player, ID.text.DRYEYES_2)
+                    player:messageSpecial(ID.text.KEYITEM_OBTAINED, keyItem)
+                else
+                    player:messageSpecial(ID.text.DRYEYES_3, keyItem)
+                end
             end
         elseif option == 103 then -- Bird Key
             npcUtil.giveKeyItem(player, {
@@ -352,6 +361,37 @@ function onEventFinish(player, csid, option)
             if not player:hasKeyItem(tpz.ki.OMNIS_STONE) then
                 player:addKeyItem(tpz.ki.OMNIS_STONE)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.OMNIS_STONE)
+            end
+        elseif option == 303 then -- Cardians mana orbs
+            player:delSeals(5, 0)
+            player:delGil(500)
+
+            for i,ki in pairs({tpz.ki.ORB_OF_CUPS,
+                        tpz.ki.ORB_OF_COINS,
+                        tpz.ki.ORB_OF_BATONS,
+                        tpz.ki.ORB_OF_SWORDS}) do
+                if not player:hasKeyItem(ki) then
+                    player:addKeyItem(ki)
+                    player:messageSpecial(ID.text.KEYITEM_OBTAINED, ki)
+                end
+            end
+        elseif option == 304 then -- Navaratna Talisman
+            player:delSeals(15, 0)
+            player:delGil(1500)
+
+            local ki = tpz.ki.NAVARATNA_TALISMAN
+            if not player:hasKeyItem(ki) then
+                player:addKeyItem(ki)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, ki)
+            end
+        elseif option == 305 then -- Mega Bonanza Kupon
+            player:delSeals(20, 0)
+            player:delGil(2000)
+
+            local ki = tpz.ki.MEGA_BONANZA_KUPON
+            if not player:hasKeyItem(ki) then
+                player:addKeyItem(ki)
+                player:messageSpecial(ID.text.KEYITEM_OBTAINED, ki)
             end
         elseif option == 306 then -- Black Book
             player:delSeals(5, 0)

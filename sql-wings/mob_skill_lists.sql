@@ -766,6 +766,10 @@ INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1085);
 INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1086);
 INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1087);
 INSERT INTO `mob_skill_lists` VALUES('Moblin', 184, 1088);
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 2465); -- Bill toss
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 2466); -- Washtub
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 2467); -- Crystalline Flare
+INSERT INTO `mob_skill_lists` VALUES('Riko_Kupenreich', 185, 3148); -- Bomb toss
 INSERT INTO `mob_skill_lists` VALUES('Morbol', 186, 316);
 INSERT INTO `mob_skill_lists` VALUES('Morbol', 186, 317);
 INSERT INTO `mob_skill_lists` VALUES('Morbol', 186, 319);
@@ -3563,6 +3567,10 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 271); -- Razor fan
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 273); -- Claw cyclone
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 1340); -- Crossthrash
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 1680); -- Predatory glare
+-- Henchman Moogle
+INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2462); -- Mog Shrapnel
+INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2463); -- flowerpot
+INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2464); -- Mog Bomb
 
 -- Pandemonium Warden Dvergar phases before final
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5400, 2115);

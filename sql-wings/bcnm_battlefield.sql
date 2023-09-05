@@ -643,6 +643,40 @@ INSERT INTO `bcnm_battlefield` VALUES(161, 3, 17453071, 3);
 INSERT INTO `bcnm_battlefield` VALUES(161, 3, 17453072, 2);
 INSERT INTO `bcnm_battlefield` VALUES(161, 3, 17453073, 0);
 INSERT INTO `bcnm_battlefield` VALUES(161, 3, 17453074, 0);
+
+--AMK Mission 14 - Smash! A Malevolent Menace
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453102, 3); -- Riko Kupenriech
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453103, 0); -- The rest are Henchmen
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453104, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453105, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453106, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453107, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453108, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453109, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453110, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 1, 17453111, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453112, 3); -- Riko Kupenriech
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453113, 0); -- The rest are Henchmen
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453114, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453115, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453116, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453117, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453118, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453119, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453120, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 2, 17453121, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453122, 3); -- Riko Kupenriech
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453123, 0); -- The rest are Henchmen
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453124, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453125, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453126, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453127, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453128, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453129, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453130, 0);
+INSERT INTO `bcnm_battlefield` VALUES(164, 3, 17453131, 0);
+
+
 INSERT INTO `bcnm_battlefield` VALUES(192, 1, 17465345, 3);
 INSERT INTO `bcnm_battlefield` VALUES(192, 1, 17465346, 3);
 INSERT INTO `bcnm_battlefield` VALUES(192, 1, 17465347, 3);
@@ -688,7 +722,8 @@ INSERT INTO `bcnm_battlefield` VALUES(198, 3, 17465403, 3);
 INSERT INTO `bcnm_battlefield` VALUES(198, 3, 17465404, 3);
 INSERT INTO `bcnm_battlefield` VALUES(198, 3, 17465405, 3);
 INSERT INTO `bcnm_battlefield` VALUES(198, 3, 17465406, 3);
-INSERT INTO `bcnm_battlefield` VALUES(200, 1, 17465414, 3); -- Roar! A Cat Burglar Bares Her Fangs (AMK10)
+-- AMK 10 - Roar! A Cat Burglar Bares Her Fangs
+INSERT INTO `bcnm_battlefield` VALUES(200, 1, 17465414, 3);
 INSERT INTO `bcnm_battlefield` VALUES(200, 1, 17465415, 0);
 INSERT INTO `bcnm_battlefield` VALUES(200, 1, 17465416, 0);
 INSERT INTO `bcnm_battlefield` VALUES(200, 1, 17465417, 1);
@@ -706,6 +741,7 @@ INSERT INTO `bcnm_battlefield` VALUES(200, 3, 17465428, 0);
 INSERT INTO `bcnm_battlefield` VALUES(200, 3, 17465429, 1);
 INSERT INTO `bcnm_battlefield` VALUES(200, 3, 17465430, 1);
 INSERT INTO `bcnm_battlefield` VALUES(200, 3, 17465431, 1);
+
 INSERT INTO `bcnm_battlefield` VALUES(224, 1, 17473537, 3);
 INSERT INTO `bcnm_battlefield` VALUES(224, 2, 17473538, 3);
 INSERT INTO `bcnm_battlefield` VALUES(224, 3, 17473539, 3);

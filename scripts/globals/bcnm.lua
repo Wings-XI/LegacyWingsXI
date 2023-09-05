@@ -360,7 +360,7 @@ local battlefields = {
         { 1,  161,    0},   -- Where Two Paths Converge (Basty 9-2)
      -- { 2,  162, 1130},   -- Kindred Spirits (BS60)
         { 3,  163, 2557},   -- Survival of the Wisest (SCH LB5)
-     -- { 4,  164,    0},   -- Smash! A Malevolent Menace (MKD14)
+        { 4,  164,    0},   -- Smash! A Malevolent Menace (AMK14)
      -- { 5,    ?, 4063},   -- *Kindred Spirits (SKC20)
      -- { 6,    ?,    0},   -- *The Shadowlord Battle (HTMBF)
      -- { 7,    ?,    0},   -- True Love
@@ -593,6 +593,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                          ) end, -- Mission 5-2
         [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                           ) end, -- Basty 9-2: Where Two Paths Converge
         [ 163] = function() return ( mjob == tpz.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
+        [ 164] = function() return ( player:hasKeyItem(tpz.ki.MEGA_BONANZA_KUPON)                                                                                           ) end, -- AMK14: Smash! A Malevolent Menace
         [ 192] = function() return ( roz >= mi.zilart.THROUGH_THE_QUICKSAND_CAVES and roz < mi.zilart.RETURN_TO_DELKFUTTS_TOWER                                             ) end, -- ZM6: Through the Quicksand Caves
         [ 194] = function() return ( mjob == tpz.job.SAM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SAM LB5)
         [ 195] = function() return ( mjob == tpz.job.NIN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (NIN LB5)
@@ -845,6 +846,7 @@ function checkSkip(player, bfid)
         [ 131] = function() return ( player:hasCompletedMission(ASA, mi.asa.PROJECT_SHANTOTTOFICATION)                                                                                               ) end, -- ASA13: Project Shantottofication
         [ 160] = function() return ( player:hasCompletedMission(player:getNation(), mi.nation.SHADOW_LORD) or (nat == mi.nation.SHADOW_LORD and natStat > 3)                                         ) end, -- Mission 5-2
         [ 161] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.WHERE_TWO_PATHS_CONVERGE) or (basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat > 4)                         ) end, -- Basty 9-2: Where Two Paths Converge
+        [ 164] = function() return ( player:hasCompletedMission(AMK, mi.amk.SMASH_A_MALEVOLENT_MENACE)                                                                                               ) end, -- AMK14: Smash! A Malevolent Menace
         [ 192] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.THROUGH_THE_QUICKSAND_CAVES)                                                                                       ) end, -- ZM6: Through the Quicksand Caves
         [ 200] = function() return ( player:hasCompletedMission(AMK, mi.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS)                                                                                      ) end, -- AMK10: Roar! A Cat Burglar Bares Her Fangs
         [ 224] = function() return ( player:hasCompletedQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH) or player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)                                     ) end, -- Quest: The Moonlit Path

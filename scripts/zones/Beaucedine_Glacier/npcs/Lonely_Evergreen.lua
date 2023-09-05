@@ -16,9 +16,7 @@ function onTrigger(player, npc)
         player:getCurrentMission(AMK) >= tpz.mission.id.amk.A_CHALLENGE_YOU_COULD_BE_A_WINNER and
         not player:hasKeyItem(tpz.ki.MEGA_BONANZA_KUPON)
     then
-        if puzzle == 2 or
-            puzzle == 5 -- if puzzle == 5, MEGA KUPON was lost and player is re-doing it
-        then
+        if puzzle == 2 then
             player:setCharVar("[AMK]12_puzzle", 2)
             if player:hasKeyItem(tpz.ki.POCKET_MOGBOMB) then
                 player:startEvent(502, tpz.ki.POCKET_MOGBOMB, tpz.ki.TRIVIA_CHALLENGE_KUPON)

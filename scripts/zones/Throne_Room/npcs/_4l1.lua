@@ -4,10 +4,10 @@
 -- Type: Door
 -- !pos -111 -6 0 165
 -------------------------------------
-
 require("scripts/globals/keyitems")
 require("scripts/globals/bcnm")
 require("scripts/globals/missions")
+-------------------------------------
 
     -- events:
     -- 7D00 : BC menu
@@ -43,7 +43,6 @@ function onTrigger(player, npc)
     elseif (EventTriggerBCNM(player, npc)) then
         return 1
     end
-
 end
 
 function onEventUpdate(player, csid, option, extras)
