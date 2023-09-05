@@ -278,14 +278,9 @@ void LoginSession::LoadCharacterList()
         std::string strDBPrefix = it->second.szDBPrefix;
         std::string strWorldSqlFmt = "SELECT chars.charid, content_id, accid, charname, nation, pos_zone, "
             "mjob, sjob, mlvl, slvl, race, face, size, head, body, hands, legs, feet, main, sub, goldworldpass "
-            "FROM %schars, %schar_stats, %schar_look "
-            "WHERE %schars.charid = %schar_stats.charid AND %schars.charid = %schar_look.charid "
-            "AND content_id IN %s;";
+            "FROM %schars LEFT JOIN %schar_stats USING (charid) LEFT JOIN %schar_look USING (charid)"
+            "WHERE content_id IN %s;";
         std::string strWorldSqlFinalQuery = FormatString(&strWorldSqlFmt,
-            Database::RealEscapeString(strDBPrefix).c_str(),
-            Database::RealEscapeString(strDBPrefix).c_str(),
-            Database::RealEscapeString(strDBPrefix).c_str(),
-            Database::RealEscapeString(strDBPrefix).c_str(),
             Database::RealEscapeString(strDBPrefix).c_str(),
             Database::RealEscapeString(strDBPrefix).c_str(),
             Database::RealEscapeString(strDBPrefix).c_str(),
