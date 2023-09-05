@@ -49,94 +49,94 @@ local optionToAugment =
 {
     [1] = -- ACP
     {
-        [ 1] = {{augment =  23, power =  9}}, -- Accuracy+10
-        [ 2] = {{augment =  25, power =  9}}, -- Attack+10
-        [ 3] = {{augment =  27, power =  9}}, -- Ranged Accuracy+10
-        [ 4] = {{augment =  29, power =  9}}, -- Ranged Attack+10
-        [ 5] = {{augment =  31, power =  9}}, -- Evasion+10
-        [ 6] = {{augment =  35, power =  3}}, -- Magic Accuracy+4
-        [ 7] = {{augment = 133, power =  3}}, -- "Magic Atk, Bonus"+4
-        [ 8] = {{augment = 143, power =  1}}, -- "Double Attack"+2
-        [ 9] = {{augment =  41, power =  2}}, -- Critical hit rate +3
-        [10] = {{augment =  44, power =  3}}, -- Store TP"+4 "Subtle Blow"+4
-        [11] = {{augment =  39, power =  4}}, -- Enmity+5
-        [12] = {{augment =  40, power =  4}}, -- Enmity-5
-        [13] = {{augment = 140, power =  4}}, -- Enhances "Fast Cast" effect +5
-        [14] = {{augment = 324, power = 14}}, -- "Call Beast" ability delay -15
-        [15] = {{augment = 211, power =  4}}, -- "Snapshot"+5
-        [16] = {{augment = 146, power =  2}}, -- Enhances "Dual Wield" effect +3
-        [17] = {{augment = 320, power =  3}}, -- "Blood Pact" ability delay -4
-        [18] = {{augment = 321, power =  1}}, -- Avatar perpetuation cost -2
-        [19] = {{augment = 325, power =  4}}, -- Quick Draw" ability delay -5
-        [20] = {{augment =  96, power = 14}}, -- Pet: Accuracy+15 Ranged Accuracy+15
-        [21] = {{augment =  97, power = 14}}, -- Pet: Attack+15 Ranged Attack+15
-        [22] = {{augment = 108, power =  6}}, -- Pet: Magic Acc.+7 "Magic Atk. Bonus"+7
-        [23] = {{augment = 109, power =  1}}, -- Pet: "Double Attack"+2 Crit. hit rate +2
+        {{augment =  23, power =  9}}, -- Accuracy+10
+        {{augment =  25, power =  9}}, -- Attack+10
+        {{augment =  27, power =  9}}, -- Ranged Accuracy+10
+        {{augment =  29, power =  9}}, -- Ranged Attack+10
+        {{augment =  31, power =  9}}, -- Evasion+10
+        {{augment =  35, power =  3}}, -- Magic Accuracy+4
+        {{augment = 133, power =  3}}, -- "Magic Atk, Bonus"+4
+        {{augment = 143, power =  1}}, -- "Double Attack"+2
+        {{augment =  41, power =  2}}, -- Critical hit rate +3
+        {{augment =  44, power =  3}}, -- Store TP"+4 "Subtle Blow"+4
+        {{augment =  39, power =  4}}, -- Enmity+5
+        {{augment =  40, power =  4}}, -- Enmity-5
+        {{augment = 140, power =  4}}, -- Enhances "Fast Cast" effect +5
+        {{augment = 324, power = 14}}, -- "Call Beast" ability delay -15
+        {{augment = 211, power =  4}}, -- "Snapshot"+5
+        {{augment = 146, power =  2}}, -- Enhances "Dual Wield" effect +3
+        {{augment = 320, power =  3}}, -- "Blood Pact" ability delay -4
+        {{augment = 321, power =  1}}, -- Avatar perpetuation cost -2
+        {{augment = 325, power =  4}}, -- Quick Draw" ability delay -5
+        {{augment =  96, power = 14}}, -- Pet: Accuracy+15 Ranged Accuracy+15
+        {{augment =  97, power = 14}}, -- Pet: Attack+15 Ranged Attack+15
+        {{augment = 108, power =  6}}, -- Pet: Magic Acc.+7 "Magic Atk. Bonus"+7
+        {{augment = 109, power =  1}}, -- Pet: "Double Attack"+2 Crit. hit rate +2
     },
     [2] = -- AMK
     {
-        [ 1] = {{augment = 512, power = 3}, {augment = 326, power = 14}}, -- STR+4 Weapon Skill Accuracy +15
-        [ 2] = {{augment = 513, power = 3}, {augment = 328, power =  1}}, -- DEX+4 Increases Critical Hit Damage (+2%)
-        [ 3] = {{augment = 514, power = 3}, {augment = 286, power =  4}}, -- VIT+4 Shield Skill +5
-        [ 4] = {{augment = 515, power = 3}, {augment = 327, power =  1}}, -- AGI+4 Increases weapon skill damage (+2%)
-        [ 5] = {{augment = 516, power = 3}, {augment =  35, power =  1}}, -- INT+4 Magic Accuracy+2
-        [ 6] = {{augment = 517, power = 3}, {augment = 329, power =  2}}, -- MND+4 "Cure" potency +3%
-        [ 7] = {{augment = 518, power = 3}, {augment = 331, power =  1}}, -- CHR+4 "Waltz" ability delay -2
-        [ 8] = {{augment = 512, power = 1}, {augment =  49, power =  1}}, -- STR+2 Haste +2%
-        [ 9] = {{augment = 513, power = 1}, {augment =  49, power =  1}}, -- DEX+2 Haste +2%
-        [10] = {{augment = 514, power = 1}, {augment =  49, power =  1}}, -- VIT+2 Haste +2%
-        [11] = {{augment = 515, power = 1}, {augment =  49, power =  1}}, -- AGI+2 Haste +2%
-        [12] = {{augment =  49, power = 2}, {augment = 211, power =  2}}, -- Haste+3% Enhances "Snapshot" effect (+3%)
-        [13] = {{augment =  23, power = 9}, {augment =  25, power =  4}}, -- Accuracy+10 Attack+5
-        [14] = {{augment =  27, power = 9}, {augment =  29, power =  4}}, -- Ranged Accuracy+10 Ranged Attack+5
-        [15] = {{augment =  31, power = 9}, {augment = 142, power =  3}}, -- Evasion+10 Store TP +4
-        [16] = {{augment = 133, power = 1}, {augment =  51, power =  2}}, -- "Magic Attack Bonus"+2 HP recovered while healing +3
-        [17] = {{augment =  35, power = 2}, {augment =  52, power =  2}}, -- Magic Accuracy+3 MP recovered while healing +3
-        [18] = {{augment =  55, power = 1}, {augment =  39, power =  3}}, -- Magic damage taken -2% Enmity+4
-        [19] = {{augment =  57, power = 9}, {augment =  40, power =  3}}, -- Magic critical hit rate +10% Enmity-4
-        [20] = {{augment = 516, power = 1}, {augment = 140, power =  1}}, -- INT+2 Enhances "Fast Cast" effect (+2%)
-        [21] = {{augment = 517, power = 1}, {augment = 140, power =  1}}, -- MND+2 Enhances "Fast Cast" effect (+2%)
-        [22] = {{augment = 518, power = 1}, {augment = 140, power =  1}}, -- CHR+2 Enhances "Fast Cast" effect (+2%)
-        [23] = {{augment = 140, power = 2}, {augment = 320, power =  2}}, -- Enhances "Fast Cast" effect (+3%) "Blood Pact" ability delay -3
-        [24] = {{augment =  23, power = 2}, {augment = 102, power =  2}}, -- Accuracy+3 Pet: Critical Hit Rate +3%
-        [25] = {{augment =  25, power = 2}, {augment = 110, power =  0}}, -- Attack+3 Pet: Adds "Regen" effect
-        [26] = {{augment =  25, power = 2}, {augment = 112, power =  9}}, -- Attack+3 Pet: Damage taken -10%
-        [27] = {{augment =  23, power = 2}, {augment = 111, power =  4}}, -- Accuracy+3 Pet: Haste +5%
+        {{augment =  49, power = 2}, {augment = 211, power =  2}}, -- Haste+3% Enhances "Snapshot" effect (+3%)
+        {{augment = 512, power = 3}, {augment = 326, power = 14}}, -- STR+4 Weapon Skill Accuracy +15
+        {{augment = 513, power = 3}, {augment = 328, power =  1}}, -- DEX+4 Increases Critical Hit Damage (+2%)
+        {{augment = 514, power = 3}, {augment = 286, power =  4}}, -- VIT+4 Shield Skill +5
+        {{augment = 515, power = 3}, {augment = 327, power =  1}}, -- AGI+4 Increases weapon skill damage (+2%)
+        {{augment = 516, power = 3}, {augment =  35, power =  1}}, -- INT+4 Magic Accuracy+2
+        {{augment = 517, power = 3}, {augment = 329, power =  2}}, -- MND+4 "Cure" potency +3%
+        {{augment = 518, power = 3}, {augment = 331, power =  1}}, -- CHR+4 "Waltz" ability delay -2
+        {{augment =  23, power = 9}, {augment =  25, power =  4}}, -- Accuracy+10 Attack+5
+        {{augment =  27, power = 9}, {augment =  29, power =  4}}, -- Ranged Accuracy+10 Ranged Attack+5
+        {{augment =  31, power = 9}, {augment = 142, power =  3}}, -- Evasion+10 Store TP +4
+        {{augment =  35, power = 2}, {augment =  52, power =  2}}, -- Magic Accuracy+3 MP recovered while healing +3
+        {{augment = 133, power = 1}, {augment =  51, power =  2}}, -- "Magic Attack Bonus"+2 HP recovered while healing +3
+        {{augment =  55, power = 1}, {augment =  39, power =  3}}, -- Magic damage taken -2% Enmity+4
+        {{augment =  57, power = 9}, {augment =  40, power =  3}}, -- Magic critical hit rate +10% Enmity-4
+        {{augment = 140, power = 2}, {augment = 320, power =  2}}, -- Enhances "Fast Cast" effect (+3%) "Blood Pact" ability delay -3
+        {{augment = 512, power = 1}, {augment =  49, power =  1}}, -- STR+2 Haste +2%
+        {{augment = 513, power = 1}, {augment =  49, power =  1}}, -- DEX+2 Haste +2%
+        {{augment = 514, power = 1}, {augment =  49, power =  1}}, -- VIT+2 Haste +2%
+        {{augment = 515, power = 1}, {augment =  49, power =  1}}, -- AGI+2 Haste +2%
+        {{augment = 516, power = 1}, {augment = 140, power =  1}}, -- INT+2 Enhances "Fast Cast" effect (+2%)
+        {{augment = 517, power = 1}, {augment = 140, power =  1}}, -- MND+2 Enhances "Fast Cast" effect (+2%)
+        {{augment = 518, power = 1}, {augment = 140, power =  1}}, -- CHR+2 Enhances "Fast Cast" effect (+2%)
+        {{augment =  23, power = 2}, {augment = 111, power =  4}}, -- Accuracy+3 Pet: Haste +5%
+        {{augment =  23, power = 2}, {augment = 102, power =  2}}, -- Accuracy+3 Pet: Critical Hit Rate +3%
+        {{augment =  25, power = 2}, {augment = 110, power =  0}}, -- Attack+3 Pet: Adds "Regen" effect
+        {{augment =  25, power = 2}, {augment = 112, power =  9}}, -- Attack+3 Pet: Damage taken -10%
     },
     [3] = -- ASA
     {
-        [ 1] = {{augment =    1, power = 24}, {augment = 39, power =  3}}, -- HP+25 Enmity+4
-        [ 2] = {{augment =    9, power = 24}, {augment = 40, power =  3}}, -- MP+25 Enmity-4
-        [ 3] = {{augment =   23, power =  6}}, -- Attack+7
-        [ 4] = {{augment =   25, power =  6}}, -- Accuracy+7
-        [ 5] = {{augment =   27, power =  6}}, -- Ranged Accuracy+7
-        [ 6] = {{augment =   29, power =  6}}, -- Ranged Attack+7
-        [ 7] = {{augment =   31, power =  6}}, -- Evasion+7
-        [ 8] = {{augment =   35, power =  3}}, -- Magic Accuracy+4
-        [ 9] = {{augment =  133, power =  3}}, -- "Magic Atk. Bonus" +4
-        [10] = {{augment =   49, power =  2}}, -- Haste +3%
-        [11] = {{augment =  143, power =  1}}, -- "Double Attack" +2%
-        [12] = {{augment =  328, power =  2}}, -- Increases Critical Hit Damage +3%
-        [13] = {{augment =  332, power =  4}}, -- Skillchain damage +5%
-        [14] = {{augment =  333, power =  4}}, -- "Conserve TP"+5
-        [15] = {{augment =   54, power =  3}}, -- Physical damage taken -4%
-        [16] = {{augment =  335, power =  9}}, -- Magic Critical Hit damage +10%
-        [17] = {{augment =  334, power =  9}}, -- Magic Burst damage +10%
-        [18] = {{augment =  194, power =  4}}, -- "Kick Attacks" +5
-        [19] = {{augment =  329, power =  4}}, -- "Cure" potency +5%
-        [20] = {{augment =  336, power =  4}}, -- "Sic" & "Ready" ability delay -5
-        [21] = {{augment =  337, power =  2}}, -- Song Recast Delay -3
-        [22] = {{augment =  338, power =  0}}, -- "Barrage" +1
-        [23] = {{augment =  339, power = 19}}, -- "Elemental Siphon" +20
-        [24] = {{augment =  340, power =  4}}, -- "Phantom Roll" ability delay -5
-        [25] = {{augment =  341, power =  9}}, -- "Repair" potency +10%
-        [26] = {{augment =  342, power =  4}}, -- "Waltz" TP cost -50
-        [27] = {{augment =   96, power =  6}}, -- Pet: Accuracy +7 Ranged Accuracy +7
-        [28] = {{augment =   97, power =  6}}, -- Pet: Attack +7 Ranged Attack +7
-        [29] = {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
-        [30] = {{augment =  100, power =  6}}, -- Pet: Magic Accuracy +7
-        [31] = {{augment =  913, power =  2}}, -- Movement Speed +8%
-        [32] = {{augment =  195, power =  4}}, -- "Subtle Blow"+5
+        {{augment =    1, power = 24}, {augment = 39, power =  3}}, -- HP+25 Enmity+4
+        {{augment =    9, power = 24}, {augment = 40, power =  3}}, -- MP+25 Enmity-4
+        {{augment =   23, power =  6}}, -- Attack+7
+        {{augment =   25, power =  6}}, -- Accuracy+7
+        {{augment =   27, power =  6}}, -- Ranged Accuracy+7
+        {{augment =   29, power =  6}}, -- Ranged Attack+7
+        {{augment =   31, power =  6}}, -- Evasion+7
+        {{augment =   35, power =  3}}, -- Magic Accuracy+4
+        {{augment =  133, power =  3}}, -- "Magic Atk. Bonus" +4
+        {{augment =   49, power =  2}}, -- Haste +3%
+        {{augment =  143, power =  1}}, -- "Double Attack" +2%
+        {{augment =  328, power =  2}}, -- Increases Critical Hit Damage +3%
+        {{augment =  332, power =  4}}, -- Skillchain damage +5%
+        {{augment =  333, power =  4}}, -- "Conserve TP"+5
+        {{augment =   54, power =  3}}, -- Physical damage taken -4%
+        {{augment =  335, power =  9}}, -- Magic Critical Hit damage +10%
+        {{augment =  334, power =  9}}, -- Magic Burst damage +10%
+        {{augment =  194, power =  4}}, -- "Kick Attacks" +5
+        {{augment =  329, power =  4}}, -- "Cure" potency +5%
+        {{augment =  336, power =  4}}, -- "Sic" & "Ready" ability delay -5
+        {{augment =  337, power =  2}}, -- Song Recast Delay -3
+        {{augment =  338, power =  0}}, -- "Barrage" +1
+        {{augment =  339, power = 19}}, -- "Elemental Siphon" +20
+        {{augment =  340, power =  4}}, -- "Phantom Roll" ability delay -5
+        {{augment =  341, power =  9}}, -- "Repair" potency +10%
+        {{augment =  342, power =  4}}, -- "Waltz" TP cost -50
+        {{augment =   96, power =  6}}, -- Pet: Accuracy +7 Ranged Accuracy +7
+        {{augment =   97, power =  6}}, -- Pet: Attack +7 Ranged Attack +7
+        {{augment =  115, power =  7}, {augment = 116, power =  7}}, -- Pet: "Store TP" +8 "Subtle Blow" +8
+        {{augment =  100, power =  6}}, -- Pet: Magic Accuracy +7
+        {{augment =  913, power =  2}}, -- Movement Speed +8%
+        {{augment =  195, power =  4}}, -- "Subtle Blow"+5
     },
 }
 
