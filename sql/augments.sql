@@ -25,99 +25,100 @@ CREATE TABLE `augments` (
 
 -- WARNING: do not comment out augmentId records, zero their modId and values instead.
 -- zero is MOD_NONE and should be fine.
-INSERT INTO `augments` VALUES (1, 0, 2, 1, 0, 0); -- HP+1
-INSERT INTO `augments` VALUES (2, 0, 2, 33, 0, 0); -- HP+33
-INSERT INTO `augments` VALUES (3, 0, 2, 65, 0, 0); -- HP+65
-INSERT INTO `augments` VALUES (4, 0, 2, 97, 0, 0); -- HP+97
-INSERT INTO `augments` VALUES (5, 0, 2, -1, 0, 0); -- HP-1
-INSERT INTO `augments` VALUES (6, 0, 2, -33, 0, 0); -- HP-33
-INSERT INTO `augments` VALUES (7, 0, 2, -65, 0, 0); -- HP-65
-INSERT INTO `augments` VALUES (8, 0, 2, -97, 0, 0); -- HP-97
-INSERT INTO `augments` VALUES (9, 0, 5, 1, 0, 0); -- MP+1
-INSERT INTO `augments` VALUES (10, 0, 5, 33, 0, 0); -- MP+33
-INSERT INTO `augments` VALUES (11, 0, 5, 65, 0, 0); -- MP+65
-INSERT INTO `augments` VALUES (12, 0, 5, 97, 0, 0); -- MP+97
-INSERT INTO `augments` VALUES (13, 0, 5, -1, 0, 0); -- MP-1
-INSERT INTO `augments` VALUES (14, 0, 5, -33, 0, 0); -- MP-33
-INSERT INTO `augments` VALUES (15, 0, 5, -65, 0, 0); -- MP-65
-INSERT INTO `augments` VALUES (16, 0, 5, -97, 0, 0); -- MP-97
-INSERT INTO `augments` VALUES (17, 0, 2, 1, 0, 0); -- HP+1 MP+1
-INSERT INTO `augments` VALUES (17, 0, 5, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (18, 0, 2, 33, 0, 0); -- HP+33 MP+33
-INSERT INTO `augments` VALUES (18, 0, 5, 33, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (19, 0, 2, 1, 0, 0); -- HP+1 MP-1
-INSERT INTO `augments` VALUES (19, 0, 5, -1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (20, 0, 2, 33, 0, 0); -- HP+33 MP-33
-INSERT INTO `augments` VALUES (20, 0, 5, -33, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (21, 0, 2, -1, 0, 0); -- HP-1 MP+1
-INSERT INTO `augments` VALUES (21, 0, 5, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (22, 0, 2, -33, 0, 0); -- HP-33 MP+33
-INSERT INTO `augments` VALUES (22, 0, 5, 33, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (23, 0, 25, 1, 0, 0); -- Accuracy+1
-INSERT INTO `augments` VALUES (24, 0, 25, -1, 0, 0); -- Accuracy-1
-INSERT INTO `augments` VALUES (25, 0, 23, 1, 0, 0); -- Attack+1
-INSERT INTO `augments` VALUES (26, 0, 23, -1, 0, 0); -- Attack-1
-INSERT INTO `augments` VALUES (27, 0, 26, 1, 0, 0); -- Rng.Acc.+1
-INSERT INTO `augments` VALUES (28, 0, 26, -1, 0, 0); -- Rng.Acc.-1
-INSERT INTO `augments` VALUES (29, 0, 24, 1, 0, 0); -- Rng.Atk.+1
-INSERT INTO `augments` VALUES (30, 0, 24, -1, 0, 0); -- Rng.Atk.-1
-INSERT INTO `augments` VALUES (31, 0, 68, 1, 0, 0); -- Evasion+1
-INSERT INTO `augments` VALUES (32, 0, 68, -1, 0, 0); -- Evasion-1
-INSERT INTO `augments` VALUES (33, 0, 1, 1, 0, 0); -- DEF+1
-INSERT INTO `augments` VALUES (34, 0, 1, -1, 0, 0); -- DEF-1
-INSERT INTO `augments` VALUES (35, 0, 30, 1, 0, 0); -- Mag.Acc.+1
-INSERT INTO `augments` VALUES (36, 0, 30, -1, 0, 0); -- Mag.Acc.-1
-INSERT INTO `augments` VALUES (37, 0, 31, 1, 0, 0); -- Mag.Evasion+1
-INSERT INTO `augments` VALUES (38, 0, 31, -1, 0, 0); -- Mag.Evasion-1
-INSERT INTO `augments` VALUES (39, 0, 27, 1, 0, 0); -- Enmity+1
-INSERT INTO `augments` VALUES (40, 0, 27, -1, 0, 0); -- Enmity-1
-INSERT INTO `augments` VALUES (41, 0, 165, 1, 0, 0); -- Crit.hit rate+1
-INSERT INTO `augments` VALUES (42, 0, 166, -1, 0, 0); -- Enemy crit. hit rate-1
-INSERT INTO `augments` VALUES (43, 0, 391, 1, 0, 0); -- Charm+1 Could not determine retail AUGMENT effect. Duration? Chance to land charm? Just set as chance for now.
-INSERT INTO `augments` VALUES (44, 0, 73, 1, 0, 0); -- Store TP+1 Subtle Blow+1
-INSERT INTO `augments` VALUES (44, 0, 289, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (45, 0, 366, 1, 0, 0); -- DMG:+1 (melee, not ranged...Mainhand only?)
-INSERT INTO `augments` VALUES (46, 0, 366, -1, 0, 0); -- DMG:-1 (melee, not ranged...Mainhand only?)
-INSERT INTO `augments` VALUES (47, 0, 380, 1, 0, 0); -- Delay:+1% (melee, not ranged)
-INSERT INTO `augments` VALUES (48, 0, 380, -1, 0, 0); -- Delay:-1% (melee, not ranged)
-INSERT INTO `augments` VALUES (49, 0, 384, 100, 0, 0); -- Haste+1
-INSERT INTO `augments` VALUES (50, 0, 384, -100, 0, 0); -- Slow+1
-INSERT INTO `augments` VALUES (51, 0, 72, 1, 0, 0); -- HP recovered while healing+1
-INSERT INTO `augments` VALUES (52, 0, 71, 1, 0, 0); -- MP recovered while healing+1
-INSERT INTO `augments` VALUES (53, 0, 168, -1, 0, 0); -- Spell interruption rate down 1%
-INSERT INTO `augments` VALUES (54, 0, 161, -1, 0, 0); -- Phys. dmg. taken -1%
-INSERT INTO `augments` VALUES (55, 0, 163, -1, 0, 0); -- Magic dmg. taken -1%
-INSERT INTO `augments` VALUES (56, 0, 162, -1, 0, 0); -- Breath dmg. taken -1%
-INSERT INTO `augments` VALUES (57, 0, 541, 1, 0, 0); -- Magic crit. hit rate+1
-INSERT INTO `augments` VALUES (58, 0, 29, -1, 0, 0); -- Mag.Def.Bns.-1
-INSERT INTO `augments` VALUES (59, 0, 0, 0, 0, 0); -- Latent effect: Regain+1 (Do via Script: triggered with your current weapon drawn for 1 TP/tick.)
-INSERT INTO `augments` VALUES (60, 0, 0, 0, 0, 0); -- Latent effect: Refresh+1 (Do via Script: triggered with your current weapon not drawn for 1 MP/tick. Refresh is not present while resting(/heal), chocobo or /sit.)
-INSERT INTO `augments` VALUES (61, 0, 0, 0, 0, 0); -- Occ. inc. resist to stat ailments+1
-INSERT INTO `augments` VALUES (62, 0, 25, 33, 0, 0); -- Accuracy+33
-INSERT INTO `augments` VALUES (63, 0, 26, 33, 0, 0); -- Rng.Accuracy+33
-INSERT INTO `augments` VALUES (64, 0, 30, 33, 0, 0); -- Mag. Acc.+33
-INSERT INTO `augments` VALUES (65, 0, 23, 33, 0, 0); -- Attack+33
-INSERT INTO `augments` VALUES (66, 0, 24, 33, 0, 0); -- Rng.Attack+33
-INSERT INTO `augments` VALUES (67, 0, 452, 1, 0, 0); -- All songs+1
-INSERT INTO `augments` VALUES (68, 0, 25, 1, 0, 0); -- Accuracy+1 Attack+1
-INSERT INTO `augments` VALUES (68, 0, 23, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (69, 0, 26, 1, 0, 0); -- Rng.Acc.+1 Rng.Atk.+1
-INSERT INTO `augments` VALUES (69, 0, 24, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (70, 0, 30, 33, 0, 0); -- Mag. Acc.+33 Mag.Atk.Bns+33
-INSERT INTO `augments` VALUES (70, 0, 28, 33, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (71, 0, 160, -1, 0, 0); -- Damage Taken -1%
-INSERT INTO `augments` VALUES (72, 0, 0, 0, 0, 0); -- 72 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (73, 0, 0, 0, 0, 0); -- 73 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (74, 0, 0, 0, 0, 0); -- Cap. Point +1%
-INSERT INTO `augments` VALUES (75, 0, 0, 0, 0, 0); -- Cap. Point +33%
-INSERT INTO `augments` VALUES (76, 0, 0, 0, 0, 0); -- DMG+33 Unsure if main hand or off hand so leaving values blank for now, goes up in increments of 1 after the initial 33.
-INSERT INTO `augments` VALUES (77, 0, 0, 0, 0, 0); -- Delay -33% Unsure if main hand or off hand so leaving values blank for now, goes up in increments of 1 after the initial 33.
-INSERT INTO `augments` VALUES (78, 0, 0, 0, 0, 0); -- HP+2 (count by 2)
-INSERT INTO `augments` VALUES (79, 0, 0, 0, 0, 0); -- HP+3 (count by 3)
-INSERT INTO `augments` VALUES (80, 0, 0, 0, 0, 0); -- Mag. Acc+1/Mag. Dmg+1
-INSERT INTO `augments` VALUES (81, 0, 0, 0, 0, 0); -- Eva+1/Mag Eva$+d (corrupted)
-INSERT INTO `augments` VALUES (82, 0, 0, 0, 0, 0); -- MP+2 (count by 2)
-INSERT INTO `augments` VALUES (83, 0, 0, 0, 0, 0); -- MP+3 (count by 3)
+INSERT INTO `augments` VALUES (1, 0, 2, 1, 0, 0);        -- HP+1
+INSERT INTO `augments` VALUES (2, 0, 2, 33, 0, 0);       -- HP+33
+INSERT INTO `augments` VALUES (3, 0, 2, 65, 0, 0);       -- HP+65
+INSERT INTO `augments` VALUES (4, 0, 2, 97, 0, 0);       -- HP+97
+INSERT INTO `augments` VALUES (5, 0, 2, -1, 0, 0);       -- HP-1
+INSERT INTO `augments` VALUES (6, 0, 2, -33, 0, 0);      -- HP-33
+INSERT INTO `augments` VALUES (7, 0, 2, -65, 0, 0);      -- HP-65
+INSERT INTO `augments` VALUES (8, 0, 2, -97, 0, 0);      -- HP-97
+INSERT INTO `augments` VALUES (9, 0, 5, 1, 0, 0);        -- MP+1
+INSERT INTO `augments` VALUES (10, 0, 5, 33, 0, 0);      -- MP+33
+INSERT INTO `augments` VALUES (11, 0, 5, 65, 0, 0);      -- MP+65
+INSERT INTO `augments` VALUES (12, 0, 5, 97, 0, 0);      -- MP+97
+INSERT INTO `augments` VALUES (13, 0, 5, -1, 0, 0);      -- MP-1
+INSERT INTO `augments` VALUES (14, 0, 5, -33, 0, 0);     -- MP-33
+INSERT INTO `augments` VALUES (15, 0, 5, -65, 0, 0);     -- MP-65
+INSERT INTO `augments` VALUES (16, 0, 5, -97, 0, 0);     -- MP-97
+INSERT INTO `augments` VALUES (17, 0, 2, 1, 0, 0);       -- HP+1 MP+1
+INSERT INTO `augments` VALUES (17, 0, 5, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES (18, 0, 2, 33, 0, 0);      -- HP+33 MP+33
+INSERT INTO `augments` VALUES (18, 0, 5, 33, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES (19, 0, 2, 1, 0, 0);       -- HP+1 MP-1
+INSERT INTO `augments` VALUES (19, 0, 5, -1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES (20, 0, 2, 33, 0, 0);      -- HP+33 MP-33
+INSERT INTO `augments` VALUES (20, 0, 5, -33, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES (21, 0, 2, -1, 0, 0);      -- HP-1 MP+1
+INSERT INTO `augments` VALUES (21, 0, 5, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES (22, 0, 2, -33, 0, 0);     -- HP-33 MP+33
+INSERT INTO `augments` VALUES (22, 0, 5, 33, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES (23, 0, 25, 1, 0, 0);      -- Accuracy+1
+INSERT INTO `augments` VALUES (24, 0, 25, -1, 0, 0);     -- Accuracy-1
+INSERT INTO `augments` VALUES (25, 0, 23, 1, 0, 0);      -- Attack+1
+INSERT INTO `augments` VALUES (26, 0, 23, -1, 0, 0);     -- Attack-1
+INSERT INTO `augments` VALUES (27, 0, 26, 1, 0, 0);      -- Rng.Acc.+1
+INSERT INTO `augments` VALUES (28, 0, 26, -1, 0, 0);     -- Rng.Acc.-1
+INSERT INTO `augments` VALUES (29, 0, 24, 1, 0, 0);      -- Rng.Atk.+1
+INSERT INTO `augments` VALUES (30, 0, 24, -1, 0, 0);     -- Rng.Atk.-1
+INSERT INTO `augments` VALUES (31, 0, 68, 1, 0, 0);      -- Evasion+1
+INSERT INTO `augments` VALUES (32, 0, 68, -1, 0, 0);     -- Evasion-1
+INSERT INTO `augments` VALUES (33, 0, 1, 1, 0, 0);       -- DEF+1
+INSERT INTO `augments` VALUES (34, 0, 1, -1, 0, 0);      -- DEF-1
+INSERT INTO `augments` VALUES (35, 0, 30, 1, 0, 0);      -- Mag.Acc.+1
+INSERT INTO `augments` VALUES (36, 0, 30, -1, 0, 0);     -- Mag.Acc.-1
+INSERT INTO `augments` VALUES (37, 0, 31, 1, 0, 0);      -- Mag.Evasion+1
+INSERT INTO `augments` VALUES (38, 0, 31, -1, 0, 0);     -- Mag.Evasion-1
+INSERT INTO `augments` VALUES (39, 0, 27, 1, 0, 0);      -- Enmity+1
+INSERT INTO `augments` VALUES (40, 0, 27, -1, 0, 0);     -- Enmity-1
+INSERT INTO `augments` VALUES (41, 0, 165, 1, 0, 0);     -- Crit.hit rate+1%
+INSERT INTO `augments` VALUES (42, 0, 166, -1, 0, 0);    -- Enemy crit. hit rate-1%
+INSERT INTO `augments` VALUES (43, 0, 391, 1, 0, 0);     -- Charm+1 Could not determine retail AUGMENT effect. Duration? Chance to land charm? Just set as chance for now.
+INSERT INTO `augments` VALUES (44, 0, 73, 1, 0, 0);      -- Store TP+1 Subtle Blow+1
+INSERT INTO `augments` VALUES (44, 0, 289, 1, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES (45, 0, 366, 1, 0, 0);     -- DMG:+(X+1), Increases damage rating of this weapon (Maximum X=31 for DMG+32) (Retail: melee,not ranged...Mainhand only?) Item displays a value 1 larger than stored in item
+INSERT INTO `augments` VALUES (46, 0, 366, -1, 0, 0);    -- DMG:-(X+1), Decreases damage rating of this weapon (Maximum X=31 for DMG-32) (Retail: melee,not ranged...Mainhand only?) Item displays a (negative) value 1 larger than stored in item
+INSERT INTO `augments` VALUES (47, 0, 380, 1, 0, 0);     -- Delay:+1% (melee,not ranged)
+INSERT INTO `augments` VALUES (48, 0, 380, -1, 0, 0);    -- Delay:-1% (melee,not ranged)
+INSERT INTO `augments` VALUES (49, 0, 384, 100, 0, 0);   -- Haste+1
+INSERT INTO `augments` VALUES (50, 0, 384, -100, 0, 0);  -- Slow+1
+INSERT INTO `augments` VALUES (51, 0, 72, 1, 0, 0);      -- HP recovered while healing+1
+INSERT INTO `augments` VALUES (52, 0, 71, 1, 0, 0);      -- MP recovered while healing+1
+INSERT INTO `augments` VALUES (53, 0, 168, -1, 0, 0);    -- Spell interruption rate down 1%
+INSERT INTO `augments` VALUES (54, 0, 161, -1, 0, 0);    -- Phys. dmg. taken -1%
+INSERT INTO `augments` VALUES (55, 0, 163, -1, 0, 0);    -- Magic dmg. taken -1%
+INSERT INTO `augments` VALUES (56, 0, 162, -1, 0, 0);    -- Breath dmg. taken -1%
+INSERT INTO `augments` VALUES (57, 0, 562, 1, 0, 0);     -- Magic crit. hit rate+1%
+INSERT INTO `augments` VALUES (58, 0, 29, -1, 0, 0);     -- Mag.Def.Bns.-1
+INSERT INTO `augments` VALUES (59, 0, 0, 0, 0, 0);       -- Latent effect: Regain+10 (Do via Latent: triggered with your current weapon drawn for 10 TP/tick.)
+INSERT INTO `augments` VALUES (60, 0, 0, 0, 0, 0);       -- Latent effect: Refresh+1 (Do via Latent: triggered with your current weapon not drawn for 1 MP/tick. Refresh is not present while resting(/heal),chocobo or /sit.)
+INSERT INTO `augments` VALUES (61, 0, 958, 1, 0, 0);     -- Occ. inc. resist to stat ailments+1
+INSERT INTO `augments` VALUES (62, 0, 25, 33, 0, 0);     -- Accuracy +33
+INSERT INTO `augments` VALUES (63, 0, 26, 33, 0, 0);     -- Rng.Accuracy +33
+INSERT INTO `augments` VALUES (64, 0, 30, 33, 0, 0);     -- Mag. Acc. +33
+INSERT INTO `augments` VALUES (65, 0, 23, 33, 0, 0);     -- Attack +33
+INSERT INTO `augments` VALUES (66, 0, 24, 33, 0, 0);     -- Rng.Attack +33
+INSERT INTO `augments` VALUES (67, 0, 452, 1, 0, 0);     -- All songs +1
+INSERT INTO `augments` VALUES (68, 0, 25, 1, 0, 0);      -- Accuracy +1 Attack +1
+INSERT INTO `augments` VALUES (68, 0, 23, 1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES (69, 0, 26, 1, 0, 0);      -- Rng.Acc. +1 Rng.Atk. +1
+INSERT INTO `augments` VALUES (69, 0, 24, 1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES (70, 0, 30, 33, 0, 0);     -- Mag. Acc. +33 Mag.Atk.Bns +33
+INSERT INTO `augments` VALUES (70, 0, 28, 33, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES (71, 0, 160, -1, 0, 0);    -- Damage Taken -1%
+INSERT INTO `augments` VALUES (72, 0, 0, 1, 0, 0);       -- Exp. Point +1%
+INSERT INTO `augments` VALUES (73, 0, 0, 33, 0, 0);      -- Exp. Point +33%
+INSERT INTO `augments` VALUES (74, 0, 915, 1, 0, 0);     -- Cap. Point +1%
+INSERT INTO `augments` VALUES (75, 0, 915, 33, 0, 0);    -- Cap. Point +33%
+INSERT INTO `augments` VALUES (76, 0, 0, 0, 0, 0);       -- DMG +33 Unsure if main hand or off hand so leaving values blank for now,goes up in increments of 1 after the initial 33.
+INSERT INTO `augments` VALUES (77, 0, 0, 0, 0, 0);       -- Delay -33% Unsure if main hand or off hand so leaving values blank for now,goes up in increments of 1 after the initial 33.
+INSERT INTO `augments` VALUES (78, 0, 2, 2, 0, 0);       -- HP +2 (count by 2)
+INSERT INTO `augments` VALUES (79, 0, 2, 3, 0, 0);       -- HP +3 (count by 3)
+INSERT INTO `augments` VALUES (80, 0, 30, 1, 0, 0);      -- Mag. Acc. +1/Mag. Dmg. +1
+INSERT INTO `augments` VALUES (80, 0, 311, 1, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES (81, 0, 0, 0, 0, 0);       -- Eva +1/Mag. Eva + d (corrupted)
+INSERT INTO `augments` VALUES (82, 0, 5, 2, 0, 0);       -- MP +2 (count by 2)
+INSERT INTO `augments` VALUES (83, 0, 5, 3, 0, 0);       -- MP +3 (count by 3)
 
 -- 84 to 95 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (84, 0, 0, 0, 0, 0);
@@ -134,78 +135,78 @@ INSERT INTO `augments` VALUES (94, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (95, 0, 0, 0, 0, 0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (96, 0, 25, 1, 1, 0); -- Pet: Accuracy+1 Rng.Acc+1
-INSERT INTO `augments` VALUES (96, 0, 26, 1, 1, 0); -- Cont.
-INSERT INTO `augments` VALUES (97, 0, 23, 1, 1, 0); -- Pet: Attack+1 Rng.Atk.+1
-INSERT INTO `augments` VALUES (97, 0, 24, 1, 1, 0); -- Cont.
-INSERT INTO `augments` VALUES (98, 0, 68, 1, 1, 0); -- Pet: Evasion+1
-INSERT INTO `augments` VALUES (99, 0, 1, 1, 1, 0); -- Pet: DEF+1
-INSERT INTO `augments` VALUES (100, 0, 30, 1, 1, 0); -- Pet: Mag.Acc.+1
-INSERT INTO `augments` VALUES (101, 0, 28, 1, 1, 0); -- Pet: Mag.Atk.Bns.+1
-INSERT INTO `augments` VALUES (102, 0, 165, 1, 1, 0); -- Pet: Crit.hit rate+1
-INSERT INTO `augments` VALUES (103, 0, 166, 1, 1, 0); -- Pet: Enemy crit. hit rate -1
-INSERT INTO `augments` VALUES (104, 0, 27, 1, 1, 0); -- Pet: Enmity+1
-INSERT INTO `augments` VALUES (105, 0, 27, -1, 1, 0); -- Pet: Enmity-1
-INSERT INTO `augments` VALUES (106, 0, 25, 1, 1, 0); -- Pet: Accuracy+1 Rng.Acc.+1
-INSERT INTO `augments` VALUES (106, 0, 26, 1, 1, 0); -- Cont.
-INSERT INTO `augments` VALUES (107, 0, 23, 1, 1, 0); -- Pet: Attack+1 Rng.Atk.+1
-INSERT INTO `augments` VALUES (107, 0, 24, 1, 1, 0); -- Cont.
-INSERT INTO `augments` VALUES (108, 0, 30, 1, 1, 0); -- Pet: Mag.Acc.+1 Mag.Atk.Bns.+1
-INSERT INTO `augments` VALUES (108, 0, 28, 1, 1, 0); -- Cont.
-INSERT INTO `augments` VALUES (109, 0, 288, 1, 1, 0); -- Pet: Dbl.Atk.+1 Crit.hit rate+1
-INSERT INTO `augments` VALUES (109, 0, 165, 1, 1, 0); -- Cont.
-INSERT INTO `augments` VALUES (110, 0, 370, 1, 1, 0); -- Pet: Regen+1
-INSERT INTO `augments` VALUES (111, 0, 384, 100, 1, 0); -- Pet: Haste+1
-INSERT INTO `augments` VALUES (112, 0, 160, -1, 1, 0); -- Pet: Damage taken -1%
-INSERT INTO `augments` VALUES (113, 0, 26, 1, 1, 0); -- Pet: Rng.Acc.+1
-INSERT INTO `augments` VALUES (114, 0, 24, 1, 1, 0); -- Pet: Rng.Atk.+1
-INSERT INTO `augments` VALUES (115, 0, 73, 1, 1, 0); -- Pet: Store TP+1
-INSERT INTO `augments` VALUES (116, 0, 289, 1, 1, 0); -- Pet: Subtle Blow+1
-INSERT INTO `augments` VALUES (117, 0, 31, 1, 1, 0); -- Pet: Mag. Evasion+1
-INSERT INTO `augments` VALUES (118, 0, 161, -1, 1, 0); -- Pet: Phys. dmg. taken -1%
-INSERT INTO `augments` VALUES (119, 0, 29, 1, 1, 0); -- Pet: Mag.Def.Bns.+1
-INSERT INTO `augments` VALUES (120, 0, 28, 1, 1, 1); -- Avatar: Mag.Atk.Bns.+1
-INSERT INTO `augments` VALUES (121, 0, 0, 0, 1, 0); -- Pet: Breath +1
-INSERT INTO `augments` VALUES (122, 0, 345, 20, 1, 0); -- Pet: TP Bonus +20
-INSERT INTO `augments` VALUES (123, 0, 288, 1, 1, 0); -- Pet: Dbl.Att.+1
-INSERT INTO `augments` VALUES (124, 0, 23, 1, 1, 0); -- Pet: Acc+1/R.Acc+1/Atk.+1/R.Atk.+1
-INSERT INTO `augments` VALUES (124, 0, 24, 1, 1, 0); -- Pet: Acc+1/R.Acc+1/Atk.+1/R.Atk.+1
-INSERT INTO `augments` VALUES (124, 0, 25, 1, 1, 0); -- Pet: Acc+1/R.Acc+1/Atk.+1/R.Atk.+1
-INSERT INTO `augments` VALUES (124, 0, 26, 1, 1, 0); -- Pet: Acc+1/R.Acc+1/Atk.+1/R.Atk.+1
-INSERT INTO `augments` VALUES (125, 0, 30, 1, 1, 0); -- Pet: Mag.Acc.+1/Mag.Dmg.+1
-INSERT INTO `augments` VALUES (125, 0, 311, 1, 1, 0); -- Pet: Mag.Acc.+1/Mag.Dmg.+1
-INSERT INTO `augments` VALUES (126, 0, 311, 1, 1, 0); -- Pet: Magic Damage +1
-INSERT INTO `augments` VALUES (127, 0, 163, -1, 1, 0); -- Pet: Magic Damage Taken -1%
-INSERT INTO `augments` VALUES (128, 0, 0, 0, 0, 0); -- 128 doesnt seem to be a valid Augment, incomplete or garbled text displays
-INSERT INTO `augments` VALUES (129, 0, 25, 1, 0, 0); -- Accuracy+1 Rng.Acc.+1
-INSERT INTO `augments` VALUES (129, 0, 26, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (130, 0, 23, 1, 0, 0); -- Attack+1 Rng.Atk.+1
-INSERT INTO `augments` VALUES (130, 0, 24, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (131, 0, 30, 1, 0, 0); -- Mag. Acc.+1 Mag.Atk.Bns+1
-INSERT INTO `augments` VALUES (131, 0, 28, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (132, 0, 288, 1, 0, 0); -- Dbl.Atk.+1 Crit.hit rate+1
-INSERT INTO `augments` VALUES (132, 0, 165, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (133, 0, 28, 1, 0, 0); -- Mag.Atk.Bns.+1
-INSERT INTO `augments` VALUES (134, 0, 29, 1, 0, 0); -- Mag.Def.Bns.+1
-INSERT INTO `augments` VALUES (135, 0, 0, 0, 0, 0); -- 135 doesnt seem to be a valid Augment, incomplete or garbled text displays
-INSERT INTO `augments` VALUES (136, 0, 0, 0, 0, 0); -- 136 doesnt seem to be a valid Augment, incomplete or garbled text displays
-INSERT INTO `augments` VALUES (137, 0, 370, 1, 0, 0); -- Regen+1
-INSERT INTO `augments` VALUES (138, 0, 369, 1, 0, 0); -- Refresh+1
-INSERT INTO `augments` VALUES (139, 0, 359, 1, 0, 0); -- Rapid Shot+1
-INSERT INTO `augments` VALUES (140, 0, 170, 1, 0, 0); -- Fast Cast+1
-INSERT INTO `augments` VALUES (141, 0, 296, 1, 0, 0); -- Conserve MP+1
-INSERT INTO `augments` VALUES (142, 0, 73, 1, 0, 0); -- Store TP+1
-INSERT INTO `augments` VALUES (143, 0, 288, 1, 0, 0); -- Dbl.Atk.+1
-INSERT INTO `augments` VALUES (144, 0, 302, 1, 0, 0); -- Triple Atk.+1
-INSERT INTO `augments` VALUES (145, 0, 291, 1, 0, 0); -- Counter+1
-INSERT INTO `augments` VALUES (146, 0, 259, 1, 0, 0); -- Dual Wield+1
-INSERT INTO `augments` VALUES (147, 0, 303, 1, 0, 0); -- Treasure Hunter+1
-INSERT INTO `augments` VALUES (148, 0, 0, 0, 0, 0); -- Gilfinder+1
-INSERT INTO `augments` VALUES (149, 0, 0, 0, 0, 0); -- 149 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (150, 0, 0, 0, 0, 0); -- 150 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (151, 0, 173, 1, 0, 0); -- Martial Arts+1
-INSERT INTO `augments` VALUES (152, 0, 0, 0, 0, 0); -- 152 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (153, 0, 485, 1, 0, 0); -- Shield Mastery+1 (tested in retail, this is correct)
+INSERT INTO `augments` VALUES (96, 0, 25, 1, 1, 0);        -- Pet: Accuracy+1 Rng.Acc+1
+INSERT INTO `augments` VALUES (96, 0, 26, 1, 1, 0);        -- Cont.
+INSERT INTO `augments` VALUES (97, 0, 23, 1, 1, 0);        -- Pet: Attack+1 Rng.Atk.+1
+INSERT INTO `augments` VALUES (97, 0, 24, 1, 1, 0);        -- Cont.
+INSERT INTO `augments` VALUES (98, 0, 68, 1, 1, 0);        -- Pet: Evasion+1
+INSERT INTO `augments` VALUES (99, 0, 1, 1, 1, 0);         -- Pet: DEF+1
+INSERT INTO `augments` VALUES (100, 0, 30, 1, 1, 0);       -- Pet: Mag.Acc.+1
+INSERT INTO `augments` VALUES (101, 0, 28, 1, 1, 0);       -- Pet: Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES (102, 0, 165, 1, 1, 0);      -- Pet: Crit.hit rate+1%
+INSERT INTO `augments` VALUES (103, 0, 166, -1, 1, 0);     -- Pet: Enemy crit. hit rate -1%
+INSERT INTO `augments` VALUES (104, 0, 27, 1, 1, 0);       -- Pet: Enmity+1
+INSERT INTO `augments` VALUES (105, 0, 27, -1, 1, 0);      -- Pet: Enmity-1
+INSERT INTO `augments` VALUES (106, 0, 25, 1, 1, 0);       -- Pet: Accuracy+1 Rng.Acc.+1
+INSERT INTO `augments` VALUES (106, 0, 26, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES (107, 0, 23, 1, 1, 0);       -- Pet: Attack+1 Rng.Atk.+1
+INSERT INTO `augments` VALUES (107, 0, 24, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES (108, 0, 30, 1, 1, 0);       -- Pet: Mag.Acc.+1 Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES (108, 0, 28, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES (109, 0, 288, 1, 1, 0);      -- Pet: Dbl.Atk.+1% Crit.hit rate+1
+INSERT INTO `augments` VALUES (109, 0, 165, 1, 1, 0);      -- Cont.
+INSERT INTO `augments` VALUES (110, 0, 370, 1, 1, 0);      -- Pet: Regen+1
+INSERT INTO `augments` VALUES (111, 0, 384, 100, 1, 0);    -- Pet: Haste+1
+INSERT INTO `augments` VALUES (112, 0, 160, -1, 1, 0);   -- Pet: Damage taken -1%
+INSERT INTO `augments` VALUES (113, 0, 26, 1, 1, 0);       -- Pet: Rng.Acc.+1
+INSERT INTO `augments` VALUES (114, 0, 24, 1, 1, 0);       -- Pet: Rng.Atk.+1
+INSERT INTO `augments` VALUES (115, 0, 73, 1, 1, 0);       -- Pet: Store TP+1
+INSERT INTO `augments` VALUES (116, 0, 289, 1, 1, 0);      -- Pet: Subtle Blow+1
+INSERT INTO `augments` VALUES (117, 0, 31, 1, 1, 0);       -- Pet: Mag. Evasion+1
+INSERT INTO `augments` VALUES (118, 0, 161, -1, 1, 0);   -- Pet: Phys. dmg. taken -1%
+INSERT INTO `augments` VALUES (119, 0, 29, 1, 1, 0);       -- Pet: Mag.Def.Bns.+1
+INSERT INTO `augments` VALUES (120, 0, 28, 1, 1, 1);       -- Avatar: Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES (121, 0, 0, 0, 1, 0);        -- Pet: Breath +1
+INSERT INTO `augments` VALUES (122, 0, 345, 20, 1, 0);     -- Pet: TP Bonus +20
+INSERT INTO `augments` VALUES (123, 0, 288, 1, 1, 0);      -- Pet: Dbl.Att.+1%
+INSERT INTO `augments` VALUES (124, 0, 23, 1, 1, 0);       -- Pet: Acc+1 R.Acc+1 Atk.+1 R.Atk.+1
+INSERT INTO `augments` VALUES (124, 0, 24, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES (124, 0, 25, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES (124, 0, 26, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES (125, 0, 30, 1, 1, 0);       -- Pet: Mag.Acc.+1 Mag.Dmg.+1
+INSERT INTO `augments` VALUES (125, 0, 311, 1, 1, 0);      -- Cont.
+INSERT INTO `augments` VALUES (126, 0, 311, 1, 1, 0);      -- Pet: Magic Damage +1
+INSERT INTO `augments` VALUES (127, 0, 163, -1, 1, 0);   -- Pet: Magic Damage Taken -1%
+INSERT INTO `augments` VALUES (128, 0, 0, 0, 0, 0);        -- 128 doesnt seem to be a valid Augment,incomplete or garbled text displays
+INSERT INTO `augments` VALUES (129, 0, 25, 1, 0, 0);       -- Accuracy+1 Rng.Acc.+1
+INSERT INTO `augments` VALUES (129, 0, 26, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES (130, 0, 23, 1, 0, 0);       -- Attack+1 Rng.Atk.+1
+INSERT INTO `augments` VALUES (130, 0, 24, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES (131, 0, 30, 1, 0, 0);       -- Mag. Acc.+1 Mag.Atk.Bns+1
+INSERT INTO `augments` VALUES (131, 0, 28, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES (132, 0, 288, 1, 0, 0);      -- Dbl.Atk.+1% Crit.hit rate+1%
+INSERT INTO `augments` VALUES (132, 0, 165, 1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES (133, 0, 28, 1, 0, 0);       -- Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES (134, 0, 29, 1, 0, 0);       -- Mag.Def.Bns.+1
+INSERT INTO `augments` VALUES (135, 0, 0, 0, 0, 0);        -- 135 doesnt seem to be a valid Augment,incomplete or garbled text displays
+INSERT INTO `augments` VALUES (136, 0, 0, 0, 0, 0);        -- 136 doesnt seem to be a valid Augment,incomplete or garbled text displays
+INSERT INTO `augments` VALUES (137, 0, 370, 1, 0, 0);      -- Regen+1
+INSERT INTO `augments` VALUES (138, 0, 369, 1, 0, 0);      -- Refresh+1
+INSERT INTO `augments` VALUES (139, 0, 359, 1, 0, 0);      -- Rapid Shot+1
+INSERT INTO `augments` VALUES (140, 0, 170, 1, 0, 0);      -- Fast Cast+1%
+INSERT INTO `augments` VALUES (141, 0, 296, 1, 0, 0);      -- Conserve MP+1
+INSERT INTO `augments` VALUES (142, 0, 73, 1, 0, 0);       -- Store TP+1
+INSERT INTO `augments` VALUES (143, 0, 288, 1, 0, 0);      -- Dbl.Atk.+1%
+INSERT INTO `augments` VALUES (144, 0, 302, 1, 0, 0);      -- Triple Atk.+1%
+INSERT INTO `augments` VALUES (145, 0, 291, 1, 0, 0);      -- Counter+1
+INSERT INTO `augments` VALUES (146, 0, 259, 1, 0, 0);      -- Dual Wield+1
+INSERT INTO `augments` VALUES (147, 0, 303, 1, 0, 0);      -- Treasure Hunter+1
+INSERT INTO `augments` VALUES (148, 0, 897, 1, 0, 0);      -- Gilfinder+1
+INSERT INTO `augments` VALUES (149, 0, 0, 0, 0, 0);        -- 149 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (150, 0, 0, 0, 0, 0);        -- 150 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (151, 0, 173, 1, 0, 0);      -- Martial Arts+1
+INSERT INTO `augments` VALUES (152, 0, 0, 0, 0, 0);        -- 152 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (153, 0, 485, 1, 0, 0);      -- Shield Mastery+1 (tested in retail,this is correct)
 
 -- 154 to 175 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (154, 0, 0, 0, 0, 0);
@@ -232,29 +233,29 @@ INSERT INTO `augments` VALUES (174, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (175, 0, 0, 0, 0, 0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (176, 0, 240, 1, 0, 0); -- Resist Sleep+1
-INSERT INTO `augments` VALUES (177, 0, 241, 1, 0, 0); -- Resist Poison+1
-INSERT INTO `augments` VALUES (178, 0, 242, 1, 0, 0); -- Resist Paralyze+1
-INSERT INTO `augments` VALUES (179, 0, 243, 1, 0, 0); -- Resist Blind+1
-INSERT INTO `augments` VALUES (180, 0, 244, 1, 0, 0); -- Resist Silence+1
-INSERT INTO `augments` VALUES (181, 0, 245, 1, 0, 0); -- Resist Petrify+1
-INSERT INTO `augments` VALUES (182, 0, 246, 1, 0, 0); -- Resist Virus+1
-INSERT INTO `augments` VALUES (183, 0, 247, 1, 0, 0); -- Resist Curse+1
-INSERT INTO `augments` VALUES (184, 0, 248, 1, 0, 0); -- Resist Stun+1
-INSERT INTO `augments` VALUES (185, 0, 249, 1, 0, 0); -- Resist Bind+1
-INSERT INTO `augments` VALUES (186, 0, 250, 1, 0, 0); -- Resist Gravity+1
-INSERT INTO `augments` VALUES (187, 0, 251, 1, 0, 0); -- Resist Slow+1
-INSERT INTO `augments` VALUES (188, 0, 252, 1, 0, 0); -- Resist Charm+1
-INSERT INTO `augments` VALUES (189, 0, 0, 0, 0, 0); -- 189 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (190, 0, 0, 0, 0, 0); -- 190 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (191, 0, 0, 0, 0, 0); -- 191 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (192, 0, 0, 0, 0, 0); -- 192 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (193, 0, 0, 0, 0, 0); -- 193 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (194, 0, 292, 1, 0, 0); -- Kick Attacks+1 Rate or Damage? Assuming Rate for now.
-INSERT INTO `augments` VALUES (195, 0, 289, 1, 0, 0); -- Subtle Blow+1
-INSERT INTO `augments` VALUES (196, 0, 0, 0, 0, 0); -- 196 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (197, 0, 0, 0, 0, 0); -- 197 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (198, 0, 306, 1, 0, 0); -- Zanshin+1
+INSERT INTO `augments` VALUES (176, 0, 240, 1, 0, 0);    -- Resist Sleep+1
+INSERT INTO `augments` VALUES (177, 0, 241, 1, 0, 0);    -- Resist Poison+1
+INSERT INTO `augments` VALUES (178, 0, 242, 1, 0, 0);    -- Resist Paralyze+1
+INSERT INTO `augments` VALUES (179, 0, 243, 1, 0, 0);    -- Resist Blind+1
+INSERT INTO `augments` VALUES (180, 0, 244, 1, 0, 0);    -- Resist Silence+1
+INSERT INTO `augments` VALUES (181, 0, 245, 1, 0, 0);    -- Resist Virus+1
+INSERT INTO `augments` VALUES (182, 0, 246, 1, 0, 0);    -- Resist Petrify+1
+INSERT INTO `augments` VALUES (183, 0, 247, 1, 0, 0);    -- Resist Bind+1
+INSERT INTO `augments` VALUES (184, 0, 248, 1, 0, 0);    -- Resist Curse+1
+INSERT INTO `augments` VALUES (185, 0, 249, 1, 0, 0);    -- Resist Gravity+1
+INSERT INTO `augments` VALUES (186, 0, 250, 1, 0, 0);    -- Resist Slow+1
+INSERT INTO `augments` VALUES (187, 0, 251, 1, 0, 0);    -- Resist Stun+1
+INSERT INTO `augments` VALUES (188, 0, 252, 1, 0, 0);    -- Resist Charm+1
+INSERT INTO `augments` VALUES (189, 0, 0, 0, 0, 0);      -- 189 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (190, 0, 0, 0, 0, 0);      -- 190 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (191, 0, 0, 0, 0, 0);      -- 191 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (192, 0, 0, 0, 0, 0);      -- 192 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (193, 0, 0, 0, 0, 0);      -- 193 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (194, 0, 292, 1, 0, 0);    -- Kick Attacks+1 Rate or Damage? Assuming Rate for now.
+INSERT INTO `augments` VALUES (195, 0, 289, 1, 0, 0);    -- Subtle Blow+1
+INSERT INTO `augments` VALUES (196, 0, 0, 0, 0, 0);      -- 196 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (197, 0, 0, 0, 0, 0);      -- 197 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (198, 0, 306, 1, 0, 0);    -- Zanshin+1
 
 -- 199 to 210 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (199, 0, 0, 0, 0, 0);
@@ -305,7 +306,7 @@ INSERT INTO `augments` VALUES (235, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (236, 0, 0, 0, 0, 0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (237, 0, 0, 0, 0, 0); -- Occult Acumen+1: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES (237, 0, 902, 1, 0, 0); -- Occult Acumen+1
 
 -- 238 to 256 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (238, 0, 0, 0, 0, 0);
@@ -321,7 +322,7 @@ INSERT INTO `augments` VALUES (247, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (248, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (249, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (250, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES (251, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES (251, 1, 911, 0, 0, 0); -- Daken +1
 INSERT INTO `augments` VALUES (252, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (253, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (254, 0, 0, 0, 0, 0);
@@ -354,16 +355,16 @@ INSERT INTO `augments` VALUES (276, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (277, 0, 0, 0, 0, 0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (278, 0, 412, 1, 0, 0); -- Melee skill+1 (for automaton)
-INSERT INTO `augments` VALUES (279, 0, 413, 1, 0, 0); -- Ranged skill+1 (for automaton)
-INSERT INTO `augments` VALUES (280, 0, 414, 1, 0, 0); -- Magic skill+1 (for automaton)
+INSERT INTO `augments` VALUES (278, 0, 101, 1, 0, 0); -- Melee skill+1 (for automaton)
+INSERT INTO `augments` VALUES (279, 0, 102, 1, 0, 0); -- Ranged skill+1 (for automaton)
+INSERT INTO `augments` VALUES (280, 0, 103, 1, 0, 0); -- Magic skill+1 (for automaton)
 INSERT INTO `augments` VALUES (281, 0, 104, 1, 0, 0); -- Archery skill+1
 INSERT INTO `augments` VALUES (282, 0, 105, 1, 0, 0); -- Marksmanship skill+1
 INSERT INTO `augments` VALUES (283, 0, 106, 1, 0, 0); -- Throwing skill+1
 INSERT INTO `augments` VALUES (284, 0, 0, 0, 0, 0); -- 284 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (285, 0, 0, 0, 0, 0); -- 285 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (286, 0, 109, 1, 0, 0); -- Shield skill+1
-INSERT INTO `augments` VALUES (287, 0, 0, 0, 0, 0); -- 287 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (287, 1, 110, 1, 0, 0); -- Parrying Skill +1
 INSERT INTO `augments` VALUES (288, 0, 111, 1, 0, 0); -- Divine magic skill+1
 INSERT INTO `augments` VALUES (289, 0, 112, 1, 0, 0); -- Healing magic skill+1
 INSERT INTO `augments` VALUES (290, 0, 113, 1, 0, 0); -- Enha.mag. skill+1
@@ -376,8 +377,8 @@ INSERT INTO `augments` VALUES (296, 0, 119, 1, 0, 0); -- Singing skill+1
 INSERT INTO `augments` VALUES (297, 0, 120, 1, 0, 0); -- String instrument skill+1
 INSERT INTO `augments` VALUES (298, 0, 121, 1, 0, 0); -- Wind instrument skill+1
 INSERT INTO `augments` VALUES (299, 0, 122, 1, 0, 0); -- Blue Magic skill+1
-INSERT INTO `augments` VALUES (300, 0, 0, 0, 0, 0); -- Geomancy Skill+1
-INSERT INTO `augments` VALUES (301, 0, 0, 0, 0, 0); -- Handbell Skill+1
+INSERT INTO `augments` VALUES (300, 0, 123, 1, 0, 0); -- Geomancy Skill+1
+INSERT INTO `augments` VALUES (301, 0, 124, 1, 0, 0); -- Handbell Skill+1
 
 -- 302 to 319 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (302, 0, 0, 0, 0, 0);
@@ -400,28 +401,28 @@ INSERT INTO `augments` VALUES (318, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (319, 0, 0, 0, 0, 0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (320, 0, 357, -1, 0, 0); -- Blood Pact ability delay -1
-INSERT INTO `augments` VALUES (321, 0, 346, -1, 0, 0); -- Avatar perpetuation cost -1
-INSERT INTO `augments` VALUES (322, 0, 455, -1, 0, 0); -- Song spellcasting time -1%
-INSERT INTO `augments` VALUES (323, 0, 0, 0, 0, 0); -- Cure spellcasting time -1%
+INSERT INTO `augments` VALUES (320, 0, 357, 1, 0, 0); -- Blood Pact ability delay -1
+INSERT INTO `augments` VALUES (321, 0, 346, 1, 0, 0); -- Avatar perpetuation cost -1
+INSERT INTO `augments` VALUES (322, 0, 455, 1, 0, 0); -- Song spellcasting time -1%
+INSERT INTO `augments` VALUES (323, 0, 519, 1, 0, 0); -- Cure spellcasting time -1%
 INSERT INTO `augments` VALUES (324, 0, 0, 0, 0, 0); -- Call Beast ability delay -1
 INSERT INTO `augments` VALUES (325, 0, 0, 0, 0, 0); -- Quick Draw ability delay -1
 INSERT INTO `augments` VALUES (326, 0, 48, 1, 0, 0); -- Weapon Skill Acc.+1
-INSERT INTO `augments` VALUES (327, 0, 0, 0, 0, 0); -- Weapon skill damage+1%
+INSERT INTO `augments` VALUES (327, 0, 840, 1, 0, 0); -- Weapon skill damage+1% (unsure if this is all hits damage or first hit damage, leaving blank until determined)
 INSERT INTO `augments` VALUES (328, 0, 421, 1, 0, 0); -- Crit. hit damage+1%
 INSERT INTO `augments` VALUES (329, 0, 374, 1, 0, 0); -- Cure potency+1%
 INSERT INTO `augments` VALUES (330, 0, 491, 1, 0, 0); -- Waltz potency+1%
 INSERT INTO `augments` VALUES (331, 0, 497, -1, 0, 0); -- Waltz ability delay -1
 INSERT INTO `augments` VALUES (332, 0, 175, 1, 0, 0); -- Sklchn.dmg.+1%
-INSERT INTO `augments` VALUES (333, 0, 0, 0, 0, 0); -- Conserve TP+1
+INSERT INTO `augments` VALUES (333, 0, 944, 1, 0, 0); -- Conserve TP+1
 INSERT INTO `augments` VALUES (334, 0, 487, 1, 0, 0); -- Magic burst dmg.+1%
-INSERT INTO `augments` VALUES (335, 0, 542, 1, 0, 0); -- Mag. crit. hit dmg.+1%
+INSERT INTO `augments` VALUES (335, 0, 563, 1, 0, 0); -- Mag. crit. hit dmg.+1%
 INSERT INTO `augments` VALUES (336, 0, 0, 0, 0, 0); -- Sic and Ready ability delay -1
-INSERT INTO `augments` VALUES (337, 0, 0, 0, 0, 0); -- Song recast delay -1
-INSERT INTO `augments` VALUES (338, 0, 0, 0, 0, 0); -- Barrage+1 (additional shots, NOT acc)
-INSERT INTO `augments` VALUES (339, 0, 0, 0, 0, 0); -- Elemental Siphon+5 (value*5) Use Multiplier field.
+INSERT INTO `augments` VALUES (337, 0, 833, 1, 0, 0); -- Song recast delay -1
+INSERT INTO `augments` VALUES (338, 0, 0, 0, 0, 0); -- Barrage+1 (additional shots,NOT acc)
+INSERT INTO `augments` VALUES (339, 5, 540, 1, 0, 0); -- Elemental Siphon+5 (value*5) Use Multiplier field.
 INSERT INTO `augments` VALUES (340, 0, 0, 0, 0, 0); -- Phantom Roll ability delay -1
-INSERT INTO `augments` VALUES (341, 0, 0, 0, 0, 0); -- Repair potency+1%
+INSERT INTO `augments` VALUES (341, 0, 854, 1, 0, 0); -- Repair potency+1%
 INSERT INTO `augments` VALUES (342, 0, 0, 0, 0, 0); -- Waltz TP cost -1
 INSERT INTO `augments` VALUES (343, 0, 315, 1, 0, 0); -- "Drain" and "Aspir" Potency +1
 INSERT INTO `augments` VALUES (343, 0, 0, 0, 0, 0); -- Cont.
@@ -430,24 +431,22 @@ INSERT INTO `augments` VALUES (343, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (344, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (345, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (346, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES (347, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES (348, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES (349, 0, 0, 0, 0, 0);
--- End unused block
-
+INSERT INTO `augments` VALUES (347, 0, 0, 0, 0, 0); -- Healing Magic Recast Delay -1
+INSERT INTO `augments` VALUES (348, 0, 0, 0, 0, 0); -- Elemental Magic Recast Delay -1
+INSERT INTO `augments` VALUES (349, 0, 0, 0, 0, 0); -- Enfeebling Magic Recast Delay -1
 INSERT INTO `augments` VALUES (350, 0, 0, 0, 0, 0); -- Occ. maximizes magic accuracy+1%
-INSERT INTO `augments` VALUES (351, 0, 0, 0, 0, 0); -- Occ. quickens spellcasting+1%
+INSERT INTO `augments` VALUES (351, 0, 909, 1, 0, 0); -- Occ. quickens spellcasting+1%
 INSERT INTO `augments` VALUES (352, 0, 0, 0, 0, 0); -- Occ. grants dmg. bonus based on TP+1%
 INSERT INTO `augments` VALUES (353, 0, 345, 50, 0, 0); -- TP Bonus +50
-INSERT INTO `augments` VALUES (354, 0, 430, 1, 0, 0);  -- Quadruple Attack+1
-INSERT INTO `augments` VALUES (355, 0, 0, 0, 0, 0); -- 355 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES (354, 0, 430, 1, 0, 0);  -- Quadruple Attack+1%
+INSERT INTO `augments` VALUES (355, 0, 0, 0, 0, 0); -- Enhancing Magic Recast Delay -1
 INSERT INTO `augments` VALUES (356, 0, 375, 1, 0, 0); -- Potency of Cure received+1%
 
 -- 354 to 362 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (357, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (358, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (359, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES (360, 0, 0, 0, 0, 0); -- Save TP+10: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES (360, 0, 880, 10, 0, 0); -- Save TP+10: Mod undefined as of yet so leaving blank.
 INSERT INTO `augments` VALUES (361, 0, 0, 0, 0, 0);
 -- End unused block
 
@@ -455,11 +454,11 @@ INSERT INTO `augments` VALUES (362, 0, 311, 1, 0, 0); -- Magic Damage+1
 INSERT INTO `augments` VALUES (363, 0, 518, 1, 0, 0); -- Chance of successful block+1
 INSERT INTO `augments` VALUES (364, 0, 0, 0, 0, 0); -- 364 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (365, 0, 0, 0, 0, 0); -- 365 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
-INSERT INTO `augments` VALUES (366, 0, 0, 0, 0, 0); -- Blood Pact Ability Delay II: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES (366, 0, 0, 0, 0, 0); -- Blood Pact Ability Delay II: (modId is 541 but no idea what the value of the augment is so leaving zero until the value is determined)
 INSERT INTO `augments` VALUES (367, 0, 0, 0, 0, 0); -- 367 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (368, 0, 301, 1, 0, 0); -- Phalanx+1
-INSERT INTO `augments` VALUES (369, 0, 0, 0, 0, 0); -- Blood Pact Dmg+1: Mod undefined as of yet so leaving blank.
-INSERT INTO `augments` VALUES (370, 0, 0, 0, 0, 0); -- Reverse Flourish+1: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES (369, 0, 126, 1, 1, 1); -- Avatar: Blood Pact Dmg+1
+INSERT INTO `augments` VALUES (370, 0, 836, 1, 0, 0); -- Reverse Flourish+1
 INSERT INTO `augments` VALUES (371, 0, 0, 0, 0, 0); -- Regen Potency+1: Mod undefined as of yet so leaving blank.
 INSERT INTO `augments` VALUES (372, 0, 0, 0, 0, 0); -- Embolden+1: Mod undefined as of yet so leaving blank.
 
@@ -794,7 +793,7 @@ INSERT INTO `augments` VALUES (636, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (637, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (638, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (639, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES (640, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES (640, 2, 291, 2, 0, 0); -- Counter +2 (increases by 2)
 INSERT INTO `augments` VALUES (641, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (642, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (643, 0, 0, 0, 0, 0);
@@ -896,7 +895,7 @@ INSERT INTO `augments` VALUES (738, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (739, 0, 0, 0, 0, 0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (740, 0, 0, 0, 0, 0); -- DMG:+1    Uncertain of correct mod id or if correct type even exists.
+INSERT INTO `augments` VALUES (740, 0, 0, 0, 0, 0); -- DMG:+1
 insert into `augments` values (741, 0, 0, 0, 0, 0); -- Dmg:+33   Needs to work in either hand, whichever one the weapon is equipped in.
 insert into `augments` values (742, 0, 0, 0, 0, 0); -- Dmg:+65   Ranged weapons use diff AugID (starts at 746) and diff ModID.
 insert into `augments` values (743, 0, 0, 0, 0, 0); -- Dmg:+97    (melee, not ranged)
@@ -1135,21 +1134,21 @@ INSERT INTO `augments` VALUES (927, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES (928, 0, 347, 1, 0, 0); -- Fire Affinity+1
 INSERT INTO `augments` VALUES (928, 0, 544, 1, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (928, 0, 553, -1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (929, 0, 350, 1, 0, 0); -- Ice Affinity+1
-INSERT INTO `augments` VALUES (929, 0, 547, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (929, 0, 556, -1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (930, 0, 352, 1, 0, 0); -- Wind Affinity+1
-INSERT INTO `augments` VALUES (930, 0, 549, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (930, 0, 558, -1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (931, 0, 348, 1, 0, 0); -- Earth Affinity+1
-INSERT INTO `augments` VALUES (931, 0, 545, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (931, 0, 554, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (929, 0, 348, 1, 0, 0); -- Ice Affinity+1
+INSERT INTO `augments` VALUES (929, 0, 545, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (929, 0, 554, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (930, 0, 349, 1, 0, 0); -- Wind Affinity+1
+INSERT INTO `augments` VALUES (930, 0, 546, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (930, 0, 555, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (931, 0, 350, 1, 0, 0); -- Earth Affinity+1
+INSERT INTO `augments` VALUES (931, 0, 547, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (931, 0, 556, -1, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (932, 0, 351, 1, 0, 0); -- Lightning Affinity+1
 INSERT INTO `augments` VALUES (932, 0, 548, 1, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (932, 0, 557, -1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (933, 0, 349, 1, 0, 0); -- Water Affinity+1
-INSERT INTO `augments` VALUES (933, 0, 546, 1, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (933, 0, 555, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (933, 0, 352, 1, 0, 0); -- Water Affinity+1
+INSERT INTO `augments` VALUES (933, 0, 549, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (933, 0, 558, -1, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (934, 0, 353, 1, 0, 0); -- Light Affinity+1
 INSERT INTO `augments` VALUES (934, 0, 550, 1, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (934, 0, 559, -1, 0, 0); -- Cont.
@@ -1158,27 +1157,27 @@ INSERT INTO `augments` VALUES (935, 0, 551, 1, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (935, 0, 560, -1, 0, 0); -- Cont.
 
 INSERT INTO `augments` VALUES (936, 0, 544, 1, 0, 0); -- Fire Affinity Magic Accuracy+1
-INSERT INTO `augments` VALUES (937, 0, 547, 1, 0, 0); -- Ice Affinity Magic Accuracy+1
-INSERT INTO `augments` VALUES (938, 0, 549, 1, 0, 0); -- Wind Affinity Magic Accuracy+1
-INSERT INTO `augments` VALUES (939, 0, 545, 1, 0, 0); -- Earth Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES (937, 0, 545, 1, 0, 0); -- Ice Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES (938, 0, 546, 1, 0, 0); -- Wind Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES (939, 0, 547, 1, 0, 0); -- Earth Affinity Magic Accuracy+1
 INSERT INTO `augments` VALUES (940, 0, 548, 1, 0, 0); -- Lightning Affinity Magic Accuracy+1
-INSERT INTO `augments` VALUES (941, 0, 546, 1, 0, 0); -- Water Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES (941, 0, 549, 1, 0, 0); -- Water Affinity Magic Accuracy+1
 INSERT INTO `augments` VALUES (942, 0, 550, 1, 0, 0); -- Light Affinity Magic Accuracy+1
 INSERT INTO `augments` VALUES (943, 0, 551, 1, 0, 0); -- Dark Affinity Magic Accuracy+1
 INSERT INTO `augments` VALUES (944, 0, 347, 1, 0, 0); -- Fire Affinity Magic Damage+1
-INSERT INTO `augments` VALUES (945, 0, 350, 1, 0, 0); -- Ice Affinity Magic Damage+1
-INSERT INTO `augments` VALUES (946, 0, 352, 1, 0, 0); -- Wind Affinity Magic Damage+1
-INSERT INTO `augments` VALUES (947, 0, 348, 1, 0, 0); -- Earth Affinity Magic Damage+1
+INSERT INTO `augments` VALUES (945, 0, 348, 1, 0, 0); -- Ice Affinity Magic Damage+1
+INSERT INTO `augments` VALUES (946, 0, 349, 1, 0, 0); -- Wind Affinity Magic Damage+1
+INSERT INTO `augments` VALUES (947, 0, 350, 1, 0, 0); -- Earth Affinity Magic Damage+1
 INSERT INTO `augments` VALUES (948, 0, 351, 1, 0, 0); -- Lightning Affinity Magic Damage+1
-INSERT INTO `augments` VALUES (949, 0, 349, 1, 0, 0); -- Water Affinity Magic Damage+1
+INSERT INTO `augments` VALUES (949, 0, 352, 1, 0, 0); -- Water Affinity Magic Damage+1
 INSERT INTO `augments` VALUES (950, 0, 353, 1, 0, 0); -- Light Affinity Magic Damage+1
 INSERT INTO `augments` VALUES (951, 0, 354, 1, 0, 0); -- Dark Affinity Magic Damage+1
 INSERT INTO `augments` VALUES (952, 0, 553, -1, 0, 0); -- Fire Affinity: Avatar perp. cost -1
-INSERT INTO `augments` VALUES (953, 0, 556, -1, 0, 0); -- Ice Affinity: Avatar perp. cost -1
-INSERT INTO `augments` VALUES (954, 0, 558, -1, 0, 0); -- Wind Affinity: Avatar perp. cost -1
-INSERT INTO `augments` VALUES (955, 0, 554, -1, 0, 0); -- Earth Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES (953, 0, 554, -1, 0, 0); -- Ice Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES (954, 0, 555, -1, 0, 0); -- Wind Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES (955, 0, 556, -1, 0, 0); -- Earth Affinity: Avatar perp. cost -1
 INSERT INTO `augments` VALUES (956, 0, 557, -1, 0, 0); -- Thunder Affinity: Avatar perp. cost -1
-INSERT INTO `augments` VALUES (957, 0, 555, -1, 0, 0); -- Water Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES (957, 0, 558, -1, 0, 0); -- Water Affinity: Avatar perp. cost -1
 INSERT INTO `augments` VALUES (958, 0, 559, -1, 0, 0); -- Light Affinity: Avatar perp. cost -1
 INSERT INTO `augments` VALUES (959, 0, 560, -1, 0, 0); -- Dark Affinity: Avatar perp. cost -1
 
@@ -1186,18 +1185,18 @@ INSERT INTO `augments` VALUES (959, 0, 560, -1, 0, 0); -- Dark Affinity: Avatar 
 -- The Magic Accuracy increase matches value, not displayed if value is zero.
 INSERT INTO `augments` VALUES (960, 0, 544, 1, 0, 0); -- Fire Affinity: Magic Accuracy+0 Recast time -2% (Increases by 2)
 INSERT INTO `augments` VALUES (960, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (961, 0, 547, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES (961, 0, 545, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 960)
 INSERT INTO `augments` VALUES (961, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (962, 0, 549, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES (962, 0, 546, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 960)
 INSERT INTO `augments` VALUES (962, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (963, 0, 545, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES (963, 0, 547, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 960)
 INSERT INTO `augments` VALUES (963, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (964, 0, 548, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 960)
 INSERT INTO `augments` VALUES (964, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (965, 0, 546, 1, 0, 0); -- Water Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES (965, 0, 549, 1, 0, 0); -- Water Affinity: (otherwise same as augID 960)
 INSERT INTO `augments` VALUES (965, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (966, 0, 550, 1, 0, 0); -- Light Affinity: (otherwise same as augID 960)
-INSERT INTO `augments` VALUES (966, 0, 0, 2, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES (966, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (967, 0, 551, 1, 0, 0); -- Dark Affinity: (otherwise same as augID 960)
 INSERT INTO `augments` VALUES (967, 0, 0, 0, 0, 0); -- Cont.
 
@@ -1206,13 +1205,13 @@ INSERT INTO `augments` VALUES (968, 0, 347, 1, 0, 0); -- Fire Affinity: Magic Da
 INSERT INTO `augments` VALUES (968, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (969, 0, 348, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 968)
 INSERT INTO `augments` VALUES (969, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (970, 0, 352, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES (970, 0, 349, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 968)
 INSERT INTO `augments` VALUES (970, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (971, 0, 350, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 968)
 INSERT INTO `augments` VALUES (971, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (972, 0, 351, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 968)
 INSERT INTO `augments` VALUES (972, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (973, 0, 349, 1, 0, 0); -- Water Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES (973, 0, 352, 1, 0, 0); -- Water Affinity: (otherwise same as augID 968)
 INSERT INTO `augments` VALUES (973, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (974, 0, 353, 1, 0, 0); -- Light Affinity: (otherwise same as augID 968)
 INSERT INTO `augments` VALUES (974, 0, 0, 0, 0, 0); -- Cont.
@@ -1246,15 +1245,15 @@ INSERT INTO `augments` VALUES (999, 0, 0, 0, 0, 0); -- Dark Affinity: (otherwise
 -- The Magic Accuracy increase matches value, not displayed if value is zero.
 INSERT INTO `augments` VALUES (1000, 0, 544, 1, 0, 0); -- Fire Affinity: Magic Accuracy+0, Fire Affinity: Casting time -6% (increases by 6)
 INSERT INTO `augments` VALUES (1000, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (1001, 0, 547, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES (1001, 0, 545, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 1000)
 INSERT INTO `augments` VALUES (1001, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (1002, 0, 549, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES (1002, 0, 546, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 1000)
 INSERT INTO `augments` VALUES (1002, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (1003, 0, 545, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES (1003, 0, 547, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 1000)
 INSERT INTO `augments` VALUES (1003, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (1004, 0, 548, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 1000)
 INSERT INTO `augments` VALUES (1004, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (1005, 0, 546, 1, 0, 0); -- Water Affintiy: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES (1005, 0, 549, 1, 0, 0); -- Water Affintiy: (otherwise same as augID 1000)
 INSERT INTO `augments` VALUES (1005, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (1006, 0, 550, 1, 0, 0); -- Light Affinity: (otherwise same as augID 1000)
 INSERT INTO `augments` VALUES (1006, 0, 0, 0, 0, 0); -- Cont.
@@ -1266,13 +1265,13 @@ INSERT INTO `augments` VALUES (1008, 0, 347, 1, 0, 0); -- Fire Affinity: Magic D
 INSERT INTO `augments` VALUES (1008, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (1009, 0, 348, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 1008)
 INSERT INTO `augments` VALUES (1009, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (1010, 0, 352, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES (1010, 0, 349, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 1008)
 INSERT INTO `augments` VALUES (1010, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (1011, 0, 350, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 1008)
 INSERT INTO `augments` VALUES (1011, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (1012, 0, 351, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 1008)
 INSERT INTO `augments` VALUES (1012, 0, 0, 0, 0, 0); -- Cont.
-INSERT INTO `augments` VALUES (1013, 0, 349, 1, 0, 0); -- Water Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES (1013, 0, 352, 1, 0, 0); -- Water Affinity: (otherwise same as augID 1008)
 INSERT INTO `augments` VALUES (1013, 0, 0, 0, 0, 0); -- Cont.
 INSERT INTO `augments` VALUES (1014, 0, 353, 1, 0, 0); -- Light Affinity: (otherwise same as augID 1008)
 INSERT INTO `augments` VALUES (1014, 0, 0, 0, 0, 0); -- Cont.
@@ -1430,7 +1429,7 @@ INSERT INTO `augments` VALUES (1154, 0, 31, 3, 0, 0); -- Mag. Evasion +3
 INSERT INTO `augments` VALUES (1155, 0, 161, -2, 0, 0); -- Physical Damage Taken -2%
 INSERT INTO `augments` VALUES (1156, 0, 163, -2, 0, 0); -- Magic Damage Taken -2%
 INSERT INTO `augments` VALUES (1157, 0, 168, 2, 0, 0); -- Spell Interruption Rate Down 2%
-INSERT INTO `augments` VALUES (1158, 0, 0, 0, 0, 0); -- Occ. Resistance to Status Ailments +2
+INSERT INTO `augments` VALUES (1158, 0, 958, 2, 0, 0); -- Occ. Resistance to Status Ailments +2
 
 -- 1159 to 1248 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (1159, 0, 0, 0, 0, 0);
@@ -1524,9 +1523,9 @@ INSERT INTO `augments` VALUES (1245, 0, 0, 0, 0, 0);
 
 INSERT INTO `augments` VALUES (1246, 0, 161, -2, 1, 0); -- Pet: Phy. Dmg. Taken -2%
 INSERT INTO `augments` VALUES (1247, 0, 163, -2, 1, 0); -- Pet: Magic Dmg. Taken -2%
-INSERT INTO `augments` VALUES (1248, 0, 0, 0, 0, 0); -- Enhancing Magic Effect Duration +1: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES (1248, 0, 890, 1, 0, 0); -- Enhancing Magic Effect Duration +1
 INSERT INTO `augments` VALUES (1249, 0, 477, 1, 0, 0); -- Helix Effect Duration+1
-INSERT INTO `augments` VALUES (1250, 0, 0, 0, 0, 0); -- Indi Effect Duration+1: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES (1250, 0, 960, 1, 0, 0); -- Indi Effect Duration+1
 
 -- 1251 to 1263 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES (1251, 0, 0, 0, 0, 0);
