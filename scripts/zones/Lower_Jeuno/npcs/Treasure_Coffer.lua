@@ -1246,6 +1246,7 @@ local repeatableKeyItems = {
     {ki = tpz.keyItem.PEACH_CORAL_KEY, expansion = AMK, mission = tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE},
     {ki = tpz.keyItem.BLACK_CORAL_KEY, expansion = AMK, mission = tpz.mission.id.amk.SHOCK_ARRANT_ABUSE_OF_AUTHORITY},
     {ki = tpz.keyItem.RED_CORAL_KEY, expansion = AMK, mission = tpz.mission.id.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS},
+    {ki = tpz.keyItem.ANGEL_SKIN_KEY, expansion = AMK, mission = tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE},
     {ki = tpz.keyItem.CRIMSON_KEY, expansion = ACP, mission = tpz.mission.id.acp.THE_ECHO_AWAKENS},
     {ki = tpz.keyItem.VIRIDIAN_KEY, expansion = ACP, mission = tpz.mission.id.acp.GATHERER_OF_LIGHT_I},
     {ki = tpz.keyItem.AMBER_KEY, expansion = ACP, mission = tpz.mission.id.acp.GATHERER_OF_LIGHT_II},
