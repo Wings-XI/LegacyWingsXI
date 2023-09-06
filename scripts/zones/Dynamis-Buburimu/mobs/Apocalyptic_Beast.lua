@@ -262,7 +262,7 @@ function onMobFight(mob, target)
             if GetMobByID(usablemobabilities[i][2]):getLocalVar("dynamisMobOnDeathTriggered") ~= 1 then
                 totalchance = totalchance + 10
                 if totalchance >= randomchance then
-                    if mob:getLocalVar("next2hr") > 0 and abilities2hr[mob:getLocalVar("next2hr") - 1][1] == tpz.jsa.FAMILIAR and math.random(1,10) < 5 then -- high chance of charm during bst 2hr window
+                    if mob:getLocalVar("next2hr") > 1 and abilities2hr[(mob:getLocalVar("next2hr") - 1) % #abilities2hr][1] == tpz.jsa.FAMILIAR and math.random(1,10) < 5 then -- high chance of charm during bst 2hr window
                         mob:useMobAbility(1337)
                     else
                         mob:useMobAbility(usablemobabilities[i][1])

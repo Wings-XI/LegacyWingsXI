@@ -662,6 +662,7 @@ int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullp
     PLastAttacker = attacker;
     this->BattleHistory.lastHitTaken_atkType = attackType;
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
+    this->SetLocalVar("dmgsourceblumagic", 0);
     
     if (this->getMod(Mod::COVERED_MP_FLAG) && amount > 4)
         this->addMP(amount / 5);

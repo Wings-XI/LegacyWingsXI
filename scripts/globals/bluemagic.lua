@@ -405,6 +405,7 @@ function BlueFinalAdjustments(caster, target, spell, dmg, params, taChar)
     elseif attackType == tpz.attackType.PHYSICAL then
         dmg = target:physicalDmgTaken(caster, dmg, damageType)
     end
+    target:setLocalVar("dmgsourceblumagic", 1)
     target:takeDamage(dmg, caster, attackType, damageType)
     local Emult = params.enmityPercent == nil and 1 or params.enmityPercent/100
     if not target:isPC() then
