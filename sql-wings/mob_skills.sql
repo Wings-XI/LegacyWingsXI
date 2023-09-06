@@ -1623,7 +1623,7 @@ INSERT INTO `mob_skills` VALUES(2461, 1501, 'mog_bomb', 2, 10.0, 2000, 3000, 4, 
 INSERT INTO `mob_skills` VALUES(2462, 1500, 'mog_shrapnel', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2463, 1499, 'flowerpot', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2465, 1502, 'bill_toss', 0, 7.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
-INSERT INTO `mob_skills` VALUES(2466, 1504, 'washtub', 2, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
+INSERT INTO `mob_skills` VALUES(2466, 1504, 'washtub', 4, 15.0, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(3148, 1503, 'riko_bomb_toss', 2, 10.0, 1000, 0, 4, 0, 0, 6, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2467, 1505, 'crystalline_flare', 1, 18.0, 1000, 50, 4, 0, 0, 0, 0, 0, 0);
 INSERT INTO `mob_skills` VALUES(2468, 1508, 'king_cobra_clamp', 4, 15, 2000, 1500, 4, 0, 0, 0, 0, 0, 0);
