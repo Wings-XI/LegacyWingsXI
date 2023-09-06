@@ -410,7 +410,7 @@ uint8 CMeritPoints::GetMeritMaxUpgrades(uint8 catid)
 uint8 CMeritPoints::GetMeritCategoryMaxUpgrades(uint8 catid)
 {// WINGSCUSTOM
     if (catid == 0) // hp/mp
-        return 10;
+        return 20;
     if (catid == 1) // attributes
         return 25;
     if (catid == 2) // combat skills
