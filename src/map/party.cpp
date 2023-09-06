@@ -587,6 +587,16 @@ void CParty::AddMember(CBattleEntity* PEntity)
     }
 }
 
+uint32 CParty::GetLeaderZoneID()
+{
+    int32 ret = Sql_Query(SqlHandle, "SELECT pos_zone FROM accounts_parties left join chars using (charid) WHERE partyflag = partyflag | IF(allianceid = partyid, %d, %d) and partyid = %u", ALLIANCE_LEADER | PARTY_LEADER, PARTY_LEADER, m_PartyID);
+    if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) == 1 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        return Sql_GetUIntData(SqlHandle, 0);
+    }
+    return 0;
+}
+
 uint32 CParty::GetRealNumberOfPeople()
 {
     int32 ret = Sql_Query(SqlHandle, "SELECT charid, partyid FROM accounts_parties WHERE partyid =  %u;", m_PartyID);
