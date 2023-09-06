@@ -1267,7 +1267,13 @@ local function hasAnyKeyItems(player)
             return true
         end
     end
-    if count == 0 then return true end
+    if  count == 0 or
+        player:hasKeyItem(tpz.ki.BEHEMOTH_KEY)
+        player:hasKeyItem(tpz.ki.PRISMATIC_KEY) or
+        player:hasKeyItem(tpz.ki.OXBLOOD_KEY) or
+    then
+        return true
+    end
     return false
 end
 
