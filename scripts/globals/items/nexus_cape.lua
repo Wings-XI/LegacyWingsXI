@@ -141,10 +141,13 @@ function onItemUse(target)
         local duration = 1
         -- send to zone before the leader teleport goes off (buff lasts a few seconds and persists zoning)
         if leaderZoneID ~= target:getZoneID() then
-            target:setPos(0, 0, 0, 0, leaderZoneID)
             duration = 10
         end
         target:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.LEADER, 0, duration)
+        -- while, in testing, this being above the addStatusEffect seemed to work well, this is moved to assure reliability
+        if leaderZoneID ~= target:getZoneID() then
+            target:setPos(0, 0, 0, 0, leaderZoneID)
+        end
         return 0
     else
         return -1
