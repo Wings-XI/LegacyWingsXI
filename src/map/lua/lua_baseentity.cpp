@@ -10506,6 +10506,26 @@ inline int32 CLuaBaseEntity::getPartyLeader(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::getPartyLeaderZoneID(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    if (PChar->PParty)
+    {
+        uint16 leaderzoneid = PChar->PParty->GetLeaderZoneID();
+        if (leaderzoneid > 0)
+        {
+            lua_pushnumber(L, leaderzoneid);
+            return 1;
+        }
+    }
+
+    lua_pushnil(L);
+    return 1;
+}
+
 /************************************************************************
 *  Function: forMembersInRange()
 *  Purpose : Apply function to party members within range
@@ -19440,6 +19460,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasPartyJob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartyMember),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartyLeader),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartyLeaderZoneID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getLeaderID),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPartyLastMemberJoinedTime),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,forMembersInRange),

@@ -10,13 +10,14 @@ require('scripts/globals/zone')
 
 function onItemCheck(target)
     local result = tpz.msg.basic.ITEM_UNABLE_TO_USE -- Default is fail.
-    local leader = target:getPartyLeader()
-    -- In a party and we were able to find the leader
-    -- (currently fails in cross map server situations)
-    if leader ~= nil and not leader:isInMogHouse() then
+
+    -- In a party and we were able to find the leader's zone
+    local leaderZone = target:getPartyLeaderZoneID()
+    if leaderZone and leaderZone > 0 then
+        -- only returns an object if within the same cluster
+        local leader = target:getPartyLeader()
         -- Don't try to teleport to self!
-        if (target:getID() ~= leader:getID()) then
-            local leaderZone = leader:getZoneID()
+        if not leader or target:getID() ~= leader:getID() then
 
             -- Locations with "**" in comment:
             -- ** If the party leader is located in a battlefield or other special location,
@@ -124,6 +125,8 @@ function onItemCheck(target)
             for _, validZone in ipairs(validZoneList) do
                 if validZone == leaderZone and target:isZoneVisited(validZone) then
                     result = 0
+                    -- snapshot the zone for down below
+                    target:setLocalVar("leaderZoneID", leaderZone)
                 end
             end
         end
@@ -133,5 +136,17 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.LEADER, 0, 1)
+    local leaderZoneID = target:getLocalVar("leaderZoneID")
+    if leaderZoneID > 0 then
+        local duration = 1
+        -- send to zone before the leader teleport goes off (buff lasts a few seconds and persists zoning)
+        if leaderZoneID ~= target:getZoneID() then
+            target:setPos(0, 0, 0, 0, leaderZoneID)
+            duration = 10
+        end
+        target:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.LEADER, 0, duration)
+        return 0
+    else
+        return -1
+    end
 end

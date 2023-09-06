@@ -66,6 +66,7 @@ public:
     uint8  MemberCount(uint16 ZoneID);                   // узнаем количество участников группы в указанной зоне
 
     CBattleEntity* GetLeader();                         // узнаем лидера группы
+    uint32 GetLeaderZoneID();                           // Raw zone id of the party leader
     CBattleEntity* GetSyncTarget();                     // узнаем цель синхронизации
     CBattleEntity* GetQuaterMaster();                   // узнаем владельца сокровищ
     CBattleEntity* GetMemberByName(const int8* MemberName);   // Returns entity pointer for member name string
