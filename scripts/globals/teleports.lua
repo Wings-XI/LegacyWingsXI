@@ -3,6 +3,7 @@
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/zone")
+require("scripts/globals/homepoint")
 
 tpz = tpz or {}
 tpz.teleport = tpz.teleport or {}
@@ -186,10 +187,36 @@ end
 -- TELEPORT TO PARTY LEADER
 -----------------------------------
 
+-- For field areas, the user will be sent directly to where their party leader stands, while for towns, the user will be teleported to where a Home Point may be set.
+-- If the party leader is located in a battlefield or other special location, players will be forced to travel to a specific location.
 tpz.teleport.toLeader = function(player)
     local leader = player:getPartyLeader()
-    if leader ~= nil and not leader:isInMogHouse() then
-        player:gotoPlayer(leader:getName())
+    if leader ~= nil then
+        local leaderZone = leader:getZone()
+        local leaderZoneID = leaderZone:getID()
+        local leaderZoneType = leaderZone:getType()
+        if not leader:isInMogHouse() and leaderZoneType ~= tpz.zoneType.CITY and leader:getBattlefieldID() == nil and leader:getInstance() == nil then
+            player:gotoPlayer(leader:getName())
+        else
+            -- send to specific location
+            if leaderZoneType == tpz.zoneType.CITY then
+                -- teleport to first home point found in city
+                for k, v in pairs(tpz.homepoint.homepointData) do
+                    leaderZoneID == v.dest[5]
+                    tpz.teleport.to(player, unpack(v.dest))
+                    return
+                end
+            elseif destinations[leaderZoneID] ~= nil then
+                tpz.teleport.to(player, unpack(destinations[leaderZoneID]))
+                return
+            else
+                -- specific destination not found, sending player to default zone position
+                --if player:getZoneID() ~= leaderZoneID then
+                    player:setPos(0, 0, 0, 0, leaderZoneID)
+                    return
+                --end
+            end
+        end
     end
 end
 
