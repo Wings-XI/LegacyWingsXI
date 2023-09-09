@@ -182,6 +182,7 @@ namespace battleutils
     CItemEquipment*     GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
 
     void                MakeEntityStandUp(CBattleEntity* PEntity);
+    inline bool         areInLine(uint8 firstPlayerWA, CBattleEntity* insidePlayer, CBattleEntity* outidePlayer);
     CBattleEntity*      getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob);
     CBattleEntity*      getCoverTarget(CBattleEntity* PTarget, CBattleEntity* PMob);
 
