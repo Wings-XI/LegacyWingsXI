@@ -3,7 +3,7 @@
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/zone")
-require("scripts/globals/homepoint")
+--require("scripts/globals/homepoint")
 
 tpz = tpz or {}
 tpz.teleport = tpz.teleport or {}
@@ -199,12 +199,15 @@ tpz.teleport.toLeader = function(player)
             player:gotoPlayer(leader:getName())
         else
             -- send to specific location
+            print("test")
             if leaderZoneType == tpz.zoneType.CITY then
                 -- teleport to first home point found in city
                 for k, v in pairs(tpz.homepoint.homepointData) do
-                    leaderZoneID == v.dest[5]
-                    tpz.teleport.to(player, unpack(v.dest))
-                    return
+                    print(v.dest[5])
+                    if leaderZoneID == v.dest[5] then
+                        player:setPos(unpack(v.dest))
+                        return
+                    end
                 end
             elseif destinations[leaderZoneID] ~= nil then
                 tpz.teleport.to(player, unpack(destinations[leaderZoneID]))

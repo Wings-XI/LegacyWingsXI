@@ -138,7 +138,7 @@ end
 function onItemUse(target)
     -- The teleportation will be rendered ineffective if the party leader changes areas in the middle of casting.
     -- It is recommended that party members communicate their intent to teleport beforehand.
-    local leaderZoneID = target:getLocalVar("leaderZoneID") == target::getPartyLeaderZoneID() and target:getLocalVar("leaderZoneID") or 0
+    local leaderZoneID = target:getLocalVar("leaderZoneID") == target:getPartyLeaderZoneID() and target:getLocalVar("leaderZoneID") or 0
     if leaderZoneID > 0 then
         local duration = 1
         -- send to zone before the leader teleport goes off (buff lasts a few seconds and persists zoning)
