@@ -199,11 +199,9 @@ tpz.teleport.toLeader = function(player)
             player:gotoPlayer(leader:getName())
         else
             -- send to specific location
-            print("test")
             if leaderZoneType == tpz.zoneType.CITY then
                 -- teleport to first home point found in city
                 for k, v in pairs(tpz.homepoint.homepointData) do
-                    print(v.dest[5])
                     if leaderZoneID == v.dest[5] then
                         player:setPos(unpack(v.dest))
                         return

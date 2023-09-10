@@ -1282,10 +1282,17 @@ local keyitems =
 -- determines if any login reward should be given (only given if none of the key items are owned)
 -- returns true if any key iten is owned OR if ineligable for all key items
 local function hasAnyKeyItems(player)
+    local ACPm = player:getCurrentMission(ACP)
+    local AMKm = player:getCurrentMission(AMK)
+    local ASAm = player:getCurrentMission(ASA)
     local count = 0
     for ki,v in pairs(keyitems) do
         if v.repeatable == True then
-            if player:hasCompletedMission(v.expansion, v.mission) then
+            if
+                (v.expansion == ACP and ACPm > v.mission) or
+                (v.expansion == AMK and AMKm > v.mission) or
+                (v.expansion == ASA and ASAm > v.mission)
+            then
                 count = count + 1
             end
         end
@@ -1306,7 +1313,7 @@ local function getEligableKeyItem(player)
         if
             v.repeatable == True and
             player:hasCompletedMission(v.expansion, v.mission) and
-            not player:hasKeyItem(v.ki)
+            not player:hasKeyItem(ki)
         then
             table.insert(eligKIs, ki)
         end
