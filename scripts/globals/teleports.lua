@@ -208,7 +208,7 @@ tpz.teleport.toLeader = function(player)
                     end
                 end
             elseif destinations[leaderZoneID] ~= nil then
-                tpz.teleport.to(player, unpack(destinations[leaderZoneID]))
+                tpz.teleport.to(player, leaderZoneID)
                 return
             else
                 -- specific destination not found, sending player to default zone position
