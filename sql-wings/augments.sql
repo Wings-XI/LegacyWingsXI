@@ -42,99 +42,102 @@ CREATE TABLE `augments` (
 -- Dumping data for table `augments`
 --
 
-INSERT INTO `augments` VALUES(1, 0, 2, 1, 0, 0);
-INSERT INTO `augments` VALUES(2, 0, 2, 33, 0, 0);
-INSERT INTO `augments` VALUES(3, 0, 2, 65, 0, 0);
-INSERT INTO `augments` VALUES(4, 0, 2, 97, 0, 0);
-INSERT INTO `augments` VALUES(5, 0, 2, -1, 0, 0);
-INSERT INTO `augments` VALUES(6, 0, 2, -33, 0, 0);
-INSERT INTO `augments` VALUES(7, 0, 2, -65, 0, 0);
-INSERT INTO `augments` VALUES(8, 0, 2, -97, 0, 0);
-INSERT INTO `augments` VALUES(9, 0, 5, 1, 0, 0);
-INSERT INTO `augments` VALUES(10, 0, 5, 33, 0, 0);
-INSERT INTO `augments` VALUES(11, 0, 5, 65, 0, 0);
-INSERT INTO `augments` VALUES(12, 0, 5, 97, 0, 0);
-INSERT INTO `augments` VALUES(13, 0, 5, -1, 0, 0);
-INSERT INTO `augments` VALUES(14, 0, 5, -33, 0, 0);
-INSERT INTO `augments` VALUES(15, 0, 5, -65, 0, 0);
-INSERT INTO `augments` VALUES(16, 0, 5, -97, 0, 0);
-INSERT INTO `augments` VALUES(17, 0, 2, 1, 0, 0);
-INSERT INTO `augments` VALUES(17, 0, 5, 1, 0, 0);
-INSERT INTO `augments` VALUES(18, 0, 2, 33, 0, 0);
-INSERT INTO `augments` VALUES(18, 0, 5, 33, 0, 0);
-INSERT INTO `augments` VALUES(19, 0, 2, 1, 0, 0);
-INSERT INTO `augments` VALUES(19, 0, 5, -1, 0, 0);
-INSERT INTO `augments` VALUES(20, 0, 2, 33, 0, 0);
-INSERT INTO `augments` VALUES(20, 0, 5, -33, 0, 0);
-INSERT INTO `augments` VALUES(21, 0, 2, -1, 0, 0);
-INSERT INTO `augments` VALUES(21, 0, 5, 1, 0, 0);
-INSERT INTO `augments` VALUES(22, 0, 2, -33, 0, 0);
-INSERT INTO `augments` VALUES(22, 0, 5, 33, 0, 0);
-INSERT INTO `augments` VALUES(23, 0, 25, 1, 0, 0);
-INSERT INTO `augments` VALUES(24, 0, 25, -1, 0, 0);
-INSERT INTO `augments` VALUES(25, 0, 23, 1, 0, 0);
-INSERT INTO `augments` VALUES(26, 0, 23, -1, 0, 0);
-INSERT INTO `augments` VALUES(27, 0, 26, 1, 0, 0);
-INSERT INTO `augments` VALUES(28, 0, 26, -1, 0, 0);
-INSERT INTO `augments` VALUES(29, 0, 24, 1, 0, 0);
-INSERT INTO `augments` VALUES(30, 0, 24, -1, 0, 0);
-INSERT INTO `augments` VALUES(31, 0, 68, 1, 0, 0);
-INSERT INTO `augments` VALUES(32, 0, 68, -1, 0, 0);
-INSERT INTO `augments` VALUES(33, 0, 1, 1, 0, 0);
-INSERT INTO `augments` VALUES(34, 0, 1, -1, 0, 0);
-INSERT INTO `augments` VALUES(35, 0, 30, 1, 0, 0);
-INSERT INTO `augments` VALUES(36, 0, 30, -1, 0, 0);
-INSERT INTO `augments` VALUES(37, 0, 31, 1, 0, 0);
-INSERT INTO `augments` VALUES(38, 0, 31, -1, 0, 0);
-INSERT INTO `augments` VALUES(39, 0, 27, 1, 0, 0);
-INSERT INTO `augments` VALUES(40, 0, 27, -1, 0, 0);
-INSERT INTO `augments` VALUES(41, 0, 165, 1, 0, 0);
-INSERT INTO `augments` VALUES(42, 0, 166, -1, 0, 0);
-INSERT INTO `augments` VALUES(43, 0, 391, 1, 0, 0);
-INSERT INTO `augments` VALUES(44, 0, 73, 1, 0, 0);
-INSERT INTO `augments` VALUES(44, 0, 289, 1, 0, 0);
-INSERT INTO `augments` VALUES(45, 0, 366, 1, 0, 0);
-INSERT INTO `augments` VALUES(46, 0, 366, -1, 0, 0);
-INSERT INTO `augments` VALUES(47, 0, 380, 1, 0, 0);
-INSERT INTO `augments` VALUES(48, 0, 380, -1, 0, 0);
-INSERT INTO `augments` VALUES(49, 0, 384, 100, 0, 0);
-INSERT INTO `augments` VALUES(50, 0, 384, -100, 0, 0);
-INSERT INTO `augments` VALUES(51, 0, 72, 1, 0, 0);
-INSERT INTO `augments` VALUES(52, 0, 71, 1, 0, 0);
-INSERT INTO `augments` VALUES(53, 0, 168, -1, 0, 0);
-INSERT INTO `augments` VALUES(54, 0, 161, -1, 0, 0);
-INSERT INTO `augments` VALUES(55, 0, 163, -1, 0, 0);
-INSERT INTO `augments` VALUES(56, 0, 162, -1, 0, 0);
-INSERT INTO `augments` VALUES(57, 0, 541, 1, 0, 0);
-INSERT INTO `augments` VALUES(58, 0, 29, -1, 0, 0);
-INSERT INTO `augments` VALUES(59, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(60, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(61, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(62, 0, 25, 33, 0, 0);
-INSERT INTO `augments` VALUES(63, 0, 26, 33, 0, 0);
-INSERT INTO `augments` VALUES(64, 0, 30, 33, 0, 0);
-INSERT INTO `augments` VALUES(65, 0, 23, 33, 0, 0);
-INSERT INTO `augments` VALUES(66, 0, 24, 33, 0, 0);
-INSERT INTO `augments` VALUES(67, 0, 452, 1, 0, 0);
-INSERT INTO `augments` VALUES(68, 0, 25, 1, 0, 0);
-INSERT INTO `augments` VALUES(68, 0, 23, 1, 0, 0);
-INSERT INTO `augments` VALUES(69, 0, 26, 1, 0, 0);
-INSERT INTO `augments` VALUES(69, 0, 24, 1, 0, 0);
-INSERT INTO `augments` VALUES(70, 0, 30, 33, 0, 0);
-INSERT INTO `augments` VALUES(70, 0, 28, 33, 0, 0);
-INSERT INTO `augments` VALUES(71, 0, 160, -1, 0, 0);
-INSERT INTO `augments` VALUES(72, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(73, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(74, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(75, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(76, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(77, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(78, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(79, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(80, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(81, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(82, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(83, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES(1, 0, 2, 1, 0, 0);        -- HP+1
+INSERT INTO `augments` VALUES(2, 0, 2, 33, 0, 0);       -- HP+33
+INSERT INTO `augments` VALUES(3, 0, 2, 65, 0, 0);       -- HP+65
+INSERT INTO `augments` VALUES(4, 0, 2, 97, 0, 0);       -- HP+97
+INSERT INTO `augments` VALUES(5, 0, 2, -1, 0, 0);       -- HP-1
+INSERT INTO `augments` VALUES(6, 0, 2, -33, 0, 0);      -- HP-33
+INSERT INTO `augments` VALUES(7, 0, 2, -65, 0, 0);      -- HP-65
+INSERT INTO `augments` VALUES(8, 0, 2, -97, 0, 0);      -- HP-97
+INSERT INTO `augments` VALUES(9, 0, 5, 1, 0, 0);        -- MP+1
+INSERT INTO `augments` VALUES(10, 0, 5, 33, 0, 0);      -- MP+33
+INSERT INTO `augments` VALUES(11, 0, 5, 65, 0, 0);      -- MP+65
+INSERT INTO `augments` VALUES(12, 0, 5, 97, 0, 0);      -- MP+97
+INSERT INTO `augments` VALUES(13, 0, 5, -1, 0, 0);      -- MP-1
+INSERT INTO `augments` VALUES(14, 0, 5, -33, 0, 0);     -- MP-33
+INSERT INTO `augments` VALUES(15, 0, 5, -65, 0, 0);     -- MP-65
+INSERT INTO `augments` VALUES(16, 0, 5, -97, 0, 0);     -- MP-97
+INSERT INTO `augments` VALUES(17, 0, 2, 1, 0, 0);       -- HP+1 MP+1
+INSERT INTO `augments` VALUES(17, 0, 5, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES(18, 0, 2, 33, 0, 0);      -- HP+33 MP+33
+INSERT INTO `augments` VALUES(18, 0, 5, 33, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES(19, 0, 2, 1, 0, 0);       -- HP+1 MP-1
+INSERT INTO `augments` VALUES(19, 0, 5, -1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES(20, 0, 2, 33, 0, 0);      -- HP+33 MP-33
+INSERT INTO `augments` VALUES(20, 0, 5, -33, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES(21, 0, 2, -1, 0, 0);      -- HP-1 MP+1
+INSERT INTO `augments` VALUES(21, 0, 5, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES(22, 0, 2, -33, 0, 0);     -- HP-33 MP+33
+INSERT INTO `augments` VALUES(22, 0, 5, 33, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES(23, 0, 25, 1, 0, 0);      -- Accuracy+1
+INSERT INTO `augments` VALUES(24, 0, 25, -1, 0, 0);     -- Accuracy-1
+INSERT INTO `augments` VALUES(25, 0, 23, 1, 0, 0);      -- Attack+1
+INSERT INTO `augments` VALUES(26, 0, 23, -1, 0, 0);     -- Attack-1
+INSERT INTO `augments` VALUES(27, 0, 26, 1, 0, 0);      -- Rng.Acc.+1
+INSERT INTO `augments` VALUES(28, 0, 26, -1, 0, 0);     -- Rng.Acc.-1
+INSERT INTO `augments` VALUES(29, 0, 24, 1, 0, 0);      -- Rng.Atk.+1
+INSERT INTO `augments` VALUES(30, 0, 24, -1, 0, 0);     -- Rng.Atk.-1
+INSERT INTO `augments` VALUES(31, 0, 68, 1, 0, 0);      -- Evasion+1
+INSERT INTO `augments` VALUES(32, 0, 68, -1, 0, 0);     -- Evasion-1
+INSERT INTO `augments` VALUES(33, 0, 1, 1, 0, 0);       -- DEF+1
+INSERT INTO `augments` VALUES(34, 0, 1, -1, 0, 0);      -- DEF-1
+INSERT INTO `augments` VALUES(35, 0, 30, 1, 0, 0);      -- Mag.Acc.+1
+INSERT INTO `augments` VALUES(36, 0, 30, -1, 0, 0);     -- Mag.Acc.-1
+INSERT INTO `augments` VALUES(37, 0, 31, 1, 0, 0);      -- Mag.Evasion+1
+INSERT INTO `augments` VALUES(38, 0, 31, -1, 0, 0);     -- Mag.Evasion-1
+INSERT INTO `augments` VALUES(39, 0, 27, 1, 0, 0);      -- Enmity+1
+INSERT INTO `augments` VALUES(40, 0, 27, -1, 0, 0);     -- Enmity-1
+INSERT INTO `augments` VALUES(41, 0, 165, 1, 0, 0);     -- Crit.hit rate+1%
+INSERT INTO `augments` VALUES(42, 0, 166, -1, 0, 0);    -- Enemy crit. hit rate-1%
+INSERT INTO `augments` VALUES(43, 0, 391, 1, 0, 0);     -- Charm+1 Could not determine retail AUGMENT effect. Duration? Chance to land charm? Just set as chance for now.
+INSERT INTO `augments` VALUES(44, 0, 73, 1, 0, 0);      -- Store TP+1 Subtle Blow+1
+INSERT INTO `augments` VALUES(44, 0, 289, 1, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES(45, 0, 366, 1, 0, 0);     -- DMG:+(X+1), Increases damage rating of this weapon (Maximum X=31 for DMG+32) (Retail: melee,not ranged...Mainhand only?) Item displays a value 1 larger than stored in item
+INSERT INTO `augments` VALUES(46, 0, 366, -1, 0, 0);    -- DMG:-(X+1), Decreases damage rating of this weapon (Maximum X=31 for DMG-32) (Retail: melee,not ranged...Mainhand only?) Item displays a (negative) value 1 larger than stored in item
+INSERT INTO `augments` VALUES(47, 0, 380, 1, 0, 0);     -- Delay:+1% (melee,not ranged)
+INSERT INTO `augments` VALUES(48, 0, 380, -1, 0, 0);    -- Delay:-1% (melee,not ranged)
+INSERT INTO `augments` VALUES(49, 0, 384, 100, 0, 0);   -- Haste+1
+INSERT INTO `augments` VALUES(50, 0, 384, -100, 0, 0);  -- Slow+1
+INSERT INTO `augments` VALUES(51, 0, 72, 1, 0, 0);      -- HP recovered while healing+1
+INSERT INTO `augments` VALUES(52, 0, 71, 1, 0, 0);      -- MP recovered while healing+1
+INSERT INTO `augments` VALUES(53, 0, 168, -1, 0, 0);    -- Spell interruption rate down 1%
+INSERT INTO `augments` VALUES(54, 0, 161, -1, 0, 0);    -- Phys. dmg. taken -1%
+INSERT INTO `augments` VALUES(55, 0, 163, -1, 0, 0);    -- Magic dmg. taken -1%
+INSERT INTO `augments` VALUES(56, 0, 162, -1, 0, 0);    -- Breath dmg. taken -1%
+INSERT INTO `augments` VALUES(57, 0, 562, 1, 0, 0);     -- Magic crit. hit rate+1%
+INSERT INTO `augments` VALUES(58, 0, 29, -1, 0, 0);     -- Mag.Def.Bns.-1
+INSERT INTO `augments` VALUES(59, 0, 0, 0, 0, 0);       -- Latent effect: Regain+10 (Do via Latent: triggered with your current weapon drawn for 10 TP/tick.)
+INSERT INTO `augments` VALUES(60, 0, 0, 0, 0, 0);       -- Latent effect: Refresh+1 (Do via Latent: triggered with your current weapon not drawn for 1 MP/tick. Refresh is not present while resting(/heal),chocobo or /sit.)
+INSERT INTO `augments` VALUES(61, 0, 958, 1, 0, 0);     -- Occ. inc. resist to stat ailments+1
+INSERT INTO `augments` VALUES(62, 0, 25, 33, 0, 0);     -- Accuracy +33
+INSERT INTO `augments` VALUES(63, 0, 26, 33, 0, 0);     -- Rng.Accuracy +33
+INSERT INTO `augments` VALUES(64, 0, 30, 33, 0, 0);     -- Mag. Acc. +33
+INSERT INTO `augments` VALUES(65, 0, 23, 33, 0, 0);     -- Attack +33
+INSERT INTO `augments` VALUES(66, 0, 24, 33, 0, 0);     -- Rng.Attack +33
+INSERT INTO `augments` VALUES(67, 0, 452, 1, 0, 0);     -- All songs +1
+INSERT INTO `augments` VALUES(68, 0, 25, 1, 0, 0);      -- Accuracy +1 Attack +1
+INSERT INTO `augments` VALUES(68, 0, 23, 1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES(69, 0, 26, 1, 0, 0);      -- Rng.Acc. +1 Rng.Atk. +1
+INSERT INTO `augments` VALUES(69, 0, 24, 1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES(70, 0, 30, 33, 0, 0);     -- Mag. Acc. +33 Mag.Atk.Bns +33
+INSERT INTO `augments` VALUES(70, 0, 28, 33, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES(71, 0, 160, -1, 0, 0);    -- Damage Taken -1%
+INSERT INTO `augments` VALUES(72, 0, 0, 1, 0, 0);       -- Exp. Point +1%
+INSERT INTO `augments` VALUES(73, 0, 0, 33, 0, 0);      -- Exp. Point +33%
+INSERT INTO `augments` VALUES(74, 0, 915, 1, 0, 0);     -- Cap. Point +1%
+INSERT INTO `augments` VALUES(75, 0, 915, 33, 0, 0);    -- Cap. Point +33%
+INSERT INTO `augments` VALUES(76, 0, 0, 0, 0, 0);       -- DMG +33 Unsure if main hand or off hand so leaving values blank for now,goes up in increments of 1 after the initial 33.
+INSERT INTO `augments` VALUES(77, 0, 0, 0, 0, 0);       -- Delay -33% Unsure if main hand or off hand so leaving values blank for now,goes up in increments of 1 after the initial 33.
+INSERT INTO `augments` VALUES(78, 0, 2, 2, 0, 0);       -- HP +2 (count by 2)
+INSERT INTO `augments` VALUES(79, 0, 2, 3, 0, 0);       -- HP +3 (count by 3)
+INSERT INTO `augments` VALUES(80, 0, 30, 1, 0, 0);      -- Mag. Acc. +1/Mag. Dmg. +1
+INSERT INTO `augments` VALUES(80, 0, 311, 1, 0, 0);     -- Cont.
+INSERT INTO `augments` VALUES(81, 0, 0, 0, 0, 0);       -- Eva +1/Mag. Eva + d (corrupted)
+INSERT INTO `augments` VALUES(82, 0, 5, 2, 0, 0);       -- MP +2 (count by 2)
+INSERT INTO `augments` VALUES(83, 0, 5, 3, 0, 0);       -- MP +3 (count by 3)
+
+-- 84 to 95 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(84, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(85, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(86, 0, 0, 0, 0, 0);
@@ -147,78 +150,82 @@ INSERT INTO `augments` VALUES(92, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(93, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(94, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(95, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(96, 0, 25, 1, 1, 0);
-INSERT INTO `augments` VALUES(96, 0, 26, 1, 1, 0);
-INSERT INTO `augments` VALUES(97, 0, 23, 1, 1, 0);
-INSERT INTO `augments` VALUES(97, 0, 24, 1, 1, 0);
-INSERT INTO `augments` VALUES(98, 0, 68, 1, 1, 0);
-INSERT INTO `augments` VALUES(99, 0, 1, 1, 1, 0);
-INSERT INTO `augments` VALUES(100, 0, 30, 1, 1, 0);
-INSERT INTO `augments` VALUES(101, 0, 28, 1, 1, 0);
-INSERT INTO `augments` VALUES(102, 0, 165, 1, 1, 0);
-INSERT INTO `augments` VALUES(103, 0, 166, 1, 1, 0);
-INSERT INTO `augments` VALUES(104, 0, 27, 1, 1, 0);
-INSERT INTO `augments` VALUES(105, 0, 27, -1, 1, 0);
-INSERT INTO `augments` VALUES(106, 0, 25, 1, 1, 0);
-INSERT INTO `augments` VALUES(106, 0, 26, 1, 1, 0);
-INSERT INTO `augments` VALUES(107, 0, 23, 1, 1, 0);
-INSERT INTO `augments` VALUES(107, 0, 24, 1, 1, 0);
-INSERT INTO `augments` VALUES(108, 0, 30, 1, 1, 0);
-INSERT INTO `augments` VALUES(108, 0, 28, 1, 1, 0);
-INSERT INTO `augments` VALUES(109, 0, 288, 1, 1, 0);
-INSERT INTO `augments` VALUES(109, 0, 165, 1, 1, 0);
-INSERT INTO `augments` VALUES(110, 0, 370, 1, 1, 0);
-INSERT INTO `augments` VALUES(111, 0, 384, 100, 1, 0);
-INSERT INTO `augments` VALUES(112, 0, 160, -1, 1, 0);
-INSERT INTO `augments` VALUES(113, 0, 26, 1, 1, 0);
-INSERT INTO `augments` VALUES(114, 0, 24, 1, 1, 0);
-INSERT INTO `augments` VALUES(115, 0, 73, 1, 1, 0);
-INSERT INTO `augments` VALUES(116, 0, 289, 1, 1, 0);
-INSERT INTO `augments` VALUES(117, 0, 31, 1, 1, 0);
-INSERT INTO `augments` VALUES(118, 0, 161, -1, 1, 0);
-INSERT INTO `augments` VALUES(119, 0, 29, 1, 1, 0);
-INSERT INTO `augments` VALUES(120, 0, 28, 1, 1, 1);
-INSERT INTO `augments` VALUES(121, 0, 0, 0, 1, 0);
-INSERT INTO `augments` VALUES(122, 0, 345, 20, 1, 0);
-INSERT INTO `augments` VALUES(123, 0, 288, 1, 1, 0);
-INSERT INTO `augments` VALUES(124, 0, 23, 1, 1, 0);
-INSERT INTO `augments` VALUES(124, 0, 24, 1, 1, 0);
-INSERT INTO `augments` VALUES(124, 0, 25, 1, 1, 0);
-INSERT INTO `augments` VALUES(124, 0, 26, 1, 1, 0);
-INSERT INTO `augments` VALUES(125, 0, 30, 1, 1, 0);
-INSERT INTO `augments` VALUES(125, 0, 311, 1, 1, 0);
-INSERT INTO `augments` VALUES(126, 0, 311, 1, 1, 0);
-INSERT INTO `augments` VALUES(127, 0, 163, -1, 1, 0);
-INSERT INTO `augments` VALUES(128, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(129, 0, 25, 1, 0, 0);
-INSERT INTO `augments` VALUES(129, 0, 26, 1, 0, 0);
-INSERT INTO `augments` VALUES(130, 0, 23, 1, 0, 0);
-INSERT INTO `augments` VALUES(130, 0, 24, 1, 0, 0);
-INSERT INTO `augments` VALUES(131, 0, 30, 1, 0, 0);
-INSERT INTO `augments` VALUES(131, 0, 28, 1, 0, 0);
-INSERT INTO `augments` VALUES(132, 0, 288, 1, 0, 0);
-INSERT INTO `augments` VALUES(132, 0, 165, 1, 0, 0);
-INSERT INTO `augments` VALUES(133, 0, 28, 1, 0, 0);
-INSERT INTO `augments` VALUES(134, 0, 29, 1, 0, 0);
-INSERT INTO `augments` VALUES(135, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(136, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(137, 0, 370, 1, 0, 0);
-INSERT INTO `augments` VALUES(138, 0, 369, 1, 0, 0);
-INSERT INTO `augments` VALUES(139, 0, 359, 1, 0, 0);
-INSERT INTO `augments` VALUES(140, 0, 170, 1, 0, 0);
-INSERT INTO `augments` VALUES(141, 0, 296, 1, 0, 0);
-INSERT INTO `augments` VALUES(142, 0, 73, 1, 0, 0);
-INSERT INTO `augments` VALUES(143, 0, 288, 1, 0, 0);
-INSERT INTO `augments` VALUES(144, 0, 302, 1, 0, 0);
-INSERT INTO `augments` VALUES(145, 0, 291, 1, 0, 0);
-INSERT INTO `augments` VALUES(146, 0, 259, 1, 0, 0);
-INSERT INTO `augments` VALUES(147, 0, 303, 1, 0, 0);
-INSERT INTO `augments` VALUES(148, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(149, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(150, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(151, 0, 173, 1, 0, 0);
-INSERT INTO `augments` VALUES(152, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(153, 0, 485, 1, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(96, 0, 25, 1, 1, 0);        -- Pet: Accuracy+1 Rng.Acc+1
+INSERT INTO `augments` VALUES(96, 0, 26, 1, 1, 0);        -- Cont.
+INSERT INTO `augments` VALUES(97, 0, 23, 1, 1, 0);        -- Pet: Attack+1 Rng.Atk.+1
+INSERT INTO `augments` VALUES(97, 0, 24, 1, 1, 0);        -- Cont.
+INSERT INTO `augments` VALUES(98, 0, 68, 1, 1, 0);        -- Pet: Evasion+1
+INSERT INTO `augments` VALUES(99, 0, 1, 1, 1, 0);         -- Pet: DEF+1
+INSERT INTO `augments` VALUES(100, 0, 30, 1, 1, 0);       -- Pet: Mag.Acc.+1
+INSERT INTO `augments` VALUES(101, 0, 28, 1, 1, 0);       -- Pet: Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES(102, 0, 165, 1, 1, 0);      -- Pet: Crit.hit rate+1%
+INSERT INTO `augments` VALUES(103, 0, 166, -1, 1, 0);     -- Pet: Enemy crit. hit rate -1%
+INSERT INTO `augments` VALUES(104, 0, 27, 1, 1, 0);       -- Pet: Enmity+1
+INSERT INTO `augments` VALUES(105, 0, 27, -1, 1, 0);      -- Pet: Enmity-1
+INSERT INTO `augments` VALUES(106, 0, 25, 1, 1, 0);       -- Pet: Accuracy+1 Rng.Acc.+1
+INSERT INTO `augments` VALUES(106, 0, 26, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES(107, 0, 23, 1, 1, 0);       -- Pet: Attack+1 Rng.Atk.+1
+INSERT INTO `augments` VALUES(107, 0, 24, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES(108, 0, 30, 1, 1, 0);       -- Pet: Mag.Acc.+1 Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES(108, 0, 28, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES(109, 0, 288, 1, 1, 0);      -- Pet: Dbl.Atk.+1% Crit.hit rate+1
+INSERT INTO `augments` VALUES(109, 0, 165, 1, 1, 0);      -- Cont.
+INSERT INTO `augments` VALUES(110, 0, 370, 1, 1, 0);      -- Pet: Regen+1
+INSERT INTO `augments` VALUES(111, 0, 384, 100, 1, 0);    -- Pet: Haste+1
+INSERT INTO `augments` VALUES(112, 0, 160, -1, 1, 0);   -- Pet: Damage taken -1%
+INSERT INTO `augments` VALUES(113, 0, 26, 1, 1, 0);       -- Pet: Rng.Acc.+1
+INSERT INTO `augments` VALUES(114, 0, 24, 1, 1, 0);       -- Pet: Rng.Atk.+1
+INSERT INTO `augments` VALUES(115, 0, 73, 1, 1, 0);       -- Pet: Store TP+1
+INSERT INTO `augments` VALUES(116, 0, 289, 1, 1, 0);      -- Pet: Subtle Blow+1
+INSERT INTO `augments` VALUES(117, 0, 31, 1, 1, 0);       -- Pet: Mag. Evasion+1
+INSERT INTO `augments` VALUES(118, 0, 161, -1, 1, 0);   -- Pet: Phys. dmg. taken -1%
+INSERT INTO `augments` VALUES(119, 0, 29, 1, 1, 0);       -- Pet: Mag.Def.Bns.+1
+INSERT INTO `augments` VALUES(120, 0, 28, 1, 1, 1);       -- Avatar: Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES(121, 0, 0, 0, 1, 0);        -- Pet: Breath +1
+INSERT INTO `augments` VALUES(122, 0, 345, 20, 1, 0);     -- Pet: TP Bonus +20
+INSERT INTO `augments` VALUES(123, 0, 288, 1, 1, 0);      -- Pet: Dbl.Att.+1%
+INSERT INTO `augments` VALUES(124, 0, 23, 1, 1, 0);       -- Pet: Acc+1 R.Acc+1 Atk.+1 R.Atk.+1
+INSERT INTO `augments` VALUES(124, 0, 24, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES(124, 0, 25, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES(124, 0, 26, 1, 1, 0);       -- Cont.
+INSERT INTO `augments` VALUES(125, 0, 30, 1, 1, 0);       -- Pet: Mag.Acc.+1 Mag.Dmg.+1
+INSERT INTO `augments` VALUES(125, 0, 311, 1, 1, 0);      -- Cont.
+INSERT INTO `augments` VALUES(126, 0, 311, 1, 1, 0);      -- Pet: Magic Damage +1
+INSERT INTO `augments` VALUES(127, 0, 163, -1, 1, 0);   -- Pet: Magic Damage Taken -1%
+INSERT INTO `augments` VALUES(128, 0, 0, 0, 0, 0);        -- 128 doesnt seem to be a valid Augment,incomplete or garbled text displays
+INSERT INTO `augments` VALUES(129, 0, 25, 1, 0, 0);       -- Accuracy+1 Rng.Acc.+1
+INSERT INTO `augments` VALUES(129, 0, 26, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES(130, 0, 23, 1, 0, 0);       -- Attack+1 Rng.Atk.+1
+INSERT INTO `augments` VALUES(130, 0, 24, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES(131, 0, 30, 1, 0, 0);       -- Mag. Acc.+1 Mag.Atk.Bns+1
+INSERT INTO `augments` VALUES(131, 0, 28, 1, 0, 0);       -- Cont.
+INSERT INTO `augments` VALUES(132, 0, 288, 1, 0, 0);      -- Dbl.Atk.+1% Crit.hit rate+1%
+INSERT INTO `augments` VALUES(132, 0, 165, 1, 0, 0);      -- Cont.
+INSERT INTO `augments` VALUES(133, 0, 28, 1, 0, 0);       -- Mag.Atk.Bns.+1
+INSERT INTO `augments` VALUES(134, 0, 29, 1, 0, 0);       -- Mag.Def.Bns.+1
+INSERT INTO `augments` VALUES(135, 0, 0, 0, 0, 0);        -- 135 doesnt seem to be a valid Augment,incomplete or garbled text displays
+INSERT INTO `augments` VALUES(136, 0, 0, 0, 0, 0);        -- 136 doesnt seem to be a valid Augment,incomplete or garbled text displays
+INSERT INTO `augments` VALUES(137, 0, 370, 1, 0, 0);      -- Regen+1
+INSERT INTO `augments` VALUES(138, 0, 369, 1, 0, 0);      -- Refresh+1
+INSERT INTO `augments` VALUES(139, 0, 359, 1, 0, 0);      -- Rapid Shot+1
+INSERT INTO `augments` VALUES(140, 0, 170, 1, 0, 0);      -- Fast Cast+1%
+INSERT INTO `augments` VALUES(141, 0, 296, 1, 0, 0);      -- Conserve MP+1
+INSERT INTO `augments` VALUES(142, 0, 73, 1, 0, 0);       -- Store TP+1
+INSERT INTO `augments` VALUES(143, 0, 288, 1, 0, 0);      -- Dbl.Atk.+1%
+INSERT INTO `augments` VALUES(144, 0, 302, 1, 0, 0);      -- Triple Atk.+1%
+INSERT INTO `augments` VALUES(145, 0, 291, 1, 0, 0);      -- Counter+1
+INSERT INTO `augments` VALUES(146, 0, 259, 1, 0, 0);      -- Dual Wield+1
+INSERT INTO `augments` VALUES(147, 0, 303, 1, 0, 0);      -- Treasure Hunter+1
+INSERT INTO `augments` VALUES(148, 0, 897, 1, 0, 0);      -- Gilfinder+1
+INSERT INTO `augments` VALUES(149, 0, 0, 0, 0, 0);        -- 149 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(150, 0, 0, 0, 0, 0);        -- 150 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(151, 0, 173, 1, 0, 0);      -- Martial Arts+1
+INSERT INTO `augments` VALUES(152, 0, 0, 0, 0, 0);        -- 152 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(153, 0, 485, 1, 0, 0);      -- Shield Mastery+1 (tested in retail,this is correct)
+
+-- 154 to 175 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(154, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(155, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(156, 0, 0, 0, 0, 0);
@@ -241,29 +248,33 @@ INSERT INTO `augments` VALUES(172, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(173, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(174, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(175, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(176, 0, 240, 1, 0, 0);
-INSERT INTO `augments` VALUES(177, 0, 241, 1, 0, 0);
-INSERT INTO `augments` VALUES(178, 0, 242, 1, 0, 0);
-INSERT INTO `augments` VALUES(179, 0, 243, 1, 0, 0);
-INSERT INTO `augments` VALUES(180, 0, 244, 1, 0, 0);
-INSERT INTO `augments` VALUES(181, 0, 245, 1, 0, 0);
-INSERT INTO `augments` VALUES(182, 0, 246, 1, 0, 0);
-INSERT INTO `augments` VALUES(183, 0, 247, 1, 0, 0);
-INSERT INTO `augments` VALUES(184, 0, 248, 1, 0, 0);
-INSERT INTO `augments` VALUES(185, 0, 249, 1, 0, 0);
-INSERT INTO `augments` VALUES(186, 0, 250, 1, 0, 0);
-INSERT INTO `augments` VALUES(187, 0, 251, 1, 0, 0);
-INSERT INTO `augments` VALUES(188, 0, 252, 1, 0, 0);
-INSERT INTO `augments` VALUES(189, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(190, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(191, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(192, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(193, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(194, 0, 292, 1, 0, 0);
-INSERT INTO `augments` VALUES(195, 0, 289, 1, 0, 0);
-INSERT INTO `augments` VALUES(196, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(197, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(198, 0, 306, 1, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(176, 0, 240, 1, 0, 0);    -- Resist Sleep+1
+INSERT INTO `augments` VALUES(177, 0, 241, 1, 0, 0);    -- Resist Poison+1
+INSERT INTO `augments` VALUES(178, 0, 242, 1, 0, 0);    -- Resist Paralyze+1
+INSERT INTO `augments` VALUES(179, 0, 243, 1, 0, 0);    -- Resist Blind+1
+INSERT INTO `augments` VALUES(180, 0, 244, 1, 0, 0);    -- Resist Silence+1
+INSERT INTO `augments` VALUES(181, 0, 245, 1, 0, 0);    -- Resist Virus+1
+INSERT INTO `augments` VALUES(182, 0, 246, 1, 0, 0);    -- Resist Petrify+1
+INSERT INTO `augments` VALUES(183, 0, 247, 1, 0, 0);    -- Resist Bind+1
+INSERT INTO `augments` VALUES(184, 0, 248, 1, 0, 0);    -- Resist Curse+1
+INSERT INTO `augments` VALUES(185, 0, 249, 1, 0, 0);    -- Resist Gravity+1
+INSERT INTO `augments` VALUES(186, 0, 250, 1, 0, 0);    -- Resist Slow+1
+INSERT INTO `augments` VALUES(187, 0, 251, 1, 0, 0);    -- Resist Stun+1
+INSERT INTO `augments` VALUES(188, 0, 252, 1, 0, 0);    -- Resist Charm+1
+INSERT INTO `augments` VALUES(189, 0, 0, 0, 0, 0);      -- 189 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(190, 0, 0, 0, 0, 0);      -- 190 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(191, 0, 0, 0, 0, 0);      -- 191 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(192, 0, 0, 0, 0, 0);      -- 192 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(193, 0, 0, 0, 0, 0);      -- 193 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(194, 0, 292, 1, 0, 0);    -- Kick Attacks+1 Rate or Damage? Assuming Rate for now.
+INSERT INTO `augments` VALUES(195, 0, 289, 1, 0, 0);    -- Subtle Blow+1
+INSERT INTO `augments` VALUES(196, 0, 0, 0, 0, 0);      -- 196 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(197, 0, 0, 0, 0, 0);      -- 197 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(198, 0, 306, 1, 0, 0);    -- Zanshin+1
+
+-- 199 to 210 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(199, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(200, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(201, 0, 0, 0, 0, 0);
@@ -276,11 +287,15 @@ INSERT INTO `augments` VALUES(207, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(208, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(209, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(210, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(211, 0, 365, 1, 0, 0);
-INSERT INTO `augments` VALUES(212, 0, 305, 1, 0, 0);
-INSERT INTO `augments` VALUES(213, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(214, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(215, 0, 308, 1, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(211, 0, 365, 1, 0, 0); -- Snapshot+1
+INSERT INTO `augments` VALUES(212, 0, 305, 1, 0, 0); -- Recycle+1
+INSERT INTO `augments` VALUES(213, 0, 0, 0, 0, 0); -- 213 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(214, 0, 0, 0, 0, 0); -- 214 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(215, 0, 308, 1, 0, 0); -- Ninja tool expertise+1
+
+-- 216 to 232 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(216, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(217, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(218, 0, 0, 0, 0, 0);
@@ -298,11 +313,19 @@ INSERT INTO `augments` VALUES(229, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(230, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(231, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(232, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(233, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(233, 0, 0, 0, 0, 0); -- Blood Boon+1: Mod undefined as of yet so leaving blank.
+
+-- 234 to 236 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(234, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(235, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(236, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(237, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(237, 0, 902, 1, 0, 0); -- Occult Acumen+1
+
+-- 238 to 256 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(238, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(239, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(240, 0, 0, 0, 0, 0);
@@ -316,24 +339,28 @@ INSERT INTO `augments` VALUES(247, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(248, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(249, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(250, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(251, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES(251, 1, 911, 0, 0, 0); -- Daken +1
 INSERT INTO `augments` VALUES(252, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(253, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(254, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(255, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(256, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(257, 0, 80, 1, 0, 0);
-INSERT INTO `augments` VALUES(258, 0, 81, 1, 0, 0);
-INSERT INTO `augments` VALUES(259, 0, 82, 1, 0, 0);
-INSERT INTO `augments` VALUES(260, 0, 83, 1, 0, 0);
-INSERT INTO `augments` VALUES(261, 0, 84, 1, 0, 0);
-INSERT INTO `augments` VALUES(262, 0, 85, 1, 0, 0);
-INSERT INTO `augments` VALUES(263, 0, 86, 1, 0, 0);
-INSERT INTO `augments` VALUES(264, 0, 87, 1, 0, 0);
-INSERT INTO `augments` VALUES(265, 0, 88, 1, 0, 0);
-INSERT INTO `augments` VALUES(266, 0, 89, 1, 0, 0);
-INSERT INTO `augments` VALUES(267, 0, 90, 1, 0, 0);
-INSERT INTO `augments` VALUES(268, 0, 91, 1, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(257, 0, 80, 1, 0, 0); -- Hand-to-Hand skill+1
+INSERT INTO `augments` VALUES(258, 0, 81, 1, 0, 0); -- Dagger skill+1
+INSERT INTO `augments` VALUES(259, 0, 82, 1, 0, 0); -- Sword skill+1
+INSERT INTO `augments` VALUES(260, 0, 83, 1, 0, 0); -- Great Sword skill+1
+INSERT INTO `augments` VALUES(261, 0, 84, 1, 0, 0); -- Axe skill+1
+INSERT INTO `augments` VALUES(262, 0, 85, 1, 0, 0); -- Great Axe skill+1
+INSERT INTO `augments` VALUES(263, 0, 86, 1, 0, 0); -- Scythe skill+1
+INSERT INTO `augments` VALUES(264, 0, 87, 1, 0, 0); -- Polearm skill+1
+INSERT INTO `augments` VALUES(265, 0, 88, 1, 0, 0); -- Katana skill+1
+INSERT INTO `augments` VALUES(266, 0, 89, 1, 0, 0); -- Great Katana skill+1
+INSERT INTO `augments` VALUES(267, 0, 90, 1, 0, 0); -- Club skill+1
+INSERT INTO `augments` VALUES(268, 0, 91, 1, 0, 0); -- Staff skill+1
+
+-- 269 to 277 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(269, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(270, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(271, 0, 0, 0, 0, 0);
@@ -343,30 +370,34 @@ INSERT INTO `augments` VALUES(274, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(275, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(276, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(277, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(278, 0, 412, 1, 0, 0);
-INSERT INTO `augments` VALUES(279, 0, 413, 1, 0, 0);
-INSERT INTO `augments` VALUES(280, 0, 414, 1, 0, 0);
-INSERT INTO `augments` VALUES(281, 0, 104, 1, 0, 0);
-INSERT INTO `augments` VALUES(282, 0, 105, 1, 0, 0);
-INSERT INTO `augments` VALUES(283, 0, 106, 1, 0, 0);
-INSERT INTO `augments` VALUES(284, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(285, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(286, 0, 109, 1, 0, 0);
-INSERT INTO `augments` VALUES(287, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(288, 0, 111, 1, 0, 0);
-INSERT INTO `augments` VALUES(289, 0, 112, 1, 0, 0);
-INSERT INTO `augments` VALUES(290, 0, 113, 1, 0, 0);
-INSERT INTO `augments` VALUES(291, 0, 114, 1, 0, 0);
-INSERT INTO `augments` VALUES(292, 0, 115, 1, 0, 0);
-INSERT INTO `augments` VALUES(293, 0, 116, 1, 0, 0);
-INSERT INTO `augments` VALUES(294, 0, 117, 1, 0, 0);
-INSERT INTO `augments` VALUES(295, 0, 118, 1, 0, 0);
-INSERT INTO `augments` VALUES(296, 0, 119, 1, 0, 0);
-INSERT INTO `augments` VALUES(297, 0, 120, 1, 0, 0);
-INSERT INTO `augments` VALUES(298, 0, 121, 1, 0, 0);
-INSERT INTO `augments` VALUES(299, 0, 122, 1, 0, 0);
-INSERT INTO `augments` VALUES(300, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(301, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(278, 0, 101, 1, 0, 0); -- Melee skill+1 (for automaton)
+INSERT INTO `augments` VALUES(279, 0, 102, 1, 0, 0); -- Ranged skill+1 (for automaton)
+INSERT INTO `augments` VALUES(280, 0, 103, 1, 0, 0); -- Magic skill+1 (for automaton)
+INSERT INTO `augments` VALUES(281, 0, 104, 1, 0, 0); -- Archery skill+1
+INSERT INTO `augments` VALUES(282, 0, 105, 1, 0, 0); -- Marksmanship skill+1
+INSERT INTO `augments` VALUES(283, 0, 106, 1, 0, 0); -- Throwing skill+1
+INSERT INTO `augments` VALUES(284, 0, 0, 0, 0, 0); -- 284 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(285, 0, 0, 0, 0, 0); -- 285 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(286, 0, 109, 1, 0, 0); -- Shield skill+1
+INSERT INTO `augments` VALUES(287, 1, 110, 1, 0, 0); -- Parrying Skill +1
+INSERT INTO `augments` VALUES(288, 0, 111, 1, 0, 0); -- Divine magic skill+1
+INSERT INTO `augments` VALUES(289, 0, 112, 1, 0, 0); -- Healing magic skill+1
+INSERT INTO `augments` VALUES(290, 0, 113, 1, 0, 0); -- Enha.mag. skill+1
+INSERT INTO `augments` VALUES(291, 0, 114, 1, 0, 0); -- Enfb.mag. skill+1
+INSERT INTO `augments` VALUES(292, 0, 115, 1, 0, 0); -- Elem. magic skill+1
+INSERT INTO `augments` VALUES(293, 0, 116, 1, 0, 0); -- Dark magic skill+1
+INSERT INTO `augments` VALUES(294, 0, 117, 1, 0, 0); -- Summoning magic skill+1
+INSERT INTO `augments` VALUES(295, 0, 118, 1, 0, 0); -- Ninjutsu skill+1
+INSERT INTO `augments` VALUES(296, 0, 119, 1, 0, 0); -- Singing skill+1
+INSERT INTO `augments` VALUES(297, 0, 120, 1, 0, 0); -- String instrument skill+1
+INSERT INTO `augments` VALUES(298, 0, 121, 1, 0, 0); -- Wind instrument skill+1
+INSERT INTO `augments` VALUES(299, 0, 122, 1, 0, 0); -- Blue Magic skill+1
+INSERT INTO `augments` VALUES(300, 0, 123, 1, 0, 0); -- Geomancy Skill+1
+INSERT INTO `augments` VALUES(301, 0, 124, 1, 0, 0); -- Handbell Skill+1
+
+-- 302 to 319 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(302, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(303, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(304, 0, 0, 0, 0, 0);
@@ -385,60 +416,70 @@ INSERT INTO `augments` VALUES(316, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(317, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(318, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(319, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(320, 0, 357, 1, 0, 0);
-INSERT INTO `augments` VALUES(321, 0, 346, 1, 0, 0);
-INSERT INTO `augments` VALUES(322, 0, 455, 1, 0, 0);
-INSERT INTO `augments` VALUES(323, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(324, 0, 572, 1, 0, 0);
-INSERT INTO `augments` VALUES(325, 0, 571, 1, 0, 0);
-INSERT INTO `augments` VALUES(326, 0, 48, 1, 0, 0);
-INSERT INTO `augments` VALUES(327, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(328, 0, 421, 1, 0, 0);
-INSERT INTO `augments` VALUES(329, 0, 374, 1, 0, 0);
-INSERT INTO `augments` VALUES(330, 0, 491, 1, 0, 0);
-INSERT INTO `augments` VALUES(331, 0, 497, -1, 0, 0);
-INSERT INTO `augments` VALUES(332, 0, 175, 1, 0, 0);
-INSERT INTO `augments` VALUES(333, 0, 944, 1, 0, 0);
-INSERT INTO `augments` VALUES(334, 0, 487, 1, 0, 0);
-INSERT INTO `augments` VALUES(335, 0, 563, 1, 0, 0);
-INSERT INTO `augments` VALUES(336, 0, 574, 1, 0, 0);
-INSERT INTO `augments` VALUES(337, 0, 833, 1, 0, 0);
-INSERT INTO `augments` VALUES(338, 0, 138, 1, 0, 0);
-INSERT INTO `augments` VALUES(339, 0, 540, 1, 0, 0);
-INSERT INTO `augments` VALUES(340, 0, 575, 1, 0, 0);
-INSERT INTO `augments` VALUES(341, 0, 854, 1, 0, 0);
-INSERT INTO `augments` VALUES(342, 0, 139, 1, 0, 0);
-INSERT INTO `augments` VALUES(343, 0, 315, 1, 0, 0);
-INSERT INTO `augments` VALUES(343, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(320, 0, 357, 1, 0, 0); -- Blood Pact ability delay -1
+INSERT INTO `augments` VALUES(321, 0, 346, 1, 0, 0); -- Avatar perpetuation cost -1
+INSERT INTO `augments` VALUES(322, 0, 455, 1, 0, 0); -- Song spellcasting time -1%
+INSERT INTO `augments` VALUES(323, 0, 519, 1, 0, 0); -- Cure spellcasting time -1%
+INSERT INTO `augments` VALUES(324, 0, 572, 1, 0, 0); -- Call Beast ability delay -1
+INSERT INTO `augments` VALUES(325, 0, 571, 1, 0, 0); -- Quick Draw ability delay -1
+INSERT INTO `augments` VALUES(326, 0, 48, 1, 0, 0); -- Weapon Skill Acc.+1
+INSERT INTO `augments` VALUES(327, 0, 840, 1, 0, 0); -- Weapon skill damage+1% (unsure if this is all hits damage or first hit damage, leaving blank until determined)
+INSERT INTO `augments` VALUES(328, 0, 421, 1, 0, 0); -- Crit. hit damage+1%
+INSERT INTO `augments` VALUES(329, 0, 374, 1, 0, 0); -- Cure potency+1%
+INSERT INTO `augments` VALUES(330, 0, 491, 1, 0, 0); -- Waltz potency+1%
+INSERT INTO `augments` VALUES(331, 0, 497, -1, 0, 0); -- Waltz ability delay -1
+INSERT INTO `augments` VALUES(332, 0, 175, 1, 0, 0); -- Sklchn.dmg.+1%
+INSERT INTO `augments` VALUES(333, 0, 944, 1, 0, 0); -- Conserve TP+1
+INSERT INTO `augments` VALUES(334, 0, 487, 1, 0, 0); -- Magic burst dmg.+1%
+INSERT INTO `augments` VALUES(335, 0, 563, 1, 0, 0); -- Mag. crit. hit dmg.+1%
+INSERT INTO `augments` VALUES(336, 0, 574, 1, 0, 0); -- Sic and Ready ability delay -1
+INSERT INTO `augments` VALUES(337, 0, 833, 1, 0, 0); -- Song recast delay -1
+INSERT INTO `augments` VALUES(338, 0, 138, 1, 0, 0); -- Barrage+1 (additional shots,NOT acc)
+INSERT INTO `augments` VALUES(339, 5, 540, 1, 0, 0); -- Elemental Siphon+5 (value*5) Use Multiplier field.
+INSERT INTO `augments` VALUES(340, 0, 575, 1, 0, 0); -- Phantom Roll ability delay -1
+INSERT INTO `augments` VALUES(341, 0, 854, 1, 0, 0); -- Repair potency+1%
+INSERT INTO `augments` VALUES(342, 0, 139, 1, 0, 0); -- Waltz TP cost -1
+INSERT INTO `augments` VALUES(343, 0, 315, 1, 0, 0); -- "Drain" and "Aspir" Potency +1
+INSERT INTO `augments` VALUES(343, 0, 0, 0, 0, 0); -- Cont.
+
+-- 344 to 349 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(344, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(345, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(346, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(347, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(348, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(349, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(350, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(351, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(352, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(353, 0, 345, 50, 0, 0);
-INSERT INTO `augments` VALUES(354, 0, 430, 1, 0, 0);
-INSERT INTO `augments` VALUES(355, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(356, 0, 375, 1, 0, 0);
+INSERT INTO `augments` VALUES(347, 0, 0, 0, 0, 0); -- Healing Magic Recast Delay -1
+INSERT INTO `augments` VALUES(348, 0, 0, 0, 0, 0); -- Elemental Magic Recast Delay -1
+INSERT INTO `augments` VALUES(349, 0, 0, 0, 0, 0); -- Enfeebling Magic Recast Delay -1
+INSERT INTO `augments` VALUES(350, 0, 0, 0, 0, 0); -- Occ. maximizes magic accuracy+1%
+INSERT INTO `augments` VALUES(351, 0, 909, 1, 0, 0); -- Occ. quickens spellcasting+1%
+INSERT INTO `augments` VALUES(352, 0, 0, 0, 0, 0); -- Occ. grants dmg. bonus based on TP+1%
+INSERT INTO `augments` VALUES(353, 0, 345, 50, 0, 0); -- TP Bonus +50
+INSERT INTO `augments` VALUES(354, 0, 430, 1, 0, 0);  -- Quadruple Attack+1%
+INSERT INTO `augments` VALUES(355, 0, 0, 0, 0, 0); -- Enhancing Magic Recast Delay -1
+INSERT INTO `augments` VALUES(356, 0, 375, 1, 0, 0); -- Potency of Cure received+1%
+
+-- 354 to 362 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(357, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(358, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(359, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(360, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES(360, 0, 880, 10, 0, 0); -- Save TP+10: Mod undefined as of yet so leaving blank.
 INSERT INTO `augments` VALUES(361, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(362, 0, 311, 1, 0, 0);
-INSERT INTO `augments` VALUES(363, 0, 518, 1, 0, 0);
-INSERT INTO `augments` VALUES(364, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(365, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(366, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(367, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(368, 0, 301, 1, 0, 0);
-INSERT INTO `augments` VALUES(369, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(370, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(371, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(372, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(362, 0, 311, 1, 0, 0); -- Magic Damage+1
+INSERT INTO `augments` VALUES(363, 0, 518, 1, 0, 0); -- Chance of successful block+1
+INSERT INTO `augments` VALUES(364, 0, 0, 0, 0, 0); -- 364 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(365, 0, 0, 0, 0, 0); -- 365 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(366, 0, 0, 0, 0, 0); -- Blood Pact Ability Delay II: (modId is 541 but no idea what the value of the augment is so leaving zero until the value is determined)
+INSERT INTO `augments` VALUES(367, 0, 0, 0, 0, 0); -- 367 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
+INSERT INTO `augments` VALUES(368, 0, 301, 1, 0, 0); -- Phalanx+1
+INSERT INTO `augments` VALUES(369, 0, 126, 1, 1, 1); -- Avatar: Blood Pact Dmg+1
+INSERT INTO `augments` VALUES(370, 0, 836, 1, 0, 0); -- Reverse Flourish+1
+INSERT INTO `augments` VALUES(371, 0, 0, 0, 0, 0); -- Regen Potency+1: Mod undefined as of yet so leaving blank.
+INSERT INTO `augments` VALUES(372, 0, 0, 0, 0, 0); -- Embolden+1: Mod undefined as of yet so leaving blank.
+
+-- 373 to 511 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(373, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(374, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(375, 0, 0, 0, 0, 0);
@@ -578,113 +619,117 @@ INSERT INTO `augments` VALUES(508, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(509, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(510, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(511, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(512, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(513, 0, 9, 1, 0, 0);
-INSERT INTO `augments` VALUES(514, 0, 10, 1, 0, 0);
-INSERT INTO `augments` VALUES(515, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(516, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(517, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(518, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(519, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(520, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(521, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(522, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(523, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(524, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(525, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(526, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(526, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(526, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(527, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(527, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(527, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(528, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(528, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(528, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(529, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(529, 0, 9, 1, 0, 0);
-INSERT INTO `augments` VALUES(529, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(530, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(530, 0, 9, 1, 0, 0);
-INSERT INTO `augments` VALUES(530, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(531, 0, 9, 1, 0, 0);
-INSERT INTO `augments` VALUES(531, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(531, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(532, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(532, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(532, 0, 10, 1, 0, 0);
-INSERT INTO `augments` VALUES(533, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(533, 0, 10, 1, 0, 0);
-INSERT INTO `augments` VALUES(533, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(534, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(534, 0, 10, 1, 0, 0);
-INSERT INTO `augments` VALUES(534, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(535, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(535, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(535, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(536, 0, 8, -1, 0, 0);
-INSERT INTO `augments` VALUES(536, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(536, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(537, 0, 9, -1, 0, 0);
-INSERT INTO `augments` VALUES(537, 0, 10, -1, 0, 0);
-INSERT INTO `augments` VALUES(537, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(538, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(538, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(538, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(539, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(539, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(539, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(540, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(540, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(540, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(541, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(541, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(541, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(542, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(542, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(542, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(543, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(543, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(543, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(544, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(544, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(544, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(545, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(545, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(545, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(546, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(546, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(546, 0, 14, -1, 0, 0);
-INSERT INTO `augments` VALUES(547, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(547, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(547, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(548, 0, 11, -1, 0, 0);
-INSERT INTO `augments` VALUES(548, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(548, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(549, 0, 12, -1, 0, 0);
-INSERT INTO `augments` VALUES(549, 0, 13, -1, 0, 0);
-INSERT INTO `augments` VALUES(549, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(550, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(550, 0, 9, 1, 0, 0);
-INSERT INTO `augments` VALUES(551, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(551, 0, 10, 1, 0, 0);
-INSERT INTO `augments` VALUES(552, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(552, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(553, 0, 9, 1, 0, 0);
-INSERT INTO `augments` VALUES(553, 0, 11, 1, 0, 0);
-INSERT INTO `augments` VALUES(554, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(554, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(555, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(555, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(556, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(556, 0, 13, 1, 0, 0);
-INSERT INTO `augments` VALUES(556, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(557, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(557, 0, 14, 1, 0, 0);
-INSERT INTO `augments` VALUES(558, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(558, 0, 12, 1, 0, 0);
-INSERT INTO `augments` VALUES(559, 0, 8, 1, 0, 0);
-INSERT INTO `augments` VALUES(559, 0, 13, 1, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(512, 0, 8, 1, 0, 0); -- STR+1
+INSERT INTO `augments` VALUES(513, 0, 9, 1, 0, 0); -- DEX+1
+INSERT INTO `augments` VALUES(514, 0, 10, 1, 0, 0); -- VIT+1
+INSERT INTO `augments` VALUES(515, 0, 11, 1, 0, 0); -- AGI+1
+INSERT INTO `augments` VALUES(516, 0, 12, 1, 0, 0); -- INT+1
+INSERT INTO `augments` VALUES(517, 0, 13, 1, 0, 0); -- MND+1
+INSERT INTO `augments` VALUES(518, 0, 14, 1, 0, 0); -- CHR+1
+INSERT INTO `augments` VALUES(519, 0, 8, -1, 0, 0); -- STR-1
+INSERT INTO `augments` VALUES(520, 0, 9, -1, 0, 0); -- DEX-1
+INSERT INTO `augments` VALUES(521, 0, 10, -1, 0, 0); -- VIT-1
+INSERT INTO `augments` VALUES(522, 0, 11, -1, 0, 0); -- AGI-1
+INSERT INTO `augments` VALUES(523, 0, 12, -1, 0, 0); -- INT-1
+INSERT INTO `augments` VALUES(524, 0, 13, -1, 0, 0); -- MND-1
+INSERT INTO `augments` VALUES(525, 0, 14, -1, 0, 0); -- CHR-1
+INSERT INTO `augments` VALUES(526, 0, 8, 1, 0, 0); -- STR+1 DEX-1 VIT-1
+INSERT INTO `augments` VALUES(526, 0, 9, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(526, 0, 10, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(527, 0, 8, 1, 0, 0); -- STR+1 DEX-1 AGI-1
+INSERT INTO `augments` VALUES(527, 0, 9, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(527, 0, 11, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(528, 0, 8, 1, 0, 0); -- STR+1 VIT-1 AGI-1
+INSERT INTO `augments` VALUES(528, 0, 10, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(528, 0, 11, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(529, 0, 8, -1, 0, 0); -- STR-1 DEX+1 VIT-1
+INSERT INTO `augments` VALUES(529, 0, 9, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(529, 0, 10, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(530, 0, 8, -1, 0, 0); -- STR-1 DEX+1 AGI-1
+INSERT INTO `augments` VALUES(530, 0, 9, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(530, 0, 11, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(531, 0, 9, 1, 0, 0); -- DEX+1 VIT-1 AGI-1
+INSERT INTO `augments` VALUES(531, 0, 10, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(531, 0, 11, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(532, 0, 8, -1, 0, 0); -- STR-1 DEX-1 VIT+1
+INSERT INTO `augments` VALUES(532, 0, 9, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(532, 0, 10, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(533, 0, 8, -1, 0, 0); -- STR-1 VIT+1 AGI-1
+INSERT INTO `augments` VALUES(533, 0, 10, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(533, 0, 11, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(534, 0, 9, -1, 0, 0); -- DEX-1 VIT+1 AGI-1
+INSERT INTO `augments` VALUES(534, 0, 10, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(534, 0, 11, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(535, 0, 8, -1, 0, 0); -- STR-1 DEX-1 AGI+1
+INSERT INTO `augments` VALUES(535, 0, 9, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(535, 0, 11, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(536, 0, 8, -1, 0, 0); -- STR-1 VIT-1 AGI+1
+INSERT INTO `augments` VALUES(536, 0, 10, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(536, 0, 11, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(537, 0, 9, -1, 0, 0); -- DEX-1 VIT-1 AGI+1
+INSERT INTO `augments` VALUES(537, 0, 10, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(537, 0, 11, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(538, 0, 11, 1, 0, 0); -- AGI+1 INT-1 MND-1
+INSERT INTO `augments` VALUES(538, 0, 12, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(538, 0, 13, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(539, 0, 11, 1, 0, 0); -- AGI+1 INT-1 CHR-1
+INSERT INTO `augments` VALUES(539, 0, 12, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(539, 0, 14, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(540, 0, 11, 1, 0, 0); -- AGI+1 MND-1 CHR-1
+INSERT INTO `augments` VALUES(540, 0, 13, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(540, 0, 14, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(541, 0, 11, -1, 0, 0); -- AGI-1 INT+1 MND-1
+INSERT INTO `augments` VALUES(541, 0, 12, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(541, 0, 13, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(542, 0, 11, -1, 0, 0); -- AGI-1 INT+1 CHR-1
+INSERT INTO `augments` VALUES(542, 0, 12, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(542, 0, 14, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(543, 0, 12, 1, 0, 0); -- INT+1 MND-1 CHR-1
+INSERT INTO `augments` VALUES(543, 0, 13, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(543, 0, 14, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(544, 0, 11, -1, 0, 0); -- AGI-1 INT-1 MND+1
+INSERT INTO `augments` VALUES(544, 0, 12, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(544, 0, 13, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(545, 0, 11, -1, 0, 0); -- AGI-1 MND+1 CHR-1
+INSERT INTO `augments` VALUES(545, 0, 13, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(545, 0, 14, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(546, 0, 12, -1, 0, 0); -- INT-1 MND+1 CHR-1
+INSERT INTO `augments` VALUES(546, 0, 13, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(546, 0, 14, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(547, 0, 11, -1, 0, 0); -- AGI-1 INT-1 CHR+1
+INSERT INTO `augments` VALUES(547, 0, 12, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(547, 0, 14, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(548, 0, 11, -1, 0, 0); -- AGI-1 MND-1 CHR+1
+INSERT INTO `augments` VALUES(548, 0, 13, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(548, 0, 14, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(549, 0, 12, -1, 0, 0); -- INT-1 MND-1 CHR+1
+INSERT INTO `augments` VALUES(549, 0, 13, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(549, 0, 14, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(550, 0, 8, 1, 0, 0); -- STR+1 DEX+1
+INSERT INTO `augments` VALUES(550, 0, 9, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(551, 0, 8, 1, 0, 0); -- STR+1 VIT+1
+INSERT INTO `augments` VALUES(551, 0, 10, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(552, 0, 8, 1, 0, 0); -- STR+1 AGI+1
+INSERT INTO `augments` VALUES(552, 0, 11, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(553, 0, 9, 1, 0, 0); -- DEX+1 AGI+1
+INSERT INTO `augments` VALUES(553, 0, 11, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(554, 0, 12, 1, 0, 0); -- INT+1 MND+1
+INSERT INTO `augments` VALUES(554, 0, 13, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(555, 0, 13, 1, 0, 0); -- MND+1 CHR+1
+INSERT INTO `augments` VALUES(555, 0, 14, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(556, 0, 12, 1, 0, 0); -- INT+1 MND+1 CHR+1
+INSERT INTO `augments` VALUES(556, 0, 13, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(556, 0, 14, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(557, 0, 8, 1, 0, 0); -- STR+1 CHR+1
+INSERT INTO `augments` VALUES(557, 0, 14, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(558, 0, 8, 1, 0, 0); -- STR+1 INT+1
+INSERT INTO `augments` VALUES(558, 0, 12, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(559, 0, 8, 1, 0, 0); -- STR+1 MND+1
+INSERT INTO `augments` VALUES(559, 0, 13, 1, 0, 0); -- Cont.
+
+-- 560 to 739 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(560, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(561, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(562, 0, 0, 0, 0, 0);
@@ -765,7 +810,7 @@ INSERT INTO `augments` VALUES(636, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(637, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(638, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(639, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(640, 0, 0, 0, 0, 0);
+INSERT INTO `augments` VALUES(640, 2, 291, 2, 0, 0); -- Counter +2 (increases by 2)
 INSERT INTO `augments` VALUES(641, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(642, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(643, 0, 0, 0, 0, 0);
@@ -865,106 +910,110 @@ INSERT INTO `augments` VALUES(736, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(737, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(738, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(739, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(740, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(741, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(742, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(743, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(744, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(745, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(746, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(747, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(748, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(749, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(750, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(751, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(752, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(753, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(754, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(755, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(756, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(757, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(758, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(759, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(760, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(761, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(762, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(763, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(764, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(765, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(766, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(767, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(768, 0, 54, 1, 0, 0);
-INSERT INTO `augments` VALUES(769, 0, 55, 1, 0, 0);
-INSERT INTO `augments` VALUES(770, 0, 56, 1, 0, 0);
-INSERT INTO `augments` VALUES(771, 0, 57, 1, 0, 0);
-INSERT INTO `augments` VALUES(772, 0, 58, 1, 0, 0);
-INSERT INTO `augments` VALUES(773, 0, 59, 1, 0, 0);
-INSERT INTO `augments` VALUES(774, 0, 60, 1, 0, 0);
-INSERT INTO `augments` VALUES(775, 0, 61, 1, 0, 0);
-INSERT INTO `augments` VALUES(776, 0, 54, -1, 0, 0);
-INSERT INTO `augments` VALUES(777, 0, 55, -1, 0, 0);
-INSERT INTO `augments` VALUES(778, 0, 56, -1, 0, 0);
-INSERT INTO `augments` VALUES(779, 0, 57, -1, 0, 0);
-INSERT INTO `augments` VALUES(780, 0, 58, -1, 0, 0);
-INSERT INTO `augments` VALUES(781, 0, 59, -1, 0, 0);
-INSERT INTO `augments` VALUES(782, 0, 60, -1, 0, 0);
-INSERT INTO `augments` VALUES(783, 0, 61, -1, 0, 0);
-INSERT INTO `augments` VALUES(784, 0, 54, 1, 0, 0);
-INSERT INTO `augments` VALUES(784, 0, 59, -1, 0, 0);
-INSERT INTO `augments` VALUES(785, 0, 54, 1, 0, 0);
-INSERT INTO `augments` VALUES(785, 0, 59, -1, 0, 0);
-INSERT INTO `augments` VALUES(786, 0, 55, -1, 0, 0);
-INSERT INTO `augments` VALUES(786, 0, 56, 1, 0, 0);
-INSERT INTO `augments` VALUES(787, 0, 56, -1, 0, 0);
-INSERT INTO `augments` VALUES(787, 0, 57, 1, 0, 0);
-INSERT INTO `augments` VALUES(788, 0, 57, -1, 0, 0);
-INSERT INTO `augments` VALUES(788, 0, 58, 1, 0, 0);
-INSERT INTO `augments` VALUES(789, 0, 58, 1, 0, 0);
-INSERT INTO `augments` VALUES(789, 0, 59, 1, 0, 0);
-INSERT INTO `augments` VALUES(790, 0, 60, 1, 0, 0);
-INSERT INTO `augments` VALUES(790, 0, 61, -1, 0, 0);
-INSERT INTO `augments` VALUES(791, 0, 60, -1, 0, 0);
-INSERT INTO `augments` VALUES(791, 0, 61, 1, 0, 0);
-INSERT INTO `augments` VALUES(792, 0, 54, 1, 0, 0);
-INSERT INTO `augments` VALUES(792, 0, 56, 1, 0, 0);
-INSERT INTO `augments` VALUES(792, 0, 58, 1, 0, 0);
-INSERT INTO `augments` VALUES(792, 0, 60, 1, 0, 0);
-INSERT INTO `augments` VALUES(793, 0, 55, 1, 0, 0);
-INSERT INTO `augments` VALUES(793, 0, 57, 1, 0, 0);
-INSERT INTO `augments` VALUES(793, 0, 59, 1, 0, 0);
-INSERT INTO `augments` VALUES(793, 0, 61, 1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 54, 1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 56, 1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 58, 1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 60, 1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 55, -1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 57, -1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 59, -1, 0, 0);
-INSERT INTO `augments` VALUES(794, 0, 61, -1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 54, -1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 56, -1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 58, -1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 60, -1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 55, 1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 57, 1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 59, 1, 0, 0);
-INSERT INTO `augments` VALUES(795, 0, 61, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 54, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 55, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 56, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 57, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 58, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 59, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 60, 1, 0, 0);
-INSERT INTO `augments` VALUES(796, 0, 61, 1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 54, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 55, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 56, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 57, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 58, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 59, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 60, -1, 0, 0);
-INSERT INTO `augments` VALUES(797, 0, 61, -1, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(740, 0, 0, 0, 0, 0); -- DMG:+1
+insert into `augments` VALUES(741, 0, 0, 0, 0, 0); -- Dmg:+33   Needs to work in either hand, whichever one the weapon is equipped in.
+insert into `augments` VALUES(742, 0, 0, 0, 0, 0); -- Dmg:+65   Ranged weapons use diff AugID (starts at 746) and diff ModID.
+insert into `augments` VALUES(743, 0, 0, 0, 0, 0); -- Dmg:+97    (melee, not ranged)
+insert into `augments` VALUES(744, 0, 0, 0, 0, 0); -- Dmg:-1    (melee, not ranged)
+insert into `augments` VALUES(745, 0, 0, 0, 0, 0); -- Dmg:-33    (melee, not ranged)
+insert into `augments` VALUES(746, 0, 0, 0, 0, 0); -- Dmg:+1    (ranged, not melee)
+insert into `augments` VALUES(747, 0, 0, 0, 0, 0); -- Dmg:+33    (ranged, not melee)
+insert into `augments` VALUES(748, 0, 0, 0, 0, 0); -- Dmg:+65    (ranged, not melee)
+insert into `augments` VALUES(749, 0, 0, 0, 0, 0); -- Dmg:+97    (ranged, not melee)
+insert into `augments` VALUES(750, 0, 0, 0, 0, 0); -- Dmg:-1    (ranged, not melee)
+insert into `augments` VALUES(751, 0, 0, 0, 0, 0); -- Dmg:-33    (ranged, not melee)
+insert into `augments` VALUES(752, 0, 0, 0, 0, 0); -- Delay:+1    (melee, not ranged)
+insert into `augments` VALUES(753, 0, 0, 0, 0, 0); -- Delay:+33    (melee, not ranged)
+insert into `augments` VALUES(754, 0, 0, 0, 0, 0); -- Delay:+65    (melee, not ranged)
+insert into `augments` VALUES(755, 0, 0, 0, 0, 0); -- Delay:+97    (melee, not ranged)
+insert into `augments` VALUES(756, 0, 0, 0, 0, 0); -- Delay:-1    (melee, not ranged)
+insert into `augments` VALUES(757, 0, 0, 0, 0, 0); -- Delay:-33    (melee, not ranged)
+insert into `augments` VALUES(758, 0, 0, 0, 0, 0); -- Delay:-65    (melee, not ranged)
+insert into `augments` VALUES(759, 0, 0, 0, 0, 0); -- Delay:-97    (melee, not ranged)
+insert into `augments` VALUES(760, 0, 0, 0, 0, 0); -- Delay:+1    (ranged, not melee)
+insert into `augments` VALUES(761, 0, 0, 0, 0, 0); -- Delay:+33    (ranged, not melee)
+insert into `augments` VALUES(762, 0, 0, 0, 0, 0); -- Delay:+65    (ranged, not melee)
+insert into `augments` VALUES(763, 0, 0, 0, 0, 0); -- Delay:+97    (ranged, not melee)
+insert into `augments` VALUES(764, 0, 0, 0, 0, 0); -- Delay:-1    (ranged, not melee)
+insert into `augments` VALUES(765, 0, 0, 0, 0, 0); -- Delay:-33    (ranged, not melee)
+insert into `augments` VALUES(766, 0, 0, 0, 0, 0); -- Delay:-65    (ranged, not melee)
+insert into `augments` VALUES(767, 0, 0, 0, 0, 0); -- Delay:-97    (ranged, not melee)
+INSERT INTO `augments` VALUES(768, 0, 54, 1, 0, 0); -- Fire resist+1
+INSERT INTO `augments` VALUES(769, 0, 55, 1, 0, 0); -- Ice resist+1
+INSERT INTO `augments` VALUES(770, 0, 56, 1, 0, 0); -- Wind resist+1
+INSERT INTO `augments` VALUES(771, 0, 57, 1, 0, 0); -- Earth resist+1
+INSERT INTO `augments` VALUES(772, 0, 58, 1, 0, 0); -- Lightning resist+1
+INSERT INTO `augments` VALUES(773, 0, 59, 1, 0, 0); -- Water resist+1
+INSERT INTO `augments` VALUES(774, 0, 60, 1, 0, 0); -- Light resist+1
+INSERT INTO `augments` VALUES(775, 0, 61, 1, 0, 0); -- Dark resist+1
+INSERT INTO `augments` VALUES(776, 0, 54, -1, 0, 0); -- Fire resist-1
+INSERT INTO `augments` VALUES(777, 0, 55, -1, 0, 0); -- Ice resist-1
+INSERT INTO `augments` VALUES(778, 0, 56, -1, 0, 0); -- Wind resist-1
+INSERT INTO `augments` VALUES(779, 0, 57, -1, 0, 0); -- Earth resist-1
+INSERT INTO `augments` VALUES(780, 0, 58, -1, 0, 0); -- Lightning resist-1
+INSERT INTO `augments` VALUES(781, 0, 59, -1, 0, 0); -- Water resist-1
+INSERT INTO `augments` VALUES(782, 0, 60, -1, 0, 0); -- Light resist-1
+INSERT INTO `augments` VALUES(783, 0, 61, -1, 0, 0); -- Dark resist-1
+INSERT INTO `augments` VALUES(784, 0, 54, 1, 0, 0); -- Fire resist+1 Water resist-1
+INSERT INTO `augments` VALUES(784, 0, 59, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(785, 0, 54, 1, 0, 0); -- Fire resist-1 Water resist+1
+INSERT INTO `augments` VALUES(785, 0, 59, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(786, 0, 55, -1, 0, 0); -- Ice resist-1 Wind resist+1
+INSERT INTO `augments` VALUES(786, 0, 56, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(787, 0, 56, -1, 0, 0); -- Wind resist-1 Earth resist+1
+INSERT INTO `augments` VALUES(787, 0, 57, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(788, 0, 57, -1, 0, 0); -- Earth resist-1 Lightning resist+1
+INSERT INTO `augments` VALUES(788, 0, 58, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(789, 0, 58, 1, 0, 0); -- Lightning resist-1 Water resist+1
+INSERT INTO `augments` VALUES(789, 0, 59, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(790, 0, 60, 1, 0, 0); -- Light resist+1 Dark resist-1
+INSERT INTO `augments` VALUES(790, 0, 61, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(791, 0, 60, -1, 0, 0); -- Light resist-1 Dark resist+1
+INSERT INTO `augments` VALUES(791, 0, 61, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(792, 0, 54, 1, 0, 0); -- Fire, Wind, Lightning, Light resists+1
+INSERT INTO `augments` VALUES(792, 0, 56, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(792, 0, 58, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(792, 0, 60, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(793, 0, 55, 1, 0, 0); -- Ice, Earth, Water, Dark resists+1
+INSERT INTO `augments` VALUES(793, 0, 57, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(793, 0, 59, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(793, 0, 61, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 54, 1, 0, 0); -- Fire, Wind, Lightning, Light resists+1, Ice, Earth, Water, Dark resists-1
+INSERT INTO `augments` VALUES(794, 0, 56, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 58, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 60, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 55, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 57, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 59, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(794, 0, 61, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 54, -1, 0, 0); -- Fire, Wind, Lightning, Light resists-1, Ice, Earth, Water, Dark resists+1
+INSERT INTO `augments` VALUES(795, 0, 56, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 58, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 60, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 55, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 57, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 59, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(795, 0, 61, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 54, 1, 0, 0); -- All elemental resists+1
+INSERT INTO `augments` VALUES(796, 0, 55, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 56, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 57, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 58, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 59, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 60, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(796, 0, 61, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 54, -1, 0, 0); -- All elemental resists -1
+INSERT INTO `augments` VALUES(797, 0, 55, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 56, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 57, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 58, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 59, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 60, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(797, 0, 61, -1, 0, 0); -- Cont.
+
+-- 798 to 927 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(798, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(799, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(800, 0, 0, 0, 0, 0);
@@ -999,31 +1048,32 @@ INSERT INTO `augments` VALUES(828, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(829, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(830, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(831, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(832, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(833, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(834, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(835, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(836, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(837, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(838, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(839, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(840, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(841, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(842, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(843, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(844, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(845, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(846, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(847, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(848, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(849, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(850, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(851, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(852, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(853, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(854, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(855, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(856, 0, 0, 0, 0, 0);
+-- NOTICE: additional effect augments will not work until we finish refactoring additional effects. See Teo in discrod for details.
+INSERT INTO `augments` VALUES(832, 0, 0, 0, 0, 0); -- Additional Effect: Fire Dmg      (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(833, 0, 0, 0, 0, 0); -- Additional Effect: Ice Dmg       (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(834, 0, 0, 0, 0, 0); -- Additional Effect: Wind Dmg      (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(835, 0, 0, 0, 0, 0); -- Additional Effect: Earth Dmg     (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(836, 0, 0, 0, 0, 0); -- Additional Effect: Lightning Dmg (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(837, 0, 0, 0, 0, 0); -- Additional Effect: Water Dmg     (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(838, 0, 0, 0, 0, 0); -- Additional Effect: Light Dmg     (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(839, 0, 0, 0, 0, 0); -- Additional Effect: Darkness Dmg  (Base of 5, each additional point +1 for range of 5 to 36)
+INSERT INTO `augments` VALUES(840, 0, 0, 0, 0, 0); -- Additional Effect: Disease +1
+INSERT INTO `augments` VALUES(841, 0, 0, 0, 0, 0); -- Additional Effect: Paralysis +1
+INSERT INTO `augments` VALUES(842, 0, 0, 0, 0, 0); -- Additional Effect: Silence +1
+INSERT INTO `augments` VALUES(843, 0, 0, 0, 0, 0); -- Additional Effect: Slow +1
+INSERT INTO `augments` VALUES(844, 0, 0, 0, 0, 0); -- Additional Effect: Stun +1
+INSERT INTO `augments` VALUES(845, 0, 0, 0, 0, 0); -- Additional Effect: Poison +1
+INSERT INTO `augments` VALUES(846, 0, 0, 0, 0, 0); -- Additional Effect: Flash +1
+INSERT INTO `augments` VALUES(847, 0, 0, 0, 0, 0); -- Additional Effect: Blindness +1
+INSERT INTO `augments` VALUES(848, 0, 0, 0, 0, 0); -- Additional Effect: Weakens Defense +1
+INSERT INTO `augments` VALUES(849, 0, 0, 0, 0, 0); -- Additional Effect: Sleep +1
+INSERT INTO `augments` VALUES(850, 0, 0, 0, 0, 0); -- Additional Effect: Weakens Attack +1
+INSERT INTO `augments` VALUES(851, 0, 0, 0, 0, 0); -- Additional Effect: Impairs Evasion +1
+INSERT INTO `augments` VALUES(852, 0, 0, 0, 0, 0); -- Additional Effect: Lowers Accuracy +1
+INSERT INTO `augments` VALUES(853, 0, 0, 0, 0, 0); -- Additional Effect: Lowers Magic Evasion +1
+INSERT INTO `augments` VALUES(854, 0, 0, 0, 0, 0); -- Additional Effect: Lowers Magic Attack +1
+INSERT INTO `augments` VALUES(855, 0, 0, 0, 0, 0); -- Additional Effect: Lowers Magic Defense +1
+INSERT INTO `augments` VALUES(856, 0, 0, 0, 0, 0); -- Additional Effect: Lowers Magic Accuracy +1
 INSERT INTO `augments` VALUES(857, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(858, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(859, 0, 0, 0, 0, 0);
@@ -1063,8 +1113,8 @@ INSERT INTO `augments` VALUES(892, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(893, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(894, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(895, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(896, 0, 432, 1, 0, 0);
-INSERT INTO `augments` VALUES(897, 0, 96, 1, 0, 0);
+INSERT INTO `augments` VALUES(896, 0, 432, 1, 0, 0); -- Sword Enhancement Spell Damage +1
+INSERT INTO `augments` VALUES(897, 0, 96, 1, 0, 0); -- Enhances Souleater Effect +1%
 INSERT INTO `augments` VALUES(898, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(899, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(900, 0, 0, 0, 0, 0);
@@ -1080,7 +1130,7 @@ INSERT INTO `augments` VALUES(909, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(910, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(911, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(912, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(913, 0, 169, 6, 0, 0);
+INSERT INTO `augments` VALUES(913, 0, 169, 6, 0, 0); -- Movement Speed
 INSERT INTO `augments` VALUES(914, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(915, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(916, 0, 0, 0, 0, 0);
@@ -1095,142 +1145,157 @@ INSERT INTO `augments` VALUES(924, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(925, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(926, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(927, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(928, 0, 347, 1, 0, 0);
-INSERT INTO `augments` VALUES(928, 0, 544, 1, 0, 0);
-INSERT INTO `augments` VALUES(928, 0, 553, -1, 0, 0);
-INSERT INTO `augments` VALUES(929, 0, 350, 1, 0, 0);
-INSERT INTO `augments` VALUES(929, 0, 547, 1, 0, 0);
-INSERT INTO `augments` VALUES(929, 0, 556, -1, 0, 0);
-INSERT INTO `augments` VALUES(930, 0, 352, 1, 0, 0);
-INSERT INTO `augments` VALUES(930, 0, 549, 1, 0, 0);
-INSERT INTO `augments` VALUES(930, 0, 558, -1, 0, 0);
-INSERT INTO `augments` VALUES(931, 0, 348, 1, 0, 0);
-INSERT INTO `augments` VALUES(931, 0, 545, 1, 0, 0);
-INSERT INTO `augments` VALUES(931, 0, 554, -1, 0, 0);
-INSERT INTO `augments` VALUES(932, 0, 351, 1, 0, 0);
-INSERT INTO `augments` VALUES(932, 0, 548, 1, 0, 0);
-INSERT INTO `augments` VALUES(932, 0, 557, -1, 0, 0);
-INSERT INTO `augments` VALUES(933, 0, 349, 1, 0, 0);
-INSERT INTO `augments` VALUES(933, 0, 546, 1, 0, 0);
-INSERT INTO `augments` VALUES(933, 0, 555, -1, 0, 0);
-INSERT INTO `augments` VALUES(934, 0, 353, 1, 0, 0);
-INSERT INTO `augments` VALUES(934, 0, 550, 1, 0, 0);
-INSERT INTO `augments` VALUES(934, 0, 559, -1, 0, 0);
-INSERT INTO `augments` VALUES(935, 0, 354, 1, 0, 0);
-INSERT INTO `augments` VALUES(935, 0, 551, 1, 0, 0);
-INSERT INTO `augments` VALUES(935, 0, 560, -1, 0, 0);
-INSERT INTO `augments` VALUES(936, 0, 544, 1, 0, 0);
-INSERT INTO `augments` VALUES(937, 0, 547, 1, 0, 0);
-INSERT INTO `augments` VALUES(938, 0, 549, 1, 0, 0);
-INSERT INTO `augments` VALUES(939, 0, 545, 1, 0, 0);
-INSERT INTO `augments` VALUES(940, 0, 548, 1, 0, 0);
-INSERT INTO `augments` VALUES(941, 0, 546, 1, 0, 0);
-INSERT INTO `augments` VALUES(942, 0, 550, 1, 0, 0);
-INSERT INTO `augments` VALUES(943, 0, 551, 1, 0, 0);
-INSERT INTO `augments` VALUES(944, 0, 347, 1, 0, 0);
-INSERT INTO `augments` VALUES(945, 0, 350, 1, 0, 0);
-INSERT INTO `augments` VALUES(946, 0, 352, 1, 0, 0);
-INSERT INTO `augments` VALUES(947, 0, 348, 1, 0, 0);
-INSERT INTO `augments` VALUES(948, 0, 351, 1, 0, 0);
-INSERT INTO `augments` VALUES(949, 0, 349, 1, 0, 0);
-INSERT INTO `augments` VALUES(950, 0, 353, 1, 0, 0);
-INSERT INTO `augments` VALUES(951, 0, 354, 1, 0, 0);
-INSERT INTO `augments` VALUES(952, 0, 553, -1, 0, 0);
-INSERT INTO `augments` VALUES(953, 0, 556, -1, 0, 0);
-INSERT INTO `augments` VALUES(954, 0, 558, -1, 0, 0);
-INSERT INTO `augments` VALUES(955, 0, 554, -1, 0, 0);
-INSERT INTO `augments` VALUES(956, 0, 557, -1, 0, 0);
-INSERT INTO `augments` VALUES(957, 0, 555, -1, 0, 0);
-INSERT INTO `augments` VALUES(958, 0, 559, -1, 0, 0);
-INSERT INTO `augments` VALUES(959, 0, 560, -1, 0, 0);
-INSERT INTO `augments` VALUES(960, 0, 544, 1, 0, 0);
-INSERT INTO `augments` VALUES(960, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(961, 0, 547, 1, 0, 0);
-INSERT INTO `augments` VALUES(961, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(962, 0, 549, 1, 0, 0);
-INSERT INTO `augments` VALUES(962, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(963, 0, 545, 1, 0, 0);
-INSERT INTO `augments` VALUES(963, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(964, 0, 548, 1, 0, 0);
-INSERT INTO `augments` VALUES(964, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(965, 0, 546, 1, 0, 0);
-INSERT INTO `augments` VALUES(965, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(966, 0, 550, 1, 0, 0);
-INSERT INTO `augments` VALUES(966, 0, 0, 2, 0, 0);
-INSERT INTO `augments` VALUES(967, 0, 551, 1, 0, 0);
-INSERT INTO `augments` VALUES(967, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(968, 0, 347, 1, 0, 0);
-INSERT INTO `augments` VALUES(968, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(969, 0, 348, 1, 0, 0);
-INSERT INTO `augments` VALUES(969, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(970, 0, 352, 1, 0, 0);
-INSERT INTO `augments` VALUES(970, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(971, 0, 350, 1, 0, 0);
-INSERT INTO `augments` VALUES(971, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(972, 0, 351, 1, 0, 0);
-INSERT INTO `augments` VALUES(972, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(973, 0, 349, 1, 0, 0);
-INSERT INTO `augments` VALUES(973, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(974, 0, 353, 1, 0, 0);
-INSERT INTO `augments` VALUES(974, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(975, 0, 354, 1, 0, 0);
-INSERT INTO `augments` VALUES(975, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(976, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(977, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(978, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(979, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(980, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(981, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(982, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(983, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(984, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(985, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(986, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(987, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(988, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(989, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(990, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(991, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(992, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(993, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(994, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(995, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(996, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(997, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(998, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(999, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1000, 0, 544, 1, 0, 0);
-INSERT INTO `augments` VALUES(1000, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1001, 0, 547, 1, 0, 0);
-INSERT INTO `augments` VALUES(1001, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1002, 0, 549, 1, 0, 0);
-INSERT INTO `augments` VALUES(1002, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1003, 0, 545, 1, 0, 0);
-INSERT INTO `augments` VALUES(1003, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1004, 0, 548, 1, 0, 0);
-INSERT INTO `augments` VALUES(1004, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1005, 0, 546, 1, 0, 0);
-INSERT INTO `augments` VALUES(1005, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1006, 0, 550, 1, 0, 0);
-INSERT INTO `augments` VALUES(1006, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1007, 0, 551, 1, 0, 0);
-INSERT INTO `augments` VALUES(1007, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1008, 0, 347, 1, 0, 0);
-INSERT INTO `augments` VALUES(1008, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1009, 0, 348, 1, 0, 0);
-INSERT INTO `augments` VALUES(1009, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1010, 0, 352, 1, 0, 0);
-INSERT INTO `augments` VALUES(1010, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1011, 0, 350, 1, 0, 0);
-INSERT INTO `augments` VALUES(1011, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1012, 0, 351, 1, 0, 0);
-INSERT INTO `augments` VALUES(1012, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1013, 0, 349, 1, 0, 0);
-INSERT INTO `augments` VALUES(1013, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1014, 0, 353, 1, 0, 0);
-INSERT INTO `augments` VALUES(1014, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1015, 0, 354, 1, 0, 0);
-INSERT INTO `augments` VALUES(1015, 0, 0, 0, 0, 0);
+-- End unused block
+
+-- The Elemental affinity increase matches value, not displayed if value is zero.
+INSERT INTO `augments` VALUES(928, 0, 347, 1, 0, 0); -- Fire Affinity+1
+INSERT INTO `augments` VALUES(928, 0, 544, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(928, 0, 553, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(929, 0, 348, 1, 0, 0); -- Ice Affinity+1
+INSERT INTO `augments` VALUES(929, 0, 545, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(929, 0, 554, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(930, 0, 349, 1, 0, 0); -- Wind Affinity+1
+INSERT INTO `augments` VALUES(930, 0, 546, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(930, 0, 555, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(931, 0, 350, 1, 0, 0); -- Earth Affinity+1
+INSERT INTO `augments` VALUES(931, 0, 547, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(931, 0, 556, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(932, 0, 351, 1, 0, 0); -- Lightning Affinity+1
+INSERT INTO `augments` VALUES(932, 0, 548, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(932, 0, 557, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(933, 0, 352, 1, 0, 0); -- Water Affinity+1
+INSERT INTO `augments` VALUES(933, 0, 549, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(933, 0, 558, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(934, 0, 353, 1, 0, 0); -- Light Affinity+1
+INSERT INTO `augments` VALUES(934, 0, 550, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(934, 0, 559, -1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(935, 0, 354, 1, 0, 0); -- Dark Affinity+1
+INSERT INTO `augments` VALUES(935, 0, 551, 1, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(935, 0, 560, -1, 0, 0); -- Cont.
+
+INSERT INTO `augments` VALUES(936, 0, 544, 1, 0, 0); -- Fire Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(937, 0, 545, 1, 0, 0); -- Ice Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(938, 0, 546, 1, 0, 0); -- Wind Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(939, 0, 547, 1, 0, 0); -- Earth Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(940, 0, 548, 1, 0, 0); -- Lightning Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(941, 0, 549, 1, 0, 0); -- Water Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(942, 0, 550, 1, 0, 0); -- Light Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(943, 0, 551, 1, 0, 0); -- Dark Affinity Magic Accuracy+1
+INSERT INTO `augments` VALUES(944, 0, 347, 1, 0, 0); -- Fire Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(945, 0, 348, 1, 0, 0); -- Ice Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(946, 0, 349, 1, 0, 0); -- Wind Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(947, 0, 350, 1, 0, 0); -- Earth Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(948, 0, 351, 1, 0, 0); -- Lightning Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(949, 0, 352, 1, 0, 0); -- Water Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(950, 0, 353, 1, 0, 0); -- Light Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(951, 0, 354, 1, 0, 0); -- Dark Affinity Magic Damage+1
+INSERT INTO `augments` VALUES(952, 0, 553, -1, 0, 0); -- Fire Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(953, 0, 554, -1, 0, 0); -- Ice Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(954, 0, 555, -1, 0, 0); -- Wind Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(955, 0, 556, -1, 0, 0); -- Earth Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(956, 0, 557, -1, 0, 0); -- Thunder Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(957, 0, 558, -1, 0, 0); -- Water Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(958, 0, 559, -1, 0, 0); -- Light Affinity: Avatar perp. cost -1
+INSERT INTO `augments` VALUES(959, 0, 560, -1, 0, 0); -- Dark Affinity: Avatar perp. cost -1
+
+-- For 960 to 975 and 984 to 1015 the values behave differently.
+-- The Magic Accuracy increase matches value, not displayed if value is zero.
+INSERT INTO `augments` VALUES(960, 0, 544, 1, 0, 0); -- Fire Affinity: Magic Accuracy+0 Recast time -2% (Increases by 2)
+INSERT INTO `augments` VALUES(960, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(961, 0, 545, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(961, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(962, 0, 546, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(962, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(963, 0, 547, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(963, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(964, 0, 548, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(964, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(965, 0, 549, 1, 0, 0); -- Water Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(965, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(966, 0, 550, 1, 0, 0); -- Light Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(966, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(967, 0, 551, 1, 0, 0); -- Dark Affinity: (otherwise same as augID 960)
+INSERT INTO `augments` VALUES(967, 0, 0, 0, 0, 0); -- Cont.
+
+-- The Magic Damage increase matches value, not displayed if value is zero.
+INSERT INTO `augments` VALUES(968, 0, 347, 1, 0, 0); -- Fire Affinity: Magic Damage+0, Fire Affinity: Casting time -2% (Increases by 2)
+INSERT INTO `augments` VALUES(968, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(969, 0, 348, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(969, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(970, 0, 349, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(970, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(971, 0, 350, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(971, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(972, 0, 351, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(972, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(973, 0, 352, 1, 0, 0); -- Water Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(973, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(974, 0, 353, 1, 0, 0); -- Light Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(974, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(975, 0, 354, 1, 0, 0); -- Dark Affinity: (otherwise same as augID 968)
+INSERT INTO `augments` VALUES(975, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(976, 0, 0, 0, 0, 0); -- Fire Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(977, 0, 0, 0, 0, 0); -- Ice Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(978, 0, 0, 0, 0, 0); -- Wind Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(979, 0, 0, 0, 0, 0); -- Earth Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(980, 0, 0, 0, 0, 0); -- Lightning Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(981, 0, 0, 0, 0, 0); -- Water Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(982, 0, 0, 0, 0, 0); -- Light Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(983, 0, 0, 0, 0, 0); -- Dark Affin.: Blood Pact delay -1
+INSERT INTO `augments` VALUES(984, 0, 0, 0, 0, 0); -- Fire Affin.: Recast time-2% (increases by 2)
+INSERT INTO `augments` VALUES(985, 0, 0, 0, 0, 0); -- Ice Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(986, 0, 0, 0, 0, 0); -- Wind Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(987, 0, 0, 0, 0, 0); -- Earth Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(988, 0, 0, 0, 0, 0); -- Lightning Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(989, 0, 0, 0, 0, 0); -- Water Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(990, 0, 0, 0, 0, 0); -- Light Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(991, 0, 0, 0, 0, 0); -- Dark Affin.: (otherwise same as augID 984)
+INSERT INTO `augments` VALUES(992, 0, 0, 0, 0, 0); -- Fire Affinity: Castin time -2% (increases by 2)
+INSERT INTO `augments` VALUES(993, 0, 0, 0, 0, 0); -- Ice Affinity: (otherwise same as augID 992)
+INSERT INTO `augments` VALUES(994, 0, 0, 0, 0, 0); -- Wind Affinity: (otherwise same as augID 992)
+INSERT INTO `augments` VALUES(995, 0, 0, 0, 0, 0); -- Earth Affinity: (otherwise same as augID 992)
+INSERT INTO `augments` VALUES(996, 0, 0, 0, 0, 0); -- Lightning Affinity: (otherwise same as augID 992)
+INSERT INTO `augments` VALUES(997, 0, 0, 0, 0, 0); -- Water Affinity: (otherwise same as augID 992)
+INSERT INTO `augments` VALUES(998, 0, 0, 0, 0, 0); -- Light Affinity: (otherwise same as augID 992)
+INSERT INTO `augments` VALUES(999, 0, 0, 0, 0, 0); -- Dark Affinity: (otherwise same as augID 992)
+
+-- The Magic Accuracy increase matches value, not displayed if value is zero.
+INSERT INTO `augments` VALUES(1000, 0, 544, 1, 0, 0); -- Fire Affinity: Magic Accuracy+0, Fire Affinity: Casting time -6% (increases by 6)
+INSERT INTO `augments` VALUES(1000, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1001, 0, 545, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1001, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1002, 0, 546, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1002, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1003, 0, 547, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1003, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1004, 0, 548, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1004, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1005, 0, 549, 1, 0, 0); -- Water Affintiy: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1005, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1006, 0, 550, 1, 0, 0); -- Light Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1006, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1007, 0, 551, 1, 0, 0); -- Dark Affinity: (otherwise same as augID 1000)
+INSERT INTO `augments` VALUES(1007, 0, 0, 0, 0, 0); -- Cont.
+
+-- The Magic Damage increase matches value, not displayed if value is zero.
+INSERT INTO `augments` VALUES(1008, 0, 347, 1, 0, 0); -- Fire Affinity: Magic Damage+0, Fire Affinity: Recast time -6%
+INSERT INTO `augments` VALUES(1008, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1009, 0, 348, 1, 0, 0); -- Ice Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1009, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1010, 0, 349, 1, 0, 0); -- Wind Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1010, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1011, 0, 350, 1, 0, 0); -- Earth Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1011, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1012, 0, 351, 1, 0, 0); -- Lightning Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1012, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1013, 0, 352, 1, 0, 0); -- Water Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1013, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1014, 0, 353, 1, 0, 0); -- Light Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1014, 0, 0, 0, 0, 0); -- Cont.
+INSERT INTO `augments` VALUES(1015, 0, 354, 1, 0, 0); -- Dark Affinity: (otherwise same as augID 1008)
+INSERT INTO `augments` VALUES(1015, 0, 0, 0, 0, 0); -- Cont.
+
+-- 1016 to 1023 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(1016, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1017, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1018, 0, 0, 0, 0, 0);
@@ -1239,63 +1304,69 @@ INSERT INTO `augments` VALUES(1020, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1021, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1022, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1023, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1024, 5, 574, 1, 0, 0);
-INSERT INTO `augments` VALUES(1025, 5, 576, 1, 0, 0);
-INSERT INTO `augments` VALUES(1026, 5, 577, 1, 0, 0);
-INSERT INTO `augments` VALUES(1027, 5, 578, 1, 0, 0);
-INSERT INTO `augments` VALUES(1028, 5, 587, 1, 0, 0);
-INSERT INTO `augments` VALUES(1029, 5, 588, 1, 0, 0);
-INSERT INTO `augments` VALUES(1030, 5, 590, 1, 0, 0);
-INSERT INTO `augments` VALUES(1031, 5, 595, 1, 0, 0);
-INSERT INTO `augments` VALUES(1032, 5, 603, 1, 0, 0);
-INSERT INTO `augments` VALUES(1033, 5, 606, 1, 0, 0);
-INSERT INTO `augments` VALUES(1034, 5, 608, 1, 0, 0);
-INSERT INTO `augments` VALUES(1035, 5, 612, 1, 0, 0);
-INSERT INTO `augments` VALUES(1036, 5, 621, 1, 0, 0);
-INSERT INTO `augments` VALUES(1037, 5, 622, 1, 0, 0);
-INSERT INTO `augments` VALUES(1038, 5, 626, 1, 0, 0);
-INSERT INTO `augments` VALUES(1039, 5, 624, 1, 0, 0);
-INSERT INTO `augments` VALUES(1040, 5, 636, 1, 0, 0);
-INSERT INTO `augments` VALUES(1041, 5, 638, 1, 0, 0);
-INSERT INTO `augments` VALUES(1042, 5, 640, 1, 0, 0);
-INSERT INTO `augments` VALUES(1043, 5, 642, 1, 0, 0);
-INSERT INTO `augments` VALUES(1044, 5, 651, 1, 0, 0);
-INSERT INTO `augments` VALUES(1045, 5, 652, 1, 0, 0);
-INSERT INTO `augments` VALUES(1046, 5, 654, 1, 0, 0);
-INSERT INTO `augments` VALUES(1047, 5, 658, 1, 0, 0);
-INSERT INTO `augments` VALUES(1048, 5, 669, 1, 0, 0);
-INSERT INTO `augments` VALUES(1049, 5, 670, 1, 0, 0);
-INSERT INTO `augments` VALUES(1050, 5, 671, 1, 0, 0);
-INSERT INTO `augments` VALUES(1051, 5, 674, 1, 0, 0);
-INSERT INTO `augments` VALUES(1052, 5, 685, 1, 0, 0);
-INSERT INTO `augments` VALUES(1053, 5, 687, 1, 0, 0);
-INSERT INTO `augments` VALUES(1054, 5, 688, 1, 0, 0);
-INSERT INTO `augments` VALUES(1055, 5, 690, 1, 0, 0);
-INSERT INTO `augments` VALUES(1056, 5, 701, 1, 0, 0);
-INSERT INTO `augments` VALUES(1057, 5, 702, 1, 0, 0);
-INSERT INTO `augments` VALUES(1058, 5, 705, 1, 0, 0);
-INSERT INTO `augments` VALUES(1059, 5, 706, 1, 0, 0);
-INSERT INTO `augments` VALUES(1060, 5, 716, 1, 0, 0);
-INSERT INTO `augments` VALUES(1061, 5, 718, 1, 0, 0);
-INSERT INTO `augments` VALUES(1062, 5, 719, 1, 0, 0);
-INSERT INTO `augments` VALUES(1063, 5, 722, 1, 0, 0);
-INSERT INTO `augments` VALUES(1064, 5, 732, 1, 0, 0);
-INSERT INTO `augments` VALUES(1065, 5, 735, 1, 0, 0);
-INSERT INTO `augments` VALUES(1066, 5, 737, 1, 0, 0);
-INSERT INTO `augments` VALUES(1067, 5, 739, 1, 0, 0);
-INSERT INTO `augments` VALUES(1068, 5, 747, 1, 0, 0);
-INSERT INTO `augments` VALUES(1069, 5, 751, 1, 0, 0);
-INSERT INTO `augments` VALUES(1070, 5, 752, 1, 0, 0);
-INSERT INTO `augments` VALUES(1071, 5, 754, 1, 0, 0);
-INSERT INTO `augments` VALUES(1072, 5, 764, 1, 0, 0);
-INSERT INTO `augments` VALUES(1073, 5, 767, 1, 0, 0);
-INSERT INTO `augments` VALUES(1074, 5, 768, 1, 0, 0);
-INSERT INTO `augments` VALUES(1075, 5, 769, 1, 0, 0);
-INSERT INTO `augments` VALUES(1076, 5, 778, 1, 0, 0);
-INSERT INTO `augments` VALUES(1077, 5, 779, 1, 0, 0);
-INSERT INTO `augments` VALUES(1078, 5, 780, 1, 0, 0);
-INSERT INTO `augments` VALUES(1079, 5, 785, 1, 0, 0);
-INSERT INTO `augments` VALUES(1080, 5, 840, 1, 0, 0);
+-- End unused block
+
+-- For 1024 to 1080 values, count by 5 each increase
+-- ModId = WEAPONSKILL_DAMAGE_BASE(570)+WsId
+INSERT INTO `augments` VALUES(1024, 5, 574, 1, 0, 0); -- Backhand Blow:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1025, 5, 576, 1, 0, 0); -- Spinning Attack:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1026, 5, 577, 1, 0, 0); -- Howling Fist:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1027, 5, 578, 1, 0, 0); -- Dragon Kick:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1028, 5, 587, 1, 0, 0); -- Viper Bite:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1029, 5, 588, 1, 0, 0); -- Shadowstitch:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1030, 5, 590, 1, 0, 0); -- Cyclone:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1031, 5, 595, 1, 0, 0); -- Evisceration:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1032, 5, 603, 1, 0, 0); -- Burning Blade:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1033, 5, 606, 1, 0, 0); -- Shining Blade:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1034, 5, 608, 1, 0, 0); -- Circle Blade:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1035, 5, 612, 1, 0, 0); -- Savage Blade:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1036, 5, 621, 1, 0, 0); -- Freezebite:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1037, 5, 622, 1, 0, 0); -- Shockwave:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1038, 5, 626, 1, 0, 0); -- Ground Strike:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1039, 5, 624, 1, 0, 0); -- Sickle Moon:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1040, 5, 636, 1, 0, 0); -- Gale Axe:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1041, 5, 638, 1, 0, 0); -- Spinning Axe:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1042, 5, 640, 1, 0, 0); -- Calamity:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1043, 5, 642, 1, 0, 0); -- Decimation:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1044, 5, 651, 1, 0, 0); -- Iron Tempest:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1045, 5, 652, 1, 0, 0); -- Sturmwind:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1046, 5, 654, 1, 0, 0); -- Keen Edge:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1047, 5, 658, 1, 0, 0); -- Steel Cyclone:DMG+5% (increase by 5)
+INSERT INTO `augments` VALUES(1048, 5, 669, 1, 0, 0); -- Nightmare Scythe:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1049, 5, 670, 1, 0, 0); -- Spinning Scythe:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1050, 5, 671, 1, 0, 0); -- Vorpal Scythe:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1051, 5, 674, 1, 0, 0); -- Spiral Hell:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1052, 5, 685, 1, 0, 0); -- Leg Sweep:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1053, 5, 687, 1, 0, 0); -- Vorpal Thrust:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1054, 5, 688, 1, 0, 0); -- Skewer:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1055, 5, 690, 1, 0, 0); -- Impulse Drive:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1056, 5, 701, 1, 0, 0); -- Blade: To:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1057, 5, 702, 1, 0, 0); -- Blade: Chi:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1058, 5, 705, 1, 0, 0); -- Blade: Ten:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1059, 5, 706, 1, 0, 0); -- Blade: Ku:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1060, 5, 716, 1, 0, 0); -- Tachi: Goten:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1061, 5, 718, 1, 0, 0); -- Tachi: Jinpu:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1062, 5, 719, 1, 0, 0); -- Tachi: Koki:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1063, 5, 722, 1, 0, 0); -- Tachi: Kasha:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1064, 5, 732, 1, 0, 0); -- Brainshaker:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1065, 5, 735, 1, 0, 0); -- Skullbreaker:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1066, 5, 737, 1, 0, 0); -- Judgment:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1067, 5, 739, 1, 0, 0); -- Black Halo:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1068, 5, 747, 1, 0, 0); -- Rock Crusher:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1069, 5, 751, 1, 0, 0); -- Shell Crusher:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1070, 5, 752, 1, 0, 0); -- Full Swing:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1071, 5, 754, 1, 0, 0); -- Retribution:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1072, 5, 764, 1, 0, 0); -- Dulling Arrow:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1073, 5, 767, 1, 0, 0); -- Blast Arrow:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1074, 5, 768, 1, 0, 0); -- Arching Arrow:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1075, 5, 769, 1, 0, 0); -- Empyreal Arrow:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1076, 5, 778, 1, 0, 0); -- Hot Shot:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1077, 5, 779, 1, 0, 0); -- Split Shot:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1078, 5, 780, 1, 0, 0); -- Sniper Shot:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1079, 5, 785, 1, 0, 0); -- Detonator:DMG+5% (increases by 5)
+INSERT INTO `augments` VALUES(1080, 5, 840, 1, 0, 0); -- Weapon Skill:DMG+5% (increases by 5)
+
+-- 1081 to 1151 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(1081, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1082, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1083, 0, 0, 0, 0, 0);
@@ -1367,13 +1438,17 @@ INSERT INTO `augments` VALUES(1148, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1149, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1150, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1151, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1152, 0, 1, 10, 0, 0);
-INSERT INTO `augments` VALUES(1153, 0, 68, 3, 0, 0);
-INSERT INTO `augments` VALUES(1154, 0, 31, 3, 0, 0);
-INSERT INTO `augments` VALUES(1155, 0, 161, -2, 0, 0);
-INSERT INTO `augments` VALUES(1156, 0, 163, -2, 0, 0);
-INSERT INTO `augments` VALUES(1157, 0, 168, 2, 0, 0);
-INSERT INTO `augments` VALUES(1158, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(1152, 0, 1, 10, 0, 0); -- DEF +10
+INSERT INTO `augments` VALUES(1153, 0, 68, 3, 0, 0); -- Evasion +3
+INSERT INTO `augments` VALUES(1154, 0, 31, 3, 0, 0); -- Mag. Evasion +3
+INSERT INTO `augments` VALUES(1155, 0, 161, -2, 0, 0); -- Physical Damage Taken -2%
+INSERT INTO `augments` VALUES(1156, 0, 163, -2, 0, 0); -- Magic Damage Taken -2%
+INSERT INTO `augments` VALUES(1157, 0, 168, 2, 0, 0); -- Spell Interruption Rate Down 2%
+INSERT INTO `augments` VALUES(1158, 0, 958, 2, 0, 0); -- Occ. Resistance to Status Ailments +2
+
+-- 1159 to 1248 currently unused. Leave at zero. Edit+move or remove this note as new augments get discovered.
 INSERT INTO `augments` VALUES(1159, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1160, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1161, 0, 0, 0, 0, 0);
@@ -1461,11 +1536,13 @@ INSERT INTO `augments` VALUES(1242, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1243, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1244, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1245, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1246, 0, 161, -2, 1, 0);
-INSERT INTO `augments` VALUES(1247, 0, 163, -2, 1, 0);
-INSERT INTO `augments` VALUES(1248, 0, 0, 0, 0, 0);
-INSERT INTO `augments` VALUES(1249, 0, 477, 1, 0, 0);
-INSERT INTO `augments` VALUES(1250, 0, 0, 0, 0, 0);
+-- End unused block
+
+INSERT INTO `augments` VALUES(1246, 0, 161, -2, 1, 0); -- Pet: Phy. Dmg. Taken -2%
+INSERT INTO `augments` VALUES(1247, 0, 163, -2, 1, 0); -- Pet: Magic Dmg. Taken -2%
+INSERT INTO `augments` VALUES(1248, 0, 890, 1, 0, 0); -- Enhancing Magic Effect Duration +1
+INSERT INTO `augments` VALUES(1249, 0, 477, 1, 0, 0); -- Helix Effect Duration+1
+INSERT INTO `augments` VALUES(1250, 0, 960, 1, 0, 0); -- Indi Effect Duration+1
 INSERT INTO `augments` VALUES(1251, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1252, 0, 0, 0, 0, 0);
 INSERT INTO `augments` VALUES(1253, 0, 0, 0, 0, 0);
