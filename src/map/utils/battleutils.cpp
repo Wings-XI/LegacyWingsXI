@@ -5475,6 +5475,10 @@ namespace battleutils
                     PMember->loc.p.z = PMob->loc.p.z;
                 }
 
+                // snap drawn-in target to valid navmesh position
+                if (PMember->loc.zone->m_navMesh != nullptr)
+                    PMember->loc.zone->m_navMesh->snapToValidPosition(PMember->loc.p);
+
                 if (PMember->objtype == TYPE_PC)
                 {
                     CCharEntity* PChar = (CCharEntity*)PMember;
