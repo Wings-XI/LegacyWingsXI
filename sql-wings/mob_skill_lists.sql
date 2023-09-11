@@ -3568,9 +3568,9 @@ INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 273); -- Claw cycl
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 1340); -- Crossthrash
 INSERT INTO `mob_skill_lists` VALUES('Nightmare_Tiger', 5313, 1680); -- Predatory glare
 -- Henchman Moogle
+INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2461); -- Mog Bomb
 INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2462); -- Mog Shrapnel
 INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2463); -- flowerpot
-INSERT INTO `mob_skill_lists` VALUES('Henchman_Moogle', 5314, 2464); -- Mog Bomb
 
 -- Pandemonium Warden Dvergar phases before final
 INSERT INTO `mob_skill_lists` VALUES('Pandemonium_Intermediate', 5400, 2115);
