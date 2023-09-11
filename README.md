@@ -52,3 +52,7 @@ You must *test your code* before committing changes/submitting a pull request. Y
 Submit early and often! Try not to touch the PR too much after its submission (unless we request changes).
 
 Remember to check back for any feedback, and drop a comment once requested changes have been made (if there are any).
+
+### Docker container
+
+See the documentation in `conf-docker/`

@@ -334,7 +334,7 @@ void MQConnection::Run()
     amqp_envelope_t Envelope;
     amqp_frame_t Frame;
     amqp_message_t Message;
-    struct timeval tv, tv_orig = { 0, 1000 };
+    struct timeval tv, tv_orig = { 0, 100000 };
     size_t dwNumHandlers = 0;
     size_t dwNumChannels = 0;
     size_t i = 0;

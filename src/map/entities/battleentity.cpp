@@ -651,7 +651,7 @@ int32 CBattleEntity::addMP(int32 mp)
 }
 
 // Added optional breakBind argument in MR !2167
-int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/, BOOLEAN breakBind /* = TRUE*/)
+int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACKTYPE attackType /* = ATTACK_NONE*/, DAMAGETYPE damageType /* = DAMAGE_NONE*/, bool breakBind /* = TRUE*/)
 {
     TracyZoneScoped;
     if (health.hp <= 0)
