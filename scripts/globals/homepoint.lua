@@ -132,6 +132,8 @@ local HPs =
     [121] = {group = 6, fee = 1, dest = {    73.59, -36.149,   38.87,   0,  26}}  -- Tavnazian Safehold #3
 }
 
+tpz.homepoint.homepointData = HPs
+
 local selection =
 {
     SET_HOMEPOINT    = 1,
