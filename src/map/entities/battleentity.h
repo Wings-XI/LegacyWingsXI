@@ -569,7 +569,7 @@ public:
 
     // Deals damage and updates the last attacker which is used when sending a player death message
     // Updated to add indicator for whether the damage should be able to break bind - See MR !2167 for details
-    virtual int32 takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACKTYPE attackType = ATTACK_NONE, DAMAGETYPE damageType = DAMAGE_NONE, BOOLEAN breakBind = TRUE);
+    virtual int32 takeDamage(int32 amount, CBattleEntity* attacker = nullptr, ATTACKTYPE attackType = ATTACK_NONE, DAMAGETYPE damageType = DAMAGE_NONE, bool breakBind = true);
 
     int16 getMod(Mod modID); // величина модификатора
 

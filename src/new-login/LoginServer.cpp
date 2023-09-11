@@ -103,7 +103,7 @@ void LoginServer::Run()
 	// Current socket being iterated
 	SOCKET sockCurrentSocket = 0;
 	// Timeout for select calls
-	struct timeval tv, tv_orig = { 0, 1000 };
+	struct timeval tv, tv_orig = { 0, 100000 };
 	// Size of saddrNewConnection
 	socklen_t cbsaddrNewConnection = 0;
 	// New bound socket for incoming connections
