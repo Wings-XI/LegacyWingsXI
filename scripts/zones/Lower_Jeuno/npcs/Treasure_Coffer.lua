@@ -1309,11 +1309,16 @@ end
 -- pulls a random key item from repeatableKeyItems for which player meets the requirements
 local function getEligableKeyItem(player)
     local eligKIs = {}
+    local ACPm = player:getCurrentMission(ACP)
+    local AMKm = player:getCurrentMission(AMK)
+    local ASAm = player:getCurrentMission(ASA)
     for ki,v in pairs(keyitems) do
         if
             v.repeatable == True and
-            player:hasCompletedMission(v.expansion, v.mission) and
-            not player:hasKeyItem(ki)
+            not player:hasKeyItem(ki) and
+			((v.expansion == ACP and ACPm > v.mission) or
+			(v.expansion == AMK and AMKm > v.mission) or
+			(v.expansion == ASA and ASAm > v.mission))
         then
             table.insert(eligKIs, ki)
         end
