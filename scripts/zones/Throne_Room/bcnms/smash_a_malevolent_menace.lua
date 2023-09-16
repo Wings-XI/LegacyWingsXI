@@ -45,16 +45,8 @@ function onBattlefieldLeave(player, battlefield, leavecode)
                     npcUtil.giveKeyItem(player,tpz.ki.ANGEL_SKIN_KEY)
                 end
 
-                local hasArmor = false
-                for i = 11487, 11489 do
-                    if player:hasItem(i) then
-                        hasArmor = true
-                    end
-                end
-
-                if not hasArmor then
-                    npcUtil.giveKeyItem(player, tpz.ki.OXBLOOD_KEY)
-                end
+                -- WINGSCUSTOM allow multiple scenario rewards to be obtained
+                npcUtil.giveKeyItem(player, tpz.ki.OXBLOOD_KEY)
             end
         end
 

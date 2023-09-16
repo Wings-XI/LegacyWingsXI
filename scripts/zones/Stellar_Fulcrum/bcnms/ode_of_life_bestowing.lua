@@ -41,14 +41,9 @@ function onBattlefieldLeave(player, battlefield, leavecode)
                     player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.EBON_KEY)
                 end
 
-                local hasArmor = false
-                for i = 11313, 11315 do
-                    if player:hasItem(i) then
-                        hasArmor = true
-                    end
-                end
 
-                if not hasArmor and not player:hasKeyItem(tpz.ki.PRISMATIC_KEY) then
+                -- WINGSCUSTOM allow multiple scenario rewards to be obtained
+                if not player:hasKeyItem(tpz.ki.PRISMATIC_KEY) then
                     player:addKeyItem(tpz.ki.PRISMATIC_KEY)
                     player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PRISMATIC_KEY)
                 end

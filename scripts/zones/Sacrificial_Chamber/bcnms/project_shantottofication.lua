@@ -104,14 +104,8 @@ function onBattlefieldLeave(player, battlefield, leavecode)
         end
 
         -- Award another Behemoth Key if player has already completed ASA and has thrown out their previous reward
-        local hasArmor = false
-        for i = 16369, 16371 do
-            if player:hasItem(i) then
-                hasArmor = true
-            end
-        end
-
-        if player:hasCompletedMission(ASA, tpz.mission.id.asa.AN_UNEASY_PEACE) and not hasArmor and not player:hasKeyItem(tpz.ki.BEHEMOTH_KEY) then
+        -- WINGSCUSTOM allow multiple scenario rewards to be obtained
+        if player:hasCompletedMission(ASA, tpz.mission.id.asa.AN_UNEASY_PEACE) and not player:hasKeyItem(tpz.ki.BEHEMOTH_KEY) then
             player:addKeyItem(tpz.ki.BEHEMOTH_KEY)
             player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.BEHEMOTH_KEY)
         end
