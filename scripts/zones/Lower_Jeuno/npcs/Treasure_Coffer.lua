@@ -147,7 +147,7 @@ local optionToAugment =
 local keyitems =
 {
     [tpz.ki.CRIMSON_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.THE_ECHO_AWAKENS, repeatable = True,
+        expansion = ACP, mission = tpz.mission.id.acp.THE_ECHO_AWAKENS, repeatable = true,
         prizes = {
             {cutoff =   70, itemId = 13206, augments = { -- Gold Obi
                     {516, 0, 1}, -- INT+1-2
@@ -228,7 +228,7 @@ local keyitems =
         },
     },
     [tpz.ki.VIRIDIAN_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.GATHERER_OF_LIGHT_I, repeatable = True,
+        expansion = ACP, mission = tpz.mission.id.acp.GATHERER_OF_LIGHT_I, repeatable = true,
         prizes = {
             {cutoff =   65, itemId = 13639, augments = { -- Aurora Mantle
                     {  9, 0, 19}, -- MP+0-20
@@ -300,7 +300,7 @@ local keyitems =
         },
     },
     [tpz.ki.AMBER_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.GATHERER_OF_LIGHT_II, repeatable = True,
+        expansion = ACP, mission = tpz.mission.id.acp.GATHERER_OF_LIGHT_II, repeatable = true,
         prizes = {
             {cutoff = 111, itemId = 16263, augments = { -- Beak Necklace
                     {  9, 0, 12}, -- MP+0-13
@@ -371,7 +371,7 @@ local keyitems =
         },
     },
     [tpz.ki.AZURE_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II, repeatable = True,
+        expansion = ACP, mission = tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II, repeatable = true,
         prizes = {
             {cutoff = 106, itemId = 13597, augments = { -- Beak Mantle
                     {512, 0,  1}, -- STR+0-2
@@ -438,7 +438,7 @@ local keyitems =
         },
     },
     [tpz.ki.IVORY_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III, repeatable = True,
+        expansion = ACP, mission = tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III, repeatable = true,
         prizes = {
             {cutoff =   62, itemId = 13357, augments = { -- Angels Earring
                     {518, 0, 1}, -- CHR+1-2
@@ -528,7 +528,7 @@ local keyitems =
         },
     },
     [tpz.ki.EBON_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING, repeatable = True,
+        expansion = ACP, mission = tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING, repeatable = true,
         prizes = {
             {cutoff =  31, itemId = 13463, augments = { -- Angels Ring:
             -- https://ffxiclopedia.fandom.com/wiki/Ebon_Key?oldid=934097 doesn't list -acc and -def, but this had -dark resist before the restructure
@@ -628,10 +628,10 @@ local keyitems =
         },
     },
     [tpz.ki.PRISMATIC_KEY] = {
-        expansion = ACP, mission = tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING, repeatable = False,
+        expansion = ACP, mission = tpz.mission.id.acp.ODE_OF_LIFE_BESTOWING, repeatable = false,
     },
     [tpz.ki.WHITE_CORAL_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP, repeatable = True,
+        expansion = AMK, mission = tpz.mission.id.amk.DRENCHED_IT_BEGAN_WITH_A_RAINDROP, repeatable = true,
         prizes = {
             {cutoff =   31, itemId = 12433, augments = { -- Brass Mask
                     {  1, 0, 1}, -- HP +1-2
@@ -694,7 +694,7 @@ local keyitems =
         },
     },
     [tpz.ki.BLUE_CORAL_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.WELCOME_TO_MY_DECREPIT_DOMICILE, repeatable = True,
+        expansion = AMK, mission = tpz.mission.id.amk.WELCOME_TO_MY_DECREPIT_DOMICILE, repeatable = true,
         prizes = {
             {cutoff =   42, itemId = 12571, augments = { -- Cuir Bouilli
                     {  1, 3, 3}, -- HP+4
@@ -748,7 +748,7 @@ local keyitems =
         },
     },
     [tpz.ki.PEACH_CORAL_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE, repeatable = True,
+        expansion = AMK, mission = tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE, repeatable = true,
         prizes = {
             {cutoff =   66, itemId = 13712, augments = { -- Carapace Harness
                     { 23, 0, 5}, -- Accuracy +1-6
@@ -812,7 +812,7 @@ local keyitems =
         },
     },
     [tpz.ki.BLACK_CORAL_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.SHOCK_ARRANT_ABUSE_OF_AUTHORITY, repeatable = True,
+        expansion = AMK, mission = tpz.mission.id.amk.SHOCK_ARRANT_ABUSE_OF_AUTHORITY, repeatable = true,
         prizes = {
             {cutoff =   90, itemId = 13698, augments = { -- Beak Helm
                     { 9, 0, 5}, -- MP +1-6
@@ -871,7 +871,7 @@ local keyitems =
         },
     },
     [tpz.ki.RED_CORAL_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS, repeatable = True,
+        expansion = AMK, mission = tpz.mission.id.amk.ROAR_A_CAT_BURGLAR_BARES_HER_FANGS, repeatable = true,
         prizes = {
             {cutoff =  109, itemId = 16289, augments = { -- Alloy Torque
                     { 51, 0, 1}, -- HP Recovered while Healing +1-2
@@ -931,7 +931,7 @@ local keyitems =
         },
     },
     [tpz.ki.ANGEL_SKIN_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE, repeatable = True,
+        expansion = AMK, mission = tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE, repeatable = true,
         prizes = {
             {cutoff =   65, itemId = 16254, augments = { -- Altius Mantle
                     {782, 0, 19}, -- Light resist -1--20
@@ -996,10 +996,10 @@ local keyitems =
         },
     },
     [tpz.ki.OXBLOOD_KEY] = {
-        expansion = AMK, mission = tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE, repeatable = False,
+        expansion = AMK, mission = tpz.mission.id.amk.SMASH_A_MALEVOLENT_MENACE, repeatable = false,
     },
     [tpz.ki.MOOGLE_KEY] = {
-        expansion = ASA, mission = tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD, repeatable = True,
+        expansion = ASA, mission = tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD, repeatable = true,
         prizes = {
             {cutoff =  167, itemId = 12442, augments = { -- Studded Bandana
                     { 23, 0, 0}, -- Accuracy+1
@@ -1025,7 +1025,7 @@ local keyitems =
         }
     },
     [tpz.ki.BIRD_KEY] = {
-        expansion = ASA, mission = tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE, repeatable = True,
+        expansion = ASA, mission = tpz.mission.id.asa.SUGAR_COATED_DIRECTIVE, repeatable = true,
         prizes = {
             {cutoff = 143, itemId = 12987, augments = { -- Ebony Sabots
                     {774, 0, 2}, -- Light+0-3
@@ -1080,7 +1080,7 @@ local keyitems =
         }
     },
     [tpz.ki.CACTUAR_KEY] = {
-        expansion = ASA, mission = tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II, repeatable = True,
+        expansion = ASA, mission = tpz.mission.id.asa.ENEMY_OF_THE_EMPIRE_II, repeatable = true,
         prizes = {
             {cutoff = 109, itemId = 13111, augments = { -- Nodowa
                     {512, 0, 1}, -- STR+1-2
@@ -1134,7 +1134,7 @@ local keyitems =
         }
     },
     [tpz.ki.BOMB_KEY] = {
-        expansion = ASA, mission = tpz.mission.id.asa.SHANTOTTO_IN_CHAINS, repeatable = True,
+        expansion = ASA, mission = tpz.mission.id.asa.SHANTOTTO_IN_CHAINS, repeatable = true,
         prizes = {
             {cutoff = 308, itemId = 12980, augments = { -- Battle Boots
                     { 34, 1,  5}, -- DEF-6--2
@@ -1172,7 +1172,7 @@ local keyitems =
             {cutoff = 901, itemId =   645}, -- Darksteel Ore
         },
         [tpz.ki.CHOCOBO_KEY] = {
-            expansion = ASA, mission = tpz.mission.id.asa.BATTARU_ROYALE, repeatable = True,
+            expansion = ASA, mission = tpz.mission.id.asa.BATTARU_ROYALE, repeatable = true,
             prizes = {
                 {cutoff =  190, itemId = 16008, augments = { -- Aptus Earring
                 -- assumed magic skill caps are all the same
@@ -1234,7 +1234,7 @@ local keyitems =
         },
     },
     [tpz.ki.TONBERRY_KEY] = {
-        expansion = ASA, mission = tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION, repeatable = True,
+        expansion = ASA, mission = tpz.mission.id.asa.PROJECT_SHANTOTTOFICATION, repeatable = true,
         prizes = {
             {cutoff =  291, itemId = 15938, augments = { -- Esprit Belt
                     {516, 0, 5}, -- INT+1-6
@@ -1274,7 +1274,7 @@ local keyitems =
         },
     },
     [tpz.ki.BEHEMOTH_KEY] = {
-        expansion = ASA, mission = tpz.mission.id.asa.AN_UNEASY_PEACE, repeatable = False,
+        expansion = ASA, mission = tpz.mission.id.asa.AN_UNEASY_PEACE, repeatable = false,
     },
 }
 
@@ -1287,7 +1287,7 @@ local function hasAnyKeyItems(player)
     local ASAm = player:getCurrentMission(ASA)
     local count = 0
     for ki,v in pairs(keyitems) do
-        if v.repeatable == True then
+        if v.repeatable then
             if
                 (v.expansion == ACP and ACPm > v.mission) or
                 (v.expansion == AMK and AMKm > v.mission) or
@@ -1314,7 +1314,7 @@ local function getEligableKeyItem(player)
     local ASAm = player:getCurrentMission(ASA)
     for ki,v in pairs(keyitems) do
         if
-            v.repeatable == True and
+            v.repeatable and
             not player:hasKeyItem(ki) and
 			((v.expansion == ACP and ACPm > v.mission) or
 			(v.expansion == AMK and AMKm > v.mission) or

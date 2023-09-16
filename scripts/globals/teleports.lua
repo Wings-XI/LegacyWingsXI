@@ -195,7 +195,8 @@ tpz.teleport.toLeader = function(player)
         local leaderZone = leader:getZone()
         local leaderZoneID = leaderZone:getID()
         local leaderZoneType = leaderZone:getType()
-        if not leader:isInMogHouse() and leaderZoneType ~= tpz.zoneType.CITY and leader:getBattlefieldID() == nil and leader:getInstance() == nil then
+        local leaderFree = leader:getBattlefield() == nil or leader:getInstance() == nil
+        if not leader:isInMogHouse() and leaderZoneType ~= tpz.zoneType.CITY and leaderFree then
             player:gotoPlayer(leader:getName())
         else
             -- send to specific location
@@ -207,11 +208,8 @@ tpz.teleport.toLeader = function(player)
                         return
                     end
                 end
-            elseif destinations[leaderZoneID] ~= nil then
-                tpz.teleport.to(player, leaderZoneID)
-                return
             else
-                -- specific destination not found, sending player to default zone position
+                -- sending player to default zone position
                 --if player:getZoneID() ~= leaderZoneID then
                     player:setPos(0, 0, 0, 0, leaderZoneID)
                     return
