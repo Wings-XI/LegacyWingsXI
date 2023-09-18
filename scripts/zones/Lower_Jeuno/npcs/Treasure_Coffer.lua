@@ -520,7 +520,7 @@ local keyitems =
             {cutoff =  658, itemId =  4134}, -- Hi-Ether +2
             {cutoff =  901, itemId =  4118}, -- Hi-Potion +2
             {cutoff =  963, itemId =   837}, -- Malboro Fiber
-            {cutoff =  982, itemId =   924}, -- Philosophers Stone
+            {cutoff =  982, itemId =   942}, -- Philosophers Stone
             {cutoff = 1019, itemId =   844}, -- Phoenix Feather
             {cutoff = 1062, itemId =   830}, -- Rainbow Cloth
             {cutoff = 1124, itemId =  1132}, -- Raxa
@@ -922,7 +922,7 @@ local keyitems =
             {cutoff =  692, itemId =  1465}, -- Granite
             {cutoff =  728, itemId =  4134}, -- Hi-Ether +2
             {cutoff =  764, itemId =   837}, -- Malboro Fiber
-            {cutoff =  782, itemId =   924}, -- Philosophers Stone
+            {cutoff =  782, itemId =   942}, -- Philosophers Stone
             {cutoff =  800, itemId =   844}, -- Phoenix Feather
             {cutoff =  836, itemId =   830}, -- Rainbow Cloth
             {cutoff =  872, itemId =  1132}, -- Raxa
@@ -1224,7 +1224,7 @@ local keyitems =
                 {cutoff =  714, itemId =  4118}, -- Hi-Potion +2
                 {cutoff =  785, itemId =   837}, -- Malboro Fiber
                 {cutoff =  856, itemId =  1110}, -- Beetle Blood
-                {cutoff =  927, itemId =   924}, -- Philosophers Stone
+                {cutoff =  927, itemId =   942}, -- Philosophers Stone
                 {cutoff =  995, itemId =   830}, -- Rainbow Cloth
                 {cutoff = 1043, itemId =  1132}, -- Raxa
                 {cutoff = 1067, itemId =  1465}, -- Granite
