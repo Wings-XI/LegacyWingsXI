@@ -7110,7 +7110,7 @@ inline int32 CLuaBaseEntity::delTitle(lua_State *L)
 
 /************************************************************************
 *  Function: getFame()
-*  Purpose : Returns the current fame level of the player
+*  Purpose : Returns the current fame amount of the player
 *  Example : player:getFame(area)
 *  Notes   :
 ************************************************************************/

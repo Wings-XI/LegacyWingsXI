@@ -1117,11 +1117,11 @@ local loot =
                 {itemid = 1923, droprate = 257}, -- Leg
                 {itemid = 1922, droprate = 189}, -- Claw
             },
-            { -- invert order to avoid "streaky" rng
-                {itemid = 1922, droprate = 189}, -- Claw
-                {itemid = 1923, droprate = 257}, -- Leg
-                {itemid = 1924, droprate = 112}, -- Tail
-                {itemid = 1920, droprate = 442}, -- Cerebrum
+            { -- WINGSCUSTOM sane chances for second group
+                {itemid = 1920, droprate = 175}, -- Cerebrum
+                {itemid = 1924, droprate = 275}, -- Tail
+                {itemid = 1923, droprate = 275}, -- Leg
+                {itemid = 1922, droprate = 275}, -- Claw
             },
             {
                 {itemid = 1921, droprate = 364}, -- Heart

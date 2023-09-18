@@ -741,7 +741,11 @@ amkHelpers.triviaQuestions = {
         end
         local right = craft_total
         local wrong = right + (sign() * math.random(1, 10))
-        wrong = utils.clamp(wrong, 0, wrong)
+        if right == 0 then
+            wrong = math.random(1, 10)
+        else
+            wrong = utils.clamp(wrong, 0, wrong)
+        end
         return {right, wrong}
     end,
     -- 3 : The sum total of each one of your current elemental resistance levels is?
