@@ -890,11 +890,11 @@ local loot =
                 {itemid = 1928, droprate = 211}, -- Omega's Hind Leg
                 {itemid = 1929, droprate = 219}, -- Omega's Tail
             },
-            { -- invert order to avoid "streaky" rng
-                {itemid = 1929, droprate = 219}, -- Omega's Tail
-                {itemid = 1928, droprate = 211}, -- Omega's Hind Leg
-                {itemid = 1927, droprate = 213}, -- Omega's Foreleg
-                {itemid = 1925, droprate = 357}, -- Omega's Eye
+            { -- WINGSCUSTOM sane chances for second group
+                {itemid = 1925, droprate = 175}, -- Omega's Eye
+                {itemid = 1927, droprate = 275}, -- Omega's Foreleg
+                {itemid = 1928, droprate = 275}, -- Omega's Hind Leg
+                {itemid = 1929, droprate = 275}, -- Omega's Tail
             },
             {
                 {itemid =    0, droprate = 735}, -- Nothing
