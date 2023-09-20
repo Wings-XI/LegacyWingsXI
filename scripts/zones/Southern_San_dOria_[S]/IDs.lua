@@ -17,6 +17,7 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA_S] =
         CARRIED_OVER_POINTS     = 6999, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY = 7000, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
         LOGIN_NUMBER            = 7001, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
+        GELTPIX_SHOP_DIALOG     = 7043, -- Don't hurt poor Geltpix! Geltpix's just a merchant from Boodlix's Emporium in Jeuno. Kingdom vendors don't like gil, but Boodlix knows true value of new money.
         CONQUEST_BASE           = 7126, -- Tallying conquest results...
         MOG_LOCKER_OFFSET       = 7360, -- Your Mog Locker lease is valid until <timestamp>, kupo.
         REGIME_CANCELED         = 7622, -- Current training regime canceled.
