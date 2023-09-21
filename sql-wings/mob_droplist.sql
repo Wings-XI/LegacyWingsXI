@@ -17153,6 +17153,9 @@ INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 11289, 657); -- Dark Ixion: 
 INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 16242, 654); -- Dark Ixion: Ixion Cape
 INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 2654, 1000); -- Dark Ixion: Horn
 INSERT INTO `mob_droplist` VALUES(3241, 0, 0, 1000, 2655, 1000); -- Dark Ixion: Tail
+INSERT INTO `mob_droplist` VALUES(3242, 0, 0, 1000, 15710, 165); -- Merrow No5: Volunteer's Nails
+INSERT INTO `mob_droplist` VALUES(3242, 0, 0, 1000, 2229, 100); -- Merrow No5: Chimera Blood
+INSERT INTO `mob_droplist` VALUES(3242, 0, 0, 1000, 2146, 63); -- Merrow No5: Merrow Scale
 
 --
 -- Indexes for dumped tables

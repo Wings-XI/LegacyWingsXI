@@ -5,16 +5,19 @@
 --  Type: Physical (blunt)
 --  Utsusemi/Blink absorb: 1 shadow
 --  Range: Rear conal (7 yalms)
---  Notes: This move should be used at any time, even if no one is standing behind.
+--  Notes: This move can be used at any time, even if no one is standing behind.
+-- "I Just learned this solo ,6th fight Ruszor used Sub-Zero Smash twice while I was in front of it. Learned in 6 kills total. 12/5/2012"
 -----------------------------------
 require("scripts/globals/msg")
 require("scripts/globals/status")
 -----------------------------------
 
 function onMobSkillCheck(target, mob, skill)
-    if not target:isBehind(mob, 48) then
+    -- chance if target is not behind mob to use it anyway
+    if math.random(1,10) <= 6 and not target:isBehind(mob, 48) then
         return 1
     end
+
     return 0
 end
 

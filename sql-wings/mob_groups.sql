@@ -2352,7 +2352,7 @@ INSERT INTO `mob_groups` VALUES(31, 2627, 54, 'Merrow_Shadowdancer', 960, 0, 166
 INSERT INTO `mob_groups` VALUES(32, 2620, 54, 'Merrow_Icedancer', 960, 0, 1660, 0, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(33, 2621, 54, 'Merrow_Kabukidancer', 960, 0, 1661, 0, 0, 73, 75, 0);
 INSERT INTO `mob_groups` VALUES(34, 404, 54, 'Bhoot', 960, 0, 262, 0, 0, 80, 82, 0);
-INSERT INTO `mob_groups` VALUES(35, 2625, 54, 'Merrow_No5', 259200, 128, 0, 13000, 0, 82, 85, 0);
+INSERT INTO `mob_groups` VALUES(35, 2625, 54, 'Merrow_No5', 259200, 128, 3242, 13000, 0, 82, 85, 0);
 INSERT INTO `mob_groups` VALUES(36, 1292, 54, 'Fallen_Volunteer', 960, 0, 0, 0, 0, 72, 74, 0);
 INSERT INTO `mob_groups` VALUES(37, 1286, 54, 'Fallen_Imperial_Wizard', 960, 0, 0, 0, 0, 72, 74, 0);
 INSERT INTO `mob_groups` VALUES(38, 1285, 54, 'Fallen_Imperial_Trooper', 960, 0, 0, 0, 0, 72, 74, 0);
