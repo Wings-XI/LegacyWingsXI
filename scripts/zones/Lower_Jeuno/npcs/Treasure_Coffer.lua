@@ -479,7 +479,7 @@ local keyitems =
             },
             {cutoff =  301, itemId = 13352, augments = { -- Ruby Earring
                     { 25, 0, 4}, -- Attack+1-5
-                    {516, 0, 1}, -- INT+1-2
+                    {516, 0, 0}, -- INT+1
                     { 97, 0, 4}, -- Pet: Attack and Ranged Attack+1-5
                     { 29, 0, 4}, -- Ranged Attack+1-5
                     {512, 0, 1}, -- STR+1-2
