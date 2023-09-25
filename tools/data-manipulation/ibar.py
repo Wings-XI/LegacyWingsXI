@@ -2,6 +2,7 @@
 import mariadb
 #from mariadb import Error, errorcode
 import re
+from slpp import slpp as lua
 
 credentials = {}
 db = cur = database = host = port = login = password = None
@@ -52,13 +53,39 @@ def all_mobs(cur):
 
     for zone in zones:
         id = zone[0]
+        zonename = zone[1]
 
         cur.execute('SELECT mobid,mobname,mJob,sJob,minlevel,maxlevel,behavior,aggro,detects,true_detection,links,mobtype & 2 = 2,spawntype,respawntime,\
                 (SELECT group_concat(DISTINCT name) FROM mob_droplist as d LEFT JOIN item_basic i ON d.itemid = i.itemid WHERE d.dropId = mob_groups.dropid AND d.dropType IN (0,1) order by grouprate,itemrate),\
                 (SELECT group_concat(DISTINCT sortname) FROM mob_droplist as d LEFT JOIN item_basic i ON d.itemid = i.itemid WHERE d.dropId = mob_groups.dropid AND d.dropType IN (2)),\
                 slash,pierce,h2h,impact,fire,ice,wind,earth,lightning,water,light,dark\
-                 FROM mob_spawn_points LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid AND mob_groups.zoneid = {0} left join mob_pools USING (poolid) left join mob_family_system USING (familyid) WHERE ((mobid >> 12) & 0xFFF) = {0} order by mobname'.format(id))
+                 FROM mob_spawn_points LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid AND mob_groups.zoneid = {0} left join mob_pools USING (poolid) left join mob_family_system USING (familyid) WHERE ((mobid >> 12) & 0xFFF) = {0} order by mobname,mobid'.format(id))
         rows = cur.fetchall()
+
+        # get zone IDs file for PH info
+        PHMappings = {}
+        try:
+            zoneTableString = ''
+            file = open("../../scripts/zones/{}/IDs.lua".format(zonename), "r")
+            lineIter= iter(file)
+            for line in lineIter:
+                if line.startswith( "zones[" ):
+                    break
+            for line in lineIter:
+                zoneTableString += line
+                if line.startswith( "}" ):
+                    break
+            file.close()
+
+            PHtable = lua.decode(zoneTableString)
+
+            for NM in PHtable['mob'].keys():
+                if NM.endswith('PH'):
+                    for PHid in PHtable['mob'][NM].keys():
+                        PHMappings[PHid] = NM
+
+        except:
+            pass
 
         file = open("./ibar/data/{}.lua".format(id), "w")
         file.write('--[[\n')
@@ -152,11 +179,15 @@ def all_mobs(cur):
 
             dropList.append(currItem)
 
+            mobName = row[1]
+            if row[0] in PHMappings.keys():
+                mobName = PHMappings[row[0]]
+
             file.write('\tmb_data[{}] = {{ nm="{}", id="{}", name="{}", mj="{}", sj="{}", mlvl="{}-{}", behavior="{}", aggro="{}", links="{}", spawntype="{}", respawntime="{}", items="{}", steal="{}", weak="{}", strong="{}", note="" }}\n'.format(
                     count,                          # row
                     'Y' if row[11] == 1 else 'N',   # NM?
                     row[0],                         # id
-                    row[1],                         # name
+                    mobName,                        # name
                     row[2],                         # Main Job
                     row[3],                         # Sub Job
                     row[4],                         # Main level
