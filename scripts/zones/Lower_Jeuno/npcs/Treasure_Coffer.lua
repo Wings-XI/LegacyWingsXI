@@ -1171,66 +1171,66 @@ local keyitems =
             {cutoff = 824, itemId =   654}, -- Darksteel Ingot
             {cutoff = 901, itemId =   645}, -- Darksteel Ore
         },
-        [tpz.ki.CHOCOBO_KEY] = {
-            expansion = ASA, mission = tpz.mission.id.asa.BATTARU_ROYALE, repeatable = true,
-            prizes = {
-                {cutoff =  190, itemId = 16008, augments = { -- Aptus Earring
-                -- assumed magic skill caps are all the same
-                        {133, 0,  5}, -- Magic Attack Bonus+1-2
-                        { 35, 0,  1}, -- Magic Accuracy+1-2
-                        {141, 0,  2}, -- Conserve MP+1-3
-                        { 53, 0,  4}, -- Spell Interruption Rate-1-5%
-                        {294, 0,  2}, -- Summoning Magic Skill+1
-                        {293, 0,  2}, -- Dark Magic Skill+2
-                        {291, 0,  2}, -- Enfeebling Magic Skill+1-2
-                        {295, 0,  2}, -- Ninjutsu Skill+1
-                        {290, 0,  2}, -- Enhancing Magic Skill+2
-                        {299, 0,  2}, -- Blue Magic Skill+1-2
-                        { 13, 6, 25}, -- MP-7--26
-                        {296, 0,  2}, -- Singing Skill+1-2
-                        {298, 0,  2}, -- Wind Instrument Skill+3
-                        {292, 0,  2}, -- Elemental Magic Skill+1
-                    }
-                },
-                {cutoff =  285, itemId = 16372, augments = { -- Stearc Subligar
-                        { 44, 0, 2}, -- Subtle Blow+1-3
-                        {188, 0, 3}, -- Resist Charm+1-4
-                        { 51, 0, 0}, -- HP Recovered While Healing+1
-                        {  1, 7, 7}, -- HP+8
-                        {774, 0, 6}, -- Light+1-7
-                        {783, 5, 5}, -- Dark-6
-                    }
-                },
-                {cutoff =  571, itemId = 16295, augments = { -- Varius Torque
-                -- assumed combat skill caps are all the same
-                        { 23,  0,  4}, -- Accuracy+1-5
-                        { 25,  0,  4}, -- Attack+1-5
-                        { 27,  0,  3}, -- Ranged Accuracy+1-4
-                        { 29,  0,  3}, -- Ranged Attack+1-4
-                        {259,  0,  4}, -- Sword Skill+1
-                        {267,  0,  4}, -- Club Skill+3
-                        {262,  0,  4}, -- Great Axe Skill+1
-                        {260,  0,  4}, -- Great Sword Skill+1
-                        {264,  0,  4}, -- Polearm Skill+1-5
-                        {266,  0,  4}, -- Great Katana Skill+1
-                        {282,  0,  4}, -- Marksmanship Skill+1-3
-                        {281,  0,  4}, -- Archery Skill+1-5
-                        {257,  0,  4}, -- Hand-to-Hand Skill+1-5
-                        {  5, 15, 24}, -- HP-16-25
-                    }
-                },
-                {cutoff =  595, itemId =   823}, -- Gold Thread
-                {cutoff =  643, itemId =  4134}, -- Hi-Ether +2
-                {cutoff =  714, itemId =  4118}, -- Hi-Potion +2
-                {cutoff =  785, itemId =   837}, -- Malboro Fiber
-                {cutoff =  856, itemId =  1110}, -- Beetle Blood
-                {cutoff =  927, itemId =   942}, -- Philosophers Stone
-                {cutoff =  995, itemId =   830}, -- Rainbow Cloth
-                {cutoff = 1043, itemId =  1132}, -- Raxa
-                {cutoff = 1067, itemId =  1465}, -- Granite
-                {cutoff = 1115, itemId =  4174}, -- Vile Elixir
-                {cutoff = 1186, itemId =   844}, -- Phoenix Feather
+    },
+    [tpz.ki.CHOCOBO_KEY] = {
+        expansion = ASA, mission = tpz.mission.id.asa.BATTARU_ROYALE, repeatable = true,
+        prizes = {
+            {cutoff =  190, itemId = 16008, augments = { -- Aptus Earring
+            -- assumed magic skill caps are all the same
+                    {133, 0,  5}, -- Magic Attack Bonus+1-2
+                    { 35, 0,  1}, -- Magic Accuracy+1-2
+                    {141, 0,  2}, -- Conserve MP+1-3
+                    { 53, 0,  4}, -- Spell Interruption Rate-1-5%
+                    {294, 0,  2}, -- Summoning Magic Skill+1
+                    {293, 0,  2}, -- Dark Magic Skill+2
+                    {291, 0,  2}, -- Enfeebling Magic Skill+1-2
+                    {295, 0,  2}, -- Ninjutsu Skill+1
+                    {290, 0,  2}, -- Enhancing Magic Skill+2
+                    {299, 0,  2}, -- Blue Magic Skill+1-2
+                    { 13, 6, 25}, -- MP-7--26
+                    {296, 0,  2}, -- Singing Skill+1-2
+                    {298, 0,  2}, -- Wind Instrument Skill+3
+                    {292, 0,  2}, -- Elemental Magic Skill+1
+                }
             },
+            {cutoff =  285, itemId = 16372, augments = { -- Stearc Subligar
+                    { 44, 0, 2}, -- Subtle Blow+1-3
+                    {188, 0, 3}, -- Resist Charm+1-4
+                    { 51, 0, 0}, -- HP Recovered While Healing+1
+                    {  1, 7, 7}, -- HP+8
+                    {774, 0, 6}, -- Light+1-7
+                    {783, 5, 5}, -- Dark-6
+                }
+            },
+            {cutoff =  571, itemId = 16295, augments = { -- Varius Torque
+            -- assumed combat skill caps are all the same
+                    { 23,  0,  4}, -- Accuracy+1-5
+                    { 25,  0,  4}, -- Attack+1-5
+                    { 27,  0,  3}, -- Ranged Accuracy+1-4
+                    { 29,  0,  3}, -- Ranged Attack+1-4
+                    {259,  0,  4}, -- Sword Skill+1
+                    {267,  0,  4}, -- Club Skill+3
+                    {262,  0,  4}, -- Great Axe Skill+1
+                    {260,  0,  4}, -- Great Sword Skill+1
+                    {264,  0,  4}, -- Polearm Skill+1-5
+                    {266,  0,  4}, -- Great Katana Skill+1
+                    {282,  0,  4}, -- Marksmanship Skill+1-3
+                    {281,  0,  4}, -- Archery Skill+1-5
+                    {257,  0,  4}, -- Hand-to-Hand Skill+1-5
+                    {  5, 15, 24}, -- HP-16-25
+                }
+            },
+            {cutoff =  595, itemId =   823}, -- Gold Thread
+            {cutoff =  643, itemId =  4134}, -- Hi-Ether +2
+            {cutoff =  714, itemId =  4118}, -- Hi-Potion +2
+            {cutoff =  785, itemId =   837}, -- Malboro Fiber
+            {cutoff =  856, itemId =  1110}, -- Beetle Blood
+            {cutoff =  927, itemId =   942}, -- Philosophers Stone
+            {cutoff =  995, itemId =   830}, -- Rainbow Cloth
+            {cutoff = 1043, itemId =  1132}, -- Raxa
+            {cutoff = 1067, itemId =  1465}, -- Granite
+            {cutoff = 1115, itemId =  4174}, -- Vile Elixir
+            {cutoff = 1186, itemId =   844}, -- Phoenix Feather
         },
     },
     [tpz.ki.TONBERRY_KEY] = {
