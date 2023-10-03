@@ -3,7 +3,7 @@
 -- Hand-to-Hand weapon skill
 -- Skill Level N/A
 -- Additional effect: temporarily enhances Subtle Blow tpz.effect.
--- Mods : VIT:80%
+-- Mods : VIT:60%
 -- 100%TP     200%TP     300%TP
 -- 3.0x        3.0x    3.0x
 -- +10 Subtle Blow for a short duration after using the weapon skill. (Not implemented)
@@ -19,7 +19,7 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.numHits = 1 -- all h2h weaponskills less than 3 hits are really numHits == 1 with a bonus offhand hit
     -- stat-modifiers (0.0 = 0%, 0.2 = 20%, 0.5 = 50%..etc)
     params.str_wsc = 0.0        params.dex_wsc = 0.0
-    params.vit_wsc = 0.8        params.agi_wsc = 0.0
+    params.vit_wsc = 0.6        params.agi_wsc = 0.0
     params.int_wsc = 0.0        params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
     -- ftp damage mods (for Damage Varies with TP lines are calculated in the function params.ftp)
