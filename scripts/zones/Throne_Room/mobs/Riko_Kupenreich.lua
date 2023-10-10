@@ -20,6 +20,8 @@ local function resetRiko(mob)
     mob:setMod(tpz.mod.UDMGMAGIC, 200)
     mob:setMod(tpz.mod.UDMGRANGE, 200)
     mob:setMod(tpz.mod.REGEN, 0)
+    mob:setMod(tpz.mod.SLEEPRES, 0)
+    mob:setMod(tpz.mod.BINDRES, 0)
     mob:setMobMod(tpz.mobMod.NO_AGGRO, 0)
     mob:setMobMod(tpz.mobMod.NO_LINK, 0)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
@@ -118,6 +120,8 @@ local function retreat(mob, player)
     mob:setMod(tpz.mod.UDMGRANGE, -100)
     mob:setMod(tpz.mod.REGAIN, 0)
     mob:setMod(tpz.mod.REGEN, 350)
+    mob:setMod(tpz.mod.SLEEPRES, 100)
+    mob:setMod(tpz.mod.BINDRES, 100)
 
     -- Spawn whms at top of stairs
     for whmId = rikoId + 8, rikoId + 9 do
