@@ -1177,7 +1177,7 @@ local keyitems =
         prizes = {
             {cutoff =  190, itemId = 16008, augments = { -- Aptus Earring
             -- assumed magic skill caps are all the same
-                    {133, 0,  5}, -- Magic Attack Bonus+1-2
+                    {133, 0,  1}, -- Magic Attack Bonus+1-2
                     { 35, 0,  1}, -- Magic Accuracy+1-2
                     {141, 0,  2}, -- Conserve MP+1-3
                     { 53, 0,  4}, -- Spell Interruption Rate-1-5%
