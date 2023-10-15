@@ -22,8 +22,12 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.MND
     params.skillType = tpz.skill.DIVINE_MAGIC
     params.bonus = 0
-    params.effect = tpz.effect.SLEEP_II
+    params.effect = tpz.effect.LULLABY
     local resist = applyResistanceEffect(caster, target, spell, params)
+    -- reset for documentation of which effect is applied, but the above function uses dark sleep restrait if you pass sleep_II
+    -- effect is applied below
+    params.effect = tpz.effect.SLEEP_II
+
     local duration = math.ceil(90 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
     
     -- Lii Jixa the Somnolist

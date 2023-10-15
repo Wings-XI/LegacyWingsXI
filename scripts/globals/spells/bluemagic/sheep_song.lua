@@ -37,9 +37,12 @@ function onSpellCast(caster, target, spell)
     params.attribute = tpz.mod.CHR
     params.skillType = tpz.skill.BLUE_MAGIC
     params.bonus = caster:getStatusEffect(tpz.effect.CONVERGENCE) == nil and 0 or (caster:getStatusEffect(tpz.effect.CONVERGENCE)):getPower()
-    params.effect = tpz.effect.SLEEP_I
+    params.effect = tpz.effect.LULLABY
     params.bonus = params.bonus + caster:getMerit(tpz.merit.MAGICAL_ACCURACY)
     local resist = applyResistanceEffect(caster, target, spell, params)
+    -- reset for documentation of which effect is applied, but the above function uses dark sleep restrait if you pass sleep_II
+    -- effect is applied below
+    params.effect = tpz.effect.SLEEP_I
     
     local duration = math.ceil(60 * resist * tryBuildResistance(tpz.mod.RESBUILD_LULLABY, target))
     

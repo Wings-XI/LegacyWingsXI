@@ -8257,7 +8257,7 @@ INSERT INTO `mob_droplist` VALUES(1611, 0, 0, 1000, 11638, 290);
 INSERT INTO `mob_droplist` VALUES(1612, 0, 0, 1000, 748, 20); -- Gold Beastcoin
 INSERT INTO `mob_droplist` VALUES(1612, 0, 0, 1000, 749, 50); -- Mythril Beastcoin
 INSERT INTO `mob_droplist` VALUES(1612, 0, 0, 1000, 1449, 20); -- Whiteshell
-INSERT INTO `mob_droplist` VALUES(1612, 0, 0, 1000, 1449, 15); -- Jadeshell
+INSERT INTO `mob_droplist` VALUES(1612, 0, 0, 1000, 1450, 15); -- Jadeshell
 INSERT INTO `mob_droplist` VALUES(1612, 0, 0, 1000, 4248, 50); -- Ginurva's Battle Theory
 INSERT INTO `mob_droplist` VALUES(1613, 0, 0, 1000, 2518, 220);
 INSERT INTO `mob_droplist` VALUES(1613, 0, 0, 1000, 2975, 160);
