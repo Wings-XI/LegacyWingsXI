@@ -27,7 +27,8 @@ function onTrigger(player, npc)
         5491, 40000,    -- Summoner Die
         5492,  3525,    -- Blue Mage Die
         5493,   316,    -- Corsair Die
-        5494,  9216     -- Puppetmaster Die
+        5494,  9216,    -- Puppetmaster Die
+        5497,  99224,    -- Bolter's Die
     }
 
     player:showText(npc, ID.text.JAJAROON_SHOP_DIALOG)
