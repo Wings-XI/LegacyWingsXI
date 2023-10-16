@@ -157,7 +157,7 @@ INSERT INTO `abilities` VALUES(114, 'corsairs_roll', 17, 5, 1, 60, 193, 420, 0, 
 INSERT INTO `abilities` VALUES(115, 'puppet_roll', 17, 23, 1, 60, 193, 420, 0, 115, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'TOAU');
 INSERT INTO `abilities` VALUES(116, 'dancers_roll', 17, 61, 1, 60, 193, 420, 0, 116, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'WOTG');
 INSERT INTO `abilities` VALUES(117, 'scholars_roll', 17, 64, 1, 60, 193, 420, 0, 117, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'WOTG');
-INSERT INTO `abilities` VALUES(118, 'bolters_roll', 17, 76, 1, 60, 193, 420, 0, 118, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
+INSERT INTO `abilities` VALUES(118, 'bolters_roll', 17, 75, 1, 60, 193, 420, 0, 118, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'WOTG'); -- WINGSCUSTOM non-combat aoe movement for a few jobs
 INSERT INTO `abilities` VALUES(119, 'casters_roll', 17, 79, 1, 60, 193, 420, 0, 119, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
 INSERT INTO `abilities` VALUES(120, 'coursers_roll', 17, 81, 1, 60, 193, 420, 0, 120, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
 INSERT INTO `abilities` VALUES(121, 'blitzers_roll', 17, 83, 1, 60, 193, 420, 0, 121, 2000, 0, 6, 8.0, 1, 1, 80, 1408, 8, 'ABYSSEA');
@@ -324,7 +324,7 @@ INSERT INTO `abilities` VALUES(367, 'Swordplay', 22, 20, 1, 300, 0, 0, 0, 299, 2
 INSERT INTO `abilities` VALUES(374, 'One_for_all', 22, 95, 1, 300, 0, 0, 0, 301, 2000, 0, 6, 20.0, 1, 160, 320, 0, 0, 'SOA');
 INSERT INTO `abilities` VALUES(379, 'Ward', 22, 1, 1, 0, 0, 0, 0, 0, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(380, 'Effusion', 22, 1, 1, 0, 0, 0, 0, 0, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, NULL);
-INSERT INTO `abilities` VALUES(381, 'chocobo_jig_ii', 19, 70, 1, 60, 218, 126, 0, 13, 2000, 0, 14, 20.0, 1, 1, 300, 0, 0, 'SOA');
+INSERT INTO `abilities` VALUES(381, 'chocobo_jig_ii', 19, 70, 1, 60, 218, 126, 0, 13, 2000, 0, 14, 20.0, 1, 1, 300, 0, 0, 'WOTG'); -- WINGSCUSTOM non-combat aoe movement for a few jobs
 INSERT INTO `abilities` VALUES(383, 'Vivacious_pulse', 22, 1, 1, 300, 0, 0, 0, 327, 2000, 0, 6, 20.0, 0, 0, 0, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(385, 'apogee', 15, 70, 1, 180, 108, 0, 0, 333, 2000, 0, 6, 20.0, 0, 1, 80, 0, 0, 'SOA');
 INSERT INTO `abilities` VALUES(387, 'bestial_loyalty', 9, 23, 1, 1200, 94, 0, 0, 83, 2000, 0, 6, 18.0, 0, 1, 0, 900, 0, 'SOA');
@@ -382,6 +382,7 @@ INSERT INTO `abilities` VALUES(597, 'aero_iv', 15, 60, 4, 60, 173, 0, 0, 118, 20
 INSERT INTO `abilities` VALUES(598, 'predator_claws', 15, 70, 4, 60, 173, 0, 0, 164, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(599, 'wind_blade', 15, 75, 4, 60, 173, 0, 0, 182, 2000, 0, 6, 18.0, 0, 1, 60, 2948, 1, 'TOAU');
 INSERT INTO `abilities` VALUES(600, 'aerial_blast', 15, 1, 4, 60, 173, 0, 0, 0, 2000, 0, 6, 18.0, 1, 1, 60, 0, 2, NULL);
+INSERT INTO `abilities` VALUES(601, 'fleet_wind', 15, 75, 1, 60, 174, 0, 0, 0, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL); -- WINGSCUSTOM non-combat aoe movement for a few jobs (uses same animation/range as aerial armor)
 INSERT INTO `abilities` VALUES(608, 'axe_kick', 15, 1, 4, 60, 173, 0, 0, 10, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(609, 'blizzard_ii', 15, 10, 4, 60, 173, 0, 0, 24, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
 INSERT INTO `abilities` VALUES(610, 'frost_armor', 15, 28, 1, 60, 174, 0, 0, 63, 2000, 0, 6, 18.0, 0, 1, 60, 0, 0, NULL);
