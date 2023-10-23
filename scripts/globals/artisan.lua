@@ -108,5 +108,19 @@ tpz.artisan.moogleOnFinish = function(player, csid, option)
                 player:messageSpecial(zone.text.ITEM_CANNOT_BE_OBTAINED, 4181)
             end
         end
+
+        if player:getCharVar("[NomadBon]Ticket") == 0 then
+            local ticket = string.format("%u%u%u%u%u",
+                math.random(1,9),
+                math.random(0,9),
+                math.random(0,9),
+                math.random(0,9),
+                math.random(0,9)
+            )
+            player:setCharVar("[NomadBon]Ticket", tonumber(ticket))
+            player:setCharVar("[NomadBon]TimeStamp", os.time())
+        end
+
+        player:PrintToPlayer(string.format( "Your Mog Bonanza Kupon number is %u!", player:getCharVar("[NomadBon]Ticket" )))
     end
 end
