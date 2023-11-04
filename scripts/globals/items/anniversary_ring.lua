@@ -5,7 +5,7 @@
 -----------------------------------------
 -- Bonus: +100%
 -- Duration: 720 min
--- Max bonus: 3000 exp
+-- Max bonus: 10000 exp
 -----------------------------------------
 require("scripts/globals/status")
 -----------------------------------------
@@ -19,5 +19,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(tpz.effect.DEDICATION, 100, 0, 43200, 0, 3000)
+    target:addStatusEffect(tpz.effect.DEDICATION, 100, 0, 43200, 0, 10000)
 end
