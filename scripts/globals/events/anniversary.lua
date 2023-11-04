@@ -22,6 +22,7 @@ anniversary.zoneinfo2022 =
             320, -- Harpsichord
             415, -- Aldebaran
             457, -- Cushaw Lantern
+            20577, -- Chocobo Knife II
         },
     },
     [tpz.zone.KONSCHTAT_HIGHLANDS] =
@@ -33,6 +34,7 @@ anniversary.zoneinfo2022 =
         HQdropitems = {
             10811, -- Chocobo shield
             16378, -- Dinner Hose
+            18600, -- Caver's Shovel
         },
     },
     [tpz.zone.LA_THEINE_PLATEAU] =
@@ -44,6 +46,7 @@ anniversary.zoneinfo2022 =
         HQdropitems = {
             266, -- Behe Statue
             11355, -- Dinner Jacket
+            20909, -- Hoe
         },
     },
 }
@@ -60,15 +63,27 @@ anniversary.spawnitems2022 = {
 anniversary.globalHQdropitems2022 = {
     11290, -- tidal_talisman
     16119, -- Nomad cap
-    15793,
+    11273, -- hq swim top
+    11274, -- hq swim top
+    11275, -- hq swim top
+    11276, -- hq swim top
+    11277, -- hq swim top
+    11278, -- hq swim top
+    11279, -- hq swim top
+    11280, -- hq swim top
 }
 
 anniversary.globalNQdropitems2022 = {
-    4217, -- sparkling_hand
-    4252, -- summer_fan
-    4253, -- spirit_masque
-    5725, -- goshikitenge
-    6190, -- spriggan_spark
+    5532, -- Ichinintousen Koma (transform into a spinning dreidle)
+    5883, -- Falling Star (big star drops down and explodes)
+    5884, -- Rengedama (bomb explodes into a shower of hearts)
+    5936, -- Mog Missile (Moogle icon explodes in the sky)
+    6186, -- Slime Rocket (Slime icon explodes in the sky)
+    5882, -- Marine Bliss (fish bubble surrounds your character)
+    6268, -- Komanezumi (fire/sparks spinning on the ground)
+    5360, -- Muteppo (roman candle)
+    4250, -- Crackler
+    5769, -- Popper
 }
 
 anniversary.onTrade = function(player, npc, trade)
@@ -97,6 +112,8 @@ anniversary.onTrigger = function(player, npc)
         local zoneInfo = anniversary.zoneinfo2022[player:getZoneID()]
         nm = GetMobByID(zoneInfo.nmId)
         if player:hasStatusEffect(143) and nm:isDead() then
+			local mobLevel = nm:getLocalVar('level')
+
             local party = player:getAlliance()
             -- distributes pop items on successful kill
             local randStartNQDrops = math.random(#anniversary.spawnitems2022)
@@ -134,16 +151,13 @@ anniversary.onTrigger = function(player, npc)
                     hasAllDrops = false
                 end
             end
-            i = 0
-            while i < #anniversary.globalNQdropitems2022 do
-                i = i + 1
-                if not player:hasItem(anniversary.globalNQdropitems2022[i]) then
-                    hasAllDrops = false
-                end
-            end
             local HQdropRate = 150 + utils.clamp(AllianceSize * 8, 0, 100) + globalHQcount * 50
             for _,member in pairs(party) do
                 if member:getZoneID() == npc:getZoneID() then
+					if mobLevel == 40 then
+						member:addStatusEffect(tpz.effect.DEDICATION, 100, 0, 43200, 0, 30000)
+					end
+
                     member:delStatusEffect(143)
                     member:delStatusEffect(276)
                     member:ChangeMusic(0, 0)
@@ -158,12 +172,7 @@ anniversary.onTrigger = function(player, npc)
 
                     -- spam nq drops directly to each alliance member
                     dropCount = 0
-                    while dropCount < #NQdroplist do
-                        dropCount = dropCount + 1
-                        if not npcUtil.giveItem(member, { {NQdroplist[dropCount], math.random(1,10)} } ) then
-                            dropCount = #NQdroplist + 1
-                        end
-                    end
+                    npcUtil.giveItem(member, { {NQdroplist[math.random(1,#NQdroplist)], math.random(10,40)} } )
                     local randRoll = math.random(1000)
                     if (randRoll < HQdropRate and dropCountHQ < AllianceSize) or (member:getName() == player:getName() and hasAllDrops) then
                         dropCountHQ = dropCountHQ + 1
@@ -269,7 +278,11 @@ anniversary.spawnNM = function(player, npc)
         nm:setMobLevel(80)
         SpawnMob(nm:getID())
         -- set nm level based on number of players in party, no increase past 12 members
-        nm:setMobLevel(zoneInfo.playerlvl - 2 + utils.clamp(npc:getLocalVar("Anni2022_AllianceSize") / 2, 0, 6))
+        --local mobLevel = (math.random(1,5) <= 2) and 40 or (zoneInfo.playerlvl - 2 + utils.clamp(npc:getLocalVar("Anni2022_AllianceSize") / 2, 0, 6))
+		-- that xp was fun, but back to normal
+        mobLevel = (zoneInfo.playerlvl - 2 + utils.clamp(npc:getLocalVar("Anni2022_AllianceSize") / 2, 0, 6))
+        nm:setLocalVar('level', mobLevel)
+        nm:setMobLevel(mobLevel)
         nm:setMod(tpz.mod.HPP, npc:getLocalVar("Anni2022_AllianceSize") * 5)
         nm:setMod(tpz.mod.REGAIN, npc:getLocalVar("Anni2022_AllianceSize") * 100)
         nm:setPos(zoneInfo.spawnPos[1], zoneInfo.spawnPos[2], zoneInfo.spawnPos[3], zoneInfo.spawnPos[4])
@@ -278,6 +291,7 @@ anniversary.spawnNM = function(player, npc)
         nm:setMobMod(tpz.mobMod.CHARMABLE, 0)
         nm:setMobMod(tpz.mobMod.GIL_MAX, -1)
         nm:setMobMod(tpz.mobMod.DRAW_IN, 1)
+        nm:setMobMod(tpz.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
         nm:setMobMod(tpz.mobMod.DRAW_IN_CUSTOM_RANGE, 30)
         nm:addMod(tpz.mod.SILENCERES, 1000)
         nm:addMod(tpz.mod.SPELLINTERRUPT, 100)
@@ -287,8 +301,8 @@ anniversary.spawnNM = function(player, npc)
         nm:engage(player:getShortID())
         -- immobilized for a bit of time
         nm:addStatusEffect(tpz.effect.BIND, 0, 0, 30)
-        nm:addStatusEffect(tpz.effect.SLEEP_I, 0, 0, 10)
-        nm:addStatusEffect(tpz.effect.SILENCE, 0, 0, 10)
+        nm:addStatusEffect(tpz.effect.SLEEP_I, 0, 0, 5)
+        nm:addStatusEffect(tpz.effect.SILENCE, 0, 0, 5)
         nm:setTP(0)
         nm:setHP(nm:getMaxHP())
         nm:setMobMod(tpz.mobMod.MAGIC_COOL, 30 - npc:getLocalVar("Anni2022_AllianceSize"))
